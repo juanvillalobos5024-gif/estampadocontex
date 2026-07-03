@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "pantone": {
+      "title": "Pantone Color",
+      "description": "Fórmulas Pantone para estampado textil",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "hex": { "type": "string" },
+        "mesh": { "type": "string" },
+        "squeegee": { "type": "string" },
+        "notes": { "type": "string" },
+        "formulas": { "type": "array" }
+      },
+      "required": ["code", "name"]
+    },
+    "stock": {
+      "title": "Stock Item",
+      "description": "Insumo de inventario",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "category": { "type": "string" },
+        "quantity": { "type": "number" },
+        "minRequired": { "type": "number" }
+      },
+      "required": ["name", "type", "quantity"]
+    },
+    "batch": {
+      "title": "Batch Log",
+      "description": "Lote de producción",
+      "type": "object",
+      "properties": {
+        "pantoneCode": { "type": "string" },
+        "pantoneHex": { "type": "string" },
+        "productType": { "type": "string" },
+        "quantity": { "type": "number" },
+        "totalGrammage": { "type": "number" },
+        "operator": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["pantoneCode", "quantity", "totalGrammage", "operator", "status"]
+    },
+    "team": {
+      "title": "Team Member",
+      "description": "Miembro del equipo de estampado",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["name", "role", "active"]
+    }
+  },
+  "firestore": {
+    "/pantones/{pantoneId}": {
+      "schema": "pantone",
+      "description": "Colección de fórmulas Pantone"
+    },
+    "/stock/{stockId}": {
+      "schema": "stock",
+      "description": "Colección de insumos de inventario"
+    },
+    "/batches/{batchId}": {
+      "schema": "batch",
+      "description": "Colección de lotes de producción"
+    },
+    "/team/{memberId}": {
+      "schema": "team",
+      "description": "Colección de miembros del equipo"
+    }
+  }
+}
