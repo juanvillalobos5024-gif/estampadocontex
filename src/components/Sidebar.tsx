@@ -1,4 +1,6 @@
 import { Paintbrush, Scale, History, Layers, Users, MessageSquareCode } from 'lucide-react';
+// @ts-ignore
+import logoUrl from '@/assets/logo.jpeg';
 
 interface SidebarProps {
   activeTab: string;
@@ -20,8 +22,15 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser }: Sideba
     <nav className="w-64 bg-slate-900 text-white flex flex-col h-full shrink-0 border-r border-slate-800" id="app-sidebar">
       <div className="p-6">
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-xl italic text-white shadow-md">T</div>
-          <span className="text-xl font-bold tracking-tight text-white">TOCONTEX PRT</span>
+          <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-blue-900 shadow-md">
+            <img 
+              src={logoUrl} 
+              alt="CONTEX Logo" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          <span className="text-xl font-bold tracking-tight text-white">CONTEX</span>
         </div>
         
         <div className="space-y-6">
