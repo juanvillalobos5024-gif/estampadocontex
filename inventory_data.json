@@ -1,0 +1,380 @@
+[
+  {
+    "name": "TINTUPRINT FUCSIA REF:56108",
+    "ref": "FUCSIA TINTUPRINT",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 15070,
+    "minRequired": 5000,
+    "hexColor": "#d946ef"
+  },
+  {
+    "name": "AMARILLO ORO NOVAPRINT 2R",
+    "ref": "AMARILLO2R",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 3530,
+    "minRequired": 1000,
+    "hexColor": "#eab308"
+  },
+  {
+    "name": "UREA 46%",
+    "ref": "UREA",
+    "type": "urea",
+    "category": "reactivo",
+    "quantity": 786560,
+    "minRequired": 25000,
+    "hexColor": "#f1f5f9"
+  },
+  {
+    "name": "NARANJA NOVACRON P-4R",
+    "ref": "NARANJAP-4R",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 3370,
+    "minRequired": 1000,
+    "hexColor": "#f97316"
+  },
+  {
+    "name": "NARANJA OCTAMINE FT-G",
+    "ref": "NARANJAOCT",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 5151,
+    "minRequired": 5000,
+    "hexColor": "#f97316"
+  },
+  {
+    "name": "BICROMATO POTASIO X 500GR",
+    "ref": "BICROPOTASIO",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 3000,
+    "minRequired": 1000,
+    "hexColor": "#ea580c"
+  },
+  {
+    "name": "PRESTOVIL M",
+    "ref": "PRESTOVILM",
+    "type": "base",
+    "category": "pigmento",
+    "quantity": 102000,
+    "minRequired": 25000,
+    "hexColor": "#f8fafc"
+  },
+  {
+    "name": "AZUL NOVACRON P3R",
+    "ref": "0084",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 9300,
+    "minRequired": 5000,
+    "hexColor": "#3b82f6"
+  },
+  {
+    "name": "BICARBONATO DE SODIO",
+    "ref": "BICARBONATO",
+    "type": "bicarbonato",
+    "category": "reactivo",
+    "quantity": 181270,
+    "minRequired": 25000,
+    "hexColor": "#f1f5f9"
+  },
+  {
+    "name": "ORIOMCROM YELLOW HE6G",
+    "ref": "YELLOW/HE6G",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 20850,
+    "minRequired": 5000,
+    "hexColor": "#facc15"
+  },
+  {
+    "name": "ORIOMCROM YELLOW HE- 4R",
+    "ref": "YELLOW/HE4R",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 14320,
+    "minRequired": 5000,
+    "hexColor": "#facc15"
+  },
+  {
+    "name": "AZUL BRILLANTE REACTIVO R",
+    "ref": "AZULR",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 14440,
+    "minRequired": 5000,
+    "hexColor": "#3b82f6"
+  },
+  {
+    "name": "AZUL OSCURO REACTIVO R",
+    "ref": "AZULOSCR",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 25000,
+    "minRequired": 5000,
+    "hexColor": "#1e3a8a"
+  },
+  {
+    "name": "GAMA ALCALI SPECIAL",
+    "ref": "GAMALCALI",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 0,
+    "minRequired": 1000,
+    "hexColor": "#94a3b8"
+  },
+  {
+    "name": "ORIOMCROM TURQ BLUE PG",
+    "ref": "TURQBLUEPG",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 29170,
+    "minRequired": 5000,
+    "hexColor": "#06b6d4"
+  },
+  {
+    "name": "ESPESANTE NOVAPRINT  TC ULTRA",
+    "ref": "ESPNOVAPRINT",
+    "type": "pasta",
+    "category": "pigmento",
+    "quantity": 29900,
+    "minRequired": 5000,
+    "hexColor": "#f8fafc"
+  },
+  {
+    "name": "SUPER BLACK R",
+    "ref": "SUPERBLACKR",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 19600,
+    "minRequired": 5000,
+    "hexColor": "#0f172a"
+  },
+  {
+    "name": "ROJO CECOPRINT GR",
+    "ref": "ROJOCECOPRINT",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 7670,
+    "minRequired": 5000,
+    "hexColor": "#ef4444"
+  },
+  {
+    "name": "MAGENTA NOVAPRINT SP-E4",
+    "ref": "MAGENTA-E4",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 8901,
+    "minRequired": 5000,
+    "hexColor": "#d946ef"
+  },
+  {
+    "name": "NEGRO NOVAPRINT SP-B",
+    "ref": "NEGROSP-B",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 11320,
+    "minRequired": 5000,
+    "hexColor": "#0f172a"
+  },
+  {
+    "name": "ORIOM ORANGE ME 2RL",
+    "ref": "ORANGE-2RL",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 14650,
+    "minRequired": 5000,
+    "hexColor": "#f97316"
+  },
+  {
+    "name": "ORIOMCROM  BLACK WNN",
+    "ref": "BLACK-WNN",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 7140,
+    "minRequired": 5000,
+    "hexColor": "#0f172a"
+  },
+  {
+    "name": "NOVAPRINT RFS",
+    "ref": "NOVAPRINTRFS",
+    "type": "base",
+    "category": "pigmento",
+    "quantity": 360750,
+    "minRequired": 25000,
+    "hexColor": "#f8fafc"
+  },
+  {
+    "name": "AUXILUBE PAM 500",
+    "ref": "AUXILUBEPAM500",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 2750,
+    "minRequired": 1000,
+    "hexColor": "#94a3b8"
+  },
+  {
+    "name": "ALCOHOL POLIVINILICO PVA 088-50",
+    "ref": "ALCOHOLPVA",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 119930,
+    "minRequired": 25000,
+    "hexColor": "#f1f5f9"
+  },
+  {
+    "name": "ASUTOL PTR GRANOS",
+    "ref": "ASUTOLPTR",
+    "type": "asutol",
+    "category": "reactivo",
+    "quantity": 73130,
+    "minRequired": 10000,
+    "hexColor": "#ca8a04"
+  },
+  {
+    "name": "NARANJA LUMIPRINT 2R-N",
+    "ref": "NARANJA2R-N",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 2070,
+    "minRequired": 1000,
+    "hexColor": "#f97316"
+  },
+  {
+    "name": "CEREZA LUMIPRINT G-N",
+    "ref": "CEREZAG-N",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 5540,
+    "minRequired": 5000,
+    "hexColor": "#ef4444"
+  },
+  {
+    "name": "VERDE LUMIPRINT B-N",
+    "ref": "VERDEB-N",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 3270,
+    "minRequired": 1000,
+    "hexColor": "#22c55e"
+  },
+  {
+    "name": "AMARILLO ORO JAKOFIX P3R",
+    "ref": "JAKOFIXP3R",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 4540,
+    "minRequired": 1000,
+    "hexColor": "#eab308"
+  },
+  {
+    "name": "AZUL REACTIVO ROYAL G",
+    "ref": "AZULROYALG",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 10630,
+    "minRequired": 5000,
+    "hexColor": "#2563eb"
+  },
+  {
+    "name": "ROJO REACTIVO ME 6BL",
+    "ref": "ROJOREACTIVO",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 11630,
+    "minRequired": 5000,
+    "hexColor": "#ef4444"
+  },
+  {
+    "name": "AMARILLO NOVAPRINT GX CONC",
+    "ref": "AMARILLOVAPRINT",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 4000,
+    "minRequired": 1000,
+    "hexColor": "#facc15"
+  },
+  {
+    "name": "AMARILLO NOVAPRINT J GRANEL",
+    "ref": "AMARILLOVAPRINTJ",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 2712,
+    "minRequired": 1000,
+    "hexColor": "#facc15"
+  },
+  {
+    "name": "VERDE CECOPRINT G",
+    "ref": "VERDECECOPRINTG",
+    "type": "pigmento",
+    "category": "pigmento",
+    "quantity": 4000,
+    "minRequired": 1000,
+    "hexColor": "#22c55e"
+  },
+  {
+    "name": "SUNCOAT BLUE 9150 CHM",
+    "ref": "SUNCOAT9150",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 11750,
+    "minRequired": 5000,
+    "hexColor": "#3b82f6"
+  },
+  {
+    "name": "NOVACRON NAVY P-2R",
+    "ref": "NOVACRONAVY",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 0,
+    "minRequired": 1000,
+    "hexColor": "#1e3a8a"
+  },
+  {
+    "name": "AZUL REACTIVO 19",
+    "ref": "AZULREACTIVO19",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 20620,
+    "minRequired": 5000,
+    "hexColor": "#3b82f6"
+  },
+  {
+    "name": "ORIOMCROM RED AID",
+    "ref": "ORIOMCROMRED AID",
+    "type": "colorante_reactivo",
+    "category": "reactivo",
+    "quantity": 21430,
+    "minRequired": 5000,
+    "hexColor": "#ef4444"
+  },
+  {
+    "name": "CONCENTRATE  M-SP",
+    "ref": "CONCENTRATE M-SP",
+    "type": "base",
+    "category": "pigmento",
+    "quantity": 507000,
+    "minRequired": 25000,
+    "hexColor": "#f8fafc"
+  },
+  {
+    "name": "CARBONATO DE SODIO",
+    "ref": "CARBONATO DE SODIO",
+    "type": "aditivo",
+    "category": "reactivo",
+    "quantity": 16711,
+    "minRequired": 5000,
+    "hexColor": "#f1f5f9"
+  },
+  {
+    "name": "GLICERINA",
+    "ref": "GLICERINA",
+    "type": "aditivo",
+    "category": "pigmento",
+    "quantity": 4000,
+    "minRequired": 1000,
+    "hexColor": "#f1f5f9"
+  }
+]

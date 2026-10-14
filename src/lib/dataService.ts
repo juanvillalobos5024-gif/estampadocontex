@@ -12,7 +12,10 @@ import {
   serverTimestamp 
 } from 'firebase/firestore';
 import { db, auth } from './firebase';
-import { PantoneColor, StockItem, BatchLog, TeamMember } from '../types';
+import { PantoneColor, StockItem, BatchLog, TeamMember, WorkOrder, Design, DailyProductionRecord } from '../types';
+import { INITIAL_EXCEL_DESIGNS, FULL_YEAR_PRODUCTION_RECORDS } from './initialProductionData';
+import { SALIDA_INSUMOS_RECORDS } from './salidaInsumosData';
+import inventoryData from '../inventory_data.json';
 
 enum OperationType {
   CREATE = 'create',
@@ -66,6 +69,9 @@ const PANTONES_COLLECTION = 'pantones';
 const STOCK_COLLECTION = 'stock';
 const BATCHES_COLLECTION = 'batches';
 const TEAM_COLLECTION = 'team';
+const WORK_ORDERS_COLLECTION = 'work_orders';
+const DESIGNS_COLLECTION = 'designs';
+const PRODUCTION_RECORDS_COLLECTION = 'production_records';
 
 // Datos de semilla iniciales (Seeds)
 const INITIAL_PANTONES: PantoneColor[] = [
@@ -142,37 +148,17 @@ const INITIAL_PANTONES: PantoneColor[] = [
   }
 ];
 
-const INITIAL_STOCK: StockItem[] = [
-  // Línea Serigrafía (Pigmentos)
-  { name: 'Base Clear 001', type: 'base', category: 'serigrafia', quantity: 25000, minRequired: 5000 },
-  { name: 'Elastic Base EB-10', type: 'base', category: 'serigrafia', quantity: 18000, minRequired: 4000 },
-  { name: 'Red Pigment RV', type: 'pigmento', category: 'serigrafia', quantity: 3200, minRequired: 1000 },
-  { name: 'Blue Pigment BL', type: 'pigmento', category: 'serigrafia', quantity: 4500, minRequired: 1000 },
-  { name: 'Yellow Pigment YE', type: 'pigmento', category: 'serigrafia', quantity: 5000, minRequired: 800 },
-  { name: 'Black Pigment BK', type: 'pigmento', category: 'serigrafia', quantity: 2000, minRequired: 500 },
-  { name: 'Orange Pigment OR', type: 'pigmento', category: 'serigrafia', quantity: 1500, minRequired: 500 },
-  { name: 'White Matte 05', type: 'base', category: 'serigrafia', quantity: 8000, minRequired: 2000 },
-  { name: 'Fixer F-10', type: 'aditivo', category: 'serigrafia', quantity: 2500, minRequired: 500 },
-
-  // Línea Colorantes Reactivos
-  { name: 'Pasta Espesante Alginato de Sodio', type: 'pasta', category: 'reactivo', quantity: 40000, minRequired: 10000 },
-  { name: 'Azul Reactivo H-EXL', type: 'colorante_reactivo', category: 'reactivo', quantity: 3500, minRequired: 800 },
-  { name: 'Rojo Reactivo M-3B', type: 'colorante_reactivo', category: 'reactivo', quantity: 2800, minRequired: 800 },
-  { name: 'Amarillo Reactivo H-A', type: 'colorante_reactivo', category: 'reactivo', quantity: 3100, minRequired: 800 },
-  { name: 'Negro Reactivo B', type: 'colorante_reactivo', category: 'reactivo', quantity: 6000, minRequired: 1500 },
-  { name: 'Urea Auxiliar Textil', type: 'aditivo', category: 'reactivo', quantity: 15000, minRequired: 5000 },
-  { name: 'Carbonato de Sodio (Fijador)', type: 'aditivo', category: 'reactivo', quantity: 12000, minRequired: 3000 }
-];
+const INITIAL_STOCK: StockItem[] = inventoryData as StockItem[];
 
 const INITIAL_TEAM: TeamMember[] = [
   { name: 'Jorge Martínez', role: 'Jefe de Estampado', active: true },
-  { name: 'Enoc Chatelain', role: 'Líder de Color / Serigrafía', active: true },
+  { name: 'Enoc Chatelain', role: 'Líder de Color / Pigmentos', active: true },
   { name: 'Mateo Gómez', role: 'Prensista de Toallas', active: true },
   { name: 'Santiago Ruiz', role: 'Operario de Mezclado', active: true },
   { name: 'Camila Ríos', role: 'Auxiliar de Laboratorio', active: true }
 ];
 
-const INITIAL_BATCHES: BatchLog[] = [
+const SEED_DEMO_BATCHES: BatchLog[] = [
   {
     pantoneCode: '185 C',
     pantoneHex: '#E21933',
@@ -186,7 +172,7 @@ const INITIAL_BATCHES: BatchLog[] = [
   {
     pantoneCode: '360 C',
     pantoneHex: '#78BE20',
-    productType: 'Hamacas',
+    productType: 'Otros',
     quantity: 120,
     totalGrammage: 1500,
     operator: 'Camila Ríos',
@@ -221,6 +207,26 @@ export async function seedDatabaseIfEmpty() {
       }
     }
 
+    // CLEANUP: Eliminar insumos duplicados en inventario
+    const stockSnapForCleanup = await getDocs(collection(db, STOCK_COLLECTION));
+    const seenNames = new Set<string>();
+    const duplicateIds: string[] = [];
+    stockSnapForCleanup.docs.forEach(d => {
+      const data = d.data();
+      const nameKey = data.name?.trim().toLowerCase();
+      if (nameKey) {
+        if (seenNames.has(nameKey)) {
+          duplicateIds.push(d.id);
+        } else {
+          seenNames.add(nameKey);
+        }
+      }
+    });
+    for (const dupId of duplicateIds) {
+      await deleteDoc(doc(db, STOCK_COLLECTION, dupId));
+      console.log(`Se eliminó insumo duplicado: ${dupId}`);
+    }
+
     const pantoneSnap = await getDocs(collection(db, PANTONES_COLLECTION));
     if (pantoneSnap.empty) {
       console.log('Base de datos vacía. Sembrando datos iniciales en Firestore...');
@@ -247,7 +253,7 @@ export async function seedDatabaseIfEmpty() {
       }
 
       // Seed Batches
-      for (const batch of INITIAL_BATCHES) {
+      for (const batch of SEED_DEMO_BATCHES) {
         await addDoc(collection(db, BATCHES_COLLECTION), batch);
       }
       
@@ -282,6 +288,22 @@ export async function seedDatabaseIfEmpty() {
           }
         }
       }
+
+      // Sembrar los diseños estándar de la producción en Firestore si faltan
+      try {
+        const designsSnap = await getDocs(collection(db, DESIGNS_COLLECTION));
+        const existingNames = new Set(designsSnap.docs.map(d => (d.data().name || '').toUpperCase().trim()));
+        for (const d of INITIAL_DESIGNS) {
+          if (!existingNames.has(d.name.toUpperCase().trim())) {
+            await addDoc(collection(db, DESIGNS_COLLECTION), {
+              ...d,
+              createdAt: serverTimestamp()
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Error al verificar/sembrar diseños:', err);
+      }
     }
   } catch (error) {
     console.error('Error al sembrar base de datos:', error);
@@ -290,9 +312,12 @@ export async function seedDatabaseIfEmpty() {
 
 // --- PANTONES CRUD ---
 
-export async function getPantoneColors(): Promise<PantoneColor[]> {
+export async function getPantoneColors(limitCount?: number): Promise<PantoneColor[]> {
   try {
-    const q = query(collection(db, PANTONES_COLLECTION), orderBy('code'));
+    let q = query(collection(db, PANTONES_COLLECTION), orderBy('code'));
+    if (limitCount) {
+      q = query(collection(db, PANTONES_COLLECTION), orderBy('code'), limit(limitCount));
+    }
     const snap = await getDocs(q);
     return snap.docs.map(d => ({
       id: d.id,
@@ -383,6 +408,178 @@ export async function deleteStockItem(id: string): Promise<void> {
   }
 }
 
+/**
+ * Sincroniza el inventario con los datos del reporte de inventario Excel más reciente.
+ * - Actualiza las cantidades de los insumos existentes a los gramos físicos del Excel.
+ * - Crea los insumos nuevos que no existían.
+ * - Pone en 0 gramos los insumos que no figuran en el archivo ("las que no esten dejalas en 0").
+ */
+export async function syncInventoryWithExcel(excelItems: any[]): Promise<{ updated: number; added: number; zeroed: number }> {
+  let updated = 0;
+  let added = 0;
+  let zeroed = 0;
+
+  try {
+    const currentStock = await getStockItems();
+    const matchedStockIds = new Set<string>();
+
+    for (const item of excelItems) {
+      if (!item.name) continue;
+      
+      const match = currentStock.find(s => 
+        s.name.trim().toLowerCase() === item.name.trim().toLowerCase() ||
+        (item.ref && s.name.trim().toLowerCase() === item.ref.trim().toLowerCase())
+      ) || findMatchingStockItem(currentStock, item.name) || (item.ref ? findMatchingStockItem(currentStock, item.ref) : undefined);
+
+      if (match && match.id) {
+        matchedStockIds.add(match.id);
+        const docRef = doc(db, STOCK_COLLECTION, match.id);
+        await updateDoc(docRef, {
+          quantity: item.quantity,
+          type: item.type || match.type,
+          category: item.category || match.category,
+          hexColor: item.hexColor || match.hexColor,
+          lastUpdated: serverTimestamp()
+        });
+        updated++;
+      } else {
+        const docRef = await addDoc(collection(db, STOCK_COLLECTION), {
+          name: item.name,
+          type: item.type,
+          category: item.category,
+          quantity: item.quantity,
+          minRequired: item.minRequired || 5000,
+          hexColor: item.hexColor,
+          lastUpdated: serverTimestamp()
+        });
+        matchedStockIds.add(docRef.id);
+        added++;
+      }
+    }
+
+    // Regla: "las que no estén déjalas en 0"
+    for (const stockItem of currentStock) {
+      if (stockItem.id && !matchedStockIds.has(stockItem.id)) {
+        if (stockItem.quantity !== 0) {
+          const docRef = doc(db, STOCK_COLLECTION, stockItem.id);
+          await updateDoc(docRef, {
+            quantity: 0,
+            lastUpdated: serverTimestamp()
+          });
+          zeroed++;
+        }
+      }
+    }
+
+    console.log(`Sincronización de inventario completada: ${updated} actualizados, ${added} creados, ${zeroed} en 0.`);
+  } catch (error) {
+    console.error('Error al sincronizar inventario:', error);
+  }
+
+  return { updated, added, zeroed };
+}
+
+/**
+ * Busca de forma flexible e inteligente el insumo de stock que corresponde
+ * a un componente de fórmula (maneja variaciones como "ROJO REACTIVO" vs "ROJO REACTIVO ME 6BL",
+ * diferencias de mayúsculas/minúsculas, espacios, guiones, etc.)
+ */
+export function findMatchingStockItem(stock: StockItem[], componentName: string): StockItem | undefined {
+  if (!componentName || !stock || stock.length === 0) return undefined;
+  
+  const rawComp = componentName.trim();
+  const lowerComp = rawComp.toLowerCase();
+
+  // 1. Coincidencia exacta
+  const exact = stock.find(s => s.name === rawComp) || stock.find(s => s.name.trim().toLowerCase() === lowerComp);
+  if (exact) return exact;
+
+  // Normalizador de texto: quita signos de puntuación, puntos, guiones y espacios dobles
+  const normalize = (str: string) => 
+    str.toLowerCase()
+       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+       .replace(/[\-_•.,/\\()[\]]/g, ' ')
+       .replace(/\s+/g, ' ')
+       .trim();
+
+  const normComp = normalize(componentName);
+  if (!normComp) return undefined;
+
+  // 2. Coincidencia exacta normalizada
+  const normExact = stock.find(s => normalize(s.name) === normComp);
+  if (normExact) return normExact;
+
+  // 3. Coincidencia de prefijo (e.g. Stock "ROJO REACTIVO ME 6BL" comienza con "ROJO REACTIVO") o viceversa
+  const prefixMatch = stock.find(s => {
+    const normStock = normalize(s.name);
+    return normStock.startsWith(normComp) || normComp.startsWith(normStock);
+  });
+  if (prefixMatch) return prefixMatch;
+
+  // 4. Subcadena completa
+  const substringMatch = stock.find(s => {
+    const normStock = normalize(s.name);
+    return normStock.includes(normComp) || normComp.includes(normStock);
+  });
+  if (substringMatch) return substringMatch;
+
+  // 5. Coincidencia por palabras clave (todas las palabras del componente contenidas en el stock)
+  const words = normComp.split(' ').filter(w => w.length > 1);
+  if (words.length > 0) {
+    const allWordsMatch = stock.find(s => {
+      const normStock = normalize(s.name);
+      return words.every(w => normStock.includes(w));
+    });
+    if (allWordsMatch) return allWordsMatch;
+  }
+
+  return undefined;
+}
+
+/**
+ * Busca un color Pantone comparando de forma normalizada (sin espacios, mayúsculas)
+ * Ej. "185 C" coincide con "185C"
+ */
+export function findMatchingPantone(pantones: PantoneColor[], code: string): PantoneColor | undefined {
+  if (!code || !pantones || pantones.length === 0) return undefined;
+  const clean = (c: string) => (c || '').replace(/\s+/g, '').toUpperCase().trim();
+  const target = clean(code);
+  return pantones.find(p => clean(p.code) === target);
+}
+
+/**
+ * Encuentra el ítem en inventario correspondiente a la Pasta Madre Preparada
+ */
+export function findPastaMadreStockItem(stock: StockItem[], lineType?: string): StockItem | undefined {
+  if (!stock || stock.length === 0) return undefined;
+  
+  // 1. Coincidencia exacta
+  const exact = stock.find(s => s.name === 'Pasta Madre (Preparada)') || 
+                stock.find(s => s.name.trim().toLowerCase() === 'pasta madre (preparada)') ||
+                stock.find(s => s.name.trim().toLowerCase() === 'pasta madre');
+  if (exact) return exact;
+
+  // 2. Por nombre que contenga pasta madre
+  const byPastaName = stock.find(s => s.name.toLowerCase().includes('pasta madre'));
+  if (byPastaName) return byPastaName;
+
+  // 3. Por tipo 'pasta'
+  const byType = stock.find(s => s.type === 'pasta');
+  if (byType) return byType;
+
+  // 4. Por categoría/tipo según línea de proceso
+  if (lineType === 'reactivo') {
+    const alginato = stock.find(s => s.name.toLowerCase().includes('espesante') || s.name.toLowerCase().includes('alginato') || s.type === 'sal_alginato');
+    if (alginato) return alginato;
+  } else if (lineType === 'pigmento') {
+    const base = stock.find(s => s.name.toLowerCase().includes('prestovil') || s.name.toLowerCase().includes('base transparente') || s.type === 'base');
+    if (base) return base;
+  }
+
+  // 5. Cualquier pasta o base
+  return stock.find(s => s.name.toLowerCase().includes('pasta') || s.name.toLowerCase().includes('base'));
+}
+
 export async function addStockItem(item: StockItem): Promise<string> {
   try {
     const docRef = await addDoc(collection(db, STOCK_COLLECTION), {
@@ -396,24 +593,104 @@ export async function addStockItem(item: StockItem): Promise<string> {
   }
 }
 
-// --- BATCH LOGS CRUD ---
+// --- BATCH LOGS CRUD (SALIDAS DE INSUMOS & LOTES) ---
+
+export const INITIAL_BATCHES: BatchLog[] = SALIDA_INSUMOS_RECORDS.map(r => {
+  const d = new Date(`${r.date}T12:00:00`);
+  return {
+    id: r.id,
+    pantoneCode: r.product,
+    pantoneHex: r.hex,
+    productType: 'Toallas',
+    productReference: `Requisición (${r.source.split('/').pop()?.replace(/\.xlsx?/i, '') || ''})`,
+    lineType: r.line,
+    quantity: 0,
+    totalGrammage: r.grams,
+    operator: 'Bodega Insumos',
+    timestamp: d,
+    status: 'Completado',
+    type: 'preparacion',
+  };
+});
+
+const DELETED_BATCHES_KEY = 'taller_batches_deleted_ids_v1';
+
+export function getDeletedBatchIds(): Set<string> {
+  try {
+    const stored = localStorage.getItem(DELETED_BATCHES_KEY);
+    if (stored) {
+      const arr = JSON.parse(stored);
+      if (Array.isArray(arr)) {
+        return new Set(arr);
+      }
+    }
+  } catch (e) {}
+  return new Set();
+}
+
+export function markBatchAsDeleted(id: string): void {
+  try {
+    const deleted = getDeletedBatchIds();
+    deleted.add(id);
+    localStorage.setItem(DELETED_BATCHES_KEY, JSON.stringify(Array.from(deleted)));
+  } catch (e) {}
+}
 
 export async function getBatchLogs(): Promise<BatchLog[]> {
+  const BATCHES_STORAGE_KEY = 'taller_batches_salidas_v1';
+  const deletedIds = getDeletedBatchIds();
+  let localBatches: BatchLog[] = [];
+
+  const stored = localStorage.getItem(BATCHES_STORAGE_KEY);
+  if (stored !== null) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        localBatches = parsed
+          .filter(b => b && b.id && !deletedIds.has(b.id))
+          .map(b => ({
+            ...b,
+            timestamp: b.timestamp ? new Date(b.timestamp) : new Date()
+          }));
+      }
+    } catch (e) {}
+  } else {
+    localBatches = INITIAL_BATCHES.filter(b => b && b.id && !deletedIds.has(b.id));
+    try {
+      localStorage.setItem(BATCHES_STORAGE_KEY, JSON.stringify(localBatches));
+    } catch (e) {}
+  }
+
   try {
     const q = query(collection(db, BATCHES_COLLECTION), orderBy('timestamp', 'desc'));
     const snap = await getDocs(q);
-    return snap.docs.map(d => {
-      const data = d.data();
-      return {
-        id: d.id,
-        ...data,
-        timestamp: data.timestamp instanceof Timestamp ? data.timestamp : Timestamp.now()
-      };
-    }) as BatchLog[];
+    if (!snap.empty) {
+      const firestoreBatches = snap.docs
+        .filter(d => !deletedIds.has(d.id))
+        .map(d => {
+          const data = d.data();
+          return {
+            id: d.id,
+            ...data,
+            timestamp: data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date())
+          };
+        }) as BatchLog[];
+
+      const existingIds = new Set(firestoreBatches.map(b => b.id));
+      const merged = [
+        ...firestoreBatches,
+        ...localBatches.filter(b => b.id && !existingIds.has(b.id) && !deletedIds.has(b.id))
+      ];
+      try {
+        localStorage.setItem(BATCHES_STORAGE_KEY, JSON.stringify(merged));
+      } catch (e) {}
+      return merged;
+    }
   } catch (error) {
-    handleFirestoreError(error, OperationType.GET, BATCHES_COLLECTION);
-    return [];
+    console.warn("Firestore getBatchLogs failed, using local storage/initial batches", error);
   }
+
+  return localBatches;
 }
 
 export async function addBatchLog(batch: BatchLog): Promise<string> {
@@ -424,31 +701,107 @@ export async function addBatchLog(batch: BatchLog): Promise<string> {
       timestamp: serverTimestamp()
     });
 
-    // 2. Descontar stock automáticamente si encontramos los componentes
+    // 2. Descontar stock y manejar Tintas Preparadas según el tipo
     try {
       const stockItems = await getStockItems();
       const pantones = await getPantoneColors();
-      const selectedPantone = pantones.find(p => p.code === batch.pantoneCode);
-      
-      if (selectedPantone) {
-        for (const component of selectedPantone.formulas) {
-          const matchedStock = stockItems.find(s => s.name === component.component);
-          if (matchedStock && matchedStock.id) {
-            // Gramos a descontar: porcentaje * peso total / 100
-            const gramsToDeduct = (component.percentage * batch.totalGrammage) / 100;
-            const updatedQty = matchedStock.quantity - gramsToDeduct;
-            await updateStockItemQuantity(matchedStock.id, updatedQty);
+      const selectedPantone = findMatchingPantone(pantones, batch.pantoneCode);
+      const isPastaMadrePrep = (batch.pantoneCode || '').toUpperCase().replace(/\s+/g, '').includes('PASTAMADRE');
+
+      const isConsumo = batch.type === 'consumo';
+      const preparedInkName = `Tarro Pantone ${batch.pantoneCode}`;
+      const existingPrepared = stockItems.find(s => s.name === preparedInkName && s.type === 'tinta_preparada');
+
+      if (isConsumo) {
+        // ES CONSUMO DE PRODUCCIÓN: Solo descontar de la tinta preparada
+        if (existingPrepared && existingPrepared.id) {
+          const updatedQty = existingPrepared.quantity - batch.totalGrammage;
+          await updateStockItemQuantity(existingPrepared.id, updatedQty);
+        }
+      } else {
+        // ES PREPARACIÓN (Calculadora / Órdenes de Trabajo):
+        if (!isPastaMadrePrep) {
+          // 1. DESCONTAR PASTA MADRE (PREPARADA)
+          // La cantidad en batch.totalGrammage (en gramos) representa los Kg de Pasta Madre utilizados.
+          const pastaItem = findPastaMadreStockItem(stockItems, batch.lineType);
+          if (pastaItem && pastaItem.id) {
+            const updatedPastaQty = pastaItem.quantity - batch.totalGrammage;
+            await updateStockItemQuantity(pastaItem.id, updatedPastaQty);
+          } else {
+            // Si aún no existe el ítem en inventario, se crea para reflejar el consumo
+            await addDoc(collection(db, STOCK_COLLECTION), {
+              name: 'Pasta Madre (Preparada)',
+              type: 'pasta',
+              category: batch.lineType || 'reactivo',
+              quantity: -batch.totalGrammage,
+              minRequired: 50000,
+              hexColor: '#FDFBF7',
+              lastUpdated: serverTimestamp()
+            });
+          }
+
+          // 2. DESCONTAR TINTAS / COLORANTES SEGÚN LA FÓRMULA
+          // Cada component.percentage está expresado en g / Kg (gramos por cada 1000g de pasta madre).
+          // Gramos a descontar = (batch.totalGrammage / 1000) * component.percentage
+          if (selectedPantone && selectedPantone.formulas && selectedPantone.formulas.length > 0) {
+            const kilosPrepared = batch.totalGrammage / 1000;
+            for (const component of selectedPantone.formulas) {
+              const matchedStock = findMatchingStockItem(stockItems, component.component);
+              if (matchedStock && matchedStock.id) {
+                const gramsToDeduct = kilosPrepared * (Number(component.percentage) || 0);
+                const updatedQty = matchedStock.quantity - gramsToDeduct;
+                await updateStockItemQuantity(matchedStock.id, updatedQty);
+              }
+            }
+          }
+
+          // 3. Sumar a la Tinta Preparada
+          const netGrams = batch.totalGrammage - (batch.wasteGrams || 0);
+          if (existingPrepared && existingPrepared.id) {
+            await updateStockItemQuantity(existingPrepared.id, existingPrepared.quantity + netGrams);
+          } else {
+            await addDoc(collection(db, STOCK_COLLECTION), {
+              name: preparedInkName,
+              type: 'tinta_preparada',
+              category: batch.lineType || 'pigmento',
+              quantity: netGrams,
+              minRequired: 0,
+              hexColor: batch.pantoneHex || '#cccccc',
+              lastUpdated: serverTimestamp()
+            });
           }
         }
       }
     } catch (err) {
-      console.error('Error al descontar el stock de manera automática:', err);
+      console.error('Error al actualizar el stock (preparación o consumo):', err);
     }
 
     return docRef.id;
   } catch (error) {
     handleFirestoreError(error, OperationType.CREATE, BATCHES_COLLECTION);
     throw error;
+  }
+}
+
+export async function deleteBatchLog(id: string): Promise<void> {
+  const BATCHES_STORAGE_KEY = 'taller_batches_salidas_v1';
+  markBatchAsDeleted(id);
+
+  try {
+    const stored = localStorage.getItem(BATCHES_STORAGE_KEY);
+    if (stored) {
+      const list: BatchLog[] = JSON.parse(stored);
+      const updated = list.filter(b => b.id !== id);
+      localStorage.setItem(BATCHES_STORAGE_KEY, JSON.stringify(updated));
+    }
+  } catch (e) {}
+
+  try {
+    const docRef = doc(db, BATCHES_COLLECTION, id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    // Si no está en Firestore porque es un lote de insumos inicial local, se ignora el error silenciosamente
+    console.warn("Firestore deleteBatchLog non-critical warning:", error);
   }
 }
 
@@ -476,3 +829,455 @@ export async function addTeamMember(member: TeamMember): Promise<string> {
     throw error;
   }
 }
+
+export async function deleteTeamMember(id: string): Promise<void> {
+  try {
+    const docRef = doc(db, TEAM_COLLECTION, id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `${TEAM_COLLECTION}/${id}`);
+    throw error;
+  }
+}
+
+// ==========================================
+// MÉTODOS PARA WORK ORDERS
+// ==========================================
+export async function getWorkOrders(): Promise<WorkOrder[]> {
+  try {
+    const q = query(
+      collection(db, WORK_ORDERS_COLLECTION),
+      orderBy('createdAt', 'desc'),
+      limit(200)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as WorkOrder));
+  } catch (error) {
+    console.warn("Could not get work orders, maybe collection doesn't exist yet", error);
+    return [];
+  }
+}
+
+export async function addWorkOrder(order: WorkOrder): Promise<boolean> {
+  try {
+    await addDoc(collection(db, WORK_ORDERS_COLLECTION), {
+      ...order,
+      createdAt: serverTimestamp()
+    });
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.CREATE, WORK_ORDERS_COLLECTION);
+    return false;
+  }
+}
+
+export async function updateWorkOrder(id: string, updates: Partial<WorkOrder>): Promise<boolean> {
+  try {
+    const docRef = doc(db, WORK_ORDERS_COLLECTION, id);
+    await updateDoc(docRef, updates);
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.UPDATE, `${WORK_ORDERS_COLLECTION}/${id}`);
+    return false;
+  }
+}
+
+export async function deleteWorkOrder(id: string): Promise<boolean> {
+  try {
+    const docRef = doc(db, WORK_ORDERS_COLLECTION, id);
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `${WORK_ORDERS_COLLECTION}/${id}`);
+    return false;
+  }
+}
+
+// --- DESIGNS CRUD ---
+
+export const INITIAL_DESIGNS: Design[] = INITIAL_EXCEL_DESIGNS;
+
+export async function getDesigns(): Promise<Design[]> {
+  let list: Design[] = [];
+  try {
+    const q = query(collection(db, DESIGNS_COLLECTION));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      list = snap.docs.map(d => ({
+        id: d.id,
+        ...d.data()
+      })) as Design[];
+    }
+  } catch (error) {
+    console.warn("Firestore getDesigns failed, fallback to local", error);
+  }
+
+  // Si Firestore está vacío o falló, revisar localStorage
+  if (list.length === 0) {
+    const stored = localStorage.getItem('taller_designs');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) list = parsed;
+      } catch (e) {}
+    }
+  }
+
+  // Garantizar que todos los 81 diseños existentes del Excel original existan
+  const existingNames = new Set(list.map(d => d.name.toUpperCase().trim()));
+  const missing = INITIAL_EXCEL_DESIGNS.filter(d => !existingNames.has(d.name.toUpperCase().trim()));
+  if (missing.length > 0) {
+    for (const m of missing) {
+      list.push(m);
+      try {
+        addDoc(collection(db, DESIGNS_COLLECTION), {
+          ...m,
+          createdAt: serverTimestamp()
+        }).catch(() => {});
+      } catch (e) {}
+    }
+  }
+
+  try {
+    localStorage.setItem('taller_designs', JSON.stringify(list));
+  } catch (e) {}
+
+  return list;
+}
+
+export async function addDesign(design: Design): Promise<string> {
+  let createdId = `des-${Date.now()}`;
+  try {
+    const docRef = await addDoc(collection(db, DESIGNS_COLLECTION), {
+      ...design,
+      createdAt: serverTimestamp()
+    });
+    createdId = docRef.id;
+  } catch (error) {
+    console.warn("Firestore addDesign failed, saving locally", error);
+  }
+
+  try {
+    const current = await getDesigns();
+    const updated = [{ ...design, id: createdId }, ...current];
+    localStorage.setItem('taller_designs', JSON.stringify(updated));
+  } catch (e) {}
+
+  return createdId;
+}
+
+export async function deleteDesign(id: string): Promise<boolean> {
+  try {
+    const docRef = doc(db, DESIGNS_COLLECTION, id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.warn("Firestore deleteDesign failed, saving locally", error);
+  }
+
+  try {
+    const current = await getDesigns();
+    const updated = current.filter(d => d.id !== id);
+    localStorage.setItem('taller_designs', JSON.stringify(updated));
+  } catch (e) {}
+
+  return true;
+}
+
+export async function updateDesign(id: string, updates: Partial<Design>): Promise<boolean> {
+  try {
+    const docRef = doc(db, DESIGNS_COLLECTION, id);
+    await updateDoc(docRef, updates);
+  } catch (error) {
+    console.warn("Firestore updateDesign failed, saving locally", error);
+  }
+
+  try {
+    const current = await getDesigns();
+    const updated = current.map(d => d.id === id ? { ...d, ...updates } : d);
+    localStorage.setItem('taller_designs', JSON.stringify(updated));
+  } catch (e) {}
+
+  return true;
+}
+
+// --- DAILY PRODUCTION RECORDS CRUD ---
+
+export const INITIAL_PRODUCTION_RECORDS: DailyProductionRecord[] = FULL_YEAR_PRODUCTION_RECORDS;
+
+export async function getProductionRecords(): Promise<DailyProductionRecord[]> {
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  let localRecords: DailyProductionRecord[] = [];
+
+  // Fallback local storage
+  const stored = localStorage.getItem(PRODUCTION_STORAGE_KEY);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      // Validar que no tenga datos astronómicos/corruptos (unidades > 50,000 en toallas)
+      const hasCorruptData = Array.isArray(parsed) && parsed.some((r: any) => Number(r.units) > 50000);
+      const hasGolpes = Array.isArray(parsed) && parsed.some((r: any) => r.golpes !== undefined);
+      if (Array.isArray(parsed) && parsed.length >= FULL_YEAR_PRODUCTION_RECORDS.length && !hasCorruptData && hasGolpes) {
+        localRecords = parsed;
+      }
+    } catch (e) {}
+  }
+
+  // Si no hay datos locales limpios con golpes, usar los 341 registros con golpes del 2026
+  if (localRecords.length === 0) {
+    localRecords = FULL_YEAR_PRODUCTION_RECORDS;
+    try {
+      localStorage.removeItem('daily_production_records');
+      localStorage.removeItem('daily_production_records_v2');
+      localStorage.removeItem('daily_production_records_v3');
+      localStorage.removeItem('daily_production_records_v4');
+      localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(FULL_YEAR_PRODUCTION_RECORDS));
+    } catch (e) {}
+  }
+
+  // Deduplicación estricta por fecha, nombre de diseño y turno, eliminando temporales
+  const deduplicate = (records: DailyProductionRecord[]): DailyProductionRecord[] => {
+    const map = new Map<string, DailyProductionRecord>();
+    for (const r of records) {
+      if (r.id && r.id.startsWith('order-temp-')) continue;
+      const key = `${r.date}__${(r.designName || '').toUpperCase().trim()}__${r.shift || 1}`;
+      const existing = map.get(key);
+      if (!existing) {
+        map.set(key, r);
+      } else {
+        if ((!existing.golpes && r.golpes) || (!existing.workOrderId && r.workOrderId)) {
+          map.set(key, r);
+        }
+      }
+    }
+    return Array.from(map.values());
+  };
+
+  localRecords = deduplicate(localRecords);
+
+  // Si Firestore está conectado y tiene registros, combinarlos sin duplicar
+  try {
+    const q = query(collection(db, PRODUCTION_RECORDS_COLLECTION));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      const firestoreRecords = snap.docs.map(d => ({
+        id: d.id,
+        ...d.data()
+      })) as DailyProductionRecord[];
+
+      const merged = deduplicate([...localRecords, ...firestoreRecords]);
+      try {
+        localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(merged));
+      } catch (e) {}
+      return merged;
+    }
+  } catch (error) {
+    console.warn("Firestore getProductionRecords failed, using local storage", error);
+  }
+
+  return localRecords;
+}
+
+export async function addProductionRecord(record: DailyProductionRecord): Promise<string> {
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  let createdId = record.id || `prod-${Date.now()}`;
+  try {
+    const docRef = await addDoc(collection(db, PRODUCTION_RECORDS_COLLECTION), {
+      ...record,
+      createdAt: serverTimestamp()
+    });
+    createdId = docRef.id;
+  } catch (error) {
+    console.warn("Firestore addProductionRecord failed, saving locally", error);
+  }
+
+  // Save to local storage as well
+  try {
+    const current = await getProductionRecords();
+    const updated = [{ ...record, id: createdId }, ...current.filter(r => r.id !== createdId)];
+    localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('production-records-updated'));
+  } catch (e) {}
+
+  return createdId;
+}
+
+export async function updateProductionRecord(id: string, updates: Partial<DailyProductionRecord>): Promise<boolean> {
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  try {
+    const docRef = doc(db, PRODUCTION_RECORDS_COLLECTION, id);
+    await updateDoc(docRef, updates);
+  } catch (error) {
+    console.warn("Firestore updateProductionRecord failed, saving locally", error);
+  }
+
+  try {
+    const current = await getProductionRecords();
+    const updated = current.map(r => r.id === id ? { ...r, ...updates } : r);
+    localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('production-records-updated'));
+  } catch (e) {}
+
+  return true;
+}
+
+export async function deleteProductionRecord(id: string): Promise<boolean> {
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  try {
+    const docRef = doc(db, PRODUCTION_RECORDS_COLLECTION, id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.warn("Firestore deleteProductionRecord failed, saving locally", error);
+  }
+
+  try {
+    const current = await getProductionRecords();
+    const updated = current.filter(r => r.id !== id);
+    localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('production-records-updated'));
+  } catch (e) {}
+
+  return true;
+}
+
+/**
+ * Convierte una Orden de Trabajo en un Registro Diario de Producción con cálculo exacto
+ * de golpes, unidades, m2, peso unitario y kilos de tela procesada.
+ */
+export function convertWorkOrderToProductionRecord(order: WorkOrder, designs: Design[] = []): DailyProductionRecord | null {
+  if (!order || (!order.designName && !order.designId)) return null;
+
+  // REQUISITO: No debe colocarse en el reporte diario hasta dar por FINALIZADA la orden
+  if (order.status !== 'Completada') return null;
+
+  // Extraer fecha en formato ISO YYYY-MM-DD (priorizar orderDate programada)
+  let dateStr = order.orderDate || new Date().toISOString().slice(0, 10);
+  if (!order.orderDate) {
+    const rawDate = order.completedAt || order.createdAt;
+    if (rawDate) {
+      if (typeof rawDate === 'string') {
+        dateStr = rawDate.slice(0, 10);
+      } else if (rawDate instanceof Date) {
+        dateStr = rawDate.toISOString().slice(0, 10);
+      } else if (typeof rawDate.toDate === 'function') {
+        try {
+          dateStr = rawDate.toDate().toISOString().slice(0, 10);
+        } catch (e) {}
+      } else if (rawDate.seconds) {
+        dateStr = new Date(rawDate.seconds * 1000).toISOString().slice(0, 10);
+      }
+    }
+  }
+
+  // Buscar diseño coincidente
+  const design = designs.find(d => 
+    (order.designId && d.id === order.designId) ||
+    (order.designName && d.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+  );
+
+  const designName = (order.designName || design?.name || 'DISEÑO').toUpperCase().trim();
+  const units = Number(order.targetQuantity) || 0;
+  if (units <= 0 && !designName) return null;
+
+  const widthM = design?.widthCm ? Number((design.widthCm / 100).toFixed(2)) : 0.60;
+  const heightM = design?.heightCm ? Number((design.heightCm / 100).toFixed(2)) : 1.20;
+  const gramaje = design?.gramaje || 280;
+  const areaM2 = Number((widthM * heightM).toFixed(4));
+  const unitWeightG = design?.unitWeight ? Number(design.unitWeight.toFixed(2)) : Number((areaM2 * gramaje).toFixed(2));
+  const kgDay = Number(((units * unitWeightG) / 1000).toFixed(2));
+
+  // Piezas por golpe según diseño o mesa
+  const ratio = design?.piezasPorGolpe || (widthM <= 0.40 ? 5 : 3);
+  const golpes = Math.ceil(units / ratio);
+  const process: 'PIGMENTO' | 'REACTIVO' = 
+    ((order.lineType || design?.lineType || 'reactivo').toLowerCase() === 'pigmento') ? 'PIGMENTO' : 'REACTIVO';
+
+  if (!order.id) return null;
+
+  return {
+    id: `order-${order.id}`,
+    workOrderId: order.id,
+    date: dateStr,
+    designName,
+    shift: 1,
+    widthM,
+    heightM,
+    gramaje,
+    process,
+    areaM2,
+    unitWeightG,
+    units,
+    kgDay,
+    golpes,
+    status: 'Completada',
+    notes: `Orden de Trabajo #${order.id?.slice(-4) || ''}`
+  };
+}
+
+/**
+ * Sincroniza las órdenes de trabajo FINALIZADAS con los registros de producción diaria y mensual,
+ * evitando cualquier duplicación y eliminando órdenes pendientes o temporales.
+ */
+export async function syncWorkOrdersToProductionRecords(
+  workOrders: WorkOrder[], 
+  designs: Design[] = []
+): Promise<DailyProductionRecord[]> {
+  const currentRecords = await getProductionRecords();
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+
+  if (!workOrders || workOrders.length === 0) return currentRecords;
+
+  // Identificar qué órdenes están completadas y cuáles incompletas
+  const completedOrders = workOrders.filter(o => o.status === 'Completada');
+  const incompleteOrderIds = new Set(workOrders.filter(o => o.status !== 'Completada').map(o => o.id));
+
+  // 1. Filtrar registros previos:
+  // - Eliminar temporales huérfanos 'order-temp-'
+  // - Eliminar registros de órdenes que NO estén completadas
+  const validRecords = currentRecords.filter(r => {
+    if (r.id && r.id.startsWith('order-temp-')) return false;
+    if (r.workOrderId && incompleteOrderIds.has(r.workOrderId)) return false;
+    if (r.id && r.id.startsWith('order-')) {
+      const oId = r.id.replace('order-', '');
+      if (incompleteOrderIds.has(oId)) return false;
+    }
+    return true;
+  });
+
+  // 2. Mapa por clave única (date + designName + shift) para evitar duplicación
+  const recordsMap = new Map<string, DailyProductionRecord>();
+  for (const r of validRecords) {
+    const key = `${r.date}__${(r.designName || '').toUpperCase().trim()}__${r.shift || 1}`;
+    recordsMap.set(key, r);
+  }
+
+  // 3. Sincronizar SOLO órdenes completadas
+  for (const order of completedOrders) {
+    const prodRec = convertWorkOrderToProductionRecord(order, designs);
+    if (!prodRec) continue;
+
+    const key = `${prodRec.date}__${prodRec.designName}__${prodRec.shift || 1}`;
+    recordsMap.set(key, prodRec);
+  }
+
+  const updated = Array.from(recordsMap.values());
+  try {
+    localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('production-records-updated'));
+  } catch (e) {}
+
+  return updated;
+}
+
+/**
+ * Elimina el registro de producción asociado a una orden borrada
+ */
+export async function removeProductionRecordForOrder(orderId: string): Promise<void> {
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  try {
+    const current = await getProductionRecords();
+    const updated = current.filter(r => r.id !== `order-${orderId}` && r.workOrderId !== orderId);
+    localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('production-records-updated'));
+  } catch (e) {}
+}
+

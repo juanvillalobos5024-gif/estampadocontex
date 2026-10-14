@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Users, Plus, Shield, Check, X } from 'lucide-react';
+import { Users, Plus, Shield, Check, X, Trash2 } from 'lucide-react';
 import { TeamMember } from '../types';
 
 interface TeamManagerProps {
   team: TeamMember[];
   onAddMember: (member: TeamMember) => void;
+  onDeleteMember?: (id: string) => void;
 }
 
-export default function TeamManager({ team, onAddMember }: TeamManagerProps) {
+export default function TeamManager({ team, onAddMember, onDeleteMember }: TeamManagerProps) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [name, setName] = useState('');
   const [role, setRole] = useState('Operario de Mezclado');
@@ -75,7 +76,7 @@ export default function TeamManager({ team, onAddMember }: TeamManagerProps) {
                   <option value="Prensista de Toallas">Prensista de Toallas</option>
                   <option value="Auxiliar de Tono">Auxiliar de Tono</option>
                   <option value="Supervisor de Calidad">Supervisor de Calidad</option>
-                  <option value="Líder de Serigrafía">Líder de Serigrafía</option>
+                  <option value="Líder de Pigmentos">Líder de Pigmentos</option>
                 </select>
               </div>
             </div>
@@ -117,11 +118,24 @@ export default function TeamManager({ team, onAddMember }: TeamManagerProps) {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right flex items-center gap-3">
                   <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold">
                     <Check className="w-3 h-3 text-emerald-500" />
                     Activo
                   </span>
+                  {onDeleteMember && member.id && (
+                    <button
+                      onClick={() => {
+                        if (confirm(`¿Seguro que deseas eliminar a ${member.name} del equipo?`)) {
+                          onDeleteMember(member.id!);
+                        }
+                      }}
+                      className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Eliminar Operador"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

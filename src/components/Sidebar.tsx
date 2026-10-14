@@ -1,21 +1,24 @@
-import { Paintbrush, Scale, History, Layers, Users, MessageSquareCode } from 'lucide-react';
+import { Paintbrush, Scale, History, Layers, Users, MessageSquareCode, LogOut, ClipboardList, Palette, Image as ImageIcon, Factory } from 'lucide-react';
 // @ts-ignore
 import logoUrl from '@/assets/logo.jpeg';
-
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   currentUser: { name: string; role: string; initials: string };
+  onLogout: () => void;
 }
 
-export default function Sidebar({ activeTab, setActiveTab, currentUser }: SidebarProps) {
+export default function Sidebar({ activeTab, setActiveTab, currentUser, onLogout }: SidebarProps) {
   const menuItems = [
-    { id: 'pantones', label: 'Catálogo Pantones', icon: Paintbrush, section: 'Operaciones' },
-    { id: 'calculadora', label: 'Calculadora Mezcla', icon: Scale, section: 'Operaciones' },
-    { id: 'historial', label: 'Historial de Lotes', icon: History, section: 'Operaciones' },
-    { id: 'asistente', label: 'Asistente de Color AI', icon: MessageSquareCode, section: 'Operaciones' },
-    { id: 'stock', label: 'Stock de Tintas', icon: Layers, section: 'Gestión' },
-    { id: 'equipo', label: 'Equipo Estampado', icon: Users, section: 'Gestión' },
+    { id: 'pantones', label: 'Catálogo', icon: Paintbrush, section: 'Gestión' },
+    { id: 'disenos', label: 'Diseños', icon: Palette, section: 'Gestión' },
+    { id: 'tareas', label: 'Tareas', icon: ClipboardList, section: 'Operaciones' },
+    { id: 'analizador', label: 'Analizador', icon: ImageIcon, section: 'Operaciones' },
+    { id: 'calculadora', label: 'Calculadora', icon: Scale, section: 'Operaciones' },
+    { id: 'historial', label: 'Dashboard', icon: History, section: 'Gestión' },
+    { id: 'asistente', label: 'Asistente IA', icon: MessageSquareCode, section: 'Operaciones' },
+    { id: 'proyeccion', label: 'Consumo', icon: Factory, section: '' },
+    { id: 'stock', label: 'Inventario', icon: Layers, section: 'Gestión' },
   ];
 
   return (
@@ -85,14 +88,23 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser }: Sideba
       </div>
 
       <div className="mt-auto p-6 border-t border-slate-800 bg-slate-950/40">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 font-bold text-blue-400 shadow-sm text-sm">
-            {currentUser.initials}
+        <div className="flex items-center gap-3 justify-between">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 font-bold text-blue-400 shadow-sm text-sm shrink-0">
+              {currentUser.initials}
+            </div>
+            <div className="truncate">
+              <p className="text-xs font-bold text-slate-200 truncate">{currentUser.name}</p>
+              <p className="text-[10px] text-slate-500 truncate">{currentUser.role}</p>
+            </div>
           </div>
-          <div className="truncate">
-            <p className="text-xs font-bold text-slate-200 truncate">{currentUser.name}</p>
-            <p className="text-[10px] text-slate-500 truncate">{currentUser.role}</p>
-          </div>
+          <button 
+            onClick={onLogout}
+            className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-colors shrink-0"
+            title="Cerrar Sesión"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </nav>

@@ -1,0 +1,152 @@
+{
+  "corrected": [
+    {
+      "file": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx",
+      "blockCol": 0,
+      "blockDate": "2026-03-11",
+      "correctedTo": "2026-03-07",
+      "rows": 14
+    },
+    {
+      "file": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx",
+      "blockCol": 9,
+      "blockDate": "2026-03-12",
+      "correctedTo": "2026-03-10",
+      "rows": 13
+    },
+    {
+      "file": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx",
+      "blockCol": 9,
+      "blockDate": "2026-04-05",
+      "correctedTo": "2026-05-05",
+      "rows": 14
+    },
+    {
+      "file": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx",
+      "blockCol": 9,
+      "blockDate": "2026-04-07",
+      "correctedTo": "2026-05-07",
+      "rows": 12
+    }
+  ],
+  "droppedDuplicate": [
+    {
+      "file": "ABRIL/ABRIL 28 Y 29 SALIDAS 2026.xlsx",
+      "blockDate": "2026-05-04",
+      "expected": [
+        "2026-04-28",
+        "2026-04-29"
+      ],
+      "sameContentAs": [
+        "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx (2026-05-04)"
+      ],
+      "rows": 16
+    }
+  ],
+  "droppedEmpty": [],
+  "inferredLine": [
+    {
+      "file": "ENERO/15 Y 16 SALIDAS 2026.xlsx",
+      "date": "2026-01-15",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "ENERO/15 Y 16 SALIDAS 2026.xlsx",
+      "date": "2026-01-16",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "ENERO/17 Y 20 SALIDAS 2026.xls",
+      "date": "2026-01-17",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "ENERO/17 Y 20 SALIDAS 2026.xls",
+      "date": "2026-01-20",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx",
+      "date": "2026-02-28",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx",
+      "date": "2026-03-07",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx",
+      "date": "2026-03-11",
+      "line": "PIGMENTO"
+    },
+    {
+      "file": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx",
+      "date": "2026-03-13",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx",
+      "date": "2026-04-10",
+      "line": "PIGMENTO"
+    },
+    {
+      "file": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx",
+      "date": "2026-05-04",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx",
+      "date": "2026-05-12",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx",
+      "date": "2026-07-02",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx",
+      "date": "2026-07-30",
+      "line": "REACTIVO"
+    },
+    {
+      "file": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx",
+      "date": "2026-08-19",
+      "line": "REACTIVO"
+    }
+  ],
+  "rangeBlocks": [
+    {
+      "file": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx",
+      "from": "2026-02-17",
+      "to": "2026-02-28",
+      "rows": 23
+    },
+    {
+      "file": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx",
+      "from": "2026-02-03",
+      "to": "2026-02-15",
+      "rows": 12
+    }
+  ],
+  "consolidatedIgnored": [
+    "ENERO/TODAS LAS SALIDAS ENERO 2026.xlsx",
+    "FEBRERO/TODAS LA SALIDAS DE FEBRERO 2026.xlsx"
+  ],
+  "unmatched": [
+    "ROJO PI0901 ACUATEX"
+  ],
+  "perMonthKg": {
+    "2026-01": 28.346,
+    "2026-02": 163.791,
+    "2026-03": 142.583,
+    "2026-04": 100.625,
+    "2026-05": 105.242,
+    "2026-06": 134.891,
+    "2026-07": 108.515,
+    "2026-08": 88.049,
+    "2026-09": 73.935,
+    "2026-10": 9.089
+  }
+}

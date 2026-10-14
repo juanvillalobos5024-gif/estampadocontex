@@ -1,0 +1,18971 @@
+// ARCHIVO GENERADO por scripts/build_consumo_data.cjs a partir de documentos/SALIDA INSUMOS/**/*.xlsx
+// No editar a mano: volver a ejecutar los scripts extract_consumo_insumos.cjs y build_consumo_data.cjs.
+import { SalidaInsumoRecord } from '../types';
+
+export const SALIDA_INSUMOS_RECORDS: SalidaInsumoRecord[] = [
+  {
+    "id": "salida-1",
+    "date": "2026-01-13",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-2",
+    "date": "2026-01-13",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 51,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-3",
+    "date": "2026-01-13",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 443,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-4",
+    "date": "2026-01-13",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 649,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-5",
+    "date": "2026-01-13",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-6",
+    "date": "2026-01-13",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1.23,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-7",
+    "date": "2026-01-13",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1.38,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-8",
+    "date": "2026-01-13",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-9",
+    "date": "2026-01-13",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-10",
+    "date": "2026-01-13",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-11",
+    "date": "2026-01-13",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-12",
+    "date": "2026-01-14",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-13",
+    "date": "2026-01-14",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-14",
+    "date": "2026-01-14",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 421,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-15",
+    "date": "2026-01-14",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 274,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-16",
+    "date": "2026-01-14",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1328,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-17",
+    "date": "2026-01-14",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-18",
+    "date": "2026-01-14",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-19",
+    "date": "2026-01-14",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-20",
+    "date": "2026-01-14",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-21",
+    "date": "2026-01-14",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-22",
+    "date": "2026-01-14",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 854,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-23",
+    "date": "2026-01-14",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 984,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-24",
+    "date": "2026-01-15",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-25",
+    "date": "2026-01-15",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 93,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-26",
+    "date": "2026-01-15",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-27",
+    "date": "2026-01-15",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-28",
+    "date": "2026-01-15",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-29",
+    "date": "2026-01-15",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-30",
+    "date": "2026-01-15",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-31",
+    "date": "2026-01-15",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-32",
+    "date": "2026-01-15",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-33",
+    "date": "2026-01-16",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 24,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-34",
+    "date": "2026-01-16",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 58,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-35",
+    "date": "2026-01-16",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 238,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-36",
+    "date": "2026-01-16",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 281,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-37",
+    "date": "2026-01-16",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-38",
+    "date": "2026-01-16",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 158,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-39",
+    "date": "2026-01-16",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-40",
+    "date": "2026-01-16",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-41",
+    "date": "2026-01-16",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-42",
+    "date": "2026-01-16",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 29,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-43",
+    "date": "2026-01-16",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 56,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-44",
+    "date": "2026-01-17",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1.2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-45",
+    "date": "2026-01-17",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 96,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-46",
+    "date": "2026-01-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 51,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-47",
+    "date": "2026-01-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-48",
+    "date": "2026-01-17",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 246,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-49",
+    "date": "2026-01-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 321,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-50",
+    "date": "2026-01-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 12,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-51",
+    "date": "2026-01-17",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 235,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-52",
+    "date": "2026-01-17",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-53",
+    "date": "2026-01-17",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-54",
+    "date": "2026-01-17",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 400,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-55",
+    "date": "2026-01-17",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-56",
+    "date": "2026-01-17",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-57",
+    "date": "2026-01-17",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-58",
+    "date": "2026-01-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-59",
+    "date": "2026-01-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-60",
+    "date": "2026-01-17",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-61",
+    "date": "2026-01-17",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-62",
+    "date": "2026-01-20",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-63",
+    "date": "2026-01-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 392,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-64",
+    "date": "2026-01-20",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-65",
+    "date": "2026-01-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1790,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-66",
+    "date": "2026-01-20",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-67",
+    "date": "2026-01-20",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-68",
+    "date": "2026-01-20",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-69",
+    "date": "2026-01-20",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 750,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-70",
+    "date": "2026-01-20",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 80,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-71",
+    "date": "2026-01-20",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 180,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-72",
+    "date": "2026-01-20",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-73",
+    "date": "2026-01-20",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 500,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-74",
+    "date": "2026-01-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-75",
+    "date": "2026-01-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-76",
+    "date": "2026-01-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-77",
+    "date": "2026-01-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/17 Y 20 SALIDAS 2026.xls"
+  },
+  {
+    "id": "salida-78",
+    "date": "2026-01-21",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 778,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-79",
+    "date": "2026-01-21",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 246,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-80",
+    "date": "2026-01-21",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 218,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-81",
+    "date": "2026-01-21",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 245,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-82",
+    "date": "2026-01-21",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 72,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-83",
+    "date": "2026-01-21",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 649,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-84",
+    "date": "2026-01-21",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 90,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-85",
+    "date": "2026-01-21",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-86",
+    "date": "2026-01-21",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4.6,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-87",
+    "date": "2026-01-22",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 44,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-88",
+    "date": "2026-01-22",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-89",
+    "date": "2026-01-22",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 13,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-90",
+    "date": "2026-01-22",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 3,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-91",
+    "date": "2026-01-22",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 9,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-92",
+    "date": "2026-01-22",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 5,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-93",
+    "date": "2026-01-22",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 5,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-94",
+    "date": "2026-01-22",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-95",
+    "date": "2026-01-22",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-96",
+    "date": "2026-01-23",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 76,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-97",
+    "date": "2026-01-23",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 207,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-98",
+    "date": "2026-01-23",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 207,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-99",
+    "date": "2026-01-23",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 36,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-100",
+    "date": "2026-01-23",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 122,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-101",
+    "date": "2026-01-23",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 37,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-102",
+    "date": "2026-01-23",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 354,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-103",
+    "date": "2026-01-28",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 750,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-104",
+    "date": "2026-01-28",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-105",
+    "date": "2026-01-28",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-106",
+    "date": "2026-01-28",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 554,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-107",
+    "date": "2026-01-28",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 406,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-108",
+    "date": "2026-01-28",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 435,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-109",
+    "date": "2026-01-28",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 15,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-110",
+    "date": "2026-01-28",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 80,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-111",
+    "date": "2026-01-28",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 9.2,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ENERO/23 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-112",
+    "date": "2026-01-29",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-113",
+    "date": "2026-01-29",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-114",
+    "date": "2026-01-29",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 48,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-115",
+    "date": "2026-01-29",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 152,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-116",
+    "date": "2026-01-29",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 201,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-117",
+    "date": "2026-01-29",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-118",
+    "date": "2026-01-29",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 531,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-119",
+    "date": "2026-01-29",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-120",
+    "date": "2026-01-29",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-121",
+    "date": "2026-01-29",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-122",
+    "date": "2026-01-29",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-123",
+    "date": "2026-01-30",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 34,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-124",
+    "date": "2026-01-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 41,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-125",
+    "date": "2026-01-30",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-126",
+    "date": "2026-01-30",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-127",
+    "date": "2026-01-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-128",
+    "date": "2026-01-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 103,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-129",
+    "date": "2026-01-30",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-130",
+    "date": "2026-01-30",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-131",
+    "date": "2026-01-30",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-132",
+    "date": "2026-01-30",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ENERO/29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-133",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 8000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-134",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 128,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-135",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1661,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-136",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3511,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-137",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 107,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-138",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 5430,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-139",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 6481,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-140",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 171,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-141",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 2174,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-142",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 129,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-143",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 325,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-144",
+    "date": "2026-02-15",
+    "periodStart": "2026-02-03",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "FEBRERO/SALIDAS DEL 3 AL 15 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-145",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-146",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 207,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-147",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1701,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-148",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3875,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-149",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-150",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1986,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-151",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1953,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-152",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 264,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-153",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 86,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-154",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 126,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-155",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 512,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-156",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 1778,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-157",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 2046,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-158",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 531,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-159",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 348,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-160",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 1328,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-161",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 1253,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-162",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 155,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-163",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 1446,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-164",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 11500,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-165",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 100000,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-166",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 350,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-167",
+    "date": "2026-02-28",
+    "periodStart": "2026-02-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "FEBRERO/SALIDAS DEL 17 AL 28 DE FEBRERO 2026.xlsx"
+  },
+  {
+    "id": "salida-168",
+    "date": "2026-03-03",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 260,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-169",
+    "date": "2026-03-03",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 120,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-170",
+    "date": "2026-03-03",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 140,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-171",
+    "date": "2026-03-03",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 511,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-172",
+    "date": "2026-03-03",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 6,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-173",
+    "date": "2026-03-03",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-174",
+    "date": "2026-03-03",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 110,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-175",
+    "date": "2026-03-03",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4600,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-176",
+    "date": "2026-03-03",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40000,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-177",
+    "date": "2026-03-04",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-178",
+    "date": "2026-03-04",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 975,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-179",
+    "date": "2026-03-04",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 266,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-180",
+    "date": "2026-03-04",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-181",
+    "date": "2026-03-04",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 505,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-182",
+    "date": "2026-03-04",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-183",
+    "date": "2026-03-04",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 92,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-184",
+    "date": "2026-03-04",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-185",
+    "date": "2026-03-04",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-186",
+    "date": "2026-03-04",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-187",
+    "date": "2026-03-04",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-188",
+    "date": "2026-03-05",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-189",
+    "date": "2026-03-05",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 205,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-190",
+    "date": "2026-03-05",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-191",
+    "date": "2026-03-05",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 57,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-192",
+    "date": "2026-03-05",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-193",
+    "date": "2026-03-05",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-194",
+    "date": "2026-03-05",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-195",
+    "date": "2026-03-05",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-196",
+    "date": "2026-03-05",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-197",
+    "date": "2026-03-05",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-198",
+    "date": "2026-03-05",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-199",
+    "date": "2026-03-05",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 38,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-200",
+    "date": "2026-03-06",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-201",
+    "date": "2026-03-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-202",
+    "date": "2026-03-06",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 135,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-203",
+    "date": "2026-03-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 206,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-204",
+    "date": "2026-03-06",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-205",
+    "date": "2026-03-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 314,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-206",
+    "date": "2026-03-06",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 221,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-207",
+    "date": "2026-03-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-208",
+    "date": "2026-03-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-209",
+    "date": "2026-03-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-210",
+    "date": "2026-03-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-211",
+    "date": "2026-03-06",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-212",
+    "date": "2026-03-06",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-213",
+    "date": "2026-03-07",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 560,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-214",
+    "date": "2026-03-07",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-215",
+    "date": "2026-03-07",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 232,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-216",
+    "date": "2026-03-07",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 391,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-217",
+    "date": "2026-03-07",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 115,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-218",
+    "date": "2026-03-07",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-219",
+    "date": "2026-03-07",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-220",
+    "date": "2026-03-07",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 22,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-221",
+    "date": "2026-03-07",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-222",
+    "date": "2026-03-07",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-223",
+    "date": "2026-03-07",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-224",
+    "date": "2026-03-07",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-225",
+    "date": "2026-03-07",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-226",
+    "date": "2026-03-10",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-227",
+    "date": "2026-03-10",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 955,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-228",
+    "date": "2026-03-10",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 131,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-229",
+    "date": "2026-03-10",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2403,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-230",
+    "date": "2026-03-10",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 606,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-231",
+    "date": "2026-03-10",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1640,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-232",
+    "date": "2026-03-10",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1380,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-233",
+    "date": "2026-03-10",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-234",
+    "date": "2026-03-10",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-235",
+    "date": "2026-03-10",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-236",
+    "date": "2026-03-10",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 38,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-237",
+    "date": "2026-03-10",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-238",
+    "date": "2026-03-10",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 07 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-239",
+    "date": "2026-03-11",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 550,
+    "line": "pigmento",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-240",
+    "date": "2026-03-11",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 35,
+    "line": "pigmento",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-241",
+    "date": "2026-03-11",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 232,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-242",
+    "date": "2026-03-11",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 391,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-243",
+    "date": "2026-03-11",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 136,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-244",
+    "date": "2026-03-11",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 658,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-245",
+    "date": "2026-03-11",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 3,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-246",
+    "date": "2026-03-11",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 3,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-247",
+    "date": "2026-03-11",
+    "product": "VERDE LUMIPRINT B-N",
+    "code": "VERDEB-N",
+    "grams": 726,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-248",
+    "date": "2026-03-11",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 4,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-249",
+    "date": "2026-03-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-250",
+    "date": "2026-03-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "pigmento",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-251",
+    "date": "2026-03-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-252",
+    "date": "2026-03-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 9,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-253",
+    "date": "2026-03-11",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-254",
+    "date": "2026-03-11",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-255",
+    "date": "2026-03-12",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-256",
+    "date": "2026-03-12",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 160,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-257",
+    "date": "2026-03-12",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 131,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-258",
+    "date": "2026-03-12",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2624,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-259",
+    "date": "2026-03-12",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1250,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-260",
+    "date": "2026-03-12",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-261",
+    "date": "2026-03-12",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 460,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-262",
+    "date": "2026-03-12",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-263",
+    "date": "2026-03-12",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-264",
+    "date": "2026-03-12",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-265",
+    "date": "2026-03-12",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-266",
+    "date": "2026-03-12",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 416,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-267",
+    "date": "2026-03-12",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 450,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-268",
+    "date": "2026-03-12",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-269",
+    "date": "2026-03-12",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 440,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-270",
+    "date": "2026-03-13",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1200,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-271",
+    "date": "2026-03-13",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 320,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-272",
+    "date": "2026-03-13",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 145,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-273",
+    "date": "2026-03-13",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1230,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-274",
+    "date": "2026-03-13",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1464,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-275",
+    "date": "2026-03-13",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-276",
+    "date": "2026-03-13",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1582,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-277",
+    "date": "2026-03-13",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1320,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-278",
+    "date": "2026-03-13",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-279",
+    "date": "2026-03-13",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-280",
+    "date": "2026-03-13",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-281",
+    "date": "2026-03-13",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-282",
+    "date": "2026-03-13",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 38,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-283",
+    "date": "2026-03-13",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-284",
+    "date": "2026-03-14",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-285",
+    "date": "2026-03-14",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-286",
+    "date": "2026-03-14",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1879,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-287",
+    "date": "2026-03-14",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 39,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-288",
+    "date": "2026-03-14",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 264,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-289",
+    "date": "2026-03-14",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-290",
+    "date": "2026-03-14",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-291",
+    "date": "2026-03-14",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-292",
+    "date": "2026-03-14",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-293",
+    "date": "2026-03-14",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 299,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-294",
+    "date": "2026-03-14",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1645,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-295",
+    "date": "2026-03-14",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 290,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-296",
+    "date": "2026-03-14",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 102,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-297",
+    "date": "2026-03-14",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 82,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-298",
+    "date": "2026-03-14",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 42,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-299",
+    "date": "2026-03-14",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 640,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "MARZO/MARZO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-300",
+    "date": "2026-03-17",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 290,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-301",
+    "date": "2026-03-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 320,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-302",
+    "date": "2026-03-17",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-303",
+    "date": "2026-03-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-304",
+    "date": "2026-03-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-305",
+    "date": "2026-03-17",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-306",
+    "date": "2026-03-17",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 825,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-307",
+    "date": "2026-03-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 920,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-308",
+    "date": "2026-03-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-309",
+    "date": "2026-03-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-310",
+    "date": "2026-03-17",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-311",
+    "date": "2026-03-17",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-312",
+    "date": "2026-03-18",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-313",
+    "date": "2026-03-18",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-314",
+    "date": "2026-03-18",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 378,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-315",
+    "date": "2026-03-18",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 186,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-316",
+    "date": "2026-03-18",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-317",
+    "date": "2026-03-18",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 166,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-318",
+    "date": "2026-03-18",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1826,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-319",
+    "date": "2026-03-18",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 968,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-320",
+    "date": "2026-03-18",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-321",
+    "date": "2026-03-18",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-322",
+    "date": "2026-03-18",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-323",
+    "date": "2026-03-18",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-324",
+    "date": "2026-03-18",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 455,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-325",
+    "date": "2026-03-18",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-326",
+    "date": "2026-03-18",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 450,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-327",
+    "date": "2026-03-18",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 165,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-328",
+    "date": "2026-03-18",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 246,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-329",
+    "date": "2026-03-19",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 240,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-330",
+    "date": "2026-03-19",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 108,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-331",
+    "date": "2026-03-19",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 12,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-332",
+    "date": "2026-03-20",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2050,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-333",
+    "date": "2026-03-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 187,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-334",
+    "date": "2026-03-20",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 77,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-335",
+    "date": "2026-03-20",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 58,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-336",
+    "date": "2026-03-20",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 743,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-337",
+    "date": "2026-03-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-338",
+    "date": "2026-03-20",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-339",
+    "date": "2026-03-20",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-340",
+    "date": "2026-03-20",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-341",
+    "date": "2026-03-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-342",
+    "date": "2026-03-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-343",
+    "date": "2026-03-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-344",
+    "date": "2026-03-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 19 Y 20 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-345",
+    "date": "2026-03-21",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-346",
+    "date": "2026-03-21",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-347",
+    "date": "2026-03-21",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 56,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-348",
+    "date": "2026-03-21",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 202,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-349",
+    "date": "2026-03-21",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 313,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-350",
+    "date": "2026-03-21",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-351",
+    "date": "2026-03-21",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 759,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-352",
+    "date": "2026-03-21",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 832,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-353",
+    "date": "2026-03-21",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 55,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-354",
+    "date": "2026-03-21",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-355",
+    "date": "2026-03-21",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-356",
+    "date": "2026-03-21",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-357",
+    "date": "2026-03-21",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-358",
+    "date": "2026-03-24",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-359",
+    "date": "2026-03-24",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-360",
+    "date": "2026-03-24",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-361",
+    "date": "2026-03-24",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-362",
+    "date": "2026-03-24",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 157,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-363",
+    "date": "2026-03-24",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 105,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-364",
+    "date": "2026-03-24",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-365",
+    "date": "2026-03-24",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-366",
+    "date": "2026-03-24",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-367",
+    "date": "2026-03-24",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-368",
+    "date": "2026-03-24",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-369",
+    "date": "2026-03-24",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 552,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "MARZO/MARZO 21 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-370",
+    "date": "2026-03-25",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1.32,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-371",
+    "date": "2026-03-25",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-372",
+    "date": "2026-03-25",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 652,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-373",
+    "date": "2026-03-25",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2593,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-374",
+    "date": "2026-03-25",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 162,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-375",
+    "date": "2026-03-25",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 330,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-376",
+    "date": "2026-03-25",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1230,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-377",
+    "date": "2026-03-25",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1380,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-378",
+    "date": "2026-03-25",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-379",
+    "date": "2026-03-25",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-380",
+    "date": "2026-03-25",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-381",
+    "date": "2026-03-25",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 29,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-382",
+    "date": "2026-03-26",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-383",
+    "date": "2026-03-26",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-384",
+    "date": "2026-03-26",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 460,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-385",
+    "date": "2026-03-26",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 340,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-386",
+    "date": "2026-03-26",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-387",
+    "date": "2026-03-26",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 50,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-388",
+    "date": "2026-03-26",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2448,
+    "line": "pigmento",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-389",
+    "date": "2026-03-26",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 331,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-390",
+    "date": "2026-03-26",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 600,
+    "line": "pigmento",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-391",
+    "date": "2026-03-26",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 3630,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-392",
+    "date": "2026-03-26",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-393",
+    "date": "2026-03-26",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "pigmento",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-394",
+    "date": "2026-03-26",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-395",
+    "date": "2026-03-26",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-396",
+    "date": "2026-03-26",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-397",
+    "date": "2026-03-27",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-398",
+    "date": "2026-03-27",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 1502,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-399",
+    "date": "2026-03-27",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 1659,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-400",
+    "date": "2026-03-27",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 675,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-401",
+    "date": "2026-03-27",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1488,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-402",
+    "date": "2026-03-27",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1684,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-403",
+    "date": "2026-03-27",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-404",
+    "date": "2026-03-27",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 630,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-405",
+    "date": "2026-03-27",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 108,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-406",
+    "date": "2026-03-27",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-407",
+    "date": "2026-03-27",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-408",
+    "date": "2026-03-27",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-409",
+    "date": "2026-03-27",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-410",
+    "date": "2026-03-28",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 1050,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-411",
+    "date": "2026-03-28",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 358,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-412",
+    "date": "2026-03-28",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 120,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-413",
+    "date": "2026-03-28",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 140,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-414",
+    "date": "2026-03-28",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 504,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-415",
+    "date": "2026-03-28",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-416",
+    "date": "2026-03-28",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-417",
+    "date": "2026-03-30",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 151,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-418",
+    "date": "2026-03-30",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 26,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-419",
+    "date": "2026-03-30",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 54,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-420",
+    "date": "2026-03-30",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 189,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-421",
+    "date": "2026-03-30",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 2941,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-422",
+    "date": "2026-03-30",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 365,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-423",
+    "date": "2026-03-30",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 9,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-424",
+    "date": "2026-03-30",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 72,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-425",
+    "date": "2026-03-30",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-426",
+    "date": "2026-03-30",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-427",
+    "date": "2026-03-31",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 440,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-428",
+    "date": "2026-03-31",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 554,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-429",
+    "date": "2026-03-31",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 534,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-430",
+    "date": "2026-03-31",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1590,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-431",
+    "date": "2026-03-31",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 112,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-432",
+    "date": "2026-03-31",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-433",
+    "date": "2026-03-31",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 91,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-434",
+    "date": "2026-03-31",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 64,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-435",
+    "date": "2026-03-31",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROMREDNEW",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-436",
+    "date": "2026-03-31",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-437",
+    "date": "2026-03-31",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-438",
+    "date": "2026-03-31",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-439",
+    "date": "2026-03-31",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "MARZO/MARZO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-440",
+    "date": "2026-04-01",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 216,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-441",
+    "date": "2026-04-01",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 4,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-442",
+    "date": "2026-04-01",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 204,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-443",
+    "date": "2026-04-01",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 26,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-444",
+    "date": "2026-04-01",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 140,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-445",
+    "date": "2026-04-01",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-446",
+    "date": "2026-04-01",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 80,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-447",
+    "date": "2026-04-01",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-448",
+    "date": "2026-04-01",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-449",
+    "date": "2026-04-01",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 149,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-450",
+    "date": "2026-04-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-451",
+    "date": "2026-04-06",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 490,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-452",
+    "date": "2026-04-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1842,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-453",
+    "date": "2026-04-06",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 565,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-454",
+    "date": "2026-04-06",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1650,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-455",
+    "date": "2026-04-06",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2147,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-456",
+    "date": "2026-04-06",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-457",
+    "date": "2026-04-06",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 300,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-458",
+    "date": "2026-04-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 520,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-459",
+    "date": "2026-04-06",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1348,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-460",
+    "date": "2026-04-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 125,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-461",
+    "date": "2026-04-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-462",
+    "date": "2026-04-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-463",
+    "date": "2026-04-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 46,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 01 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-464",
+    "date": "2026-04-07",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2.4,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-465",
+    "date": "2026-04-07",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 330,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-466",
+    "date": "2026-04-07",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-467",
+    "date": "2026-04-07",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 133,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-468",
+    "date": "2026-04-07",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 650,
+    "line": "pigmento",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-469",
+    "date": "2026-04-07",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 150,
+    "line": "pigmento",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-470",
+    "date": "2026-04-07",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-471",
+    "date": "2026-04-08",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-472",
+    "date": "2026-04-08",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 460,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-473",
+    "date": "2026-04-08",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 340,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-474",
+    "date": "2026-04-08",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 67,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-475",
+    "date": "2026-04-08",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2455,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-476",
+    "date": "2026-04-08",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 313,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-477",
+    "date": "2026-04-08",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 510,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-478",
+    "date": "2026-04-08",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 3442,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-479",
+    "date": "2026-04-08",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-480",
+    "date": "2026-04-08",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-481",
+    "date": "2026-04-08",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-482",
+    "date": "2026-04-08",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-483",
+    "date": "2026-04-08",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-484",
+    "date": "2026-04-09",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1200,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-485",
+    "date": "2026-04-09",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-486",
+    "date": "2026-04-09",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 287,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-487",
+    "date": "2026-04-09",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1238,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-488",
+    "date": "2026-04-09",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 82,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-489",
+    "date": "2026-04-09",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-490",
+    "date": "2026-04-09",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1230,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-491",
+    "date": "2026-04-09",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1441,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-492",
+    "date": "2026-04-09",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-493",
+    "date": "2026-04-09",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-494",
+    "date": "2026-04-09",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-495",
+    "date": "2026-04-09",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-496",
+    "date": "2026-04-09",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-497",
+    "date": "2026-04-09",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-498",
+    "date": "2026-04-09",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-499",
+    "date": "2026-04-10",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 284,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-500",
+    "date": "2026-04-10",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 180,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-501",
+    "date": "2026-04-10",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 155,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-502",
+    "date": "2026-04-10",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 178,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-503",
+    "date": "2026-04-10",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 21,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-504",
+    "date": "2026-04-10",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 10,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-505",
+    "date": "2026-04-10",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 09 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-506",
+    "date": "2026-04-11",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-507",
+    "date": "2026-04-11",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-508",
+    "date": "2026-04-11",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 505,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-509",
+    "date": "2026-04-11",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 237,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-510",
+    "date": "2026-04-11",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-511",
+    "date": "2026-04-11",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 48,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-512",
+    "date": "2026-04-11",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 74,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-513",
+    "date": "2026-04-11",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 23,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-514",
+    "date": "2026-04-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-515",
+    "date": "2026-04-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-516",
+    "date": "2026-04-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-517",
+    "date": "2026-04-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-518",
+    "date": "2026-04-14",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1600,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-519",
+    "date": "2026-04-14",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-520",
+    "date": "2026-04-14",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-521",
+    "date": "2026-04-14",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 266,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-522",
+    "date": "2026-04-14",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 505,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-523",
+    "date": "2026-04-14",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-524",
+    "date": "2026-04-14",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 940,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-525",
+    "date": "2026-04-14",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 975,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-526",
+    "date": "2026-04-14",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 101.35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-527",
+    "date": "2026-04-14",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8.15,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-528",
+    "date": "2026-04-14",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28.3,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-529",
+    "date": "2026-04-14",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 37.75,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 11 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-530",
+    "date": "2026-04-15",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-531",
+    "date": "2026-04-15",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 301,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-532",
+    "date": "2026-04-15",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1137,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-533",
+    "date": "2026-04-15",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 46,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-534",
+    "date": "2026-04-15",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-535",
+    "date": "2026-04-15",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 660,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-536",
+    "date": "2026-04-15",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 449,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-537",
+    "date": "2026-04-15",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 943,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-538",
+    "date": "2026-04-15",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-539",
+    "date": "2026-04-15",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-540",
+    "date": "2026-04-15",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-541",
+    "date": "2026-04-15",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 38,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-542",
+    "date": "2026-04-15",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 355,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-543",
+    "date": "2026-04-15",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-544",
+    "date": "2026-04-15",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-545",
+    "date": "2026-04-16",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1600,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-546",
+    "date": "2026-04-16",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-547",
+    "date": "2026-04-16",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-548",
+    "date": "2026-04-16",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 266,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-549",
+    "date": "2026-04-16",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 505,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-550",
+    "date": "2026-04-16",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-551",
+    "date": "2026-04-16",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 940,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-552",
+    "date": "2026-04-16",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-553",
+    "date": "2026-04-16",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-554",
+    "date": "2026-04-16",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-555",
+    "date": "2026-04-16",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 15 Y 16 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-556",
+    "date": "2026-04-17",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-557",
+    "date": "2026-04-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 87,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-558",
+    "date": "2026-04-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 801,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-559",
+    "date": "2026-04-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2108,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-560",
+    "date": "2026-04-17",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-561",
+    "date": "2026-04-17",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 109,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-562",
+    "date": "2026-04-17",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2460,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-563",
+    "date": "2026-04-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2760,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-564",
+    "date": "2026-04-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-565",
+    "date": "2026-04-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-566",
+    "date": "2026-04-17",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-567",
+    "date": "2026-04-17",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-568",
+    "date": "2026-04-18",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-569",
+    "date": "2026-04-18",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-570",
+    "date": "2026-04-18",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-571",
+    "date": "2026-04-18",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-572",
+    "date": "2026-04-18",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-573",
+    "date": "2026-04-18",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 105,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-574",
+    "date": "2026-04-18",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 123,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-575",
+    "date": "2026-04-18",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-576",
+    "date": "2026-04-18",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 27.5,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-577",
+    "date": "2026-04-18",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-578",
+    "date": "2026-04-18",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 10.5,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-579",
+    "date": "2026-04-18",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 13.5,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-580",
+    "date": "2026-04-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-581",
+    "date": "2026-04-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-582",
+    "date": "2026-04-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-583",
+    "date": "2026-04-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-584",
+    "date": "2026-04-21",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 23,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-585",
+    "date": "2026-04-21",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 58,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-586",
+    "date": "2026-04-21",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 58,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-587",
+    "date": "2026-04-21",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-588",
+    "date": "2026-04-21",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 56,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-589",
+    "date": "2026-04-21",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 81,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-590",
+    "date": "2026-04-21",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 64,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-591",
+    "date": "2026-04-22",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-592",
+    "date": "2026-04-22",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-593",
+    "date": "2026-04-22",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 116,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-594",
+    "date": "2026-04-22",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-595",
+    "date": "2026-04-22",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 205,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-596",
+    "date": "2026-04-22",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 243,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-597",
+    "date": "2026-04-22",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 140,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-598",
+    "date": "2026-04-22",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 68,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-599",
+    "date": "2026-04-22",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-600",
+    "date": "2026-04-22",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-601",
+    "date": "2026-04-22",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-602",
+    "date": "2026-04-23",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4200,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-603",
+    "date": "2026-04-23",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1060,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-604",
+    "date": "2026-04-23",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1180,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-605",
+    "date": "2026-04-23",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2350,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-606",
+    "date": "2026-04-23",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-607",
+    "date": "2026-04-23",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 130,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-608",
+    "date": "2026-04-23",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 760,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-609",
+    "date": "2026-04-23",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-610",
+    "date": "2026-04-23",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2425,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-611",
+    "date": "2026-04-23",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2701,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-612",
+    "date": "2026-04-23",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 2600,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-613",
+    "date": "2026-04-23",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-614",
+    "date": "2026-04-23",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-615",
+    "date": "2026-04-23",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 49,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-616",
+    "date": "2026-04-23",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 64,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-617",
+    "date": "2026-04-24",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-618",
+    "date": "2026-04-24",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-619",
+    "date": "2026-04-24",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 145,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-620",
+    "date": "2026-04-24",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2552,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-621",
+    "date": "2026-04-24",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 589,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-622",
+    "date": "2026-04-24",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 574,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-623",
+    "date": "2026-04-24",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 644,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-624",
+    "date": "2026-04-24",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 340,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-625",
+    "date": "2026-04-24",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-626",
+    "date": "2026-04-24",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 241,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-627",
+    "date": "2026-04-24",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 2640,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-628",
+    "date": "2026-04-24",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-629",
+    "date": "2026-04-24",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-630",
+    "date": "2026-04-24",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-631",
+    "date": "2026-04-24",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-632",
+    "date": "2026-04-27",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1200,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-633",
+    "date": "2026-04-27",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 763,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-634",
+    "date": "2026-04-27",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 133,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-635",
+    "date": "2026-04-27",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2533,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-636",
+    "date": "2026-04-27",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 255,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-637",
+    "date": "2026-04-27",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 578,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-638",
+    "date": "2026-04-27",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-639",
+    "date": "2026-04-27",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 546,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-640",
+    "date": "2026-04-27",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-641",
+    "date": "2026-04-27",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-642",
+    "date": "2026-04-27",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 29,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-643",
+    "date": "2026-04-27",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-644",
+    "date": "2026-04-27",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-645",
+    "date": "2026-04-27",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-646",
+    "date": "2026-04-27",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL 24 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-647",
+    "date": "2026-04-30",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-648",
+    "date": "2026-04-30",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-649",
+    "date": "2026-04-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 460,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-650",
+    "date": "2026-04-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-651",
+    "date": "2026-04-30",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-652",
+    "date": "2026-04-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1290,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-653",
+    "date": "2026-04-30",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 300,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-654",
+    "date": "2026-04-30",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 3475,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-655",
+    "date": "2026-04-30",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 316,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-656",
+    "date": "2026-04-30",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-657",
+    "date": "2026-04-30",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-658",
+    "date": "2026-04-30",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-659",
+    "date": "2026-04-30",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "ABRIL/ABRIL30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-660",
+    "date": "2026-05-04",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 303,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-661",
+    "date": "2026-05-04",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-662",
+    "date": "2026-05-04",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-663",
+    "date": "2026-05-04",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 551,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-664",
+    "date": "2026-05-04",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4.6,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-665",
+    "date": "2026-05-04",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-666",
+    "date": "2026-05-04",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 203,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-667",
+    "date": "2026-05-04",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-668",
+    "date": "2026-05-04",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-669",
+    "date": "2026-05-04",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-670",
+    "date": "2026-05-04",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 184,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-671",
+    "date": "2026-05-04",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-672",
+    "date": "2026-05-04",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-673",
+    "date": "2026-05-04",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 103,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-674",
+    "date": "2026-05-04",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1460,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-675",
+    "date": "2026-05-04",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 300,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-676",
+    "date": "2026-05-04",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-677",
+    "date": "2026-05-05",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-678",
+    "date": "2026-05-05",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 162,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-679",
+    "date": "2026-05-05",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 171,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-680",
+    "date": "2026-05-05",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 155,
+    "line": "pigmento",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-681",
+    "date": "2026-05-05",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 90,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-682",
+    "date": "2026-05-05",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 376,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-683",
+    "date": "2026-05-05",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 530,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-684",
+    "date": "2026-05-05",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 24,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-685",
+    "date": "2026-05-05",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 210,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-686",
+    "date": "2026-05-05",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 86,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-687",
+    "date": "2026-05-05",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "pigmento",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-688",
+    "date": "2026-05-05",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-689",
+    "date": "2026-05-05",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 36,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-690",
+    "date": "2026-05-05",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 04 Y 05 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-691",
+    "date": "2026-05-06",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-692",
+    "date": "2026-05-06",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 154,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-693",
+    "date": "2026-05-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 333,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-694",
+    "date": "2026-05-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-695",
+    "date": "2026-05-06",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 482,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-696",
+    "date": "2026-05-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 32,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-697",
+    "date": "2026-05-06",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-698",
+    "date": "2026-05-06",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-699",
+    "date": "2026-05-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-700",
+    "date": "2026-05-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-701",
+    "date": "2026-05-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-702",
+    "date": "2026-05-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-703",
+    "date": "2026-05-07",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-704",
+    "date": "2026-05-07",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 79,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-705",
+    "date": "2026-05-07",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 940,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-706",
+    "date": "2026-05-07",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2305,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-707",
+    "date": "2026-05-07",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-708",
+    "date": "2026-05-07",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-709",
+    "date": "2026-05-07",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2460,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-710",
+    "date": "2026-05-07",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2760,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-711",
+    "date": "2026-05-07",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-712",
+    "date": "2026-05-07",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-713",
+    "date": "2026-05-07",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-714",
+    "date": "2026-05-07",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 06 Y 07 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-715",
+    "date": "2026-05-08",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-716",
+    "date": "2026-05-08",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2896,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-717",
+    "date": "2026-05-08",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-718",
+    "date": "2026-05-08",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 116,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-719",
+    "date": "2026-05-08",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-720",
+    "date": "2026-05-08",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1540,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-721",
+    "date": "2026-05-08",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 811,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-722",
+    "date": "2026-05-08",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2460,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-723",
+    "date": "2026-05-08",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-724",
+    "date": "2026-05-08",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-725",
+    "date": "2026-05-08",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-726",
+    "date": "2026-05-08",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-727",
+    "date": "2026-05-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-728",
+    "date": "2026-05-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-729",
+    "date": "2026-05-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-730",
+    "date": "2026-05-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 08 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-731",
+    "date": "2026-05-12",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-732",
+    "date": "2026-05-12",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-733",
+    "date": "2026-05-12",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 48,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-734",
+    "date": "2026-05-12",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 298,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-735",
+    "date": "2026-05-12",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 142,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-736",
+    "date": "2026-05-12",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-737",
+    "date": "2026-05-12",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 546,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-738",
+    "date": "2026-05-12",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 650,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-739",
+    "date": "2026-05-12",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-740",
+    "date": "2026-05-12",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-741",
+    "date": "2026-05-12",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 165,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-742",
+    "date": "2026-05-12",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-743",
+    "date": "2026-05-12",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-744",
+    "date": "2026-05-12",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 16,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-745",
+    "date": "2026-05-12",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-746",
+    "date": "2026-05-12",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-747",
+    "date": "2026-05-12",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-748",
+    "date": "2026-05-13",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 53,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-749",
+    "date": "2026-05-13",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 33,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-750",
+    "date": "2026-05-13",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-751",
+    "date": "2026-05-13",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-752",
+    "date": "2026-05-13",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-753",
+    "date": "2026-05-13",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-754",
+    "date": "2026-05-13",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 135,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-755",
+    "date": "2026-05-13",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-756",
+    "date": "2026-05-13",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-757",
+    "date": "2026-05-13",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-758",
+    "date": "2026-05-13",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-759",
+    "date": "2026-05-14",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-760",
+    "date": "2026-05-14",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-761",
+    "date": "2026-05-14",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-762",
+    "date": "2026-05-14",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 897,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-763",
+    "date": "2026-05-14",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 901,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-764",
+    "date": "2026-05-14",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3666,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-765",
+    "date": "2026-05-14",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 43,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-766",
+    "date": "2026-05-14",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 219,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-767",
+    "date": "2026-05-14",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-768",
+    "date": "2026-05-14",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-769",
+    "date": "2026-05-14",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-770",
+    "date": "2026-05-14",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-771",
+    "date": "2026-05-14",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-772",
+    "date": "2026-05-15",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-773",
+    "date": "2026-05-15",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-774",
+    "date": "2026-05-15",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 750,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-775",
+    "date": "2026-05-15",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 923,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-776",
+    "date": "2026-05-15",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-777",
+    "date": "2026-05-15",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 823,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-778",
+    "date": "2026-05-15",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2750,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-779",
+    "date": "2026-05-15",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-780",
+    "date": "2026-05-15",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-781",
+    "date": "2026-05-15",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-782",
+    "date": "2026-05-15",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-783",
+    "date": "2026-05-15",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-784",
+    "date": "2026-05-16",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-785",
+    "date": "2026-05-16",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-786",
+    "date": "2026-05-16",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-787",
+    "date": "2026-05-16",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 897,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-788",
+    "date": "2026-05-16",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 901,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-789",
+    "date": "2026-05-16",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3666,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-790",
+    "date": "2026-05-16",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 43,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-791",
+    "date": "2026-05-16",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 219,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-792",
+    "date": "2026-05-16",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-793",
+    "date": "2026-05-16",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-794",
+    "date": "2026-05-16",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-795",
+    "date": "2026-05-16",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-796",
+    "date": "2026-05-16",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-797",
+    "date": "2026-05-19",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 191,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-798",
+    "date": "2026-05-19",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 463,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-799",
+    "date": "2026-05-19",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 124,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-800",
+    "date": "2026-05-19",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-801",
+    "date": "2026-05-19",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 16 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-802",
+    "date": "2026-05-20",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-803",
+    "date": "2026-05-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 138,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-804",
+    "date": "2026-05-20",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-805",
+    "date": "2026-05-20",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-806",
+    "date": "2026-05-20",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 818,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-807",
+    "date": "2026-05-20",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 704,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-808",
+    "date": "2026-05-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-809",
+    "date": "2026-05-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-810",
+    "date": "2026-05-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-811",
+    "date": "2026-05-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-812",
+    "date": "2026-05-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-813",
+    "date": "2026-05-21",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 450,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-814",
+    "date": "2026-05-21",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-815",
+    "date": "2026-05-21",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-816",
+    "date": "2026-05-21",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1880,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-817",
+    "date": "2026-05-21",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 450,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-818",
+    "date": "2026-05-21",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 3300,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-819",
+    "date": "2026-05-21",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 300,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-820",
+    "date": "2026-05-21",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-821",
+    "date": "2026-05-21",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-822",
+    "date": "2026-05-21",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-823",
+    "date": "2026-05-21",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-824",
+    "date": "2026-05-22",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-825",
+    "date": "2026-05-22",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 328,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-826",
+    "date": "2026-05-22",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 409,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-827",
+    "date": "2026-05-22",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1583,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-828",
+    "date": "2026-05-22",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 360,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-829",
+    "date": "2026-05-22",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 4400,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-830",
+    "date": "2026-05-22",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 225,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-831",
+    "date": "2026-05-22",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-832",
+    "date": "2026-05-22",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-833",
+    "date": "2026-05-22",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-834",
+    "date": "2026-05-22",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-835",
+    "date": "2026-05-22",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 412,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-836",
+    "date": "2026-05-22",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-837",
+    "date": "2026-05-22",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-838",
+    "date": "2026-05-22",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-839",
+    "date": "2026-05-22",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 46,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-840",
+    "date": "2026-05-23",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-841",
+    "date": "2026-05-23",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-842",
+    "date": "2026-05-23",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 125,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-843",
+    "date": "2026-05-23",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-844",
+    "date": "2026-05-23",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-845",
+    "date": "2026-05-23",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 349,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-846",
+    "date": "2026-05-23",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 392,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-847",
+    "date": "2026-05-23",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-848",
+    "date": "2026-05-23",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-849",
+    "date": "2026-05-23",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-850",
+    "date": "2026-05-23",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-851",
+    "date": "2026-05-23",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-852",
+    "date": "2026-05-23",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-853",
+    "date": "2026-05-23",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1700,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 22 Y 23 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-854",
+    "date": "2026-05-26",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-855",
+    "date": "2026-05-26",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 304,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-856",
+    "date": "2026-05-26",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 739,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-857",
+    "date": "2026-05-26",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1809,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-858",
+    "date": "2026-05-26",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-859",
+    "date": "2026-05-26",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 91,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-860",
+    "date": "2026-05-26",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2021,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-861",
+    "date": "2026-05-26",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2318,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-862",
+    "date": "2026-05-26",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 66,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-863",
+    "date": "2026-05-26",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-864",
+    "date": "2026-05-26",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-865",
+    "date": "2026-05-26",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-866",
+    "date": "2026-05-26",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-867",
+    "date": "2026-05-26",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-868",
+    "date": "2026-05-27",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-869",
+    "date": "2026-05-27",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 507,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-870",
+    "date": "2026-05-27",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 219,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-871",
+    "date": "2026-05-27",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 891,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-872",
+    "date": "2026-05-27",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1168,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-873",
+    "date": "2026-05-27",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 129,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-874",
+    "date": "2026-05-27",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 5,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-875",
+    "date": "2026-05-27",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 5,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-876",
+    "date": "2026-05-27",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-877",
+    "date": "2026-05-27",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-878",
+    "date": "2026-05-27",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-879",
+    "date": "2026-05-27",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 26 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-880",
+    "date": "2026-05-28",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-881",
+    "date": "2026-05-28",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 375,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-882",
+    "date": "2026-05-28",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2384,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-883",
+    "date": "2026-05-28",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 672,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-884",
+    "date": "2026-05-28",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2050,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-885",
+    "date": "2026-05-28",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-886",
+    "date": "2026-05-28",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-887",
+    "date": "2026-05-28",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-888",
+    "date": "2026-05-28",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-889",
+    "date": "2026-05-29",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-890",
+    "date": "2026-05-29",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 937,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-891",
+    "date": "2026-05-29",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 841,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-892",
+    "date": "2026-05-29",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2964,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-893",
+    "date": "2026-05-29",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 749,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-894",
+    "date": "2026-05-29",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 496,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-895",
+    "date": "2026-05-29",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-896",
+    "date": "2026-05-29",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-897",
+    "date": "2026-05-29",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-898",
+    "date": "2026-05-29",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-899",
+    "date": "2026-05-29",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-900",
+    "date": "2026-05-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1064,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-901",
+    "date": "2026-05-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 167,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-902",
+    "date": "2026-05-30",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 159,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-903",
+    "date": "2026-05-30",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 80,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-904",
+    "date": "2026-05-30",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1787,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-905",
+    "date": "2026-05-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1855,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-906",
+    "date": "2026-05-30",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 63,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-907",
+    "date": "2026-05-30",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-908",
+    "date": "2026-05-30",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-909",
+    "date": "2026-05-30",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-910",
+    "date": "2026-05-30",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP90%",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "mayo/MAYO 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-911",
+    "date": "2026-06-01",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 655,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-912",
+    "date": "2026-06-01",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 43,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-913",
+    "date": "2026-06-01",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 410,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-914",
+    "date": "2026-06-01",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 130,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-915",
+    "date": "2026-06-01",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-916",
+    "date": "2026-06-01",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-917",
+    "date": "2026-06-02",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-918",
+    "date": "2026-06-02",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-919",
+    "date": "2026-06-02",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 473,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-920",
+    "date": "2026-06-02",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 435,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-921",
+    "date": "2026-06-02",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-922",
+    "date": "2026-06-02",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 92,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-923",
+    "date": "2026-06-02",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 1610,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-924",
+    "date": "2026-06-02",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-925",
+    "date": "2026-06-02",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-926",
+    "date": "2026-06-02",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-927",
+    "date": "2026-06-02",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-928",
+    "date": "2026-06-03",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-929",
+    "date": "2026-06-03",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2038,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-930",
+    "date": "2026-06-03",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-931",
+    "date": "2026-06-03",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 617,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-932",
+    "date": "2026-06-03",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 830,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-933",
+    "date": "2026-06-03",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 114,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-934",
+    "date": "2026-06-03",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 353,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-935",
+    "date": "2026-06-03",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 644,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-936",
+    "date": "2026-06-03",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 205,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-937",
+    "date": "2026-06-03",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 810,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-938",
+    "date": "2026-06-03",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-939",
+    "date": "2026-06-03",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-940",
+    "date": "2026-06-03",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-941",
+    "date": "2026-06-03",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-942",
+    "date": "2026-06-04",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 2047,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-943",
+    "date": "2026-06-04",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 84,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-944",
+    "date": "2026-06-04",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-945",
+    "date": "2026-06-04",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 176,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-946",
+    "date": "2026-06-04",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1987,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-947",
+    "date": "2026-06-04",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 414,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-948",
+    "date": "2026-06-04",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1247,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-949",
+    "date": "2026-06-04",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2322,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-950",
+    "date": "2026-06-04",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-951",
+    "date": "2026-06-04",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-952",
+    "date": "2026-06-04",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-953",
+    "date": "2026-06-04",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 03 Y 04 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-954",
+    "date": "2026-06-05",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-955",
+    "date": "2026-06-05",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 346,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-956",
+    "date": "2026-06-05",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 388,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-957",
+    "date": "2026-06-05",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 440,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-958",
+    "date": "2026-06-05",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-959",
+    "date": "2026-06-05",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-960",
+    "date": "2026-06-05",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 115,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-961",
+    "date": "2026-06-05",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2800,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-962",
+    "date": "2026-06-05",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 600,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-963",
+    "date": "2026-06-05",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 47,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-964",
+    "date": "2026-06-05",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 5.2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-965",
+    "date": "2026-06-05",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 18.2,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-966",
+    "date": "2026-06-05",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 23.4,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-967",
+    "date": "2026-06-05",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-968",
+    "date": "2026-06-05",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 178,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-969",
+    "date": "2026-06-06",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-970",
+    "date": "2026-06-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 920,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-971",
+    "date": "2026-06-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 340,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-972",
+    "date": "2026-06-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-973",
+    "date": "2026-06-06",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-974",
+    "date": "2026-06-06",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2828,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-975",
+    "date": "2026-06-06",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 597,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-976",
+    "date": "2026-06-06",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 660,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-977",
+    "date": "2026-06-06",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 6556,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-978",
+    "date": "2026-06-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-979",
+    "date": "2026-06-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-980",
+    "date": "2026-06-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-981",
+    "date": "2026-06-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 05 Y 06 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-982",
+    "date": "2026-06-09",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 182,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-983",
+    "date": "2026-06-09",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 202,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-984",
+    "date": "2026-06-09",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 149,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-985",
+    "date": "2026-06-09",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-986",
+    "date": "2026-06-09",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-987",
+    "date": "2026-06-11",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1310,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-988",
+    "date": "2026-06-11",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 71,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-989",
+    "date": "2026-06-11",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 119,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-990",
+    "date": "2026-06-11",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 656,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-991",
+    "date": "2026-06-11",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-992",
+    "date": "2026-06-11",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 2144,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-993",
+    "date": "2026-06-11",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1164,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-994",
+    "date": "2026-06-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-995",
+    "date": "2026-06-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-996",
+    "date": "2026-06-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-997",
+    "date": "2026-06-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 09 Y 11 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-998",
+    "date": "2026-06-12",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-999",
+    "date": "2026-06-12",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1000",
+    "date": "2026-06-12",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 740,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1001",
+    "date": "2026-06-12",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1975,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1002",
+    "date": "2026-06-12",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1003",
+    "date": "2026-06-12",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 102,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1004",
+    "date": "2026-06-12",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2050,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1005",
+    "date": "2026-06-12",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2300,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1006",
+    "date": "2026-06-12",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1007",
+    "date": "2026-06-12",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1008",
+    "date": "2026-06-12",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1009",
+    "date": "2026-06-12",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1010",
+    "date": "2026-06-12",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 1200,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1011",
+    "date": "2026-06-12",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 200,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1012",
+    "date": "2026-06-13",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1013",
+    "date": "2026-06-13",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 155,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1014",
+    "date": "2026-06-13",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 216,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1015",
+    "date": "2026-06-13",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 163,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1016",
+    "date": "2026-06-13",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 721,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1017",
+    "date": "2026-06-13",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 1293,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1018",
+    "date": "2026-06-13",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 328,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1019",
+    "date": "2026-06-13",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1020",
+    "date": "2026-06-13",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1021",
+    "date": "2026-06-13",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1022",
+    "date": "2026-06-13",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1023",
+    "date": "2026-06-13",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 12 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1024",
+    "date": "2026-06-16",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1025",
+    "date": "2026-06-16",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 310,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1026",
+    "date": "2026-06-16",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 146,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1027",
+    "date": "2026-06-16",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 87,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1028",
+    "date": "2026-06-16",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 152,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1029",
+    "date": "2026-06-16",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 744,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1030",
+    "date": "2026-06-16",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 346,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1031",
+    "date": "2026-06-16",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2323,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1032",
+    "date": "2026-06-16",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1195,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1033",
+    "date": "2026-06-16",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 105,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1034",
+    "date": "2026-06-16",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1035",
+    "date": "2026-06-16",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1036",
+    "date": "2026-06-16",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1037",
+    "date": "2026-06-16",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1038",
+    "date": "2026-06-16",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1039",
+    "date": "2026-06-17",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 503,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1040",
+    "date": "2026-06-17",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1041",
+    "date": "2026-06-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 63,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1042",
+    "date": "2026-06-17",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 80,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1043",
+    "date": "2026-06-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1044",
+    "date": "2026-06-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1045",
+    "date": "2026-06-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 94,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1046",
+    "date": "2026-06-17",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 180,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1047",
+    "date": "2026-06-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1048",
+    "date": "2026-06-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1049",
+    "date": "2026-06-17",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1050",
+    "date": "2026-06-17",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1051",
+    "date": "2026-06-17",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 16 Y 17 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1052",
+    "date": "2026-06-18",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 12.4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1053",
+    "date": "2026-06-18",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1054",
+    "date": "2026-06-18",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 235,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1055",
+    "date": "2026-06-18",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 194,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1056",
+    "date": "2026-06-18",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1057",
+    "date": "2026-06-18",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 213,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1058",
+    "date": "2026-06-18",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 397,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1059",
+    "date": "2026-06-18",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 140,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1060",
+    "date": "2026-06-18",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 123,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1061",
+    "date": "2026-06-18",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1062",
+    "date": "2026-06-18",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1063",
+    "date": "2026-06-18",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1064",
+    "date": "2026-06-18",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1065",
+    "date": "2026-06-19",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1066",
+    "date": "2026-06-19",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 62,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1067",
+    "date": "2026-06-19",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 723,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1068",
+    "date": "2026-06-19",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1865,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1069",
+    "date": "2026-06-19",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1070",
+    "date": "2026-06-19",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 96,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1071",
+    "date": "2026-06-19",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1394,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1072",
+    "date": "2026-06-19",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1564,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1073",
+    "date": "2026-06-19",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1074",
+    "date": "2026-06-19",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1075",
+    "date": "2026-06-19",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1076",
+    "date": "2026-06-19",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1077",
+    "date": "2026-06-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 300,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1078",
+    "date": "2026-06-20",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2375,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1079",
+    "date": "2026-06-20",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 61,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1080",
+    "date": "2026-06-20",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 12,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1081",
+    "date": "2026-06-20",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1320,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1082",
+    "date": "2026-06-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 672,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1083",
+    "date": "2026-06-20",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2042,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1084",
+    "date": "2026-06-22",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1340,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1085",
+    "date": "2026-06-22",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 4260,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1086",
+    "date": "2026-06-22",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 924,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1087",
+    "date": "2026-06-22",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1088",
+    "date": "2026-06-22",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 823,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1089",
+    "date": "2026-06-22",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1881,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1090",
+    "date": "2026-06-22",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 2033,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1091",
+    "date": "2026-06-22",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1092",
+    "date": "2026-06-22",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1093",
+    "date": "2026-06-22",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1094",
+    "date": "2026-06-22",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 46,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 20 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1095",
+    "date": "2026-06-23",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1050,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1096",
+    "date": "2026-06-23",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 925,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1097",
+    "date": "2026-06-23",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1098",
+    "date": "2026-06-23",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 144,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1099",
+    "date": "2026-06-23",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1100",
+    "date": "2026-06-23",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1101",
+    "date": "2026-06-23",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1102",
+    "date": "2026-06-23",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1492,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1103",
+    "date": "2026-06-23",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1656,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1104",
+    "date": "2026-06-23",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1105",
+    "date": "2026-06-23",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1106",
+    "date": "2026-06-23",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1107",
+    "date": "2026-06-23",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1108",
+    "date": "2026-06-24",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 2408,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1109",
+    "date": "2026-06-24",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 4262,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1110",
+    "date": "2026-06-24",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1111",
+    "date": "2026-06-24",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 695,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1112",
+    "date": "2026-06-24",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 589,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1113",
+    "date": "2026-06-24",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1114",
+    "date": "2026-06-24",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1115",
+    "date": "2026-06-24",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1116",
+    "date": "2026-06-24",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1117",
+    "date": "2026-06-24",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1118",
+    "date": "2026-06-25",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1119",
+    "date": "2026-06-25",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1120",
+    "date": "2026-06-25",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 48,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1121",
+    "date": "2026-06-25",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 275,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1122",
+    "date": "2026-06-25",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 333,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1123",
+    "date": "2026-06-25",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1124",
+    "date": "2026-06-25",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 576,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1125",
+    "date": "2026-06-25",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 650,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1126",
+    "date": "2026-06-25",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1127",
+    "date": "2026-06-25",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1128",
+    "date": "2026-06-25",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1129",
+    "date": "2026-06-25",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1130",
+    "date": "2026-06-26",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 1212,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1131",
+    "date": "2026-06-26",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 425,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1132",
+    "date": "2026-06-26",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2751,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1133",
+    "date": "2026-06-26",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 55,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1134",
+    "date": "2026-06-26",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 59,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1135",
+    "date": "2026-06-26",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 560,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1136",
+    "date": "2026-06-26",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 520,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1137",
+    "date": "2026-06-26",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 255,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1138",
+    "date": "2026-06-26",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1139",
+    "date": "2026-06-26",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1140",
+    "date": "2026-06-26",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 580,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1141",
+    "date": "2026-06-26",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1142",
+    "date": "2026-06-26",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1143",
+    "date": "2026-06-26",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1144",
+    "date": "2026-06-27",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1145",
+    "date": "2026-06-27",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 574,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1146",
+    "date": "2026-06-27",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 644,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1147",
+    "date": "2026-06-27",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 120,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1148",
+    "date": "2026-06-27",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1149",
+    "date": "2026-06-27",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2407,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1150",
+    "date": "2026-06-27",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 541,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1151",
+    "date": "2026-06-27",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 554,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1152",
+    "date": "2026-06-27",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 5940,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1153",
+    "date": "2026-06-27",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1154",
+    "date": "2026-06-27",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1155",
+    "date": "2026-06-27",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1156",
+    "date": "2026-06-27",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1157",
+    "date": "2026-06-30",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1158",
+    "date": "2026-06-30",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 533,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1159",
+    "date": "2026-06-30",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 310,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1160",
+    "date": "2026-06-30",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1003,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1161",
+    "date": "2026-06-30",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 395,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1162",
+    "date": "2026-06-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 295,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1163",
+    "date": "2026-06-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1998,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1164",
+    "date": "2026-06-30",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 33,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1165",
+    "date": "2026-06-30",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 88,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1166",
+    "date": "2026-06-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 430,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1167",
+    "date": "2026-06-30",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1168",
+    "date": "2026-06-30",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1169",
+    "date": "2026-06-30",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1170",
+    "date": "2026-06-30",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JUNIO/JUNIO 27 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1171",
+    "date": "2026-07-01",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 1283,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1172",
+    "date": "2026-07-01",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 55,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1173",
+    "date": "2026-07-01",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1174",
+    "date": "2026-07-01",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1175",
+    "date": "2026-07-01",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 6164,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1176",
+    "date": "2026-07-01",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 303,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1177",
+    "date": "2026-07-01",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 787,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1178",
+    "date": "2026-07-01",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1462,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1179",
+    "date": "2026-07-01",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1180",
+    "date": "2026-07-01",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1181",
+    "date": "2026-07-01",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1182",
+    "date": "2026-07-01",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1183",
+    "date": "2026-07-02",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 550,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1184",
+    "date": "2026-07-02",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 324,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1185",
+    "date": "2026-07-02",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 31,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1186",
+    "date": "2026-07-02",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 180,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1187",
+    "date": "2026-07-02",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1188",
+    "date": "2026-07-02",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 48,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1189",
+    "date": "2026-07-02",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1190",
+    "date": "2026-07-02",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1191",
+    "date": "2026-07-02",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1192",
+    "date": "2026-07-02",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1193",
+    "date": "2026-07-02",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1194",
+    "date": "2026-07-02",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1195",
+    "date": "2026-07-02",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1677,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1196",
+    "date": "2026-07-02",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 335,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 01 Y 02 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1197",
+    "date": "2026-07-07",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 160,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1198",
+    "date": "2026-07-07",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 85,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1199",
+    "date": "2026-07-07",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1200",
+    "date": "2026-07-07",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 410,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1201",
+    "date": "2026-07-07",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 535,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1202",
+    "date": "2026-07-07",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1203",
+    "date": "2026-07-07",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1204",
+    "date": "2026-07-07",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 69,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1205",
+    "date": "2026-07-07",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1206",
+    "date": "2026-07-07",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1207",
+    "date": "2026-07-07",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1208",
+    "date": "2026-07-08",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1209",
+    "date": "2026-07-08",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 133,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1210",
+    "date": "2026-07-08",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 170,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1211",
+    "date": "2026-07-08",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 82,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1212",
+    "date": "2026-07-08",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 122,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1213",
+    "date": "2026-07-08",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 496,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1214",
+    "date": "2026-07-08",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1215",
+    "date": "2026-07-08",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1216",
+    "date": "2026-07-08",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 65,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "JULIO/JULIO 07 Y 08 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1217",
+    "date": "2026-07-09",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1218",
+    "date": "2026-07-09",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 630,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1219",
+    "date": "2026-07-09",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 570,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1220",
+    "date": "2026-07-09",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 249,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1221",
+    "date": "2026-07-09",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 144,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1222",
+    "date": "2026-07-09",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1910,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1223",
+    "date": "2026-07-09",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 3150,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1224",
+    "date": "2026-07-09",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 825,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1225",
+    "date": "2026-07-09",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 750,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1226",
+    "date": "2026-07-09",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1227",
+    "date": "2026-07-09",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1228",
+    "date": "2026-07-09",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1229",
+    "date": "2026-07-09",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1230",
+    "date": "2026-07-13",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1231",
+    "date": "2026-07-13",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1232",
+    "date": "2026-07-13",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1990,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1233",
+    "date": "2026-07-13",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 845,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1234",
+    "date": "2026-07-13",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1235",
+    "date": "2026-07-13",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2003,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1236",
+    "date": "2026-07-13",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 212,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1237",
+    "date": "2026-07-13",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 160,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1238",
+    "date": "2026-07-13",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 96,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1239",
+    "date": "2026-07-13",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1640,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1240",
+    "date": "2026-07-13",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1241",
+    "date": "2026-07-13",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1242",
+    "date": "2026-07-13",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1243",
+    "date": "2026-07-13",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 09 Y 13 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1244",
+    "date": "2026-07-14",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1245",
+    "date": "2026-07-14",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1246",
+    "date": "2026-07-14",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 24,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1247",
+    "date": "2026-07-14",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 72,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1248",
+    "date": "2026-07-14",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1249",
+    "date": "2026-07-14",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 493,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1250",
+    "date": "2026-07-14",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 200,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1251",
+    "date": "2026-07-14",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 895,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1252",
+    "date": "2026-07-14",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 975,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1253",
+    "date": "2026-07-14",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1254",
+    "date": "2026-07-14",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1255",
+    "date": "2026-07-14",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1256",
+    "date": "2026-07-14",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1257",
+    "date": "2026-07-15",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 1200,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1258",
+    "date": "2026-07-15",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 656,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1259",
+    "date": "2026-07-15",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 801,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1260",
+    "date": "2026-07-15",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 622,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1261",
+    "date": "2026-07-15",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 200,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1262",
+    "date": "2026-07-15",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 803,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1263",
+    "date": "2026-07-15",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2960,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1264",
+    "date": "2026-07-15",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1265",
+    "date": "2026-07-15",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 39,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1266",
+    "date": "2026-07-15",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1267",
+    "date": "2026-07-15",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1268",
+    "date": "2026-07-15",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1269",
+    "date": "2026-07-15",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1270",
+    "date": "2026-07-15",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1271",
+    "date": "2026-07-15",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1272",
+    "date": "2026-07-16",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1273",
+    "date": "2026-07-16",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1274",
+    "date": "2026-07-16",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 1380,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1275",
+    "date": "2026-07-16",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 99,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1276",
+    "date": "2026-07-16",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 177,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1277",
+    "date": "2026-07-16",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 306,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1278",
+    "date": "2026-07-16",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1279",
+    "date": "2026-07-16",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1280",
+    "date": "2026-07-16",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1281",
+    "date": "2026-07-16",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1282",
+    "date": "2026-07-17",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1283",
+    "date": "2026-07-17",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 570,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1284",
+    "date": "2026-07-17",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 814,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1285",
+    "date": "2026-07-17",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 258,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1286",
+    "date": "2026-07-17",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 523,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1287",
+    "date": "2026-07-17",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1288",
+    "date": "2026-07-17",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 181,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1289",
+    "date": "2026-07-17",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 257,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1290",
+    "date": "2026-07-17",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 922,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1291",
+    "date": "2026-07-17",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 500,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1292",
+    "date": "2026-07-17",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1293",
+    "date": "2026-07-17",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 16 Y 17SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1294",
+    "date": "2026-07-18",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1295",
+    "date": "2026-07-18",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 239,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1296",
+    "date": "2026-07-18",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 304,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1297",
+    "date": "2026-07-18",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 433,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1298",
+    "date": "2026-07-18",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 257,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1299",
+    "date": "2026-07-18",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1300",
+    "date": "2026-07-18",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1301",
+    "date": "2026-07-18",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1302",
+    "date": "2026-07-18",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1303",
+    "date": "2026-07-18",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1304",
+    "date": "2026-07-20",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1305",
+    "date": "2026-07-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1306",
+    "date": "2026-07-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 75,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1307",
+    "date": "2026-07-20",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1308",
+    "date": "2026-07-20",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1309",
+    "date": "2026-07-20",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 233,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1310",
+    "date": "2026-07-20",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 112,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1311",
+    "date": "2026-07-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1312",
+    "date": "2026-07-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1313",
+    "date": "2026-07-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1314",
+    "date": "2026-07-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 18 Y 20SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1315",
+    "date": "2026-07-21",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1316",
+    "date": "2026-07-21",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1317",
+    "date": "2026-07-21",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 200,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1318",
+    "date": "2026-07-21",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1319",
+    "date": "2026-07-21",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1320",
+    "date": "2026-07-21",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 267,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1321",
+    "date": "2026-07-21",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 213,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1322",
+    "date": "2026-07-21",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1323",
+    "date": "2026-07-21",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1324",
+    "date": "2026-07-21",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1325",
+    "date": "2026-07-21",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1326",
+    "date": "2026-07-21",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1327",
+    "date": "2026-07-21",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1328",
+    "date": "2026-07-21",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1329",
+    "date": "2026-07-22",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 320,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1330",
+    "date": "2026-07-22",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2844,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1331",
+    "date": "2026-07-22",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1332",
+    "date": "2026-07-22",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1333",
+    "date": "2026-07-22",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1408,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1334",
+    "date": "2026-07-22",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 677,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1335",
+    "date": "2026-07-22",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2460,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1336",
+    "date": "2026-07-22",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1337",
+    "date": "2026-07-22",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1338",
+    "date": "2026-07-22",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1339",
+    "date": "2026-07-22",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 21 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1340",
+    "date": "2026-07-23",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 525,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1341",
+    "date": "2026-07-23",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1342",
+    "date": "2026-07-23",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1343",
+    "date": "2026-07-23",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 77,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1344",
+    "date": "2026-07-23",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1345",
+    "date": "2026-07-23",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1346",
+    "date": "2026-07-23",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 110,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1347",
+    "date": "2026-07-23",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 232,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1348",
+    "date": "2026-07-23",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1349",
+    "date": "2026-07-23",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1350",
+    "date": "2026-07-23",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1351",
+    "date": "2026-07-23",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1352",
+    "date": "2026-07-24",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1353",
+    "date": "2026-07-24",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 182,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1354",
+    "date": "2026-07-24",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1355",
+    "date": "2026-07-24",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1356",
+    "date": "2026-07-24",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 804,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1357",
+    "date": "2026-07-24",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 703,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1358",
+    "date": "2026-07-24",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1359",
+    "date": "2026-07-24",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1360",
+    "date": "2026-07-24",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1361",
+    "date": "2026-07-24",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1362",
+    "date": "2026-07-24",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 23 Y 24 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1363",
+    "date": "2026-07-25",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1364",
+    "date": "2026-07-25",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1365",
+    "date": "2026-07-25",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 920,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1366",
+    "date": "2026-07-25",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 537,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1367",
+    "date": "2026-07-25",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1368",
+    "date": "2026-07-25",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 86,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1369",
+    "date": "2026-07-25",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3760,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1370",
+    "date": "2026-07-25",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 661,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1371",
+    "date": "2026-07-25",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 894,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1372",
+    "date": "2026-07-25",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 7260,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1373",
+    "date": "2026-07-25",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1374",
+    "date": "2026-07-25",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1375",
+    "date": "2026-07-25",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1376",
+    "date": "2026-07-25",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1377",
+    "date": "2026-07-25",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1378",
+    "date": "2026-07-27",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 223,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1379",
+    "date": "2026-07-27",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 23,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1380",
+    "date": "2026-07-27",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 550,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1381",
+    "date": "2026-07-27",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 150,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1382",
+    "date": "2026-07-27",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 25,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1383",
+    "date": "2026-07-27",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1384",
+    "date": "2026-07-27",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 15,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1385",
+    "date": "2026-07-27",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1386",
+    "date": "2026-07-27",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4.6,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 25 Y 27 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1387",
+    "date": "2026-07-28",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 133,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1388",
+    "date": "2026-07-28",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1389",
+    "date": "2026-07-28",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1390",
+    "date": "2026-07-28",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1391",
+    "date": "2026-07-28",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 33,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1392",
+    "date": "2026-07-28",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 91,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1393",
+    "date": "2026-07-28",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 49,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1394",
+    "date": "2026-07-28",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1395",
+    "date": "2026-07-29",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 220,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1396",
+    "date": "2026-07-29",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1397",
+    "date": "2026-07-29",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1398",
+    "date": "2026-07-29",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 24,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1399",
+    "date": "2026-07-29",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1400",
+    "date": "2026-07-29",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1401",
+    "date": "2026-07-29",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 31,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1402",
+    "date": "2026-07-29",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1403",
+    "date": "2026-07-29",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1404",
+    "date": "2026-07-29",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 265,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "JULIO/JULIO 28 Y 29 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1405",
+    "date": "2026-07-30",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1406",
+    "date": "2026-07-30",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1407",
+    "date": "2026-07-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 184,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1408",
+    "date": "2026-07-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 330,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1409",
+    "date": "2026-07-30",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1410",
+    "date": "2026-07-30",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 108,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1411",
+    "date": "2026-07-30",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 158,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1412",
+    "date": "2026-07-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1920,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1413",
+    "date": "2026-07-30",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 360,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1414",
+    "date": "2026-07-30",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 550,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1415",
+    "date": "2026-07-30",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 252,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1416",
+    "date": "2026-07-30",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 24,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1417",
+    "date": "2026-07-30",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1418",
+    "date": "2026-07-30",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1419",
+    "date": "2026-07-30",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1420",
+    "date": "2026-07-30",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1421",
+    "date": "2026-07-30",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1422",
+    "date": "2026-07-31",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 366,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1423",
+    "date": "2026-07-31",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 603,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1424",
+    "date": "2026-07-31",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 210,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1425",
+    "date": "2026-07-31",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 180,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1426",
+    "date": "2026-07-31",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "JULIO/JULIO 30 Y 31 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1427",
+    "date": "2026-08-03",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1428",
+    "date": "2026-08-03",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1429",
+    "date": "2026-08-03",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 125,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1430",
+    "date": "2026-08-03",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1431",
+    "date": "2026-08-03",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1432",
+    "date": "2026-08-03",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1433",
+    "date": "2026-08-03",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 392,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1434",
+    "date": "2026-08-03",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1435",
+    "date": "2026-08-03",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1436",
+    "date": "2026-08-03",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1437",
+    "date": "2026-08-03",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1438",
+    "date": "2026-08-03",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1439",
+    "date": "2026-08-04",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1440",
+    "date": "2026-08-04",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1441",
+    "date": "2026-08-04",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 184,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1442",
+    "date": "2026-08-04",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 330,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1443",
+    "date": "2026-08-04",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1444",
+    "date": "2026-08-04",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 108,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1445",
+    "date": "2026-08-04",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 158,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1446",
+    "date": "2026-08-04",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1920,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1447",
+    "date": "2026-08-04",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 360,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1448",
+    "date": "2026-08-04",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1449",
+    "date": "2026-08-04",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1450",
+    "date": "2026-08-04",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1451",
+    "date": "2026-08-04",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1452",
+    "date": "2026-08-05",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 182,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1453",
+    "date": "2026-08-05",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1454",
+    "date": "2026-08-05",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1455",
+    "date": "2026-08-05",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 870,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1456",
+    "date": "2026-08-05",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 740,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1457",
+    "date": "2026-08-05",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1458",
+    "date": "2026-08-05",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1459",
+    "date": "2026-08-05",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1460",
+    "date": "2026-08-05",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1461",
+    "date": "2026-08-05",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1462",
+    "date": "2026-08-06",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1463",
+    "date": "2026-08-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 1984,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1464",
+    "date": "2026-08-06",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 79,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1465",
+    "date": "2026-08-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1466",
+    "date": "2026-08-06",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 352,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1467",
+    "date": "2026-08-06",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 1944,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1468",
+    "date": "2026-08-06",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 405,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1469",
+    "date": "2026-08-06",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1201,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1470",
+    "date": "2026-08-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2236,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1471",
+    "date": "2026-08-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1472",
+    "date": "2026-08-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1473",
+    "date": "2026-08-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1474",
+    "date": "2026-08-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 5 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1475",
+    "date": "2026-08-08",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1476",
+    "date": "2026-08-08",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1477",
+    "date": "2026-08-08",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 310,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1478",
+    "date": "2026-08-08",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 887,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1479",
+    "date": "2026-08-08",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1480",
+    "date": "2026-08-08",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 484,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1481",
+    "date": "2026-08-08",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2892,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1482",
+    "date": "2026-08-08",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1483",
+    "date": "2026-08-08",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1484",
+    "date": "2026-08-08",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1485",
+    "date": "2026-08-08",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1486",
+    "date": "2026-08-10",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1487",
+    "date": "2026-08-10",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 352,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1488",
+    "date": "2026-08-10",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 26,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1489",
+    "date": "2026-08-10",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 405,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1490",
+    "date": "2026-08-10",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1201,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1491",
+    "date": "2026-08-10",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2236,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1492",
+    "date": "2026-08-10",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 310,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1493",
+    "date": "2026-08-10",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1494",
+    "date": "2026-08-10",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1495",
+    "date": "2026-08-10",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1496",
+    "date": "2026-08-10",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1497",
+    "date": "2026-08-10",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 8 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1498",
+    "date": "2026-08-11",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1499",
+    "date": "2026-08-11",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 656,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1500",
+    "date": "2026-08-11",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1501",
+    "date": "2026-08-11",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 615,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1502",
+    "date": "2026-08-11",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 200,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1503",
+    "date": "2026-08-11",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 951,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1504",
+    "date": "2026-08-11",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 3540,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1505",
+    "date": "2026-08-11",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1506",
+    "date": "2026-08-11",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1507",
+    "date": "2026-08-11",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1508",
+    "date": "2026-08-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1509",
+    "date": "2026-08-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1510",
+    "date": "2026-08-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1511",
+    "date": "2026-08-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1512",
+    "date": "2026-08-11",
+    "product": "BICROMATO POTASIO X 500GR",
+    "code": "BICROPOTASIO",
+    "grams": 345,
+    "line": "reactivo",
+    "hex": "#ea580c",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1513",
+    "date": "2026-08-11",
+    "product": "PRESTOVIL M",
+    "code": "PRESTOVILM",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1514",
+    "date": "2026-08-11",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1515",
+    "date": "2026-08-12",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1516",
+    "date": "2026-08-12",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 820,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1517",
+    "date": "2026-08-12",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 920,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1518",
+    "date": "2026-08-12",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 591,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1519",
+    "date": "2026-08-12",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1520",
+    "date": "2026-08-12",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1241,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1521",
+    "date": "2026-08-12",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 2381,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1522",
+    "date": "2026-08-12",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 101,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1523",
+    "date": "2026-08-12",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 1890,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1524",
+    "date": "2026-08-12",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 309,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1525",
+    "date": "2026-08-12",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1526",
+    "date": "2026-08-12",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1527",
+    "date": "2026-08-12",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1528",
+    "date": "2026-08-12",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1529",
+    "date": "2026-08-14",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 550,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "AGOSTO/AGOSTO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1530",
+    "date": "2026-08-14",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 425,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "AGOSTO/AGOSTO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1531",
+    "date": "2026-08-14",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 1000,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1532",
+    "date": "2026-08-14",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1533",
+    "date": "2026-08-14",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4.6,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 13 Y 14 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1534",
+    "date": "2026-08-18",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 86,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1535",
+    "date": "2026-08-18",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 6,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1536",
+    "date": "2026-08-18",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 72,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1537",
+    "date": "2026-08-18",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 205,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1538",
+    "date": "2026-08-18",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 82,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1539",
+    "date": "2026-08-18",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 57,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1540",
+    "date": "2026-08-18",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 36,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1541",
+    "date": "2026-08-18",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1542",
+    "date": "2026-08-18",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1543",
+    "date": "2026-08-19",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 550,
+    "line": "reactivo",
+    "hex": "#eab308",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1544",
+    "date": "2026-08-19",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 180,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1545",
+    "date": "2026-08-19",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1546",
+    "date": "2026-08-19",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#22c55e",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1547",
+    "date": "2026-08-19",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 35,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1548",
+    "date": "2026-08-19",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1549",
+    "date": "2026-08-19",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#d946ef",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1550",
+    "date": "2026-08-19",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1551",
+    "date": "2026-08-19",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1552",
+    "date": "2026-08-19",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1553",
+    "date": "2026-08-19",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 70,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1554",
+    "date": "2026-08-19",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 720,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1555",
+    "date": "2026-08-19",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1755,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1556",
+    "date": "2026-08-19",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1557",
+    "date": "2026-08-19",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1558",
+    "date": "2026-08-19",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1230,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1559",
+    "date": "2026-08-19",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1380,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1560",
+    "date": "2026-08-19",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1561",
+    "date": "2026-08-19",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 18 Y 19 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1562",
+    "date": "2026-08-20",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 995,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1563",
+    "date": "2026-08-20",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 942,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1564",
+    "date": "2026-08-20",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 97,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1565",
+    "date": "2026-08-20",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 350,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1566",
+    "date": "2026-08-20",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 326,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1567",
+    "date": "2026-08-20",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 108,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1568",
+    "date": "2026-08-20",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 23,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1569",
+    "date": "2026-08-20",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1570",
+    "date": "2026-08-20",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 198,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1571",
+    "date": "2026-08-20",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1572",
+    "date": "2026-08-20",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1573",
+    "date": "2026-08-20",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1574",
+    "date": "2026-08-20",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1575",
+    "date": "2026-08-20",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1576",
+    "date": "2026-08-21",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1577",
+    "date": "2026-08-21",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 499,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1578",
+    "date": "2026-08-21",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 869,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1579",
+    "date": "2026-08-21",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 49,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1580",
+    "date": "2026-08-21",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 810,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1581",
+    "date": "2026-08-21",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 150,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1582",
+    "date": "2026-08-21",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1583",
+    "date": "2026-08-21",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1584",
+    "date": "2026-08-21",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1585",
+    "date": "2026-08-21",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 20 Y 21 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1586",
+    "date": "2026-08-25",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1587",
+    "date": "2026-08-25",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 10,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1588",
+    "date": "2026-08-25",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1589",
+    "date": "2026-08-25",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 40,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1590",
+    "date": "2026-08-25",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 303,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1591",
+    "date": "2026-08-25",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 160,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1592",
+    "date": "2026-08-25",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1593",
+    "date": "2026-08-25",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 512,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1594",
+    "date": "2026-08-25",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 520,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1595",
+    "date": "2026-08-25",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1596",
+    "date": "2026-08-25",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1597",
+    "date": "2026-08-25",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1598",
+    "date": "2026-08-25",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1599",
+    "date": "2026-08-26",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1600",
+    "date": "2026-08-26",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 163,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1601",
+    "date": "2026-08-26",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 166,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1602",
+    "date": "2026-08-26",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 12,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1603",
+    "date": "2026-08-26",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 443,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1604",
+    "date": "2026-08-26",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 243,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1605",
+    "date": "2026-08-26",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 424,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1606",
+    "date": "2026-08-26",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 22,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1607",
+    "date": "2026-08-26",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 125,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1608",
+    "date": "2026-08-26",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1609",
+    "date": "2026-08-26",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1610",
+    "date": "2026-08-26",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1611",
+    "date": "2026-08-26",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 25 Y 26 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1612",
+    "date": "2026-08-27",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 80,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1613",
+    "date": "2026-08-27",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 331,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1614",
+    "date": "2026-08-27",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1382,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1615",
+    "date": "2026-08-27",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 664,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1616",
+    "date": "2026-08-27",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1242,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1617",
+    "date": "2026-08-27",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1175,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1618",
+    "date": "2026-08-27",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 1100,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1619",
+    "date": "2026-08-27",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 528,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1620",
+    "date": "2026-08-27",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 106,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1621",
+    "date": "2026-08-27",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1622",
+    "date": "2026-08-27",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1623",
+    "date": "2026-08-27",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1624",
+    "date": "2026-08-27",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1625",
+    "date": "2026-08-28",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 279,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1626",
+    "date": "2026-08-28",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 3,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1627",
+    "date": "2026-08-28",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 506,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1628",
+    "date": "2026-08-28",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 1,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1629",
+    "date": "2026-08-28",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 167,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "AGOSTO/AGOSTO 27 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1630",
+    "date": "2026-09-01",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 319,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1631",
+    "date": "2026-09-01",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 200,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1632",
+    "date": "2026-09-01",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 504,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1633",
+    "date": "2026-09-01",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1634",
+    "date": "2026-09-01",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1635",
+    "date": "2026-09-02",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 660,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1636",
+    "date": "2026-09-02",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 97,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1637",
+    "date": "2026-09-02",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 77,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1638",
+    "date": "2026-09-02",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 309,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1639",
+    "date": "2026-09-02",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 86,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1640",
+    "date": "2026-09-02",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 33,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1641",
+    "date": "2026-09-02",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1642",
+    "date": "2026-09-02",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 20.67,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1643",
+    "date": "2026-09-02",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1644",
+    "date": "2026-09-02",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1645",
+    "date": "2026-09-02",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1646",
+    "date": "2026-09-02",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1647",
+    "date": "2026-09-03",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 605,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1648",
+    "date": "2026-09-03",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 180,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1649",
+    "date": "2026-09-03",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1650",
+    "date": "2026-09-03",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 169,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1651",
+    "date": "2026-09-03",
+    "product": "SUNCOAT BLUE 9150 CHM",
+    "code": "SUNCOAT9150",
+    "grams": 28,
+    "line": "pigmento",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1652",
+    "date": "2026-09-03",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1653",
+    "date": "2026-09-03",
+    "product": "TINTUPRINT FUCSIA REF:56108",
+    "code": "FUCSIA TINTUPRINT",
+    "grams": 15,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1654",
+    "date": "2026-09-03",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1655",
+    "date": "2026-09-03",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1656",
+    "date": "2026-09-04",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 160,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1657",
+    "date": "2026-09-04",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1658",
+    "date": "2026-09-04",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1659",
+    "date": "2026-09-04",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1660",
+    "date": "2026-09-04",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1661",
+    "date": "2026-09-04",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 24,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1662",
+    "date": "2026-09-04",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1663",
+    "date": "2026-09-04",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1664",
+    "date": "2026-09-04",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1665",
+    "date": "2026-09-04",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 3 Y 4 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1666",
+    "date": "2026-09-05",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1667",
+    "date": "2026-09-05",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 448,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1668",
+    "date": "2026-09-05",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 3817,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1669",
+    "date": "2026-09-05",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 101,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1670",
+    "date": "2026-09-05",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1671",
+    "date": "2026-09-05",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1540,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1672",
+    "date": "2026-09-05",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 764,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1673",
+    "date": "2026-09-05",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 3280,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1674",
+    "date": "2026-09-05",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 90,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1675",
+    "date": "2026-09-05",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 12,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1676",
+    "date": "2026-09-05",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 42,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1677",
+    "date": "2026-09-05",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 54,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1678",
+    "date": "2026-09-10",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1524,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1679",
+    "date": "2026-09-10",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1379,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1680",
+    "date": "2026-09-10",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 142,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1681",
+    "date": "2026-09-10",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 366,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1682",
+    "date": "2026-09-10",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 487,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1683",
+    "date": "2026-09-10",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 144,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1684",
+    "date": "2026-09-10",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1685",
+    "date": "2026-09-10",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1686",
+    "date": "2026-09-10",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 330,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1687",
+    "date": "2026-09-10",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1688",
+    "date": "2026-09-10",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1689",
+    "date": "2026-09-10",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1690",
+    "date": "2026-09-10",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 5 Y 10 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1691",
+    "date": "2026-09-11",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1692",
+    "date": "2026-09-11",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 20,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1693",
+    "date": "2026-09-11",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 310,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1694",
+    "date": "2026-09-11",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 816,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1695",
+    "date": "2026-09-11",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 164,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1696",
+    "date": "2026-09-11",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 284,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1697",
+    "date": "2026-09-11",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 2586,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1698",
+    "date": "2026-09-11",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1699",
+    "date": "2026-09-11",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1700",
+    "date": "2026-09-11",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1701",
+    "date": "2026-09-11",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1702",
+    "date": "2026-09-12",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 4000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1703",
+    "date": "2026-09-12",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 574,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1704",
+    "date": "2026-09-12",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 644,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1705",
+    "date": "2026-09-12",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 600,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1706",
+    "date": "2026-09-12",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1707",
+    "date": "2026-09-12",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1255,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1708",
+    "date": "2026-09-12",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 2438,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1709",
+    "date": "2026-09-12",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 85,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1710",
+    "date": "2026-09-12",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 1720,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1711",
+    "date": "2026-09-12",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 250,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1712",
+    "date": "2026-09-12",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1713",
+    "date": "2026-09-12",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1714",
+    "date": "2026-09-12",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1715",
+    "date": "2026-09-12",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 11 Y 12 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1716",
+    "date": "2026-09-14",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 350,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1717",
+    "date": "2026-09-14",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 1003,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1718",
+    "date": "2026-09-14",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 550,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1719",
+    "date": "2026-09-14",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 4.6,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1720",
+    "date": "2026-09-14",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 40,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1721",
+    "date": "2026-09-14",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 10.33,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1722",
+    "date": "2026-09-14",
+    "product": "GLICERINA",
+    "code": "GLISERINA",
+    "grams": 345,
+    "line": "pigmento",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1723",
+    "date": "2026-09-15",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 352,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1724",
+    "date": "2026-09-15",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 307,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1725",
+    "date": "2026-09-15",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 405,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1726",
+    "date": "2026-09-15",
+    "product": "MAGENTA NOVAPRINT SP-E4",
+    "code": "MAGENTA-E4",
+    "grams": 10,
+    "line": "pigmento",
+    "hex": "#d946ef",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1727",
+    "date": "2026-09-15",
+    "product": "NARANJA OCTAMINE FT-G",
+    "code": "NARANJAOCT",
+    "grams": 12,
+    "line": "pigmento",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1728",
+    "date": "2026-09-15",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1729",
+    "date": "2026-09-15",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 14 Y 15 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1730",
+    "date": "2026-09-17",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 48,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1731",
+    "date": "2026-09-17",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 80,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1732",
+    "date": "2026-09-17",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 120,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1733",
+    "date": "2026-09-17",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 30,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1734",
+    "date": "2026-09-17",
+    "product": "ROJO PI0901 ACUATEX",
+    "code": "ROJO PI0901 ACUATEX",
+    "grams": 90,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1735",
+    "date": "2026-09-18",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 164,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1736",
+    "date": "2026-09-18",
+    "product": "ROJO PI0901 ACUATEX",
+    "code": "ROJO PI0901 ACUATEX",
+    "grams": 182,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1737",
+    "date": "2026-09-18",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 110,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "SEPTIEMBRE/septiembre 17 Y 18 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1738",
+    "date": "2026-09-19",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 538,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1739",
+    "date": "2026-09-19",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1740",
+    "date": "2026-09-19",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 58,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1741",
+    "date": "2026-09-19",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 80,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1742",
+    "date": "2026-09-19",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 17,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1743",
+    "date": "2026-09-19",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1744",
+    "date": "2026-09-19",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 110,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1745",
+    "date": "2026-09-19",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 225,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1746",
+    "date": "2026-09-19",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1747",
+    "date": "2026-09-19",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1748",
+    "date": "2026-09-19",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1749",
+    "date": "2026-09-19",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1750",
+    "date": "2026-09-22",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1751",
+    "date": "2026-09-22",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 25,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1752",
+    "date": "2026-09-22",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 33,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1753",
+    "date": "2026-09-22",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 56.8,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1754",
+    "date": "2026-09-22",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 190,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1755",
+    "date": "2026-09-22",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 250,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1756",
+    "date": "2026-09-22",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 460,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1757",
+    "date": "2026-09-22",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 487,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1758",
+    "date": "2026-09-22",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 598,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1759",
+    "date": "2026-09-22",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1760",
+    "date": "2026-09-22",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1761",
+    "date": "2026-09-22",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1762",
+    "date": "2026-09-22",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 19 Y 22 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1763",
+    "date": "2026-09-24",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 76,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1764",
+    "date": "2026-09-24",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 76,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1765",
+    "date": "2026-09-24",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 3,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1766",
+    "date": "2026-09-24",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 31,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1767",
+    "date": "2026-09-24",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 359,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1768",
+    "date": "2026-09-24",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 455,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1769",
+    "date": "2026-09-24",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1770",
+    "date": "2026-09-24",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1771",
+    "date": "2026-09-24",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1772",
+    "date": "2026-09-24",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1773",
+    "date": "2026-09-24",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 9,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1774",
+    "date": "2026-09-25",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1775",
+    "date": "2026-09-25",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1776",
+    "date": "2026-09-25",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 125,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1777",
+    "date": "2026-09-25",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 175,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1778",
+    "date": "2026-09-25",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1779",
+    "date": "2026-09-25",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 313,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1780",
+    "date": "2026-09-25",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 367,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1781",
+    "date": "2026-09-25",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 210,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1782",
+    "date": "2026-09-25",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1783",
+    "date": "2026-09-25",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1784",
+    "date": "2026-09-25",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1785",
+    "date": "2026-09-25",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 37,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 24 Y 25 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1786",
+    "date": "2026-09-26",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1787",
+    "date": "2026-09-26",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1788",
+    "date": "2026-09-26",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 375,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1789",
+    "date": "2026-09-26",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 514,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1790",
+    "date": "2026-09-26",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 100,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1791",
+    "date": "2026-09-26",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 412,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1792",
+    "date": "2026-09-26",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1130,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1793",
+    "date": "2026-09-26",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 1260,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1794",
+    "date": "2026-09-26",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1795",
+    "date": "2026-09-26",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 424,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1796",
+    "date": "2026-09-26",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1797",
+    "date": "2026-09-26",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1798",
+    "date": "2026-09-26",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1799",
+    "date": "2026-09-26",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1800",
+    "date": "2026-09-28",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 880,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1801",
+    "date": "2026-09-28",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 81,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1802",
+    "date": "2026-09-28",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1803",
+    "date": "2026-09-28",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 23,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1804",
+    "date": "2026-09-28",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 32,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1805",
+    "date": "2026-09-28",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1806",
+    "date": "2026-09-28",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 77,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1807",
+    "date": "2026-09-28",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 59,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1808",
+    "date": "2026-09-28",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1809",
+    "date": "2026-09-28",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1810",
+    "date": "2026-09-28",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1811",
+    "date": "2026-09-28",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 26 Y 28 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1812",
+    "date": "2026-09-29",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2000,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1813",
+    "date": "2026-09-29",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 61,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1814",
+    "date": "2026-09-29",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 552,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1815",
+    "date": "2026-09-29",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 1171,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1816",
+    "date": "2026-09-29",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 13,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1817",
+    "date": "2026-09-29",
+    "product": "AZUL REACTIVO ROYAL G",
+    "code": "AZULROYALG",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#2563eb",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1818",
+    "date": "2026-09-29",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1230,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1819",
+    "date": "2026-09-29",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 1380,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1820",
+    "date": "2026-09-29",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 45,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1821",
+    "date": "2026-09-29",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1822",
+    "date": "2026-09-29",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1823",
+    "date": "2026-09-29",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 27,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1824",
+    "date": "2026-09-30",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 2400,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1825",
+    "date": "2026-09-30",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 368,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1826",
+    "date": "2026-09-30",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 2405,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1827",
+    "date": "2026-09-30",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 76,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1828",
+    "date": "2026-09-30",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 15,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1829",
+    "date": "2026-09-30",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 1386,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1830",
+    "date": "2026-09-30",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 676,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1831",
+    "date": "2026-09-30",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 2050,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1832",
+    "date": "2026-09-30",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1833",
+    "date": "2026-09-30",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1834",
+    "date": "2026-09-30",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1835",
+    "date": "2026-09-30",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 19,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "SEPTIEMBRE/septiembre 29 Y 30 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1836",
+    "date": "2026-10-01",
+    "product": "NEGRO NOVAPRINT SP-B",
+    "code": "NEGROSP-B",
+    "grams": 750,
+    "line": "pigmento",
+    "hex": "#0f172a",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1837",
+    "date": "2026-10-01",
+    "product": "VERDE CECOPRINT G",
+    "code": "VERDECECOPRINTG",
+    "grams": 105,
+    "line": "pigmento",
+    "hex": "#22c55e",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1838",
+    "date": "2026-10-01",
+    "product": "AMARILLO ORO NOVAPRINT 2R",
+    "code": "AMARILLO2R",
+    "grams": 152,
+    "line": "pigmento",
+    "hex": "#eab308",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1839",
+    "date": "2026-10-01",
+    "product": "ROJO CECOPRINT GR",
+    "code": "ROJOCECOPRINT",
+    "grams": 349,
+    "line": "pigmento",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1840",
+    "date": "2026-10-01",
+    "product": "AMARILLO NOVAPRINT J GRANEL",
+    "code": "AMARILLOVAPRINTJ",
+    "grams": 420,
+    "line": "pigmento",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1841",
+    "date": "2026-10-01",
+    "product": "ESPESANTE NOVAPRINT TC ULTRA",
+    "code": "ESPNOVAPRINT",
+    "grams": 2.3,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1842",
+    "date": "2026-10-01",
+    "product": "NOVAPRINT RFS",
+    "code": "NOVAPRINTRFS",
+    "grams": 20,
+    "line": "pigmento",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1843",
+    "date": "2026-10-02",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 137,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1844",
+    "date": "2026-10-02",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 6,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1845",
+    "date": "2026-10-02",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 29,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1846",
+    "date": "2026-10-02",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1847",
+    "date": "2026-10-02",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 55,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1848",
+    "date": "2026-10-02",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 1,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1849",
+    "date": "2026-10-02",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 139,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1850",
+    "date": "2026-10-02",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 2,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1851",
+    "date": "2026-10-02",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1852",
+    "date": "2026-10-02",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1853",
+    "date": "2026-10-02",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1854",
+    "date": "2026-10-02",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 1 Y 2 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1855",
+    "date": "2026-10-03",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 1122,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1856",
+    "date": "2026-10-03",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 963,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1857",
+    "date": "2026-10-03",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 111,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1858",
+    "date": "2026-10-03",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 358,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1859",
+    "date": "2026-10-03",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 316,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1860",
+    "date": "2026-10-03",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 108,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1861",
+    "date": "2026-10-03",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 23,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1862",
+    "date": "2026-10-03",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 7,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1863",
+    "date": "2026-10-03",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 166,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1864",
+    "date": "2026-10-03",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 60,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1865",
+    "date": "2026-10-03",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 8,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1866",
+    "date": "2026-10-03",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 28,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1867",
+    "date": "2026-10-03",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 36,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1868",
+    "date": "2026-10-03",
+    "product": "ALCOHOL POLIVINILICO PVA 088-50",
+    "code": "ALCOHOLPVA",
+    "grams": 10.34,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1869",
+    "date": "2026-10-06",
+    "product": "SUPER BLACK R",
+    "code": "SUPERBLACKR",
+    "grams": 800,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1870",
+    "date": "2026-10-06",
+    "product": "ORIOMCROM YELLOW HE- 4R",
+    "code": "YELLOW/HE4R",
+    "grams": 96,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1871",
+    "date": "2026-10-06",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 21,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1872",
+    "date": "2026-10-06",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 30,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1873",
+    "date": "2026-10-06",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 189,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1874",
+    "date": "2026-10-06",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 255,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1875",
+    "date": "2026-10-06",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 440,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1876",
+    "date": "2026-10-06",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 11,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1877",
+    "date": "2026-10-06",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 51.8,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1878",
+    "date": "2026-10-06",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4.1,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1879",
+    "date": "2026-10-06",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14.35,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1880",
+    "date": "2026-10-06",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18.45,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 3 Y 6 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1881",
+    "date": "2026-10-07",
+    "product": "NARANJA NOVACRON P-4R",
+    "code": "NARANJAP-4R",
+    "grams": 412,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1882",
+    "date": "2026-10-07",
+    "product": "ORIOMCROM YELLOW HE6G",
+    "code": "YELLOW/HE6G",
+    "grams": 215,
+    "line": "reactivo",
+    "hex": "#facc15",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1883",
+    "date": "2026-10-07",
+    "product": "ORIOMCROM BLACK WNN",
+    "code": "BLACK-WNN",
+    "grams": 88,
+    "line": "reactivo",
+    "hex": "#0f172a",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1884",
+    "date": "2026-10-07",
+    "product": "ROJO REACTIVO ME 6BL",
+    "code": "ROJOREACTIVO",
+    "grams": 66,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1885",
+    "date": "2026-10-07",
+    "product": "AZUL NOVACRON P3R",
+    "code": "0084",
+    "grams": 133,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1886",
+    "date": "2026-10-07",
+    "product": "ORIOMCROM RED AID",
+    "code": "ORIOMCROM RED AID",
+    "grams": 89,
+    "line": "reactivo",
+    "hex": "#ef4444",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1887",
+    "date": "2026-10-07",
+    "product": "ORIOM ORANGE ME 2RL",
+    "code": "ORANGE-2RL",
+    "grams": 44,
+    "line": "reactivo",
+    "hex": "#f97316",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1888",
+    "date": "2026-10-07",
+    "product": "AZUL REACTIVO 19",
+    "code": "AZULREACTIVO19",
+    "grams": 440,
+    "line": "reactivo",
+    "hex": "#3b82f6",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1889",
+    "date": "2026-10-07",
+    "product": "ORIOMCROM TURQ BLUE PG",
+    "code": "TURQBLUEPG",
+    "grams": 34,
+    "line": "reactivo",
+    "hex": "#06b6d4",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1890",
+    "date": "2026-10-07",
+    "product": "UREA 46%",
+    "code": "UREA",
+    "grams": 50,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1891",
+    "date": "2026-10-07",
+    "product": "ASUTOL PTR GRANOS",
+    "code": "ASUTOLPTR",
+    "grams": 4,
+    "line": "reactivo",
+    "hex": "#ca8a04",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1892",
+    "date": "2026-10-07",
+    "product": "BICARBONATO DE SODIO",
+    "code": "BICARBONATO",
+    "grams": 14,
+    "line": "reactivo",
+    "hex": "#f1f5f9",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  },
+  {
+    "id": "salida-1893",
+    "date": "2026-10-07",
+    "product": "CONCENTRATE M-SP",
+    "code": "CONCENTRATEMCP",
+    "grams": 18,
+    "line": "reactivo",
+    "hex": "#f8fafc",
+    "source": "OCTUBRE/OCTUBRE 7 Y 8 SALIDAS 2026.xlsx"
+  }
+];

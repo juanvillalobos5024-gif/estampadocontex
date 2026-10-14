@@ -30,9 +30,11 @@ export default function PantoneFormModal({
   const [mesh, setMesh] = useState('62 hilos');
   const [squeegee, setSqueegee] = useState('70 Shore');
   const [notes, setNotes] = useState('');
+  const [type, setType] = useState<'Pigmento' | 'Reactivo'>('Pigmento');
   
   // Modo de ingreso: 'grams' (por gramos) o 'percentage' (por porcentaje)
   const [entryMode, setEntryMode] = useState<'grams' | 'percentage'>('grams');
+  const [referenceSampleGrams, setReferenceSampleGrams] = useState<number | ''>(100);
 
   // Lista de componentes locales para armar la formulación
   const [formulas, setFormulas] = useState<FormulaRow[]>([]);
@@ -42,19 +44,20 @@ export default function PantoneFormModal({
   // Rellenar datos si estamos editando
   useEffect(() => {
     if (editingPantone) {
-      setCode(editingPantone.code);
-      setName(editingPantone.name);
-      setHex(editingPantone.hex);
+      setCode(editingPantone.code || '');
+      setName(editingPantone.name || '');
+      setHex(editingPantone.hex || '#3b82f6');
       setMesh(editingPantone.mesh || '62 hilos');
       setSqueegee(editingPantone.squeegee || '70 Shore');
-      setNotes(editingPantone.notes);
+      setNotes(editingPantone.notes || '');
+      setType(editingPantone.type || 'Pigmento');
       
       // Convertir formulas a las filas locales con gramos (tomamos 1000g de referencia para la visualización inicial de gramos)
       const rows = editingPantone.formulas.map(f => ({
-        component: f.component,
-        description: f.description,
-        percentage: f.percentage,
-        grams: Number(((f.percentage * 1000) / 100).toFixed(1))
+        component: f.component || '',
+        description: f.description || '',
+        percentage: f.percentage || 0,
+        grams: Number((((f.percentage || 0) * 1000) / 100).toFixed(1))
       }));
       setFormulas(rows);
     } else {
@@ -72,6 +75,39 @@ export default function PantoneFormModal({
     setValidationError('');
   }, [editingPantone, isOpen]);
 
+  // Efecto para recalcular si cambia el peso de muestra de referencia
+  useEffect(() => {
+    if (entryMode === 'grams') {
+      const updated = [...formulas];
+      const totalG = updated.reduce((acc, row) => acc + row.grams, 0);
+      const baseCalc = referenceSampleGrams || totalG;
+      if (baseCalc > 0) {
+        updated.forEach(row => {
+          row.percentage = Number(((row.grams / baseCalc) * 100).toFixed(2));
+        });
+        setFormulas(updated);
+      }
+    }
+  }, [referenceSampleGrams]);
+
+  // Cerrar modal con tecla Escape y bloquear scroll de fondo
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   // Cálculos totales en tiempo real
@@ -88,12 +124,12 @@ export default function PantoneFormModal({
   const handleRemoveComponent = (idx: number) => {
     const updated = formulas.filter((_, i) => i !== idx);
     
-    // Recalcular porcentajes en base al nuevo total de gramos si estamos en modo gramos
     if (entryMode === 'grams') {
       const totalG = updated.reduce((acc, row) => acc + row.grams, 0);
-      if (totalG > 0) {
+      const baseCalc = referenceSampleGrams || totalG;
+      if (baseCalc > 0) {
         updated.forEach(row => {
-          row.percentage = Number(((row.grams / totalG) * 100).toFixed(2));
+          row.percentage = Number(((row.grams / baseCalc) * 100).toFixed(2));
         });
       } else {
         updated.forEach(row => { row.percentage = 0; });
@@ -122,11 +158,11 @@ export default function PantoneFormModal({
     } else if (field === 'grams') {
       updated[idx].grams = Math.max(0, parseFloat(value) || 0);
       
-      // Recalcular porcentajes de todas las filas en base al nuevo total de gramos
       const totalG = updated.reduce((acc, row) => acc + row.grams, 0);
-      if (totalG > 0) {
+      const baseCalc = referenceSampleGrams || totalG;
+      if (baseCalc > 0) {
         updated.forEach(row => {
-          row.percentage = Number(((row.grams / totalG) * 100).toFixed(2));
+          row.percentage = Number(((row.grams / baseCalc) * 100).toFixed(2));
         });
       } else {
         updated.forEach(row => {
@@ -135,8 +171,9 @@ export default function PantoneFormModal({
       }
     } else if (field === 'percentage') {
       updated[idx].percentage = Math.max(0, parseFloat(value) || 0);
-      // Estimar los gramos en base a un lote de referencia de 1000g
-      updated[idx].grams = Number(((updated[idx].percentage * 1000) / 100).toFixed(1));
+      // Solo ajustamos los gramos visuales usando el tamaño de muestra de referencia si existe, o 1000g por defecto
+      const visualBase = referenceSampleGrams || 1000;
+      updated[idx].grams = Number(((updated[idx].percentage * visualBase) / 100).toFixed(1));
     }
     
     setFormulas(updated);
@@ -166,23 +203,25 @@ export default function PantoneFormModal({
     let finalFormulas = [];
 
     if (entryMode === 'grams') {
-      if (totalGrams <= 0) {
-        setValidationError('La cantidad total de gramos debe ser mayor que 0g para poder calcular la proporción.');
+      const baseCalc = referenceSampleGrams || totalGrams;
+      if (baseCalc <= 0) {
+        setValidationError('La cantidad base para cálculo debe ser mayor que 0g.');
         return;
       }
 
-      // Generar porcentajes exactos de manera proporcional
       finalFormulas = formulas.map(f => ({
-        component: f.component,
-        description: f.description,
-        percentage: Number(((f.grams / totalGrams) * 100).toFixed(2))
+        component: f.component || '',
+        description: f.description || '',
+        percentage: Number(((f.grams / baseCalc) * 100).toFixed(2))
       }));
 
-      // Corregir pequeñas diferencias de redondeo para que sume exactamente 100.00%
-      const currentSum = finalFormulas.reduce((acc, f) => acc + f.percentage, 0);
-      const diff = 100 - currentSum;
-      if (Math.abs(diff) > 0 && Math.abs(diff) < 1 && finalFormulas.length > 0) {
-        finalFormulas[0].percentage = Number((finalFormulas[0].percentage + diff).toFixed(2));
+      // Solo ajustamos para que sume 100% si NO se definió un volumen de muestra manualmente (es decir, si asumimos que ingresaron el 100% de la fórmula)
+      if (!referenceSampleGrams) {
+        const currentSum = finalFormulas.reduce((acc, f) => acc + f.percentage, 0);
+        const diff = 100 - currentSum;
+        if (Math.abs(diff) > 0 && Math.abs(diff) < 1 && finalFormulas.length > 0) {
+          finalFormulas[0].percentage = Number((finalFormulas[0].percentage + diff).toFixed(2));
+        }
       }
     } else {
       // Modo porcentaje directo
@@ -192,19 +231,27 @@ export default function PantoneFormModal({
       }
       
       finalFormulas = formulas.map(f => ({
-        component: f.component,
-        description: f.description,
-        percentage: f.percentage
+        component: f.component || '',
+        description: f.description || '',
+        percentage: f.percentage || 0
       }));
+    }
+
+    let finalHex = hex.trim();
+    if (!finalHex.startsWith('#')) finalHex = '#' + finalHex;
+    if (!/^#[0-9A-Fa-f]{6}$/i.test(finalHex)) {
+      setValidationError('El código de color hexadecimal no es válido (ej: #FF0000)');
+      return;
     }
 
     const payload: PantoneColor = {
       code: code.trim().toUpperCase(),
       name: name.trim(),
-      hex,
+      hex: finalHex,
       mesh,
       squeegee,
       notes: notes.trim(),
+      type,
       formulas: finalFormulas
     };
 
@@ -216,8 +263,14 @@ export default function PantoneFormModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in animate-duration-150">
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full flex flex-col max-h-[90vh] overflow-hidden">
+    <div 
+      className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in animate-duration-150"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full flex flex-col max-h-[90vh] overflow-hidden"
+        onClick={e => e.stopPropagation()}
+      >
         
         {/* Header de modal */}
         <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -227,7 +280,12 @@ export default function PantoneFormModal({
             </h3>
             <p className="text-xs text-slate-500">Registra los componentes y sus proporciones exactas de mezcla.</p>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer">
+          <button 
+            onClick={onClose} 
+            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer flex items-center gap-1.5"
+            title="Cerrar (Esc)"
+          >
+            <span className="text-[10px] font-semibold text-slate-400 hidden sm:inline-block bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded-md">Esc</span>
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -235,13 +293,6 @@ export default function PantoneFormModal({
         {/* Formulario */}
         <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto p-6 space-y-5">
           
-          {validationError && (
-            <div className="p-3 bg-red-50 border border-red-100 text-red-800 rounded-xl text-xs flex items-start gap-2 animate-pulse">
-              <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-              <div className="font-semibold">{validationError}</div>
-            </div>
-          )}
-
           {/* Información General */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
             <div className="sm:col-span-4">
@@ -252,11 +303,10 @@ export default function PantoneFormModal({
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-1 focus:ring-blue-400 focus:outline-none"
-                required
               />
             </div>
 
-            <div className="sm:col-span-5">
+            <div className="sm:col-span-3">
               <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nombre Descriptivo *</label>
               <input
                 type="text"
@@ -264,8 +314,19 @@ export default function PantoneFormModal({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-blue-400 focus:outline-none"
-                required
               />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Línea *</label>
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value as 'Pigmento' | 'Reactivo')}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-blue-400 focus:outline-none"
+              >
+                <option value="Pigmento">Pigmento</option>
+                <option value="Reactivo">Reactivo</option>
+              </select>
             </div>
 
             <div className="sm:col-span-3">
@@ -273,12 +334,17 @@ export default function PantoneFormModal({
               <div className="flex gap-2 items-center">
                 <input
                   type="color"
+                  value={/^#[0-9A-Fa-f]{6}$/i.test(hex) ? hex : '#000000'}
+                  onChange={(e) => setHex(e.target.value)}
+                  className="w-10 h-10 border border-slate-200 rounded-xl p-0.5 cursor-pointer bg-slate-50 shrink-0"
+                />
+                <input
+                  type="text"
                   value={hex}
                   onChange={(e) => setHex(e.target.value)}
-                  className="w-10 h-10 border border-slate-200 rounded-xl p-0.5 cursor-pointer bg-slate-50"
-                  required
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs font-mono font-bold text-slate-700 uppercase focus:ring-1 focus:ring-blue-400 focus:outline-none"
+                  placeholder="#000000"
                 />
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase">{hex}</span>
               </div>
             </div>
           </div>
@@ -313,11 +379,25 @@ export default function PantoneFormModal({
                 Por Porcentaje Directo (%)
               </button>
             </div>
-            <p className="text-[10px] text-slate-400 mt-2">
-              {entryMode === 'grams'
-                ? 'Introduce los gramos reales que usaste para armar tu muestra de laboratorio (ej: 950g de pasta espesante y 50g de colorante). La app calculará las proporciones exactas en % automáticamente.'
-                : 'Introduce los porcentajes directamente. La suma total de los porcentajes debe ser exactamente 100.00%.'}
-            </p>
+            <div className="mt-4 pt-3 border-t border-slate-100">
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                {entryMode === 'grams' ? 'Tamaño de la Muestra (g)' : 'Tamaño base (g) para previsualizar visualmente'}
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  placeholder="Ej: 100 o 1000"
+                  value={referenceSampleGrams}
+                  onChange={(e) => setReferenceSampleGrams(e.target.value === '' ? '' : Number(e.target.value))}
+                  className="w-full sm:w-1/2 bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-1 focus:ring-blue-400 focus:outline-none"
+                />
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">
+                {entryMode === 'grams' 
+                  ? 'Si preparaste los colores en un tarro de 100g (pero solo registras 80g de ingredientes), escribe "100" aquí para que los % se calculen sobre 100g y no sobre la suma.'
+                  : 'Este valor solo se usa para previsualizar la columna de gramos mientras editas los porcentajes.'}
+              </p>
+            </div>
           </div>
 
           {/* Formulación e ingredientes */}
@@ -353,7 +433,6 @@ export default function PantoneFormModal({
                       value={f.component}
                       onChange={(e) => handleFormulaFieldChange(idx, 'component', e.target.value)}
                       className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs font-semibold focus:outline-none text-slate-800 focus:ring-1 focus:ring-blue-400"
-                      required
                     />
                   </div>
 
@@ -380,7 +459,6 @@ export default function PantoneFormModal({
                           onChange={(e) => handleFormulaFieldChange(idx, 'grams', e.target.value)}
                           className="w-full bg-transparent border-none text-xs text-right focus:outline-none font-bold text-blue-600 font-mono"
                           min="0"
-                          required
                         />
                         <span className="text-xs font-bold text-slate-400">g</span>
                       </>
@@ -395,7 +473,6 @@ export default function PantoneFormModal({
                           className="w-full bg-transparent border-none text-xs text-right focus:outline-none font-bold text-blue-600 font-mono"
                           min="0"
                           max="100"
-                          required
                         />
                         <span className="text-xs font-bold text-slate-400">%</span>
                       </>
@@ -461,26 +538,35 @@ export default function PantoneFormModal({
           </div>
 
           {/* Acciones */}
-          <div className="border-t border-slate-100 pt-4 flex justify-end gap-2.5">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-slate-100 text-slate-600 rounded-xl px-4 py-2.5 text-xs font-bold hover:bg-slate-200 cursor-pointer transition-colors"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white rounded-xl px-5 py-2.5 text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer shadow-lg shadow-blue-500/10"
-            >
-              {editingPantone ? 'Guardar Cambios' : 'Registrar Fórmula'}
-            </button>
+          <div className="border-t border-slate-100 pt-4 flex flex-col gap-3">
+            {validationError && (
+              <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-xl text-xs flex items-start gap-2 shadow-sm animate-fade-in">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div className="font-bold">{validationError}</div>
+              </div>
+            )}
+            
+            <div className="flex justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={onClose}
+                className="bg-slate-100 text-slate-600 rounded-xl px-4 py-2.5 text-xs font-bold hover:bg-slate-200 cursor-pointer transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-600 text-white rounded-xl px-5 py-2.5 text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer shadow-lg shadow-blue-500/10"
+              >
+                {editingPantone ? 'Guardar Cambios' : 'Registrar Fórmula'}
+              </button>
+            </div>
           </div>
 
           {/* Datalist helper para autocompletar insumos de stock */}
           <datalist id="stock-options">
-            {stock.map((s) => (
-              <option key={s.name} value={s.name} />
+            {stock.map((s, idx) => (
+              <option key={s.id || idx} value={s.name} />
             ))}
           </datalist>
 

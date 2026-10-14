@@ -1,0 +1,1155 @@
+[
+  {
+    "name": "AIRO MAN HOLK",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "AVENGER TOOR",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "AVENGERS #2",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "AVENGERS 2",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 4,
+    "sheets": [
+      "JUNIO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "AVENGERS 3",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 5,
+    "sheets": [
+      "MAYO",
+      "JUNIO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "AVENGERS THOOR",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "AVENGERS TOOR",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "BARRANQUILLA",
+    "m1": 0.6,
+    "m2": 0.44,
+    "gr": 380,
+    "proc": "reactivo",
+    "area": 0.264,
+    "peso": 100.32000000000001,
+    "occurrences": 1,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "BUZZ",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 7,
+    "sheets": [
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "BUZZ (MUESTRA) 6CM",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "BUZZ MODA NOVA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "C ASTRO LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "C.ARCOIRIS LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "C.DINOSAURIO LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 2,
+    "sheets": [
+      "FEBRERO",
+      "MARZO"
+    ]
+  },
+  {
+    "name": "C.MAGIC LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "C.SAFARI LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 2,
+    "sheets": [
+      "FEBRERO",
+      "MARZO"
+    ]
+  },
+  {
+    "name": "C.SALVAJE LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "C.UNICORNIO LINEA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "CANGREJO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 5,
+    "sheets": [
+      "ENERO",
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "CARS",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 15,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "CARS (MUESTRA) 6CM",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "CARS MODA NOVA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "CHASE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 6,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "CHASE P.P",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 11,
+    "sheets": [
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "DINO MARKETING",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "DUPRE FLORES",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.15,
+    "peso": 45,
+    "occurrences": 1,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "DUPRE RAYAS",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.15,
+    "peso": 45,
+    "occurrences": 1,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "FLOR DUPRE",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.15,
+    "peso": 45,
+    "occurrences": 1,
+    "sheets": [
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "FRUTAS ANDU",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 16,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "FRUTAS ANDU VIEJAS",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 2,
+    "sheets": [
+      "FEBRERO"
+    ]
+  },
+  {
+    "name": "GALLINA DUPREE",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.15,
+    "peso": 45,
+    "occurrences": 1,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "GATA MARY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 6,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "GRANJA ANDU",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 8,
+    "sheets": [
+      "ENERO",
+      "MARZO",
+      "ABRIL",
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "GRANJAS ANDU",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 2,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "HELLO KITTY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "HELLO KITTY (MUESTRA)",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "IRON MAN HOLK",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 4,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "IRON-MAN",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "JESSIE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 4,
+    "sheets": [
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "KOALA MARKETING",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 2,
+    "sheets": [
+      "MARZO"
+    ]
+  },
+  {
+    "name": "KOALA NIÑA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 1,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "KOALA NIÑO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 3,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "LAZOS MUESTRAS",
+    "m1": 0.6,
+    "m2": 1.3,
+    "gr": 380,
+    "proc": "reactivo",
+    "area": 0.78,
+    "peso": 296.40000000000003,
+    "occurrences": 1,
+    "sheets": [
+      "ABRIL"
+    ]
+  },
+  {
+    "name": "M.LORIAN (MUESTRA) 6CM",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "MANDALORIAN MODA NOVA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "MARIE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 9,
+    "sheets": [
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "MICKEY MOUSE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 25,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "MINNIE MOUSE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 28,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "MMA",
+    "m1": 0.4,
+    "m2": 0.6,
+    "gr": 380,
+    "proc": "reactivo",
+    "area": 0.24,
+    "peso": 91.2,
+    "occurrences": 1,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "NAVIDAD ANDU",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 63,
+    "occurrences": 5,
+    "sheets": [
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "NAVIDAD LINEA",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 63,
+    "occurrences": 6,
+    "sheets": [
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "POWER FIT",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "QE FRUTAS",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 4,
+    "sheets": [
+      "FEBRERO",
+      "MARZO",
+      "MAYO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "QE UTENCILIOS",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 63,
+    "occurrences": 1,
+    "sheets": [
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "QE UTENSILIO",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 4,
+    "sheets": [
+      "ENERO",
+      "FEBRERO",
+      "MARZO"
+    ]
+  },
+  {
+    "name": "QEFRUTAS",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 1,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "RAMA DUPRE",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 300,
+    "proc": "pigmento",
+    "area": 0.15,
+    "peso": 45,
+    "occurrences": 2,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "ROMARCO",
+    "m1": 0.3,
+    "m2": 0.5,
+    "gr": 380,
+    "proc": "reactivo",
+    "area": 0.15,
+    "peso": 57,
+    "occurrences": 1,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "SELECCIÓN COLOMBIA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "SKAY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 11,
+    "sheets": [
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "SKYE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "SPADER-MAN",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "SPAIDER-MAN",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "SPAIDY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "SPIDER-MAN",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 14,
+    "sheets": [
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "SPIDEY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 10,
+    "sheets": [
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "SPIDY GIGANTE",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "STICH NIÑA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "STICH NIÑO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 3,
+    "sheets": [
+      "ENERO"
+    ]
+  },
+  {
+    "name": "STITCH (MUESTRA) 6CM",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "MAYO",
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "STITCH ALOHA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 4,
+    "sheets": [
+      "JULIO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "STITCH NIÑA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 17,
+    "sheets": [
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "STITCH NIÑO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 13,
+    "sheets": [
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "STITCH NÑO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JUNIO"
+    ]
+  },
+  {
+    "name": "STITCH SUMER",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 2,
+    "sheets": [
+      "JULIO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "VACAS ANDU",
+    "m1": 0.35,
+    "m2": 0.6,
+    "gr": 330,
+    "proc": "pigmento",
+    "area": 0.21,
+    "peso": 69.3,
+    "occurrences": 5,
+    "sheets": [
+      "FEBRERO",
+      "JULIO",
+      "SEPTIEMBRE"
+    ]
+  },
+  {
+    "name": "WOODY",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 7,
+    "sheets": [
+      "JUNIO",
+      "JULIO",
+      "AGOSTO"
+    ]
+  },
+  {
+    "name": "WOODY (MUESTRA) 6CM",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "WOODY (MUESTRA) X",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "MAYO"
+    ]
+  },
+  {
+    "name": "WOODY MODA NOVA",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 280,
+    "proc": "reactivo",
+    "area": 0.72,
+    "peso": 201.6,
+    "occurrences": 1,
+    "sheets": [
+      "JULIO"
+    ]
+  },
+  {
+    "name": "ZOOLOGICO",
+    "m1": 0.6,
+    "m2": 1.2,
+    "gr": 320,
+    "proc": "pigmento",
+    "area": 0.72,
+    "peso": 230.39999999999998,
+    "occurrences": 8,
+    "sheets": [
+      "MAYO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE"
+    ]
+  }
+]

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { MessageSquare, Send, Sparkles, AlertCircle, HelpCircle, ArrowRight } from 'lucide-react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -16,12 +17,23 @@ export default function AiAssistant({ initialPrompt, onClearInitialPrompt }: AiA
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      text: '¡Hola! Soy tu Consultor Técnico de Color y Serigrafía. Estoy aquí para resolver cualquier duda que tengas sobre mezclas de color Pantone, selección de mallas de serigrafía, problemas de adherencia o secado en toallas o hamacas, y optimización de tus procesos de estampado. ¿En qué te puedo ayudar hoy?'
+      text: '¡Hola! Soy tu Consultor Técnico de Color y Pigmentos. Estoy aquí para resolver cualquier duda que tengas sobre mezclas de color Pantone, selección de mallas de pigmentos, problemas de adherencia o secado en toallas o hamacas, y optimización de tus procesos de estampado. ¿En qué te puedo ayudar hoy?'
     }
   ]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  
+  // API Key State
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+  const [isApiKeySet, setIsApiKeySet] = useState(() => !!localStorage.getItem('gemini_api_key'));
+
+  const handleSaveApiKey = () => {
+    if (apiKey.trim()) {
+      localStorage.setItem('gemini_api_key', apiKey.trim());
+      setIsApiKeySet(true);
+    }
+  };
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -54,29 +66,23 @@ export default function AiAssistant({ initialPrompt, onClearInitialPrompt }: AiA
     setLoading(true);
 
     try {
-      // Hacer la llamada a nuestra API del servidor Express local
-      const response = await fetch('/api/color-assistant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: textToSend,
-          // Enviamos el historial sin el primer saludo del asistente
-          history: messages.slice(1).map(m => ({
-            role: m.role,
-            text: m.text
-          }))
-        })
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-pro-latest",
+        systemInstruction: "Eres un Consultor Técnico de Color y Pigmentos experto. Tus consejos son sobre mezclas de color Pantone, selección de mallas de pigmentos, problemas de adherencia o secado en toallas o hamacas, y optimización de procesos de estampado."
       });
 
-      const data = await response.json();
+      const chat = model.startChat({
+        history: messages.slice(1).map(m => ({
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: m.text }],
+        })),
+      });
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Ocurrió un error al procesar tu consulta.');
-      }
-
-      setMessages(prev => [...prev, { role: 'assistant', text: data.response }]);
+      const result = await chat.sendMessage(textToSend);
+      const responseText = result.response.text();
+      
+      setMessages(prev => [...prev, { role: 'assistant', text: responseText }]);
     } catch (err: any) {
       console.error(err);
       setErrorMsg(err.message || 'No se pudo conectar con el servidor. Verifica que la clave API esté configurada.');
@@ -100,7 +106,7 @@ export default function AiAssistant({ initialPrompt, onClearInitialPrompt }: AiA
         <div className="space-y-5">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-blue-600 animate-pulse" />
-            <h4 className="text-sm font-bold text-slate-900">Consultor AI de Serigrafía</h4>
+            <h4 className="text-sm font-bold text-slate-900">Consultor AI de Pigmentos</h4>
           </div>
 
           <p className="text-xs text-slate-500 leading-relaxed">
@@ -132,14 +138,55 @@ export default function AiAssistant({ initialPrompt, onClearInitialPrompt }: AiA
       <div className="lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col overflow-hidden h-full">
         
         {/* Cabecera del chat */}
-        <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
-          <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
-          <p className="text-xs font-bold text-slate-700">Asesor de Color en Línea (Gemini)</p>
+        <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
+            <p className="text-xs font-bold text-slate-700">Asesor de Color en Línea (Google Gemini)</p>
+          </div>
+          {isApiKeySet && (
+            <button 
+              onClick={() => {
+                localStorage.removeItem('gemini_api_key');
+                setApiKey('');
+                setIsApiKeySet(false);
+              }}
+              className="text-[10px] text-slate-400 hover:text-red-500 font-bold underline"
+            >
+              Cambiar API Key
+            </button>
+          )}
         </div>
 
         {/* Mensajes */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4 max-h-[460px] custom-scrollbar">
-          {messages.map((m, idx) => {
+        {!isApiKeySet ? (
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center text-center">
+            <Sparkles className="w-12 h-12 text-blue-500 mb-4" />
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Configurar Gemini API</h3>
+            <p className="text-sm text-slate-500 max-w-md mb-6">
+              Para usar el consultor de inteligencia artificial, necesitas una clave API gratuita de Google Gemini. 
+              Puedes obtenerla sin costo en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 font-bold underline">Google AI Studio</a>.
+            </p>
+            <div className="w-full max-w-sm space-y-3">
+              <input 
+                type="password"
+                placeholder="Pega tu API Key aquí..."
+                value={apiKey}
+                onChange={e => setApiKey(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+              />
+              <button 
+                onClick={handleSaveApiKey}
+                disabled={!apiKey.trim()}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors disabled:opacity-50"
+              >
+                Guardar y Comenzar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex-1 overflow-y-auto p-6 space-y-4 max-h-[460px] custom-scrollbar">
+              {messages.map((m, idx) => {
             const isAi = m.role === 'assistant';
             return (
               <div 
@@ -195,27 +242,29 @@ export default function AiAssistant({ initialPrompt, onClearInitialPrompt }: AiA
             </div>
           )}
 
-          <div ref={messagesEndRef} />
-        </div>
+            <div ref={messagesEndRef} />
+          </div>
 
-        {/* Input Bar */}
-        <form onSubmit={handleSendMessage} className="p-4 border-t border-slate-200 bg-slate-50 flex gap-2">
-          <input
-            type="text"
-            placeholder="Haz una consulta técnica sobre el color, mallas, temperatura..."
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:ring-2 focus:ring-blue-400 focus:outline-none text-slate-800 font-semibold shadow-inner"
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            disabled={loading || !inputText.trim()}
-            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center cursor-pointer shadow-md shadow-blue-500/10"
-          >
-            <Send className="w-4 h-4" />
-          </button>
-        </form>
+          {/* Input Bar */}
+          <form onSubmit={handleSendMessage} className="p-4 border-t border-slate-200 bg-slate-50 flex gap-2">
+            <input
+              type="text"
+              placeholder="Haz una consulta técnica sobre el color, mallas, temperatura..."
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:ring-2 focus:ring-blue-400 focus:outline-none text-slate-800 font-semibold shadow-inner"
+              disabled={loading}
+            />
+            <button
+              type="submit"
+              disabled={loading || !inputText.trim()}
+              className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center cursor-pointer shadow-md shadow-blue-500/10"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </>
+        )}
 
       </div>
     </div>

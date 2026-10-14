@@ -7,13 +7,15 @@ interface PantoneSelectorProps {
   selectedPantone: PantoneColor | null;
   onSelectPantone: (pantone: PantoneColor) => void;
   onOpenCreateModal: () => void;
+  readonly?: boolean;
 }
 
 export default function PantoneSelector({
   pantones,
   selectedPantone,
   onSelectPantone,
-  onOpenCreateModal
+  onOpenCreateModal,
+  readonly = false
 }: PantoneSelectorProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -96,13 +98,15 @@ export default function PantoneSelector({
       </div>
 
       {/* Acción de agregar rápida */}
-      <button
-        onClick={onOpenCreateModal}
-        className="mt-4 w-full bg-blue-600 text-white rounded-xl py-2.5 px-4 text-xs font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/10 flex items-center justify-center gap-2 cursor-pointer"
-      >
-        <Plus className="w-4 h-4" />
-        Agregar Nueva Fórmula
-      </button>
+      {!readonly && (
+        <button
+          onClick={onOpenCreateModal}
+          className="mt-4 w-full bg-blue-600 text-white rounded-xl py-2.5 px-4 text-xs font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/10 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+          Agregar Nueva Fórmula
+        </button>
+      )}
     </div>
   );
 }
