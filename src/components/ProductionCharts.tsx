@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { Table, Award, Zap, TrendingUp, Calendar, Layers, BarChart3 } from 'lucide-react';
 import { DailyProductionRecord } from '../types';
+import { getRecordKg, getRecordGolpes } from '../lib/dataService';
 
 interface ProductionChartsProps {
   records: DailyProductionRecord[];
@@ -19,9 +20,6 @@ const PIGMENTO_COLOR = '#f59e0b';
 const DESIGN_COLORS = ['#0ea5e9', '#6366f1', '#10b981', '#f59e0b', '#ec4899', '#14b8a6', '#ef4444', '#8b5cf6', '#84cc16', '#f97316'];
 const SHIFT_COLORS = ['#0ea5e9', '#6366f1', '#10b981', '#f59e0b'];
 const MONTH_SHORT = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-const getGolpes = (r: DailyProductionRecord): number =>
-  r.golpes || (r.widthM <= 0.40 ? Math.round(r.units / 5) : Math.round(r.units / 3));
 
 const fmtInt = (n: number) => Math.round(n).toLocaleString('es-ES');
 const fmtDec = (n: number, d = 2) =>
@@ -52,20 +50,20 @@ export default function ProductionCharts({ records, weightUnit, periodLabel }: P
   };
 
   const valueOf = (r: DailyProductionRecord): number => {
-    if (metric === 'kg') return (r.kgDay || 0) * wFactor;
+    if (metric === 'kg') return getRecordKg(r) * wFactor;
     if (metric === 'units') return r.units || 0;
-    return getGolpes(r);
+    return getRecordGolpes(r);
   };
 
   const round = (n: number) => (metric === 'kg' ? Number(n.toFixed(weightUnit === 'kg' ? 2 : 0)) : Math.round(n));
 
   // ── KPIs ──
   const kpis = useMemo(() => {
-    const totalKg = records.reduce((a, r) => a + (r.kgDay || 0), 0);
+    const totalKg = records.reduce((a, r) => a + getRecordKg(r), 0);
     const totalUnits = records.reduce((a, r) => a + (r.units || 0), 0);
-    const totalGolpes = records.reduce((a, r) => a + getGolpes(r), 0);
+    const totalGolpes = records.reduce((a, r) => a + getRecordGolpes(r), 0);
     const byDate = new Map<string, number>();
-    records.forEach(r => byDate.set(r.date, (byDate.get(r.date) || 0) + (r.kgDay || 0)));
+    records.forEach(r => byDate.set(r.date, (byDate.get(r.date) || 0) + getRecordKg(r)));
     const days = byDate.size;
     let bestDay = '';
     let bestKg = 0;

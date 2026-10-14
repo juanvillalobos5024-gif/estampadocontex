@@ -73,7 +73,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
   };
 
   // Filtro de categorías y búsqueda
-  const [activeCategoryFilter, setActiveCategoryFilter] = useState<'todos' | 'pigmentos' | 'reactivos' | 'inventario' | 'preparadas'>('todos');
+  const [activeCategoryFilter, setActiveCategoryFilter] = useState<'todos' | 'pigmentos' | 'reactivos' | 'inventario' | 'preparadas' | 'criticos'>('todos');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Paginación
@@ -387,7 +387,9 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
   // Filtrado de stock basado en categoría y búsqueda
   const filteredStock = stock.filter(item => {
     if (activeCategoryFilter !== 'todos') {
-      if (activeCategoryFilter === 'pigmentos') {
+      if (activeCategoryFilter === 'criticos') {
+        if (item.quantity > item.minRequired) return false;
+      } else if (activeCategoryFilter === 'pigmentos') {
         if (item.type !== 'pigmento') return false;
       } else if (activeCategoryFilter === 'reactivos') {
         if (item.type !== 'colorante_reactivo') return false;
@@ -419,59 +421,113 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
   const paginatedStock = filteredStock.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
 
+  const typeLabel = (type: string) => {
+    const map: Record<string, string> = {
+      'pigmento': 'Pigmento',
+      'colorante_reactivo': 'Reactivo',
+      'base': 'Base Clear',
+      'urea': 'Urea',
+      'asutol': 'Asutol',
+      'bicarbonato': 'Bicarbonato',
+      'pasta': 'Pasta Espesante',
+      'sal_alginato': 'Sal / Alginato',
+      'aditivo': 'Aditivo'
+    };
+    return map[type] || type;
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-start overflow-hidden" id="stock-manager-view">
+    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 h-full min-h-0 overflow-hidden" id="stock-manager-view">
       
       {/* Columna Principal - Lista de Insumos */}
-      <div className="lg:col-span-8 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col h-full overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-blue-600" />
-            <h3 className="text-lg font-bold text-slate-900">Inventario y Lista de Insumos</h3>
-          </div>
+      <div className="flex-1 lg:col-span-8 bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-3.5 sm:p-6 shadow-sm flex flex-col h-full min-h-0 overflow-hidden">
+        
+        {/* Cabecera Responsiva */}
+        <div className="flex flex-col gap-3 mb-4 sm:mb-6 shrink-0">
           
-          <div className="flex items-center gap-3">
-            <div className="relative">
+          {/* Fila 1: Título y Botón Principal */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                <Layers className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-lg font-bold text-slate-900 leading-tight truncate">Inventario de Insumos</h3>
+                <p className="text-[10px] sm:text-xs text-slate-400 font-medium">
+                  {stock.length} materiales · {lowStockItems.length > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => setActiveCategoryFilter('criticos')}
+                      className="text-amber-600 hover:text-amber-700 font-bold hover:underline cursor-pointer"
+                    >
+                      {lowStockItems.length} críticos
+                    </button>
+                  ) : (
+                    <span className="text-emerald-600 font-bold">Stock en orden</span>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="bg-blue-600 text-white rounded-xl px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-bold hover:bg-blue-700 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">{showAddForm ? 'Cerrar Formulario' : 'Nuevo Insumo'}</span>
+              <span className="sm:hidden">{showAddForm ? 'Cerrar' : 'Insumo'}</span>
+            </button>
+          </div>
+
+          {/* Fila 2: Búsqueda y Botones Secundarios */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+            <div className="relative flex-1">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Buscar insumo..."
+                placeholder="Buscar insumo o pigmento..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none w-48 sm:w-56 transition-all focus:w-64"
+                className="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none transition-all"
               />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+                  title="Limpiar búsqueda"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
-            <button
-              onClick={() => {
-                setPastaMadreKg(200);
-                setPastaMadreError(null);
-                setPastaMadreSuccess(false);
-                setShowPastaMadreModal(true);
-              }}
-              className="bg-teal-600 text-white rounded-xl px-4 py-2 text-xs font-bold hover:bg-teal-700 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0"
-            >
-              <Beaker className="w-4 h-4" />
-              <span className="hidden sm:inline">Preparar Pasta Madre</span>
-              <span className="sm:hidden">Pasta</span>
-            </button>
-            <button
-              onClick={handleSyncExcelInventory}
-              disabled={isSyncing}
-              className="bg-indigo-600 text-white rounded-xl px-3.5 py-2 text-xs font-bold hover:bg-indigo-700 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0 disabled:opacity-50"
-              title="Sincronizar con el reporte Excel 7-Oct-2026 (las que no estén quedarán en 0)"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">{isSyncing ? 'Sincronizando...' : 'Actualizar Excel 7-Oct'}</span>
-              <span className="sm:hidden">{isSyncing ? '...' : '7-Oct'}</span>
-            </button>
-            <button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="bg-blue-600 text-white rounded-xl px-4 py-2 text-xs font-bold hover:bg-blue-700 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0"
-            >
-              <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">{showAddForm ? 'Cerrar' : 'Agregar Insumo Fijo'}</span>
-              <span className="sm:hidden">{showAddForm ? 'Cerrar' : 'Agregar'}</span>
-            </button>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={() => {
+                  setPastaMadreKg(200);
+                  setPastaMadreError(null);
+                  setPastaMadreSuccess(false);
+                  setShowPastaMadreModal(true);
+                }}
+                className="flex-1 sm:flex-initial bg-teal-600 text-white rounded-xl px-2.5 sm:px-3.5 py-2 text-xs font-bold hover:bg-teal-700 transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Preparar lote de Pasta Madre"
+              >
+                <Beaker className="w-3.5 h-3.5" />
+                <span>Pasta Madre</span>
+              </button>
+
+              <button
+                onClick={handleSyncExcelInventory}
+                disabled={isSyncing}
+                className="flex-1 sm:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl px-2.5 sm:px-3 py-2 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                title="Sincronizar con el reporte Excel 7-Oct-2026"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">{isSyncing ? 'Sincronizando...' : 'Excel 7-Oct'}</span>
+                <span className="sm:hidden">{isSyncing ? '...' : 'Excel'}</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -492,39 +548,39 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
           </div>
         )}
 
-        {/* Separación por Pestañas */}
-        <div className="flex border-b border-slate-100 mb-6 gap-2 overflow-x-auto custom-scrollbar">
+        {/* Separación por Pestañas (Pills) */}
+        <div className="flex border-b border-slate-100 mb-4 sm:mb-5 gap-1.5 overflow-x-auto pb-2 custom-scrollbar">
           <button
             onClick={() => setActiveCategoryFilter('todos')}
-            className={`pb-3 px-4 text-xs font-bold transition-all relative cursor-pointer whitespace-nowrap ${
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeCategoryFilter === 'todos' 
-                ? 'text-blue-600 border-b-2 border-blue-600' 
-                : 'text-slate-400 hover:text-slate-600'
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            Materia Prima Cruda ({stock.filter(i => i.type !== 'tinta_preparada').length})
+            Materia Prima ({stock.filter(i => i.type !== 'tinta_preparada').length})
           </button>
 
-          <div className="w-px h-4 bg-slate-200 my-auto ml-2 mr-2 hidden sm:block"></div>
-          
-          <button
-            onClick={() => setActiveCategoryFilter('preparadas')}
-            className={`pb-3 px-4 text-xs font-bold transition-all relative cursor-pointer whitespace-nowrap ${
-              activeCategoryFilter === 'preparadas' 
-                ? 'text-emerald-600 border-b-2 border-emerald-600' 
-                : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            Bodega de Preparadas ({stock.filter(i => i.type === 'tinta_preparada').length})
-          </button>
-          
-          <div className="w-px h-4 bg-slate-200 my-auto ml-2 mr-2 hidden sm:block"></div>
+          {lowStockItems.length > 0 && (
+            <button
+              onClick={() => setActiveCategoryFilter('criticos')}
+              className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                activeCategoryFilter === 'criticos' 
+                  ? 'bg-amber-500 text-white shadow-xs' 
+                  : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200'
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5" />
+              Críticos ({lowStockItems.length})
+            </button>
+          )}
+
           <button
             onClick={() => setActiveCategoryFilter('pigmentos')}
-            className={`pb-3 px-4 text-xs font-bold transition-all relative cursor-pointer whitespace-nowrap ${
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeCategoryFilter === 'pigmentos' 
-                ? 'text-blue-600 border-b-2 border-blue-600' 
-                : 'text-slate-400 hover:text-slate-600'
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
             Pigmentos ({stock.filter(i => i.type === 'pigmento').length})
@@ -532,34 +588,43 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
 
           <button
             onClick={() => setActiveCategoryFilter('reactivos')}
-            className={`pb-3 px-4 text-xs font-bold transition-all relative cursor-pointer whitespace-nowrap ${
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeCategoryFilter === 'reactivos' 
-                ? 'text-blue-600 border-b-2 border-blue-600' 
-                : 'text-slate-400 hover:text-slate-600'
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
             Reactivos ({stock.filter(i => i.type === 'colorante_reactivo').length})
           </button>
 
-          <div className="w-px h-4 bg-slate-200 my-auto ml-2 mr-2 hidden sm:block"></div>
+          <button
+            onClick={() => setActiveCategoryFilter('preparadas')}
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              activeCategoryFilter === 'preparadas' 
+                ? 'bg-emerald-600 text-white shadow-xs' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }`}
+          >
+            Preparadas ({stock.filter(i => i.type === 'tinta_preparada').length})
+          </button>
 
           <button
             onClick={() => setActiveCategoryFilter('inventario')}
-            className={`pb-3 px-4 text-xs font-bold transition-all relative cursor-pointer whitespace-nowrap ${
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeCategoryFilter === 'inventario' 
-                ? 'text-blue-600 border-b-2 border-blue-600' 
-                : 'text-slate-400 hover:text-slate-600'
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            Inventario ({stock.filter(i => !['pigmento', 'colorante_reactivo'].includes(i.type)).length})
+            Otros / Bases ({stock.filter(i => !['pigmento', 'colorante_reactivo', 'tinta_preparada'].includes(i.type)).length})
           </button>
         </div>
 
         {/* Formulario de Agregar Insumo */}
         {showAddForm && (
-          <form onSubmit={handleSubmit} className="bg-slate-50 border border-slate-100 rounded-2xl p-5 mb-6 space-y-4 animate-fade-in">
+          <form onSubmit={handleSubmit} className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 sm:p-5 mb-4 sm:mb-6 space-y-3 sm:space-y-4 animate-fade-in">
             <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wide">Nuevo Insumo de Taller</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nombre Comercial / Insumo</label>
                 <input
@@ -567,7 +632,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                   placeholder="Ej: Azul Reactivo H-EXL o Pasta Espesante Alginato"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-medium"
+                  className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-medium"
                   required
                 />
               </div>
@@ -579,14 +644,13 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                   onChange={(e) => {
                     const val = e.target.value;
                     setNewType(val as any);
-                    // Asignación automática de categoría para los tabs
                     if (['colorante_reactivo', 'pasta', 'urea', 'asutol', 'bicarbonato', 'sal_alginato'].includes(val)) {
                       setNewCategory('reactivo');
                     } else {
                       setNewCategory('pigmento');
                     }
                   }}
-                  className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-semibold"
+                  className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-semibold"
                 >
                   <option value="pigmento">Pigmento</option>
                   <option value="colorante_reactivo">Reactivo</option>
@@ -607,7 +671,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                     type="number"
                     value={newQty}
                     onChange={(e) => setNewQty(Math.max(0, Number(e.target.value)))}
-                    className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
                     required
                   />
                 </div>
@@ -617,7 +681,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                     type="number"
                     value={newMin}
                     onChange={(e) => setNewMin(Math.max(0, Number(e.target.value)))}
-                    className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
                     required
                   />
                 </div>
@@ -628,21 +692,21 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                       type="color"
                       value={newColor}
                       onChange={(e) => setNewColor(e.target.value)}
-                      className="w-12 h-10 rounded-lg cursor-pointer bg-white border border-slate-200 p-1"
+                      className="w-10 h-9 rounded-lg cursor-pointer bg-white border border-slate-200 p-0.5"
                     />
                     <input
                       type="text"
                       value={newColor}
                       onChange={(e) => setNewColor(e.target.value)}
                       placeholder="#HEX"
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:ring-1 focus:ring-blue-400 focus:outline-none text-slate-800 font-mono"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 pt-1">
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
@@ -652,297 +716,554 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
               </button>
               <button
                 type="submit"
-                className="bg-blue-600 text-white rounded-xl px-4 py-1.5 text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer"
+                className="bg-blue-600 text-white rounded-xl px-4 py-1.5 text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer shadow-sm"
               >
-                Registrar Insumo Constante
+                Registrar Insumo
               </button>
             </div>
           </form>
         )}
 
-        {/* Tabla / Lista de Stock */}
-        <div className="flex-1 overflow-y-auto pr-1">
+        {/* Contenido: Tarjetas en Móvil / Tabla en Desktop */}
+        <div className="flex-1 overflow-y-auto pr-0 lg:pr-1 custom-scrollbar min-h-0">
           {filteredStock.length === 0 ? (
-            <div className="text-center py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <div className="text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
               <Filter className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-              <p className="text-xs font-bold text-slate-500">No hay insumos registrados para esta línea.</p>
-              <p className="text-[11px] text-slate-400 mt-1">Usa el botón "Agregar Insumo Fijo" para dar de alta tus materiales.</p>
+              <p className="text-xs font-bold text-slate-600">No hay insumos registrados para este filtro.</p>
+              <p className="text-[11px] text-slate-400 mt-1">Intenta cambiar la categoría o limpiar la búsqueda.</p>
+              {(searchTerm || activeCategoryFilter !== 'todos') && (
+                <button
+                  onClick={() => { setSearchTerm(''); setActiveCategoryFilter('todos'); }}
+                  className="mt-3 text-xs text-blue-600 font-bold hover:underline cursor-pointer"
+                >
+                  Restablecer filtros
+                </button>
+              )}
             </div>
           ) : (
-            <table className="w-full border-collapse text-left">
-              <thead>
-                <tr className="border-b border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest bg-slate-50/50">
-                  <th className="py-3 px-4 font-semibold w-1/3">Insumo / Material</th>
-                  <th className="py-3 px-4 font-semibold">Tipo</th>
-                  <th className="py-3 px-4 font-semibold text-right">Cantidad (g / kg)</th>
-                  <th className="py-3 px-4 font-semibold text-right">Alerta Mín. (g / kg)</th>
-                  <th className="py-3 px-4 font-semibold text-right w-[180px]">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
+            <>
+              {/* VISTA MÓVIL (Tarjetas limpias y táctiles) */}
+              <div className="md:hidden space-y-2.5">
                 {paginatedStock.map((item) => {
                   const isLow = item.quantity <= item.minRequired;
                   const isEditing = editingId === item.id;
-                  
-                  // Helper para parsear tipo
-                  const typeLabel = (type: string) => {
-                    const map: Record<string, string> = {
-                      'pigmento': 'Pigmento',
-                      'colorante_reactivo': 'Reactivo',
-                      'base': 'Base Clear',
-                      'urea': 'Urea',
-                      'asutol': 'Asutol',
-                      'bicarbonato': 'Bicarbonato',
-                      'pasta': 'Pasta Espesante',
-                      'sal_alginato': 'Sal / Alginato',
-                      'aditivo': 'Aditivo'
-                    };
-                    return map[type] || type;
-                  };
-                  
-                  return (
-                    <tr key={item.id} className={`hover:bg-slate-50/50 ${isLow ? 'bg-amber-50/20' : ''}`}>
-                      <td className="py-3 px-4 font-bold text-slate-800">
-                        {isEditing ? (
-                          <div className="flex flex-col gap-2">
-                            <input
-                              type="text"
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              placeholder="Nombre del insumo"
-                              className="w-full bg-white border border-blue-400 rounded-xl px-2 py-1.5 text-xs text-slate-800 font-medium focus:outline-none focus:ring-1 focus:ring-blue-400"
-                              required
-                            />
-                            <div className="flex items-center gap-2">
+
+                  if (isEditing) {
+                    return (
+                      <div key={item.id} className="p-3 bg-blue-50/70 border border-blue-200 rounded-2xl space-y-2.5 shadow-sm">
+                        <p className="text-[10px] font-bold text-blue-700 uppercase">Editando Insumo</p>
+                        <div>
+                          <label className="text-[10px] font-bold text-slate-500 uppercase">Nombre</label>
+                          <input
+                            type="text"
+                            value={editName}
+                            onChange={(e) => setEditName(e.target.value)}
+                            className="w-full bg-white border border-blue-300 rounded-xl p-2 text-xs font-bold text-slate-800"
+                            required
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">Tipo</label>
+                            <select
+                              value={editType}
+                              onChange={(e) => handleEditTypeChange(e.target.value)}
+                              className="w-full bg-white border border-blue-300 rounded-xl p-2 text-xs font-semibold"
+                            >
+                              <option value="pigmento">Pigmento</option>
+                              <option value="colorante_reactivo">Reactivo</option>
+                              <option value="base">Base Clear</option>
+                              <option value="urea">Urea</option>
+                              <option value="asutol">Asutol</option>
+                              <option value="bicarbonato">Bicarbonato</option>
+                              <option value="pasta">Pasta</option>
+                              <option value="sal_alginato">Sal/Alginato</option>
+                              <option value="aditivo">Aditivo</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">Color</label>
+                            <div className="flex gap-1.5 items-center">
                               <input
                                 type="color"
                                 value={editColor}
                                 onChange={(e) => setEditColor(e.target.value)}
-                                className="w-6 h-6 rounded cursor-pointer bg-white border border-slate-200 p-0"
+                                className="w-8 h-8 rounded-lg border border-slate-200 p-0.5 shrink-0"
                               />
                               <input
                                 type="text"
                                 value={editColor}
                                 onChange={(e) => setEditColor(e.target.value)}
-                                placeholder="#HEX"
-                                className="w-20 bg-white border border-blue-400 rounded-lg px-2 py-1 text-[10px] text-slate-800 font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                className="w-full bg-white border border-blue-300 rounded-xl p-1.5 text-xs font-mono font-bold"
                               />
                             </div>
                           </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            {isLow && <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />}
-                            {item.hexColor && (
-                              <div 
-                                className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" 
-                                style={{ backgroundColor: item.hexColor }}
-                                title={item.hexColor}
-                              />
-                            )}
-                            {item.name}
-                          </div>
-                        )}
-                      </td>
-                      <td className="py-3 px-4">
-                        {isEditing ? (
-                          <select
-                            value={editType}
-                            onChange={(e) => handleEditTypeChange(e.target.value)}
-                            className="w-full bg-white border border-blue-400 rounded-xl px-2 py-1.5 text-xs text-slate-800 font-semibold focus:outline-none"
-                          >
-                            <option value="pigmento">Pigmento</option>
-                            <option value="colorante_reactivo">Reactivo</option>
-                            <option value="base">Base Clear / Copaje</option>
-                            <option value="urea">Urea</option>
-                            <option value="asutol">Asutol</option>
-                            <option value="bicarbonato">Bicarbonato</option>
-                            <option value="pasta">Pasta / Espesante</option>
-                            <option value="sal_alginato">Sal / Alginato</option>
-                            <option value="aditivo">Aditivo</option>
-                          </select>
-                        ) : (
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
-                            item.category === 'reactivo' ? 'bg-teal-50 text-teal-700 border-teal-100' :
-                            'bg-purple-50 text-purple-700 border-purple-100'
-                          }`}>
-                            {typeLabel(item.type)}
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono font-extrabold text-slate-900">
-                        {isEditing ? (
-                          <div className="flex items-center justify-end gap-1">
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">En Stock (g)</label>
                             <input
                               type="number"
                               value={editVal}
                               onChange={(e) => setEditVal(Math.max(0, Number(e.target.value)))}
-                              className="w-20 border border-blue-400 bg-white rounded-xl p-1 text-xs text-right font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full bg-white border border-blue-300 rounded-xl p-2 text-xs font-mono font-bold text-right"
                               required
                             />
-                            <span className="text-[10px] text-slate-400 font-semibold">g</span>
                           </div>
-                        ) : (
-                          <div className="flex flex-col items-end">
-                            <span>{(item.quantity).toLocaleString()} g</span>
-                            <span className="text-[10px] text-slate-400 font-normal mt-0.5">{(item.quantity / 1000).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 3 })} kg</span>
-                          </div>
-                        )}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-slate-400">
-                        {isEditing ? (
-                          <div className="flex items-center justify-end gap-1">
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">Alerta Mín (g)</label>
                             <input
                               type="number"
                               value={editMin}
                               onChange={(e) => setEditMin(Math.max(0, Number(e.target.value)))}
-                              className="w-20 border border-blue-400 bg-white rounded-xl p-1 text-xs text-right font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full bg-white border border-blue-300 rounded-xl p-2 text-xs font-mono font-bold text-right"
                               required
                             />
-                            <span className="text-[10px] text-slate-400 font-semibold">g</span>
                           </div>
-                        ) : (
-                          <div className="flex flex-col items-end">
-                            <span>{(item.minRequired).toLocaleString()} g</span>
-                            <span className="text-[10px] text-slate-400 font-normal mt-0.5">{(item.minRequired / 1000).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 3 })} kg</span>
-                          </div>
-                        )}
-                      </td>
-                      <td className="py-3 px-4 text-right">
-                        {isEditing ? (
-                          <div className="flex justify-end items-center gap-1.5">
-                            {confirmDeleteId === item.id ? (
-                              <div className="flex items-center gap-1 bg-red-50 border border-red-100 p-1 rounded-xl">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    onDeleteStockItem(item.id!);
-                                    setEditingId(null);
-                                    setConfirmDeleteId(null);
-                                  }}
-                                  className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
-                                >
-                                  Sí, Borrar
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setConfirmDeleteId(null)}
-                                  className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
-                                >
-                                  No
-                                </button>
-                              </div>
-                            ) : (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={() => setConfirmDeleteId(item.id!)}
-                                  title="Eliminar insumo por completo"
-                                  className="bg-red-50 hover:bg-red-100 text-red-600 p-1.5 rounded-xl transition-all cursor-pointer"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setEditingId(null)}
-                                  className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-xl px-2.5 py-1.5 text-[10px] font-bold cursor-pointer"
-                                >
-                                  X
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleSaveEdit(item.id!)}
-                                  className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl px-2.5 py-1.5 text-[10px] font-bold cursor-pointer"
-                                >
-                                  Guardar
-                                </button>
-                              </>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="flex justify-end items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={() => handleStartEdit(item)}
-                              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-2 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer"
-                            >
-                              <Edit2 className="w-3 h-3" />
-                              Editar
-                            </button>
-                            {item.type === 'tinta_preparada' && (
+                        </div>
+
+                        <div className="flex justify-between items-center pt-1 border-t border-blue-100">
+                          {confirmDeleteId === item.id ? (
+                            <div className="flex items-center gap-1">
                               <button
                                 type="button"
                                 onClick={() => {
-                                  const newGramsStr = prompt(`¿Cuántos gramos sobraron en el ${item.name}? \nEsto ajustará el tarro a esta nueva cantidad exacta.`);
-                                  if (newGramsStr) {
-                                    const newGrams = parseInt(newGramsStr);
-                                    if (!isNaN(newGrams) && newGrams >= 0) {
-                                      onUpdateStock(item.id!, newGrams);
-                                    } else {
-                                      alert("Por favor ingresa un número válido mayor o igual a 0.");
-                                    }
-                                  }
+                                  onDeleteStockItem(item.id!);
+                                  setEditingId(null);
+                                  setConfirmDeleteId(null);
                                 }}
-                                className="text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 px-2 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer border border-emerald-200"
+                                className="bg-red-600 text-white rounded-lg px-2 py-1 text-[10px] font-bold"
                               >
-                                Registrar Retorno
+                                Sí, Borrar
                               </button>
-                            )}
-                            
-                            {confirmDeleteId === item.id ? (
-                              <div className="flex items-center gap-1 bg-red-50 border border-red-100 p-1 rounded-xl">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    onDeleteStockItem(item.id!);
-                                    setConfirmDeleteId(null);
-                                  }}
-                                  className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
-                                >
-                                  Sí, Borrar
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setConfirmDeleteId(null)}
-                                  className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
-                                >
-                                  No
-                                </button>
-                              </div>
-                            ) : (
                               <button
                                 type="button"
-                                onClick={() => setConfirmDeleteId(item.id!)}
-                                title="Eliminar insumo"
-                                className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded-lg transition-all cursor-pointer"
+                                onClick={() => setConfirmDeleteId(null)}
+                                className="bg-slate-200 text-slate-600 rounded-lg px-2 py-1 text-[10px]"
                               >
-                                <Trash2 className="w-3.5 h-3.5" />
+                                Cancelar
                               </button>
-                            )}
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDeleteId(item.id!)}
+                              className="text-red-500 hover:text-red-700 text-xs font-bold flex items-center gap-1 cursor-pointer p-1"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" /> Borrar
+                            </button>
+                          )}
+
+                          <div className="flex gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => setEditingId(null)}
+                              className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 bg-white border border-slate-200"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleSaveEdit(item.id!)}
+                              className="px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700"
+                            >
+                              Guardar
+                            </button>
                           </div>
-                        )}
-                      </td>
-                    </tr>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div 
+                      key={item.id} 
+                      className={`p-3 rounded-2xl border transition-all ${
+                        isLow 
+                          ? 'bg-amber-50/40 border-amber-200 shadow-2xs' 
+                          : 'bg-white border-slate-200 shadow-2xs'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          {item.hexColor ? (
+                            <div 
+                              className="w-3.5 h-3.5 rounded-full border border-black/15 shrink-0 shadow-2xs" 
+                              style={{ backgroundColor: item.hexColor }} 
+                            />
+                          ) : (
+                            <div className="w-3.5 h-3.5 rounded-full bg-slate-300 shrink-0" />
+                          )}
+                          <span className="font-bold text-xs text-slate-800 truncate">{item.name}</span>
+                        </div>
+                        <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase shrink-0 border ${
+                          item.category === 'reactivo' 
+                            ? 'bg-teal-50 text-teal-700 border-teal-200' 
+                            : 'bg-purple-50 text-purple-700 border-purple-200'
+                        }`}>
+                          {typeLabel(item.type)}
+                        </span>
+                      </div>
+
+                      <div className="flex items-end justify-between bg-slate-50/80 p-2.5 rounded-xl border border-slate-100 mb-2">
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase block">En Stock</span>
+                          <div className="flex items-baseline gap-1.5">
+                            <span className={`text-base font-black font-mono ${isLow ? 'text-red-600' : 'text-slate-800'}`}>
+                              {item.quantity.toLocaleString()} g
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-mono">
+                              ({(item.quantity / 1000).toFixed(1)} kg)
+                            </span>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase block">Mínimo</span>
+                          <span className="text-xs font-mono font-bold text-slate-500">
+                            {item.minRequired.toLocaleString()} g
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-1">
+                        <div>
+                          {isLow ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-md">
+                              <AlertTriangle className="w-3 h-3" /> Crítico
+                            </span>
+                          ) : (
+                            <span className="text-[10px] text-emerald-600 font-bold">✓ En orden</span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleStartEdit(item)}
+                            className="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                          >
+                            <Edit2 className="w-3 h-3" /> Editar
+                          </button>
+                          {item.type === 'tinta_preparada' && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newGramsStr = prompt(`¿Cuántos gramos sobraron en el ${item.name}? \nEsto ajustará el tarro a esta nueva cantidad exacta.`);
+                                if (newGramsStr) {
+                                  const newGrams = parseInt(newGramsStr);
+                                  if (!isNaN(newGrams) && newGrams >= 0) {
+                                    onUpdateStock(item.id!, newGrams);
+                                  } else {
+                                    alert("Por favor ingresa un número válido mayor o igual a 0.");
+                                  }
+                                }
+                              }}
+                              className="text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                            >
+                              Retorno
+                            </button>
+                          )}
+                          {confirmDeleteId === item.id ? (
+                            <div className="flex items-center gap-1 bg-red-50 p-0.5 rounded-lg border border-red-200">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  onDeleteStockItem(item.id!);
+                                  setConfirmDeleteId(null);
+                                }}
+                                className="bg-red-600 text-white rounded px-1.5 py-0.5 text-[10px] font-bold"
+                              >
+                                Sí
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setConfirmDeleteId(null)}
+                                className="bg-white text-slate-600 rounded px-1.5 py-0.5 text-[10px]"
+                              >
+                                No
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDeleteId(item.id!)}
+                              className="text-slate-400 hover:text-red-600 p-1 rounded-lg transition-colors cursor-pointer"
+                              title="Eliminar insumo"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
-              </tbody>
-            </table>
+              </div>
+
+              {/* VISTA DESKTOP / TABLET (Tabla estructurada) */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full border-collapse text-left">
+                  <thead>
+                    <tr className="border-b border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest bg-slate-50/50">
+                      <th className="py-3 px-4 font-semibold w-1/3">Insumo / Material</th>
+                      <th className="py-3 px-4 font-semibold">Tipo</th>
+                      <th className="py-3 px-4 font-semibold text-right">Cantidad (g / kg)</th>
+                      <th className="py-3 px-4 font-semibold text-right">Alerta Mín. (g / kg)</th>
+                      <th className="py-3 px-4 font-semibold text-right w-[180px]">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {paginatedStock.map((item) => {
+                      const isLow = item.quantity <= item.minRequired;
+                      const isEditing = editingId === item.id;
+                      
+                      return (
+                        <tr key={item.id} className={`hover:bg-slate-50/50 ${isLow ? 'bg-amber-50/20' : ''}`}>
+                          <td className="py-3 px-4 font-bold text-slate-800">
+                            {isEditing ? (
+                              <div className="flex flex-col gap-2">
+                                <input
+                                  type="text"
+                                  value={editName}
+                                  onChange={(e) => setEditName(e.target.value)}
+                                  placeholder="Nombre del insumo"
+                                  className="w-full bg-white border border-blue-400 rounded-xl px-2 py-1.5 text-xs text-slate-800 font-medium focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                  required
+                                />
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="color"
+                                    value={editColor}
+                                    onChange={(e) => setEditColor(e.target.value)}
+                                    className="w-6 h-6 rounded cursor-pointer bg-white border border-slate-200 p-0"
+                                  />
+                                  <input
+                                    type="text"
+                                    value={editColor}
+                                    onChange={(e) => setEditColor(e.target.value)}
+                                    placeholder="#HEX"
+                                    className="w-20 bg-white border border-blue-400 rounded-lg px-2 py-1 text-[10px] text-slate-800 font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                  />
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2">
+                                {isLow && <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />}
+                                {item.hexColor && (
+                                  <div 
+                                    className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" 
+                                    style={{ backgroundColor: item.hexColor }}
+                                    title={item.hexColor}
+                                  />
+                                )}
+                                {item.name}
+                              </div>
+                            )}
+                          </td>
+                          <td className="py-3 px-4">
+                            {isEditing ? (
+                              <select
+                                value={editType}
+                                onChange={(e) => handleEditTypeChange(e.target.value)}
+                                className="w-full bg-white border border-blue-400 rounded-xl px-2 py-1.5 text-xs text-slate-800 font-semibold focus:outline-none"
+                              >
+                                <option value="pigmento">Pigmento</option>
+                                <option value="colorante_reactivo">Reactivo</option>
+                                <option value="base">Base Clear / Copaje</option>
+                                <option value="urea">Urea</option>
+                                <option value="asutol">Asutol</option>
+                                <option value="bicarbonato">Bicarbonato</option>
+                                <option value="pasta">Pasta / Espesante</option>
+                                <option value="sal_alginato">Sal / Alginato</option>
+                                <option value="aditivo">Aditivo</option>
+                              </select>
+                            ) : (
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
+                                item.category === 'reactivo' ? 'bg-teal-50 text-teal-700 border-teal-100' :
+                                'bg-purple-50 text-purple-700 border-purple-100'
+                              }`}>
+                                {typeLabel(item.type)}
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-3 px-4 text-right font-mono font-extrabold text-slate-900">
+                            {isEditing ? (
+                              <div className="flex items-center justify-end gap-1">
+                                <input
+                                  type="number"
+                                  value={editVal}
+                                  onChange={(e) => setEditVal(Math.max(0, Number(e.target.value)))}
+                                  className="w-20 border border-blue-400 bg-white rounded-xl p-1 text-xs text-right font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                  required
+                                />
+                                <span className="text-[10px] text-slate-400 font-semibold">g</span>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-end">
+                                <span>{(item.quantity).toLocaleString()} g</span>
+                                <span className="text-[10px] text-slate-400 font-normal mt-0.5">{(item.quantity / 1000).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 3 })} kg</span>
+                              </div>
+                            )}
+                          </td>
+                          <td className="py-3 px-4 text-right font-mono text-slate-400">
+                            {isEditing ? (
+                              <div className="flex items-center justify-end gap-1">
+                                <input
+                                  type="number"
+                                  value={editMin}
+                                  onChange={(e) => setEditMin(Math.max(0, Number(e.target.value)))}
+                                  className="w-20 border border-blue-400 bg-white rounded-xl p-1 text-xs text-right font-mono focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                  required
+                                />
+                                <span className="text-[10px] text-slate-400 font-semibold">g</span>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-end">
+                                <span>{(item.minRequired).toLocaleString()} g</span>
+                                <span className="text-[10px] text-slate-400 font-normal mt-0.5">{(item.minRequired / 1000).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 3 })} kg</span>
+                              </div>
+                            )}
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            {isEditing ? (
+                              <div className="flex justify-end items-center gap-1.5">
+                                {confirmDeleteId === item.id ? (
+                                  <div className="flex items-center gap-1 bg-red-50 border border-red-100 p-1 rounded-xl">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        onDeleteStockItem(item.id!);
+                                        setEditingId(null);
+                                        setConfirmDeleteId(null);
+                                      }}
+                                      className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      Sí, Borrar
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setConfirmDeleteId(null)}
+                                      className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      No
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <button
+                                      type="button"
+                                      onClick={() => setConfirmDeleteId(item.id!)}
+                                      title="Eliminar insumo por completo"
+                                      className="bg-red-50 hover:bg-red-100 text-red-600 p-1.5 rounded-xl transition-all cursor-pointer"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setEditingId(null)}
+                                      className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-xl px-2.5 py-1.5 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      X
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleSaveEdit(item.id!)}
+                                      className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl px-2.5 py-1.5 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      Guardar
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="flex justify-end items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => handleStartEdit(item)}
+                                  className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-2 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer"
+                                >
+                                  <Edit2 className="w-3 h-3" />
+                                  Editar
+                                </button>
+                                {item.type === 'tinta_preparada' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const newGramsStr = prompt(`¿Cuántos gramos sobraron en el ${item.name}? \nEsto ajustará el tarro a esta nueva cantidad exacta.`);
+                                      if (newGramsStr) {
+                                        const newGrams = parseInt(newGramsStr);
+                                        if (!isNaN(newGrams) && newGrams >= 0) {
+                                          onUpdateStock(item.id!, newGrams);
+                                        } else {
+                                          alert("Por favor ingresa un número válido mayor o igual a 0.");
+                                        }
+                                      }
+                                    }}
+                                    className="text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 px-2 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer border border-emerald-200"
+                                  >
+                                    Registrar Retorno
+                                  </button>
+                                )}
+                                
+                                {confirmDeleteId === item.id ? (
+                                  <div className="flex items-center gap-1 bg-red-50 border border-red-100 p-1 rounded-xl">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        onDeleteStockItem(item.id!);
+                                        setConfirmDeleteId(null);
+                                      }}
+                                      className="bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      Sí, Borrar
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setConfirmDeleteId(null)}
+                                      className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded px-2 py-1 text-[10px] font-bold cursor-pointer"
+                                    >
+                                      No
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onClick={() => setConfirmDeleteId(item.id!)}
+                                    title="Eliminar insumo"
+                                    className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded-lg transition-all cursor-pointer"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
           
-          {/* Controles de paginación */}
+          {/* Controles de paginación responsivos */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between py-4 px-2 border-t border-slate-100 mt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-between py-3 px-1 border-t border-slate-100 mt-3 gap-2">
               <span className="text-xs text-slate-500">
-                Mostrando {(currentPage - 1) * itemsPerPage + 1} a {Math.min(currentPage * itemsPerPage, filteredStock.length)} de {filteredStock.length}
+                Mostrando {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredStock.length)} de {filteredStock.length}
               </span>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-slate-50 hover:bg-slate-100 text-slate-600"
+                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
                 >
                   Anterior
                 </button>
-                <div className="flex items-center gap-1 px-2">
+                <div className="flex items-center gap-1 px-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <button
                       key={page}
@@ -950,7 +1271,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                       className={`w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold transition-colors ${
                         currentPage === page 
                           ? 'bg-blue-600 text-white' 
-                          : 'bg-white hover:bg-slate-50 text-slate-600'
+                          : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200'
                       }`}
                     >
                       {page}
@@ -960,7 +1281,7 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                 <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-slate-50 hover:bg-slate-100 text-slate-600"
+                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
                 >
                   Siguiente
                 </button>
@@ -970,18 +1291,25 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
         </div>
       </div>
 
-      {/* Columna Lateral - Alertas y Consejos */}
-      <div className="lg:col-span-4 space-y-6">
+      {/* Columna Lateral - Alertas de Inventario (Solo en Desktop) */}
+      <div className="hidden lg:block lg:col-span-4 space-y-4">
         
         {/* Panel de Alertas Críticas */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
-          <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <TrendingDown className="w-4 h-4 text-amber-500" />
-            Alertas de Inventario
-          </h4>
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+              <TrendingDown className="w-4 h-4 text-amber-500" />
+              Alertas de Inventario
+            </h4>
+            {lowStockItems.length > 0 && (
+              <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                {lowStockItems.length} alertas
+              </span>
+            )}
+          </div>
 
           {lowStockItems.length === 0 ? (
-            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 flex items-start gap-3">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl sm:rounded-2xl p-3.5 flex items-start gap-2.5">
               <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs font-bold text-emerald-800">Todo en Orden</p>
@@ -989,24 +1317,33 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
               </div>
             </div>
           ) : (
-            <div className="space-y-3">
-              <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4">
-                <p className="text-xs font-bold text-amber-800 mb-1">Hay {lowStockItems.length} insumo(s) crítico(s)</p>
-                <p className="text-[11px] text-amber-600 leading-relaxed">
-                  Realiza un pedido pronto para evitar detener el estampado en prensa o el área de reactivos.
-                </p>
+            <div className="space-y-2.5">
+              <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 flex items-start justify-between gap-2">
+                <div>
+                  <p className="text-xs font-bold text-amber-800">Hay {lowStockItems.length} insumo(s) crítico(s)</p>
+                  <p className="text-[10px] text-amber-600 mt-0.5">
+                    Insumos por debajo de su stock de seguridad.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveCategoryFilter('criticos')}
+                  className="bg-amber-500 hover:bg-amber-600 text-white rounded-lg px-2 py-1 text-[10px] font-bold whitespace-nowrap cursor-pointer transition-colors shrink-0"
+                >
+                  Filtrar lista
+                </button>
               </div>
 
-              <div className="space-y-2 max-h-[220px] overflow-y-auto">
+              <div className="space-y-1.5 max-h-[260px] overflow-y-auto custom-scrollbar pr-1">
                 {lowStockItems.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <div>
-                      <p className="text-xs font-bold text-slate-800">{item.name}</p>
-                      <p className="text-[10px] text-slate-400 capitalize">
+                  <div key={item.id} className="flex items-center justify-between p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-100 transition-colors">
+                    <div className="min-w-0 pr-2">
+                      <p className="text-xs font-bold text-slate-800 truncate">{item.name}</p>
+                      <p className="text-[10px] text-slate-400 capitalize truncate">
                         {item.category === 'reactivo' ? 'Reactivo' : 'Pigmentos'} • {item.type}
                       </p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right shrink-0">
                       <p className="text-xs font-extrabold text-red-600 font-mono">{item.quantity.toLocaleString()} g</p>
                       <p className="text-[9px] text-slate-400 font-mono">Mín. {item.minRequired.toLocaleString()} g</p>
                     </div>
@@ -1015,27 +1352,6 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
               </div>
             </div>
           )}
-        </div>
-
-        {/* Tarjeta de Control de Tintas */}
-        <div className="bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-12 -mt-12" />
-          <h4 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">Recomendaciones de {currentUser.name.split('@')[0]}</h4>
-          <p className="text-sm font-semibold mb-3 leading-relaxed">Instrucciones para el control del inventario:</p>
-          <ul className="text-xs space-y-2.5 text-slate-300">
-            <li className="flex gap-2">
-              <ArrowUpRight className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-              <span><strong>Pigmentos:</strong> Pesar siempre las bases clear y pigmentos antes de preparar el lote para toallas y hamacas.</span>
-            </li>
-            <li className="flex gap-2">
-              <ArrowUpRight className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-              <span><strong>Reactivos:</strong> Al usar Alginato de Sodio como espesante, prepáralo con anticipación para asegurar la viscosidad adecuada.</span>
-            </li>
-            <li className="flex gap-2">
-              <ArrowUpRight className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-              <span><strong>Control alcalino:</strong> Recuerda agregar el Carbonato de Sodio (fijador reactivo) justo antes de iniciar la estampación, ya que inicia la reacción del colorante.</span>
-            </li>
-          </ul>
         </div>
 
       </div>

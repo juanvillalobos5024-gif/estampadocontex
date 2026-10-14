@@ -74,8 +74,20 @@ export default function WorkOrderManager({
   const [priority, setPriority] = useState<'Normal' | 'Urgente'>('Normal');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const todayStr = useMemo(() => formatLocalDate(), []);
-  const tomorrowStr = useMemo(() => getTomorrowLocalDate(), []);
+  // Fecha actual y de mañana con actualización automática periódica (para TVs y pantallas 24/7)
+  const [currentDateStr, setCurrentDateStr] = useState(() => formatLocalDate());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = formatLocalDate();
+      if (now !== currentDateStr) {
+        setCurrentDateStr(now);
+      }
+    }, 30000);
+    return () => clearInterval(timer);
+  }, [currentDateStr]);
+
+  const todayStr = currentDateStr;
+  const tomorrowStr = useMemo(() => getTomorrowLocalDate(), [currentDateStr]);
 
   // Fecha para programar la orden (por defecto hoy)
   const [scheduledDate, setScheduledDate] = useState(() => formatLocalDate());
@@ -221,47 +233,71 @@ export default function WorkOrderManager({
   };
 
   return (
-    <div className={`flex flex-col h-full gap-6 w-full transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-slate-50 p-6 sm:p-8' : 'max-w-7xl mx-auto'}`}>
+    <div className={`flex flex-col h-full gap-3 sm:gap-6 w-full transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-slate-50 p-3 sm:p-8 overflow-y-auto' : 'max-w-7xl mx-auto'}`}>
       
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 shrink-0">
-        <div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <ClipboardList className="w-7 h-7 text-blue-600" />
-            Órdenes de Trabajo y Mezcla
+      <div className="flex items-center justify-between gap-3 shrink-0">
+        <div className="min-w-0 flex-1">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 truncate">
+            <ClipboardList className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600 shrink-0" />
+            <span className="truncate">Órdenes de Trabajo</span>
+            <span className="hidden sm:inline text-slate-400 font-normal">y Mezcla</span>
           </h2>
-          <p className="text-sm text-slate-500 font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5 truncate">
             Gestión y preparación de fórmulas de color para producción
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Indicador de sincronización en vivo para TV y dispositivos */}
+          <div 
+            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-50 border border-emerald-200/80 rounded-xl text-emerald-700 text-xs font-bold shadow-2xs select-none"
+            title="Sincronización en vivo activa: Los cambios desde PC o Tablet se reflejan inmediatamente en este TV"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="hidden sm:inline">En Vivo · TV</span>
+            <span className="inline sm:hidden text-[10px]">Vivo</span>
+          </div>
+
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="flex items-center justify-center bg-white text-slate-600 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm cursor-pointer"
-            title={isFullscreen ? "Contraer" : "Pantalla grande"}
+            className="flex items-center justify-center bg-white text-slate-600 p-2 sm:p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm cursor-pointer"
+            title={isFullscreen ? "Salir de pantalla completa" : "Modo TV / Pantalla Completa"}
           >
-            {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+            {isFullscreen ? <Minimize className="w-4 h-4 sm:w-5 sm:h-5" /> : <Maximize className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-slate-800 transition-colors shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-slate-800 transition-colors shadow-sm cursor-pointer"
           >
-            {showForm ? <span className="flex items-center gap-2"><Trash2 className="w-4 h-4"/> Cancelar</span> : <span className="flex items-center gap-2"><Plus className="w-4 h-4"/> Nueva Orden</span>}
+            {showForm ? (
+              <span className="flex items-center gap-1.5"><X className="w-4 h-4"/> Cancelar</span>
+            ) : (
+              <span className="flex items-center gap-1.5"><Plus className="w-4 h-4"/> <span>Nueva Orden</span></span>
+            )}
           </button>
         </div>
       </div>
 
       {/* Formulario de Supervisor */}
       {showForm && (
-        <div className="bg-white rounded-3xl border border-blue-100 shadow-sm p-6 shrink-0 animate-fade-in ring-1 ring-blue-500/20">
-          <h3 className="text-md font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <Plus className="w-5 h-5 text-blue-500" /> Crear Nueva Orden de Trabajo
-          </h3>
-          <form onSubmit={handleCreate} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-blue-100 shadow-sm p-4 sm:p-6 shrink-0 animate-fade-in ring-1 ring-blue-500/20">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2">
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" /> Crear Nueva Orden de Trabajo
+            </h3>
+            <button 
+              type="button" 
+              onClick={() => setShowForm(false)}
+              className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <form onSubmit={handleCreate} className="space-y-3 sm:space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 sm:gap-4">
               
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2 md:col-span-2">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Diseño / Referencia</label>
                 <select 
                   value={designId} 
@@ -273,7 +309,7 @@ export default function WorkOrderManager({
                       setLineType(selectedDesign.lineType);
                     }
                   }}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                   required
                 >
                   <option value="">Seleccionar Diseño...</option>
@@ -284,7 +320,7 @@ export default function WorkOrderManager({
               </div>
 
               {/* Selector de Fecha Programada */}
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2 md:col-span-2">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1 flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-blue-600" />
@@ -294,19 +330,19 @@ export default function WorkOrderManager({
                     {scheduledDate === todayStr ? '📅 Hoy' : scheduledDate === tomorrowStr ? '🚀 Mañana' : scheduledDate}
                   </span>
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5">
                   <input 
                     type="date"
                     value={scheduledDate}
                     onChange={e => setScheduledDate(e.target.value)}
-                    className="flex-1 bg-slate-50 border border-slate-200 rounded-xl p-2 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="flex-1 min-w-0 bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                     required
                   />
                   <div className="flex gap-1 shrink-0">
                     <button
                       type="button"
                       onClick={() => setScheduledDate(todayStr)}
-                      className={`px-2.5 py-1 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-1 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                         scheduledDate === todayStr
                           ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                           : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -318,7 +354,7 @@ export default function WorkOrderManager({
                     <button
                       type="button"
                       onClick={() => setScheduledDate(tomorrowStr)}
-                      className={`px-2.5 py-1 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-1 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                         scheduledDate === tomorrowStr
                           ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                           : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -336,7 +372,7 @@ export default function WorkOrderManager({
                 <select 
                   value={priority}
                   onChange={e => setPriority(e.target.value as 'Normal' | 'Urgente')}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                   <option value="Normal">Normal</option>
                   <option value="Urgente">Urgente</option>
@@ -348,36 +384,42 @@ export default function WorkOrderManager({
                 <select 
                   value={productType}
                   onChange={e => setProductType(e.target.value as 'Toallas' | 'Otros')}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                   <option value="Toallas">Toallas</option>
                   <option value="Otros">Otros</option>
                 </select>
               </div>
 
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2 md:col-span-2">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Unidades a estampar</label>
                 <div className="relative">
                   <input 
                     type="number"
                     value={targetPieces}
                     onChange={e => setTargetPieces(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none pr-28"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none pr-24"
                     min="1" required
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-slate-400">
-                    ≈ {Math.ceil(targetPieces / 3)} golpes
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-mono font-bold text-slate-400">
+                    ≈ {(() => {
+                      const selDesign = designs.find(d => d.id === designId);
+                      const isReactivo = (lineType || selDesign?.lineType)?.toLowerCase() === 'reactivo';
+                      const isPigmentoToalla = productType === 'Toallas' && !isReactivo;
+                      const pzGolpe = isPigmentoToalla ? 5 : (selDesign?.piezasPorGolpe || (productType === 'Toallas' ? 3 : 1));
+                      return Math.ceil(targetPieces / pzGolpe);
+                    })()} golpes
                   </span>
                 </div>
               </div>
 
             </div>
             
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end pt-2">
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+                className="w-full sm:w-auto bg-blue-600 text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 cursor-pointer text-center"
               >
                 {isSubmitting ? 'Guardando...' : 'Guardar y Asignar'}
               </button>
@@ -387,50 +429,50 @@ export default function WorkOrderManager({
       )}
 
       {/* Kanban / Lista */}
-      <div className="bg-slate-200/50 rounded-3xl p-6 flex-1 flex flex-col min-h-0 overflow-hidden">
+      <div className="bg-slate-200/50 rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-6 flex-1 flex flex-col min-h-0 overflow-hidden">
         
         {/* Filtros de Fecha y Estado */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 shrink-0 bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 mb-3 sm:mb-5 shrink-0 bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200 shadow-sm">
           
           {/* Bloque: Filtro por Fecha (PREDETERMINADO: SIEMPRE HOY) */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-blue-600" /> Fecha:
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 md:pb-0">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1.5 flex items-center gap-1 shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-blue-600 shrink-0" /> Fecha:
             </span>
             <button 
               type="button"
               onClick={() => setDateFilterMode('today')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                 dateFilterMode === 'today'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               <span>Hoy</span>
-              <span className={`text-[10px] px-1.5 py-0.2 rounded-md ${dateFilterMode === 'today' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-mono ${dateFilterMode === 'today' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
                 {workOrders.filter(o => getOrderDate(o) === todayStr).length}
               </span>
             </button>
             <button 
               type="button"
               onClick={() => setDateFilterMode('tomorrow')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                 dateFilterMode === 'tomorrow'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               <span>Mañana</span>
-              <span className={`text-[10px] px-1.5 py-0.2 rounded-md ${dateFilterMode === 'tomorrow' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-mono ${dateFilterMode === 'tomorrow' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
                 {workOrders.filter(o => getOrderDate(o) === tomorrowStr).length}
               </span>
             </button>
             <button 
               type="button"
               onClick={() => setDateFilterMode('all')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                 dateFilterMode === 'all'
-                  ? 'bg-slate-800 text-white shadow-md'
+                  ? 'bg-slate-800 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -442,14 +484,14 @@ export default function WorkOrderManager({
                 type="date"
                 value={customFilterDate}
                 onChange={e => setCustomFilterDate(e.target.value)}
-                className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shrink-0"
               />
             )}
             {dateFilterMode !== 'custom' && (
               <button
                 type="button"
                 onClick={() => setDateFilterMode('custom')}
-                className="text-[11px] font-bold text-slate-500 hover:text-blue-600 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                className="text-[11px] font-bold text-slate-500 hover:text-blue-600 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer shrink-0 whitespace-nowrap"
                 title="Elegir otra fecha específica"
               >
                 Otro día...
@@ -458,28 +500,28 @@ export default function WorkOrderManager({
           </div>
 
           {/* Bloque: Filtro por Estado */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar shrink-0">
             <button 
               onClick={() => setFilterStatus('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
             >
               Todas
             </button>
             <button 
               onClick={() => setFilterStatus('Pendiente')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === 'Pendiente' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-600 hover:text-amber-700'}`}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'Pendiente' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-600 hover:text-amber-700'}`}
             >
               Pendientes
             </button>
             <button 
               onClick={() => setFilterStatus('En Progreso')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === 'En Progreso' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-blue-700'}`}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'En Progreso' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-blue-700'}`}
             >
               En Progreso
             </button>
             <button 
               onClick={() => setFilterStatus('Completada')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === 'Completada' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:text-emerald-700'}`}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'Completada' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:text-emerald-700'}`}
             >
               Completadas
             </button>
@@ -487,29 +529,39 @@ export default function WorkOrderManager({
         </div>
 
         {/* Grid de Tarjetas */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
+        <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 sm:pr-2">
           {pendingOrders.length === 0 ? (
-             <div className="flex flex-col items-center justify-center h-48 text-slate-400 bg-white/60 rounded-2xl border border-dashed border-slate-300">
-               <Calendar className="w-12 h-12 text-blue-400 mb-3 opacity-60" />
-               <p className="font-bold text-sm text-slate-700">
+             <div className="flex flex-col items-center justify-center p-6 sm:p-8 text-slate-400 bg-white/70 rounded-2xl border border-dashed border-slate-300 text-center">
+               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3">
+                 <Calendar className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500" />
+               </div>
+               <p className="font-bold text-sm sm:text-base text-slate-800">
                  No hay órdenes para {dateFilterMode === 'today' ? 'el día de hoy' : dateFilterMode === 'tomorrow' ? 'el día de mañana' : 'la fecha seleccionada'}
                </p>
-               <p className="text-xs text-slate-400 mt-1">
-                 {dateFilterMode === 'today' ? 'Puedes programar una orden haciendo clic en "+ Nueva Orden"' : 'Cambia a "Hoy" o "Todas las fechas" para ver más órdenes'}
+               <p className="text-xs text-slate-400 mt-1 max-w-xs">
+                 {dateFilterMode === 'today' ? 'Puedes programar una nueva orden haciendo clic en "+ Nueva Orden"' : 'Cambia a "Hoy" o "Todas las fechas" para ver más órdenes'}
                </p>
-               {dateFilterMode !== 'today' && (
+               <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
                  <button
-                   onClick={() => setDateFilterMode('today')}
-                   className="mt-3 text-xs font-bold text-blue-600 hover:underline cursor-pointer"
+                   onClick={() => setShowForm(true)}
+                   className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all cursor-pointer"
                  >
-                   Ver órdenes de Hoy
+                   <Plus className="w-4 h-4" /> Nueva Orden
                  </button>
-               )}
+                 {dateFilterMode !== 'today' && (
+                   <button
+                     onClick={() => setDateFilterMode('today')}
+                     className="text-xs font-bold text-slate-600 hover:text-blue-600 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl transition-colors cursor-pointer"
+                   >
+                     Ver órdenes de Hoy
+                   </button>
+                 )}
+               </div>
              </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {pendingOrders.map(order => (
-                <div key={order.id} className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow group flex flex-col">
+                <div key={order.id} className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow group flex flex-col">
                   
                   {/* Card Header */}
                   <div className="flex items-start justify-between mb-3">
@@ -518,6 +570,7 @@ export default function WorkOrderManager({
                          <>
                            <div className="w-5 h-5 rounded-md border border-slate-200 shadow-sm shrink-0 flex items-center justify-center bg-purple-100 text-purple-600 font-bold text-[10px]">
                              D
+
                            </div>
                            <span className="font-black text-lg text-slate-800">{order.designName}</span>
                          </>
@@ -559,15 +612,41 @@ export default function WorkOrderManager({
 
                     <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
                       <span className="text-slate-500 font-semibold">Producto:</span>
-                      <span className="font-bold text-slate-800">{order.productType}</span>
+                      <span className="font-bold text-slate-800">
+                        {order.productType}
+                        {(() => {
+                          const d = designs.find(item => 
+                            (order.designId && item.id === order.designId) ||
+                            (order.designName && item.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+                          );
+                          const isReactivo = (order.lineType || d?.lineType)?.toLowerCase() === 'reactivo';
+                          const isPigmentoToalla = order.productType === 'Toallas' && !isReactivo;
+                          const w = isPigmentoToalla ? 35 : (d?.widthCm || 60);
+                          const h = isPigmentoToalla ? 60 : (d?.heightCm || 120);
+                          return <span className="text-[10px] text-slate-500 font-medium ml-1">({w}×{h} cm)</span>;
+                        })()}
+                      </span>
                     </div>
 
-                    
+                    <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
+                      <span className="text-slate-500 font-semibold">Técnica:</span>
+                      <span className="font-bold text-xs text-slate-700 capitalize">
+                        {(() => {
+                          const d = designs.find(item => 
+                            (order.designId && item.id === order.designId) ||
+                            (order.designName && item.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+                          );
+                          const isReactivo = (order.lineType || d?.lineType)?.toLowerCase() === 'reactivo';
+                          return isReactivo ? 'Estampado Reactivo' : 'Estampado En Pigmento';
+                        })()}
+                      </span>
+                    </div>
+
                     {order.designId ? (
                       <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
                         <span className="text-slate-500 font-semibold">Progreso Diseño:</span>
                         <span className="font-mono font-bold text-purple-700">
-                          {order.completedColors?.length || 0} / {designs.find(d => d.id === order.designId)?.colors.length || 0} Colores
+                          {order.completedColors?.length || 0} / {designs.find(d => d.id === order.designId || d.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())?.colors.length || 0} Colores
                         </span>
                       </div>
                     ) : (
@@ -580,18 +659,46 @@ export default function WorkOrderManager({
                     <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
                       <span className="text-slate-500 font-semibold">Golpes:</span>
                       <span className="font-mono font-bold text-slate-700">
-                        {Math.ceil(order.targetQuantity / 3)} <span className="text-[10px] text-slate-400 font-normal">({order.targetQuantity} unds)</span>
+                        {(() => {
+                          const d = designs.find(item => 
+                            (order.designId && item.id === order.designId) ||
+                            (order.designName && item.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+                          );
+                          const isReactivo = (order.lineType || d?.lineType)?.toLowerCase() === 'reactivo';
+                          const isPigmentoToalla = order.productType === 'Toallas' && !isReactivo;
+                          // Para toallas estampadas en pigmento (35x60 cm), la relación es estrictamente 5 unidades por golpe
+                          const pzGolpe = isPigmentoToalla ? 5 : (d?.piezasPorGolpe || (order.productType === 'Toallas' ? 3 : 1));
+                          const golpes = Math.ceil(order.targetQuantity / pzGolpe);
+                          return (
+                            <>
+                              <span className="text-blue-700 font-black">{golpes}</span>
+                              <span className="text-[10px] text-slate-400 font-normal ml-1">
+                                ({order.targetQuantity} unds · {pzGolpe} u/golpe)
+                              </span>
+                            </>
+                          );
+                        })()}
                       </span>
                     </div>
 
                     {order.designId && (() => {
-                      const d = designs.find(item => item.id === order.designId);
-                      return d?.unitWeight && d.unitWeight > 0 ? (
+                      const d = designs.find(item => 
+                        (order.designId && item.id === order.designId) ||
+                        (order.designName && item.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+                      );
+                      const isReactivo = (order.lineType || d?.lineType)?.toLowerCase() === 'reactivo';
+                      const isPigmentoToalla = order.productType === 'Toallas' && !isReactivo;
+                      const unitWeight = isPigmentoToalla ? 63 : (d?.unitWeight || 63);
+                      const gramaje = isPigmentoToalla ? 310 : (d?.gramaje || 280);
+                      return (
                         <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
                           <span className="text-slate-500 font-semibold">Peso Unidad:</span>
-                          <span className="font-mono font-bold text-slate-700">{d.unitWeight}g / pz</span>
+                          <span className="font-mono font-bold text-slate-700">
+                            {unitWeight}g / pz
+                            <span className="text-[10px] text-slate-400 font-normal ml-1">({gramaje}g/m²)</span>
+                          </span>
                         </div>
-                      ) : null;
+                      );
                     })()}
                   </div>
 
@@ -662,11 +769,11 @@ export default function WorkOrderManager({
       {/* Modal de Colores del Diseño */}
       {selectedOrderForModal && selectedOrderForModal.designId && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[60] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setSelectedOrderForModal(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-full overflow-hidden border border-slate-200 flex flex-col animate-fade-in"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] sm:max-h-full overflow-hidden border border-slate-200 flex flex-col animate-fade-in"
             onClick={e => e.stopPropagation()}
           >
             {(() => {
@@ -675,13 +782,13 @@ export default function WorkOrderManager({
               
               return (
                 <>
-                  <div className="p-6 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50">
-                    <div>
-                      <h2 className="text-xl font-black text-slate-800 flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-600 flex items-center justify-center text-xs">D</div>
-                        {design.name}
+                  <div className="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50">
+                    <div className="min-w-0 flex-1 pr-2">
+                      <h2 className="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2 truncate">
+                        <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-600 flex items-center justify-center text-xs shrink-0">D</div>
+                        <span className="truncate">{design.name}</span>
                       </h2>
-                      <p className="text-sm text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <p className="text-xs sm:text-sm text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span>Orden #{selectedOrderForModal.id?.slice(-4)}</span>
                         <span>•</span>
                         <span className="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100 flex items-center gap-1">
@@ -694,13 +801,13 @@ export default function WorkOrderManager({
                           })()}
                         </span>
                         <span>•</span>
-                        <span>{design.colors.length} Colores Requeridos</span>
-                        {design.unitWeight ? <span>• Peso Prenda: {design.unitWeight}g</span> : ''}
+                        <span>{design.colors.length} Colores</span>
+                        {design.unitWeight ? <span>• Peso: {design.unitWeight}g</span> : ''}
                       </p>
                     </div>
                     <button 
                       onClick={() => setSelectedOrderForModal(null)}
-                      className="p-2 hover:bg-slate-200 rounded-full transition-colors flex items-center gap-1.5"
+                      className="p-2 hover:bg-slate-200 rounded-full transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
                       title="Cerrar (Esc)"
                     >
                       <span className="text-[10px] font-semibold text-slate-400 hidden sm:inline-block bg-slate-200 border border-slate-300 px-1.5 py-0.5 rounded-md">Esc</span>
@@ -708,8 +815,8 @@ export default function WorkOrderManager({
                     </button>
                   </div>
                   
-                  <div className="p-6 overflow-y-auto flex-1 custom-scrollbar">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-3 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                       {design.colors.map((color, idx) => {
                         const pantoneInfo = findMatchingPantone(pantones, color.pantoneCode);
                         const requiredGrams = color.gramsPerPiece * selectedOrderForModal.targetQuantity;
@@ -740,7 +847,7 @@ export default function WorkOrderManager({
                         }
 
                         return (
-                          <div key={idx} className={`bg-white border border-slate-200 rounded-2xl p-4 flex flex-col hover:shadow-md transition-shadow relative gap-3`}>
+                          <div key={idx} className={`bg-white border border-slate-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col hover:shadow-md transition-shadow relative gap-3`}>
                             {!pantoneInfo && (
                                <div className="absolute -top-2 -right-2 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center gap-1">
                                 <AlertCircle className="w-3 h-3" /> Pantone no existe
@@ -749,20 +856,20 @@ export default function WorkOrderManager({
 
                             <div className="flex flex-col gap-3">
                               {/* Fila superior: Color, Detalles, Botón */}
-                              <div className="flex gap-4 items-center">
-                                <div className="w-16 h-16 rounded-xl shadow-inner border border-black/10 shrink-0 overflow-hidden bg-slate-50 flex flex-col items-center justify-center relative" style={{ backgroundColor: pantoneInfo?.hex }}>
+                              <div className="flex gap-3 sm:gap-4 items-center">
+                                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl shadow-inner border border-black/10 shrink-0 overflow-hidden bg-slate-50 flex flex-col items-center justify-center relative" style={{ backgroundColor: pantoneInfo?.hex }}>
                                   {!pantoneInfo && (
                                     <span className="text-[10px] font-bold text-slate-400">N/A</span>
                                   )}
                                 </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                  <p className="text-xs font-bold text-slate-400 uppercase mb-0.5">Marco {idx + 1}</p>
-                                  <h4 className="font-black text-slate-800 text-lg leading-tight">{color.pantoneCode}</h4>
+                                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                  <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase mb-0.5">Marco {idx + 1}</p>
+                                  <h4 className="font-black text-slate-800 text-base sm:text-lg leading-tight truncate">{color.pantoneCode}</h4>
                                   <p className="text-xs text-slate-500 truncate">{pantoneInfo?.name || 'Pantone Desconocido'}</p>
                                 </div>
                                 <div className="flex flex-col justify-center shrink-0">
                                    <button 
-                                     className="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-colors w-full"
+                                     className="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-colors w-full cursor-pointer"
                                      onClick={async () => {
                                        const kgToPrepare = parseFloat(customKilos[idx] || '0');
                                        if (kgToPrepare <= 0) {
@@ -790,8 +897,8 @@ export default function WorkOrderManager({
                               </div>
                               
                               {/* Fila inferior: Inputs */}
-                              <div className="flex items-center gap-3">
-                                <div className="flex-1 bg-blue-50/50 rounded-xl p-3 border-2 border-blue-200 hover:border-blue-400 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10 transition-all flex flex-col justify-center group cursor-text" onClick={(e) => {
+                              <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="flex-1 bg-blue-50/50 rounded-xl p-2.5 sm:p-3 border-2 border-blue-200 hover:border-blue-400 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10 transition-all flex flex-col justify-center group cursor-text" onClick={(e) => {
                                   const input = e.currentTarget.querySelector('input');
                                   if(input) input.focus();
                                 }}>
@@ -807,16 +914,16 @@ export default function WorkOrderManager({
                                       placeholder="0"
                                       value={customKilos[idx] ?? ''}
                                       onChange={(e) => setCustomKilos(prev => ({...prev, [idx]: e.target.value}))}
-                                      className="font-mono font-black text-blue-700 bg-transparent outline-none w-full placeholder-blue-300 text-xl p-0 h-6"
+                                      className="font-mono font-black text-blue-700 bg-transparent outline-none w-full placeholder-blue-300 text-lg sm:text-xl p-0 h-6"
                                     />
                                     <span className="text-[11px] font-bold text-blue-400 pb-1">Kg</span>
                                   </div>
                                 </div>
                                 {preparedHistory[color.pantoneCode] && preparedHistory[color.pantoneCode].length > 0 && (
-                                  <div className="flex-1 bg-emerald-50/50 rounded-xl p-3 border-2 border-emerald-200 flex flex-col justify-center">
+                                  <div className="flex-1 bg-emerald-50/50 rounded-xl p-2.5 sm:p-3 border-2 border-emerald-200 flex flex-col justify-center">
                                     <span className="text-[10px] font-black text-emerald-600 uppercase mb-1">Total Preparado</span>
                                     <div className="flex items-end gap-1.5">
-                                      <span className="font-mono font-black text-emerald-700 text-xl leading-none">
+                                      <span className="font-mono font-black text-emerald-700 text-lg sm:text-xl leading-none">
                                         {preparedHistory[color.pantoneCode].reduce((a, b) => a + b, 0).toFixed(2)}
                                       </span>
                                       <span className="text-[11px] font-bold text-emerald-500 pb-0.5">Kg</span>
@@ -831,35 +938,35 @@ export default function WorkOrderManager({
 
                             {/* Desglose de pasta y tintas */}
                             {pantoneInfo && (
-                              <div className="bg-slate-50 rounded-xl p-3 mt-1 border border-slate-100">
+                              <div className="bg-slate-50 rounded-xl p-2.5 sm:p-3 mt-1 border border-slate-100">
                                 <div className="flex items-center justify-between mb-2 pb-1 border-b border-slate-200">
                                   <p className="text-[10px] font-bold text-slate-400 uppercase">Fórmula Requerida</p>
-                                  <div className="flex gap-3 text-[9px] font-bold text-slate-400 uppercase">
-                                     <span className="w-12 text-right">g/Kg</span>
-                                     <span className="w-16 text-right text-blue-500">TOTAL</span>
+                                  <div className="flex gap-2 sm:gap-3 text-[9px] font-bold text-slate-400 uppercase">
+                                     <span className="w-10 sm:w-12 text-right">g/Kg</span>
+                                     <span className="w-14 sm:w-16 text-right text-blue-500">TOTAL</span>
                                   </div>
                                 </div>
                                 <div className="space-y-1.5">
                                   {/* Fila Base: Pasta Madre (Preparada) */}
                                   <div className="flex items-center justify-between text-xs py-1.5 px-2 -mx-1 rounded-lg bg-blue-50/70 border border-blue-200/70 mb-2">
-                                    <div className="flex items-center gap-1.5 truncate flex-1">
+                                    <div className="flex items-center gap-1.5 truncate flex-1 min-w-0 pr-1">
                                       <div className={`w-2 h-2 rounded-full shrink-0 ${pastaStockItem && pastaStockItem.quantity >= (targetKilos * 1000) ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                                      <span className="truncate font-black text-blue-900">
+                                      <span className="truncate font-black text-blue-900 text-[11px] sm:text-xs">
                                         Pasta Madre (Preparada)
                                       </span>
                                       {pastaStockItem ? (
-                                        <span className="text-[10px] text-blue-600/80 font-medium shrink-0">
-                                          ({(pastaStockItem.quantity / 1000).toFixed(1)} Kg disp.)
+                                        <span className="text-[9px] sm:text-[10px] text-blue-600/80 font-medium shrink-0">
+                                          ({(pastaStockItem.quantity / 1000).toFixed(1)}k)
                                         </span>
                                       ) : (
-                                        <span className="text-[10px] text-amber-600 font-medium shrink-0">
-                                          (Sin existencias registradas)
+                                        <span className="text-[9px] sm:text-[10px] text-amber-600 font-medium shrink-0">
+                                          (Sin stock)
                                         </span>
                                       )}
                                     </div>
-                                    <div className="flex gap-3 text-[11px] font-mono shrink-0">
-                                      <span className="w-12 text-right text-blue-500 font-bold">Base</span>
-                                      <span className="w-16 text-right font-black text-blue-800">
+                                    <div className="flex gap-2 sm:gap-3 text-[10px] sm:text-[11px] font-mono shrink-0">
+                                      <span className="w-10 sm:w-12 text-right text-blue-500 font-bold">Base</span>
+                                      <span className="w-14 sm:w-16 text-right font-black text-blue-800">
                                         {targetKilos > 0 ? `${targetKilos.toFixed(2)} Kg` : '—'}
                                       </span>
                                     </div>
@@ -878,25 +985,25 @@ export default function WorkOrderManager({
                                     
                                     return (
                                       <div key={i} className="flex items-center justify-between text-xs hover:bg-slate-100/50 rounded px-1 -mx-1 transition-colors">
-                                        <div className="flex items-center gap-1.5 truncate flex-1">
+                                        <div className="flex items-center gap-1.5 truncate flex-1 min-w-0 pr-1">
                                           <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isMissing ? 'bg-red-500' : 'bg-emerald-500'}`} />
-                                          <span className={`truncate ${isMissing ? 'text-red-700 font-semibold' : 'text-slate-600'}`}>
+                                          <span className={`truncate text-[11px] sm:text-xs ${isMissing ? 'text-red-700 font-semibold' : 'text-slate-600'}`}>
                                             {c.component}
                                           </span>
                                           {stockItem ? (
-                                            <span className="text-[10px] text-slate-400 font-normal shrink-0">
-                                              ({(stockItem.quantity / 1000).toFixed(1)} Kg disp.)
+                                            <span className="text-[9px] sm:text-[10px] text-slate-400 font-normal shrink-0">
+                                              ({(stockItem.quantity / 1000).toFixed(1)}k)
                                             </span>
                                           ) : (
-                                            <span className="text-[10px] text-red-500 font-normal shrink-0">
-                                              (Sin existencias)
+                                            <span className="text-[9px] sm:text-[10px] text-red-500 font-normal shrink-0">
+                                              (0)
                                             </span>
                                           )}
                                         </div>
-                                        <div className="flex gap-3 font-mono">
-                                          <span className="w-12 text-right text-slate-400">{gPerKg.toFixed(2)} g</span>
-                                          <span className={`w-16 text-right font-bold ${isMissing ? 'text-red-700' : 'text-blue-600'}`}>
-                                            {actualNeeded.toFixed(2)} g
+                                        <div className="flex gap-2 sm:gap-3 font-mono text-[10px] sm:text-xs shrink-0">
+                                          <span className="w-10 sm:w-12 text-right text-slate-400">{gPerKg.toFixed(1)}g</span>
+                                          <span className={`w-14 sm:w-16 text-right font-bold ${isMissing ? 'text-red-700' : 'text-blue-600'}`}>
+                                            {actualNeeded.toFixed(1)}g
                                           </span>
                                         </div>
                                       </div>
@@ -912,14 +1019,14 @@ export default function WorkOrderManager({
                     </div>
                   </div>
 
-                  <div className="p-6 border-t border-slate-100 bg-slate-50 shrink-0 flex justify-between items-center">
-                     <p className="text-sm text-slate-500 font-medium">
+                  <div className="p-3.5 sm:p-6 border-t border-slate-100 bg-slate-50 shrink-0 flex flex-col sm:flex-row sm:justify-between items-stretch sm:items-center gap-2.5 sm:gap-3">
+                     <p className="text-xs sm:text-sm text-slate-500 font-medium text-center sm:text-left">
                        Puedes preparar los marcos en el orden que prefieras.
                      </p>
-                     <div className="flex gap-3">
+                     <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
                        <button 
                          onClick={() => setSelectedOrderForModal(null)}
-                         className="px-6 py-2.5 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200 transition-colors"
+                         className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer text-center"
                        >
                          Cerrar
                        </button>
@@ -929,17 +1036,17 @@ export default function WorkOrderManager({
                              onUpdateOrder(selectedOrderForModal.id!, { status: 'En Progreso' });
                              setSelectedOrderForModal(null);
                            }}
-                           className="px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors flex items-center gap-2"
+                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
                          >
-                           <PlayCircle className="w-4 h-4" /> Marcar como "En Progreso"
+                           <PlayCircle className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">En Progreso</span>
                          </button>
                        )}
                        {selectedOrderForModal.status === 'En Progreso' && (
                          <button 
                            onClick={() => setConfirmFinishOrder(true)}
-                           className="px-6 py-2.5 rounded-xl font-bold text-sm text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center gap-2"
+                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
                          >
-                           <CheckCircle className="w-4 h-4" /> Finalizar Orden
+                           <CheckCircle className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">Finalizar Orden</span>
                          </button>
                        )}
                      </div>
@@ -954,24 +1061,24 @@ export default function WorkOrderManager({
       {/* Custom Error Alert Modal */}
       {errorAlert && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-4 animate-fade-in"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-3 sm:p-4 animate-fade-in"
           onClick={() => setErrorAlert(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-red-100"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-red-100"
             onClick={e => e.stopPropagation()}
           >
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+            <div className="p-5 sm:p-6 text-center">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-3">
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Atención</h3>
-              <p className="text-sm text-slate-500">{errorAlert}</p>
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">Atención</h3>
+              <p className="text-xs sm:text-sm text-slate-500">{errorAlert}</p>
             </div>
-            <div className="bg-slate-50 p-4 border-t border-slate-100 flex justify-center">
+            <div className="bg-slate-50 p-3 sm:p-4 border-t border-slate-100 flex justify-center">
               <button
                 onClick={() => setErrorAlert(null)}
-                className="bg-red-600 text-white rounded-xl px-8 py-2.5 text-sm font-bold hover:bg-red-700 transition-colors w-full"
+                className="bg-red-600 text-white rounded-xl px-6 py-2.5 text-xs sm:text-sm font-bold hover:bg-red-700 transition-colors w-full cursor-pointer"
               >
                 Entendido
               </button>
@@ -983,26 +1090,26 @@ export default function WorkOrderManager({
       {/* Custom Confirm Modal */}
       {confirmBatch && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-4 animate-fade-in"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-3 sm:p-4 animate-fade-in"
           onClick={() => setConfirmBatch(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-blue-100"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-blue-100"
             onClick={e => e.stopPropagation()}
           >
-            <div className="p-6 text-center">
+            <div className="p-4 sm:p-6 text-center">
               <div 
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner border border-black/10"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mx-auto mb-2.5 shadow-inner border border-black/10"
                 style={{ backgroundColor: confirmBatch.pantoneInfo.hex }}
               />
-              <h3 className="text-lg font-bold text-slate-900 mb-1">Confirmar Preparación</h3>
-              <p className="text-xs text-slate-500 mb-3">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1">Confirmar Preparación</h3>
+              <p className="text-xs text-slate-500 mb-2.5">
                 Se registrará y descontará del inventario:
               </p>
 
-              <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/80 text-left space-y-2 mb-3 text-xs">
+              <div className="bg-slate-50 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 text-left space-y-2 mb-2.5 text-xs">
                 <div className="flex justify-between items-center font-bold text-blue-900 pb-1.5 border-b border-slate-200">
-                  <span>Pasta Madre (Preparada):</span>
+                  <span>Pasta Madre:</span>
                   <span className="font-mono text-sm">{confirmBatch.kg} Kg</span>
                 </div>
                 <div>
@@ -1025,7 +1132,7 @@ export default function WorkOrderManager({
               </div>
 
               {confirmBatch.isStockWarning && (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-left mb-1 text-xs text-amber-800">
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-2 text-left mb-1 text-xs text-amber-800">
                   <div className="flex items-center gap-1.5 font-bold mb-0.5">
                     <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                     <span>Insumos con existencia baja o en 0</span>
@@ -1036,10 +1143,10 @@ export default function WorkOrderManager({
                 </div>
               )}
             </div>
-            <div className="bg-slate-50 p-4 border-t border-slate-100 flex gap-3">
+            <div className="bg-slate-50 p-3 sm:p-4 border-t border-slate-100 flex gap-2 sm:gap-3">
               <button
                 onClick={() => setConfirmBatch(null)}
-                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-4 py-2.5 text-sm font-bold hover:bg-slate-50 transition-colors"
+                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 Cancelar
               </button>
@@ -1133,7 +1240,7 @@ export default function WorkOrderManager({
                     }
                   }
                 }}
-                className="flex-1 bg-blue-600 text-white rounded-xl px-4 py-2.5 text-sm font-bold hover:bg-blue-700 transition-colors"
+                className="flex-1 bg-blue-600 text-white rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer"
               >
                 Aceptar
               </button>
@@ -1145,29 +1252,29 @@ export default function WorkOrderManager({
       {/* Custom Confirm Finish Order Modal */}
       {confirmFinishOrder && selectedOrderForModal && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-4 animate-fade-in"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-3 sm:p-4 animate-fade-in"
           onClick={() => setConfirmFinishOrder(false)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-emerald-100"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-emerald-100"
             onClick={e => e.stopPropagation()}
           >
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <div className="p-5 sm:p-6 text-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
                 <CheckCircle className="w-6 h-6 text-emerald-600" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Finalizar Orden</h3>
-              <p className="text-sm text-slate-500 mb-2">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">Finalizar Orden</h3>
+              <p className="text-xs sm:text-sm text-slate-500 mb-2">
                 ¿Estás seguro que deseas marcar esta orden como <span className="font-bold text-emerald-600">Completada</span> manualmente?
               </p>
-              <p className="text-xs text-slate-400">
+              <p className="text-[11px] text-slate-400">
                 Asegúrate de haber finalizado todos los colores necesarios.
               </p>
             </div>
-            <div className="bg-slate-50 p-4 border-t border-slate-100 flex gap-3">
+            <div className="bg-slate-50 p-3 sm:p-4 border-t border-slate-100 flex gap-2 sm:gap-3">
               <button
                 onClick={() => setConfirmFinishOrder(false)}
-                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-4 py-2.5 text-sm font-bold hover:bg-slate-50 transition-colors"
+                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 Cancelar
               </button>
@@ -1180,7 +1287,7 @@ export default function WorkOrderManager({
                   setConfirmFinishOrder(false);
                   setSelectedOrderForModal(null);
                 }}
-                className="flex-1 bg-emerald-600 text-white rounded-xl px-4 py-2.5 text-sm font-bold hover:bg-emerald-700 transition-colors"
+                className="flex-1 bg-emerald-600 text-white rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-emerald-700 transition-colors cursor-pointer"
               >
                 Confirmar
               </button>
@@ -1192,26 +1299,26 @@ export default function WorkOrderManager({
       {/* Custom Confirm Delete Order Modal */}
       {orderToDelete && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-4 animate-fade-in"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-[70] p-3 sm:p-4 animate-fade-in"
           onClick={() => setOrderToDelete(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-red-100"
+            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-scale-in border border-red-100"
             onClick={e => e.stopPropagation()}
           >
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+            <div className="p-5 sm:p-6 text-center">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-3">
                 <Trash2 className="w-6 h-6 text-red-600" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Eliminar Orden</h3>
-              <p className="text-sm text-slate-500">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">Eliminar Orden</h3>
+              <p className="text-xs sm:text-sm text-slate-500">
                 ¿Seguro que deseas eliminar esta orden? Esta acción no se puede deshacer.
               </p>
             </div>
-            <div className="bg-slate-50 p-4 border-t border-slate-100 flex gap-3">
+            <div className="bg-slate-50 p-3 sm:p-4 border-t border-slate-100 flex gap-2 sm:gap-3">
               <button
                 onClick={() => setOrderToDelete(null)}
-                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-4 py-2.5 text-sm font-bold hover:bg-slate-50 transition-colors"
+                className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 Cancelar
               </button>

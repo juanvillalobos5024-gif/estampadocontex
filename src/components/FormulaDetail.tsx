@@ -39,11 +39,16 @@ export default function FormulaDetail({
   const [toallas, setToallas] = useState<number>(0);
   const [cobertura, setCobertura] = useState<number>(50);
   const [volumenTeorico, setVolumenTeorico] = useState<number>(30);
+  const [productType, setProductType] = useState<'Toallas' | 'Otros'>('Toallas');
+  const [lineType, setLineType] = useState<'pigmento' | 'reactivo'>('pigmento');
 
   useEffect(() => {
     if (toallas > 0) {
-      const golpes = Math.ceil(toallas / 3);
-      const a_golpe = 2.16;
+      // Para toallas estampadas en pigmento (35x60cm): 5 piezas por golpe y 1.05m² área total
+      const isPigmento = lineType === 'pigmento';
+      const golpesRatio = isPigmento ? 5 : 3;
+      const golpes = Math.ceil(toallas / golpesRatio);
+      const a_golpe = isPigmento ? 1.05 : 2.16;
       const k_trans = 0.55;
       const rho = 1.08;
       
@@ -51,12 +56,10 @@ export default function FormulaDetail({
       const pastaKg = ((golpes * gramosPorGolpe) / 1000) * 1.10; // 10% residuo
       setTotalGrams(Math.round(pastaKg * 1000));
     }
-  }, [toallas, cobertura, volumenTeorico]);
+  }, [toallas, cobertura, volumenTeorico, lineType]);
 
   // Estado para registrar preparación de lote
   const [showLogForm, setShowLogForm] = useState(false);
-  const [productType, setProductType] = useState<'Toallas' | 'Otros'>('Toallas');
-  const [lineType, setLineType] = useState<'pigmento' | 'reactivo'>('pigmento');
   const [piecesQty, setPiecesQty] = useState<number>(100);
   const [selectedOperator, setSelectedOperator] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);

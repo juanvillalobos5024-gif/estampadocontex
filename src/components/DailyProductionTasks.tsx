@@ -9,7 +9,10 @@ import {
   addProductionRecord, 
   updateProductionRecord, 
   deleteProductionRecord,
-  syncWorkOrdersToProductionRecords 
+  syncWorkOrdersToProductionRecords,
+  getRecordKg,
+  getRecordGolpes,
+  isToallaDesign
 } from '../lib/dataService';
 
 interface DailyProductionTasksProps {
@@ -166,9 +169,9 @@ export default function DailyProductionTasks({
     });
 
     return Object.entries(map).map(([date, records]) => {
-      const totalGolpes = records.reduce((acc, r) => acc + (r.golpes || (r.widthM <= 0.4 ? Math.round(r.units / 5) : Math.round(r.units / 3))), 0);
+      const totalGolpes = records.reduce((acc, r) => acc + getRecordGolpes(r), 0);
       const totalUnits = records.reduce((acc, r) => acc + (r.units || 0), 0);
-      const totalKg = records.reduce((acc, r) => acc + (r.kgDay || 0), 0);
+      const totalKg = records.reduce((acc, r) => acc + getRecordKg(r), 0);
       return {
         date,
         records,
@@ -187,31 +190,33 @@ export default function DailyProductionTasks({
   }, [groupedDailyTasks, pageCards, cardsPerPage]);
 
   // Métricas acumuladas del período
-  const totalPeriodGolpes = filteredRecords.reduce((acc, r) => acc + (r.golpes || (r.widthM <= 0.4 ? Math.round(r.units / 5) : Math.round(r.units / 3))), 0);
+  const totalPeriodGolpes = filteredRecords.reduce((acc, r) => acc + getRecordGolpes(r), 0);
   const totalPeriodUnits = filteredRecords.reduce((acc, r) => acc + (r.units || 0), 0);
-  const totalPeriodKg = filteredRecords.reduce((acc, r) => acc + (r.kgDay || 0), 0);
+  const totalPeriodKg = filteredRecords.reduce((acc, r) => acc + getRecordKg(r), 0);
   const totalDaysCount = groupedDailyTasks.length;
 
   // Manejo de selección de diseño en formulario
   const handleSelectDesign = (name: string) => {
     setTaskDesignName(name);
     const d = designs.find(item => item.name.toUpperCase() === name.toUpperCase());
+    const isToalla = isToallaDesign(name);
     if (d) {
-      const wM = d.widthCm ? Number((d.widthCm / 100).toFixed(2)) : 0.60;
-      const hM = d.heightCm ? Number((d.heightCm / 100).toFixed(2)) : 1.20;
+      const wM = isToalla ? 0.35 : (d.widthCm ? Number((d.widthCm / 100).toFixed(2)) : 0.60);
+      const hM = isToalla ? 0.60 : (d.heightCm ? Number((d.heightCm / 100).toFixed(2)) : 1.20);
       setTaskWidthM(wM);
       setTaskHeightM(hM);
-      if (d.gramaje) setTaskGramaje(d.gramaje);
-      if (d.lineType) setTaskProcess(d.lineType === 'reactivo' ? 'REACTIVO' : 'PIGMENTO');
+      setTaskGramaje(isToalla ? 310 : (d.gramaje || 280));
+      setTaskProcess(isToalla ? 'PIGMENTO' : (d.lineType === 'reactivo' ? 'REACTIVO' : 'PIGMENTO'));
 
-      const ratio = (wM <= 0.40) ? 5 : 3;
+      const ratio = (wM <= 0.40 || isToalla) ? 5 : 3;
       setTaskUnits(taskGolpes * ratio);
     }
   };
 
   const handleGolpesChange = (val: number) => {
     setTaskGolpes(val);
-    const ratio = (taskWidthM <= 0.40) ? 5 : 3;
+    const isToalla = isToallaDesign(taskDesignName, taskWidthM, taskProcess);
+    const ratio = (taskWidthM <= 0.40 || isToalla) ? 5 : 3;
     setTaskUnits(val * ratio);
   };
 
@@ -219,16 +224,17 @@ export default function DailyProductionTasks({
     setEditingRecordId(null);
     setTaskDate(defaultDate || new Date().toISOString().slice(0, 10));
     const firstDesign = designs.length > 0 ? designs[0] : null;
-    const wM = firstDesign?.widthCm ? Number((firstDesign.widthCm / 100).toFixed(2)) : 0.60;
-    const hM = firstDesign?.heightCm ? Number((firstDesign.heightCm / 100).toFixed(2)) : 1.20;
+    const isToalla = firstDesign ? isToallaDesign(firstDesign.name) : false;
+    const wM = isToalla ? 0.35 : (firstDesign?.widthCm ? Number((firstDesign.widthCm / 100).toFixed(2)) : 0.60);
+    const hM = isToalla ? 0.60 : (firstDesign?.heightCm ? Number((firstDesign.heightCm / 100).toFixed(2)) : 1.20);
     setTaskDesignName(firstDesign ? firstDesign.name : '');
     setTaskShift(1);
     setTaskGolpes(800);
     setTaskWidthM(wM);
     setTaskHeightM(hM);
-    setTaskGramaje(firstDesign?.gramaje || 280);
-    setTaskProcess(firstDesign?.lineType === 'reactivo' ? 'REACTIVO' : 'PIGMENTO');
-    const ratio = (wM <= 0.40) ? 5 : 3;
+    setTaskGramaje(isToalla ? 310 : (firstDesign?.gramaje || 280));
+    setTaskProcess(isToalla ? 'PIGMENTO' : (firstDesign?.lineType === 'reactivo' ? 'REACTIVO' : 'PIGMENTO'));
+    const ratio = (wM <= 0.40 || isToalla) ? 5 : 3;
     setTaskUnits(800 * ratio);
     setIsModalOpen(true);
   };
@@ -238,13 +244,14 @@ export default function DailyProductionTasks({
     setTaskDate(r.date);
     setTaskDesignName(r.designName);
     setTaskShift(r.shift);
-    const g = r.golpes || (r.widthM <= 0.40 ? Math.round(r.units / 5) : Math.round(r.units / 3));
+    const g = getRecordGolpes(r);
     setTaskGolpes(g);
     setTaskUnits(r.units);
-    setTaskWidthM(r.widthM);
-    setTaskHeightM(r.heightM);
-    setTaskGramaje(r.gramaje);
-    setTaskProcess(r.process);
+    const isToalla = isToallaDesign(r.designName, r.widthM, r.process);
+    setTaskWidthM(isToalla ? 0.35 : r.widthM);
+    setTaskHeightM(isToalla ? 0.60 : r.heightM);
+    setTaskGramaje(isToalla ? 310 : r.gramaje);
+    setTaskProcess(isToalla ? 'PIGMENTO' : r.process);
     setIsModalOpen(true);
   };
 
@@ -255,19 +262,23 @@ export default function DailyProductionTasks({
       return;
     }
 
-    const area = Number((taskWidthM * taskHeightM).toFixed(2));
-    const unitWeight = Number((area * taskGramaje).toFixed(1));
+    const isToalla = isToallaDesign(taskDesignName, taskWidthM, taskProcess);
+    const area = isToalla ? 0.21 : Number((taskWidthM * taskHeightM).toFixed(2));
+    const matchedDesign = designs.find(item => item.name.toUpperCase() === taskDesignName.toUpperCase().trim());
+    const unitWeight = isToalla ? 63 : (matchedDesign?.unitWeight || Number((area * taskGramaje).toFixed(1)));
     const kg = Number(((taskUnits * unitWeight) / 1000).toFixed(2));
+    const pxg = isToalla ? 5 : (taskWidthM <= 0.40 ? 5 : 3);
+    const golpes = Number(taskGolpes) || Math.round(taskUnits / pxg);
 
     const recordData: DailyProductionRecord = {
       date: taskDate,
       designName: taskDesignName.toUpperCase().trim(),
       shift: Number(taskShift) || 1,
-      golpes: Number(taskGolpes) || 0,
-      widthM: Number(taskWidthM) || 0,
-      heightM: Number(taskHeightM) || 0,
-      gramaje: Number(taskGramaje) || 0,
-      process: taskProcess,
+      golpes,
+      widthM: isToalla ? 0.35 : Number(taskWidthM) || 0,
+      heightM: isToalla ? 0.60 : Number(taskHeightM) || 0,
+      gramaje: isToalla ? 310 : Number(taskGramaje) || 0,
+      process: isToalla ? 'PIGMENTO' : taskProcess,
       areaM2: area,
       unitWeightG: unitWeight,
       units: Number(taskUnits) || 0,
@@ -285,10 +296,21 @@ export default function DailyProductionTasks({
   };
 
   const handleDeleteTask = async (id: string) => {
-    setProductionRecords(prev => prev.filter(r => r.id !== id));
+    setProductionRecords(prev => prev.filter(r => r.id !== id && `${r.date}__${r.designName}` !== id));
     setDeleteConfirmId(null);
     await deleteProductionRecord(id);
-    loadData();
+    await loadData();
+  };
+
+  const handleDeleteEntireDay = async (date: string, dayRecords: DailyProductionRecord[]) => {
+    if (window.confirm(`¿Estás seguro de eliminar todo el reporte de producción del día ${formatProductionDate(date)}?`)) {
+      setProductionRecords(prev => prev.filter(r => r.date !== date));
+      for (const r of dayRecords) {
+        const idToDelete = r.id || `${r.date}__${r.designName}`;
+        await deleteProductionRecord(idToDelete);
+      }
+      await loadData();
+    }
   };
 
   return (
@@ -312,7 +334,7 @@ export default function DailyProductionTasks({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 ml-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ml-auto">
           {onNavigateToMonthlySheet && (
             <button
               type="button"
@@ -564,16 +586,26 @@ export default function DailyProductionTasks({
               className="bg-white rounded-2xl border border-slate-300/80 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow"
             >
               {/* Encabezado Celeste Superior Estilo Excel */}
-              <div className="bg-sky-500 text-white font-extrabold uppercase py-2 px-3 text-center text-[11px] tracking-wider border-b border-sky-600 shadow-inner flex items-center justify-between">
-                <span className="flex-1 text-center font-black">REPORTE DIARIO DE PRODUCCIÒN</span>
-                <button
-                  type="button"
-                  onClick={() => handleOpenNewTask(day.date)}
-                  className="bg-sky-600/80 hover:bg-sky-700 p-1 rounded text-white cursor-pointer"
-                  title="Añadir diseño a este día"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                </button>
+              <div className="bg-sky-500 text-white font-extrabold uppercase py-2 px-3 text-[11px] tracking-wider border-b border-sky-600 shadow-inner flex items-center justify-between">
+                <span className="font-black truncate">REPORTE DIARIO DE PRODUCCIÓN</span>
+                <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenNewTask(day.date)}
+                    className="bg-sky-600/90 hover:bg-sky-700 p-1.5 rounded-lg text-white shadow-xs cursor-pointer transition-colors"
+                    title="Añadir diseño a este día"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteEntireDay(day.date, day.records)}
+                    className="bg-sky-600/90 hover:bg-red-600 p-1.5 rounded-lg text-white shadow-xs cursor-pointer transition-colors"
+                    title="Eliminar todo este día de producción"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
 
               {/* Subencabezado de Fecha y Unidades */}
@@ -591,23 +623,25 @@ export default function DailyProductionTasks({
 
               {/* Fila de Títulos de Columna */}
               <div className="grid grid-cols-12 bg-slate-50 px-3 py-1.5 text-[10px] font-black text-slate-600 uppercase border-b border-slate-200">
-                <div className="col-span-6">DISEÑO</div>
+                <div className="col-span-5">DISEÑO</div>
                 <div className="col-span-3 text-center">Nº GOLPES</div>
-                <div className="col-span-3 text-right">UNIDADES</div>
+                <div className="col-span-2 text-right">UNIDADES</div>
+                <div className="col-span-2 text-center">ACCIONES</div>
               </div>
 
               {/* Lista de Diseños Estampados en el Día */}
               <div className="divide-y divide-slate-100 font-medium text-xs flex-1">
                 {day.records.map(r => {
-                  const golpesVal = r.golpes || (r.widthM <= 0.40 ? Math.round(r.units / 5) : Math.round(r.units / 3));
+                  const golpesVal = getRecordGolpes(r);
+                  const recordKey = r.id || `${r.date}__${r.designName}`;
                   return (
                     <div
-                      key={r.id}
-                      className="grid grid-cols-12 items-center px-3 py-2 hover:bg-slate-50/80 transition-colors group"
+                      key={recordKey}
+                      className="grid grid-cols-12 items-center px-3 py-2.5 hover:bg-sky-50/40 transition-colors"
                     >
-                      <div className="col-span-6 font-bold text-slate-900 truncate flex items-center gap-1.5" title={r.designName}>
+                      <div className="col-span-5 font-bold text-slate-900 truncate flex items-center gap-1.5" title={r.designName}>
                         <span className="truncate">{r.designName}</span>
-                        <span className={`text-[8px] px-1 py-0.2 rounded font-black uppercase ${
+                        <span className={`text-[8px] px-1 py-0.2 rounded font-black uppercase shrink-0 ${
                           r.process === 'REACTIVO'
                             ? 'bg-purple-100 text-purple-700 border border-purple-200'
                             : 'bg-orange-100 text-orange-700 border border-orange-200'
@@ -620,36 +654,48 @@ export default function DailyProductionTasks({
                         {golpesVal.toLocaleString()}
                       </div>
 
-                      <div className="col-span-3 text-right font-mono font-extrabold text-sky-800 flex items-center justify-end gap-1">
-                        <span>{r.units.toLocaleString()}</span>
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 ml-1">
-                          <button
-                            type="button"
-                            onClick={() => handleOpenEditTask(r)}
-                            className="p-0.5 text-slate-400 hover:text-blue-600 cursor-pointer"
-                            title="Editar tarea"
-                          >
-                            <Edit2 className="w-3 h-3" />
-                          </button>
-                          {deleteConfirmId === r.id ? (
+                      <div className="col-span-2 text-right font-mono font-extrabold text-sky-800">
+                        {r.units.toLocaleString()}
+                      </div>
+
+                      <div className="col-span-2 flex items-center justify-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleOpenEditTask(r)}
+                          className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
+                          title="Editar tarea"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        {deleteConfirmId === recordKey ? (
+                          <div className="flex items-center gap-1">
                             <button
                               type="button"
-                              onClick={() => handleDeleteTask(r.id!)}
-                              className="text-[9px] font-bold text-red-600 bg-red-50 border border-red-200 px-1 rounded cursor-pointer"
+                              onClick={() => handleDeleteTask(recordKey)}
+                              className="text-[10px] font-bold text-red-600 bg-red-100 hover:bg-red-200 border border-red-300 px-1.5 py-0.5 rounded cursor-pointer"
+                              title="Confirmar eliminación"
                             >
                               Sí
                             </button>
-                          ) : (
                             <button
                               type="button"
-                              onClick={() => setDeleteConfirmId(r.id!)}
-                              className="p-0.5 text-slate-400 hover:text-red-600 cursor-pointer"
-                              title="Eliminar tarea"
+                              onClick={() => setDeleteConfirmId(null)}
+                              className="text-[10px] font-bold text-slate-500 bg-slate-200 hover:bg-slate-300 px-1 py-0.5 rounded cursor-pointer"
+                              title="Cancelar"
                             >
-                              <Trash2 className="w-3 h-3" />
+                              ✕
                             </button>
-                          )}
-                        </div>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setDeleteConfirmId(recordKey)}
+                            className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            title="Eliminar tarea"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
@@ -658,7 +704,7 @@ export default function DailyProductionTasks({
 
               {/* Fila Amarilla de Totales Diarios Estilo Excel */}
               <div className="grid grid-cols-12 bg-yellow-400 text-slate-950 font-black px-3 py-2 text-xs border-t-2 border-yellow-500 shadow-sm">
-                <div className="col-span-6 tracking-wider uppercase flex items-center gap-1.5">
+                <div className="col-span-5 tracking-wider uppercase flex items-center gap-1.5">
                   <span>TOTAL</span>
                   <span className="text-[9px] font-bold text-slate-700 font-sans">
                     ({day.records.length} ref{day.records.length > 1 ? 's' : ''})
@@ -667,7 +713,7 @@ export default function DailyProductionTasks({
                 <div className="col-span-3 text-center font-mono text-sm">
                   {day.totalGolpes.toLocaleString()}
                 </div>
-                <div className="col-span-3 text-right font-mono text-sm">
+                <div className="col-span-4 text-right font-mono text-sm pr-2">
                   {day.totalUnits.toLocaleString()}
                 </div>
               </div>
@@ -911,21 +957,38 @@ export default function DailyProductionTasks({
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 rounded-xl text-xs font-extrabold text-white bg-sky-600 hover:bg-sky-700 shadow-md shadow-sky-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Check className="w-4 h-4" />
-                  {editingRecordId ? 'Guardar Cambios' : 'Registrar Tarea y Auto-llenar'}
-                </button>
+              <div className="flex items-center justify-between gap-2 pt-2">
+                {editingRecordId ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (window.confirm("¿Seguro que deseas eliminar este registro de producción?")) {
+                        handleDeleteTask(editingRecordId);
+                        setIsModalOpen(false);
+                      }
+                    }}
+                    className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Eliminar Registro</span>
+                  </button>
+                ) : <div />}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 rounded-xl text-xs font-extrabold text-white bg-sky-600 hover:bg-sky-700 shadow-md shadow-sky-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Check className="w-4 h-4" />
+                    {editingRecordId ? 'Guardar Cambios' : 'Registrar Tarea y Auto-llenar'}
+                  </button>
+                </div>
               </div>
             </form>
           </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Plus, Search, Palette, Trash2, Edit2, Loader2, AlertCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Design, PantoneColor } from '../types';
-import { addDesign, getDesigns, deleteDesign, updateDesign } from '../lib/dataService';
+import { addDesign, getDesigns, deleteDesign, updateDesign, syncDesignToProductionRecords, isToallaDesign } from '../lib/dataService';
 
 interface DesignManagerProps {
   pantones: PantoneColor[];
@@ -167,24 +167,31 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
     }
 
     try {
-      const gVal = gramaje !== '' && !isNaN(Number(gramaje)) ? Number(gramaje) : 0;
-      const wVal = unitWeight !== '' && !isNaN(Number(unitWeight)) ? Number(unitWeight) : 0;
-      const calcAreaTowel = gVal > 0 && wVal > 0 ? (wVal / gVal) : 0.72;
-      const calcAreaTotal = calcAreaTowel * 3;
+      const existing = designs.find(d => d.id === editingDesignId);
+      const normName = name.toUpperCase().trim();
+      const isToalla = isToallaDesign(normName) || (productType === 'Toallas' && lineType === 'pigmento');
+
+      const widthCm = isToalla ? 35 : (existing?.widthCm || 60);
+      const heightCm = isToalla ? 60 : (existing?.heightCm || 120);
+      const piezasPorGolpe = isToalla ? 5 : (existing?.piezasPorGolpe || 3);
+      const gVal = isToalla ? 310 : (gramaje !== '' && !isNaN(Number(gramaje)) ? Number(gramaje) : (existing?.gramaje || 280));
+      const wVal = isToalla ? 63 : (unitWeight !== '' && !isNaN(Number(unitWeight)) ? Number(unitWeight) : (existing?.unitWeight || 201.6));
+      const calcAreaTowel = isToalla ? 0.21 : (gVal > 0 && wVal > 0 ? (wVal / gVal) : Number(((widthCm * heightCm) / 10000).toFixed(2)));
+      const calcAreaTotal = calcAreaTowel * piezasPorGolpe;
 
       const designData = {
-        name: name.toUpperCase(),
+        name: normName,
         imageUrl,
         frames: Number(frames) || 0,
         gramaje: gVal,
         unitWeight: wVal,
-        widthCm: 60,
-        heightCm: 120,
-        piezasPorGolpe: 3,
+        widthCm,
+        heightCm,
+        piezasPorGolpe,
         areaPorToalla: calcAreaTowel,
         areaTotal: calcAreaTotal,
         productType,
-        lineType,
+        lineType: isToalla ? 'pigmento' : lineType,
         colors: colors.filter(c => c.pantoneCode && c.gramsPerPiece > 0)
       };
 
@@ -193,6 +200,10 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
       } else {
         await addDesign(designData);
       }
+
+      // Sincronizar automáticamente registros de producción para que nunca queden desactualizados
+      await syncDesignToProductionRecords(normName, wVal, gVal, widthCm, heightCm, piezasPorGolpe);
+
       handleCancel();
       loadDesigns();
       if (onRefreshDesigns) onRefreshDesigns();

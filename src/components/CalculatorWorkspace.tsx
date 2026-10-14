@@ -329,40 +329,40 @@ export default function CalculatorWorkspace({
   // VIEW: WORKSPACE (WEIGHING)
   // -----------------------------------------------------
   return (
-    <div className="h-full bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+    <div className="h-full bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
       
       {/* HEADER */}
-      <div className="p-4 sm:p-6 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-4 w-full sm:w-auto">
+      <div className="p-3 sm:p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
           <button 
             onClick={() => {
               onSelectPantone(null);
               setSuccessMsg('');
             }}
-            className="p-2 bg-white rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 shadow-sm cursor-pointer"
+            className="p-1.5 sm:p-2 bg-white rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 shadow-sm cursor-pointer shrink-0"
             title="Volver al buscador"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             {activeDesign ? (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl shadow-inner border-2 border-white bg-purple-100 text-purple-600 font-bold text-xl">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="flex items-center justify-center w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl shadow-inner border border-white bg-purple-100 text-purple-600 font-bold text-base sm:text-xl shrink-0">
                   D
                 </div>
-                <div>
-                  <h2 className="text-xl font-black text-slate-900 leading-tight">{activeDesign.name}</h2>
-                  <p className="text-xs font-semibold text-slate-500">
-                    Color actual: {pantone.code} ({currentDesignColorIndex + 1}/{activeDesign.colors.length})
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-xl font-black text-slate-900 leading-tight truncate">{activeDesign.name}</h2>
+                  <p className="text-[11px] sm:text-xs font-semibold text-slate-500 truncate">
+                    Color: {pantone.code} ({currentDesignColorIndex + 1}/{activeDesign.colors.length})
                   </p>
                 </div>
               </div>
             ) : (
               <>
-                <div className="w-12 h-12 rounded-xl shadow-inner border-2 border-white" style={{ backgroundColor: pantone.hex }} />
-                <div>
-                  <h2 className="text-xl font-black text-slate-900 leading-tight">{pantone.code}</h2>
-                  <p className="text-xs font-semibold text-slate-500">{pantone.name}</p>
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl shadow-inner border border-white shrink-0" style={{ backgroundColor: pantone.hex }} />
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-xl font-black text-slate-900 leading-tight truncate">{pantone.code}</h2>
+                  <p className="text-[11px] sm:text-xs font-semibold text-slate-500 truncate">{pantone.name}</p>
                 </div>
               </>
             )}
@@ -370,31 +370,31 @@ export default function CalculatorWorkspace({
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center gap-2 self-end sm:self-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button 
             onClick={() => onEditPantone(pantone)}
-            className="p-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl hover:text-blue-600 hover:border-blue-200 transition-colors cursor-pointer shadow-sm"
+            className="p-2 sm:p-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl hover:text-blue-600 hover:border-blue-200 transition-colors cursor-pointer shadow-sm"
             title="Editar Fórmula"
           >
             <Edit2 className="w-4 h-4" />
           </button>
           {pantone.id && !activeDesign && (
             showDeleteConfirm ? (
-              <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 p-1.5 rounded-xl">
-                <span className="text-[10px] text-red-700 font-bold px-1.5">¿Borrar?</span>
+              <div className="flex items-center gap-1 bg-red-50 border border-red-200 p-1 rounded-xl">
+                <span className="text-[10px] text-red-700 font-bold px-1">¿Borrar?</span>
                 <button
                   onClick={() => {
                     onDeletePantone(pantone.id!);
                     setShowDeleteConfirm(false);
                     onSelectPantone(null);
                   }}
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2.5 py-1 text-[10px] font-bold cursor-pointer"
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2 py-1 text-[10px] font-bold cursor-pointer"
                 >
                   Sí
                 </button>
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="bg-white border border-slate-200 text-slate-500 rounded-lg px-2 py-1 text-[10px] font-semibold cursor-pointer"
+                  className="bg-white border border-slate-200 text-slate-500 rounded-lg px-1.5 py-1 text-[10px] font-semibold cursor-pointer"
                 >
                   No
                 </button>
@@ -402,7 +402,7 @@ export default function CalculatorWorkspace({
             ) : (
               <button 
                 onClick={() => setShowDeleteConfirm(true)}
-                className="p-2.5 bg-white border border-slate-200 text-red-500 rounded-xl hover:bg-red-50 hover:border-red-200 transition-colors cursor-pointer shadow-sm"
+                className="p-2 sm:p-2.5 bg-white border border-slate-200 text-red-500 rounded-xl hover:bg-red-50 hover:border-red-200 transition-colors cursor-pointer shadow-sm"
                 title="Eliminar Fórmula"
               >
                 <Trash2 className="w-4 h-4" />
@@ -416,31 +416,31 @@ export default function CalculatorWorkspace({
       <div className="flex-1 overflow-y-auto flex flex-col lg:flex-row">
         
         {/* Left Column: Settings */}
-        <div className="w-full lg:w-1/3 p-6 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/30 space-y-5">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <Scale className="w-4 h-4 text-blue-600" />
+        <div className="w-full lg:w-1/3 p-3 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/30 space-y-3 sm:space-y-5">
+          <h3 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2">
+            <Scale className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
             Configuración de Lote
           </h3>
 
           {activeDesign && (
-            <div className="bg-white p-5 rounded-2xl border border-purple-200 shadow-sm bg-purple-50/30">
-              <label className="block text-xs font-bold text-purple-700 uppercase tracking-wide mb-3">
+            <div className="bg-white p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-purple-200 shadow-sm bg-purple-50/30">
+              <label className="block text-[11px] sm:text-xs font-bold text-purple-700 uppercase tracking-wide mb-2 sm:mb-3">
                 Progreso del Diseño
               </label>
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 {activeDesign.colors.map((c, idx) => {
                   const isCompleted = completedColors.includes(c.pantoneCode);
                   const isCurrent = currentDesignColorIndex === idx;
                   return (
-                    <div key={idx} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${isCurrent ? 'bg-purple-100 border border-purple-200' : ''}`}>
+                    <div key={idx} className={`flex items-center gap-2 text-xs sm:text-sm p-1.5 sm:p-2 rounded-lg ${isCurrent ? 'bg-purple-100 border border-purple-200' : ''}`}>
                       {isCompleted ? (
-                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 shrink-0" />
                       ) : isCurrent ? (
-                        <Circle className="w-4 h-4 text-purple-500 fill-purple-100" />
+                        <Circle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-500 fill-purple-100 shrink-0" />
                       ) : (
-                        <Circle className="w-4 h-4 text-slate-300" />
+                        <Circle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-300 shrink-0" />
                       )}
-                      <span className={`font-semibold ${isCompleted ? 'text-slate-400 line-through' : isCurrent ? 'text-purple-900 font-bold' : 'text-slate-600'}`}>
+                      <span className={`font-semibold truncate ${isCompleted ? 'text-slate-400 line-through' : isCurrent ? 'text-purple-900 font-bold' : 'text-slate-600'}`}>
                         {c.pantoneCode}
                       </span>
                     </div>
@@ -451,37 +451,37 @@ export default function CalculatorWorkspace({
           )}
 
           {/* Kilos + Reescala */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">
+          <div className="bg-white p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <label className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide">
                 Kilos a Preparar
               </label>
               <button
                 type="button"
                 onClick={() => { setShowRescale(!showRescale); setRescaleMsg(''); }}
-                className="flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg hover:bg-amber-100 transition-colors"
+                className="flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 sm:py-1 rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
                 title="Reescalar fórmula"
               >
                 <Zap className="w-3 h-3" /> Reescalar
               </button>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <input
                 type="number"
                 value={totalGrams / 1000}
                 onChange={(e) => setTotalGrams(Math.max(1, Number(e.target.value) * 1000))}
-                className="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-xl px-4 py-3 text-2xl font-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white text-right transition-all"
+                className="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xl sm:text-2xl font-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white text-right transition-all"
                 min="0.001"
                 step="0.01"
                 disabled={activeDesign !== null}
               />
-              <span className="text-lg font-bold text-slate-400">Kg</span>
+              <span className="text-base sm:text-lg font-bold text-slate-400">Kg</span>
             </div>
 
             {/* Panel de Reescala */}
             {showRescale && (
-              <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+              <div className="mt-2.5 p-2.5 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
                 <p className="text-[10px] font-bold text-amber-700 uppercase tracking-wide">Nueva cantidad objetivo</p>
                 <div className="flex gap-2">
                   <input
@@ -489,24 +489,24 @@ export default function CalculatorWorkspace({
                     value={rescaleTarget}
                     onChange={e => setRescaleTarget(e.target.value)}
                     placeholder="Ej: 3500"
-                    className="flex-1 bg-white border border-amber-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="flex-1 bg-white border border-amber-200 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-400"
                     min="1"
                     autoFocus
                   />
-                  <span className="text-sm font-bold text-amber-700 self-center">g</span>
+                  <span className="text-xs font-bold text-amber-700 self-center">g</span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5">
                   <button
                     type="button"
                     onClick={handleRescale}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg py-1.5 text-xs font-bold transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1 bg-amber-500 hover:bg-amber-600 text-white rounded-lg py-1.5 text-xs font-bold transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-3.5 h-3.5" /> Aplicar Escala
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowRescale(false)}
-                    className="p-1.5 text-amber-600 hover:bg-amber-100 rounded-lg"
+                    className="p-1.5 text-amber-600 hover:bg-amber-100 rounded-lg cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -515,13 +515,13 @@ export default function CalculatorWorkspace({
             )}
 
             {rescaleMsg && (
-              <p className="mt-2 text-[11px] text-amber-700 font-bold bg-amber-50 rounded-lg px-2 py-1.5 border border-amber-100">
+              <p className="mt-2 text-[10px] text-amber-700 font-bold bg-amber-50 rounded-lg px-2 py-1.5 border border-amber-100">
                 ⚡ {rescaleMsg}
               </p>
             )}
 
             {!showRescale && !rescaleMsg && (
-              <p className="text-[11px] text-slate-400 mt-3 leading-relaxed">
+              <p className="text-[10px] text-slate-400 mt-2 leading-tight">
                 Modificar este valor reiniciará el checklist de pesaje.
               </p>
             )}
@@ -530,15 +530,14 @@ export default function CalculatorWorkspace({
         </div>
 
         {/* Right Column: Weighing Checklist & Submit */}
-        <div className="w-full lg:w-2/3 p-6 flex flex-col">
+        <div className="w-full lg:w-2/3 p-3 sm:p-6 flex flex-col">
 
-
-          <div className="mb-4">
-            <h3 className="text-sm font-bold text-slate-900">Checklist de Pesaje</h3>
-            <p className="text-xs text-slate-500">Marca cada tinta conforme la agregues a la báscula para habilitar el registro.</p>
+          <div className="mb-2.5 sm:mb-4">
+            <h3 className="text-xs sm:text-sm font-bold text-slate-900">Checklist de Pesaje</h3>
+            <p className="text-[10px] sm:text-xs text-slate-500">Marca cada tinta conforme la agregues a la báscula para habilitar el registro.</p>
           </div>
 
-          <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar mb-6">
+          <div className="flex-1 overflow-y-auto space-y-2 sm:space-y-3 pr-1 sm:pr-2 custom-scrollbar mb-3 sm:mb-6">
             {(() => {
               const items = pantone.formulas.map((f, idx) => {
                 const calculatedGrams = ((totalGrams / 1000) * f.percentage).toFixed(2);
@@ -556,29 +555,29 @@ export default function CalculatorWorkspace({
                 <button
                   key={item.idx}
                   onClick={() => toggleCheck(item.idx)}
-                  className={`w-full text-left flex items-center gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                  className={`w-full text-left flex items-center gap-2.5 sm:gap-4 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer ${
                     item.isChecked 
-                      ? 'bg-emerald-50/50 border-emerald-200 shadow-sm' 
-                      : 'bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50 shadow-sm'
+                      ? 'bg-emerald-50/50 border-emerald-300 shadow-xs' 
+                      : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-xs'
                   }`}
                 >
                   <div className="shrink-0">
                     {item.isChecked ? (
-                      <CheckCircle className="w-7 h-7 text-emerald-500" />
+                      <CheckCircle className="w-5 h-5 sm:w-7 sm:h-7 text-emerald-500" />
                     ) : (
-                      <Circle className="w-7 h-7 text-slate-300" />
+                      <Circle className="w-5 h-5 sm:w-7 sm:h-7 text-slate-300" />
                     )}
                   </div>
-                  <div className="flex-1">
-                    <h4 className={`text-lg font-bold ${item.isChecked ? 'text-emerald-900' : 'text-slate-800'}`}>
+                  <div className="flex-1 min-w-0">
+                    <h4 className={`text-xs sm:text-base font-bold truncate ${item.isChecked ? 'text-emerald-900' : 'text-slate-800'}`}>
                       {item.component}
                     </h4>
-                    <p className={`text-xs ${item.isChecked ? 'text-emerald-700/70' : 'text-slate-500'}`}>
+                    <p className={`text-[10px] sm:text-xs ${item.isChecked ? 'text-emerald-700/70' : 'text-slate-500'}`}>
                       {item.percentage.toFixed(2)} g/Kg
                     </p>
                   </div>
-                  <div className="text-right">
-                    <span className={`text-2xl font-black font-mono tracking-tight ${item.isChecked ? 'text-emerald-700' : 'text-blue-600'}`}>
+                  <div className="text-right shrink-0">
+                    <span className={`text-base sm:text-2xl font-black font-mono tracking-tight ${item.isChecked ? 'text-emerald-700' : 'text-blue-600'}`}>
                       {item.calculatedGrams}g
                     </span>
                   </div>
@@ -589,13 +588,13 @@ export default function CalculatorWorkspace({
 
           {/* Modal de reciclaje */}
           {showRecyclePrompt && (
-            <div className="mb-4 bg-emerald-50 border border-emerald-300 rounded-2xl p-4 space-y-3">
-              <div className="flex items-start gap-3">
-                <Recycle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="mb-3 bg-emerald-50 border border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+              <div className="flex items-start gap-2.5 sm:gap-3">
+                <Recycle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-bold text-emerald-900">Sobrante de {wasteGrams}g detectado</p>
-                  <p className="text-xs text-emerald-700 mt-0.5">
-                    ¿Deseas catalogar este sobrante como <strong>Tinta Reciclada (Gris/Oscuro)</strong> y sumarlo al stock para reutilizar en bases o tonos oscuros?
+                  <p className="text-xs sm:text-sm font-bold text-emerald-900">Sobrante de {wasteGrams}g detectado</p>
+                  <p className="text-[11px] sm:text-xs text-emerald-700 mt-0.5">
+                    ¿Deseas catalogar este sobrante como <strong>Tinta Reciclada</strong> y sumarlo al stock?
                   </p>
                 </div>
               </div>
@@ -603,28 +602,28 @@ export default function CalculatorWorkspace({
                 <button
                   type="button"
                   onClick={() => { setRecycleAccepted(true); setShowRecyclePrompt(false); }}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2 text-xs font-bold transition-colors"
+                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2 text-xs font-bold transition-colors cursor-pointer"
                 >
-                  ✓ Sí, añadir al stock
+                  ✓ Sí, añadir
                 </button>
                 <button
                   type="button"
                   onClick={() => { setRecycleAccepted(false); setShowRecyclePrompt(false); }}
-                  className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl py-2 text-xs font-bold hover:bg-slate-50 transition-colors"
+                  className="flex-1 bg-white border border-slate-200 text-slate-600 rounded-xl py-2 text-xs font-bold hover:bg-slate-50 transition-colors cursor-pointer"
                 >
-                  No, solo registrar merma
+                  No, solo merma
                 </button>
               </div>
             </div>
           )}
 
-          <div className="mt-auto bg-slate-50 rounded-2xl p-5 border border-slate-200">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-bold text-slate-900">
+          <div className="mt-auto bg-slate-50 rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-slate-200">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4">
+              <div className="text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-bold text-slate-900">
                   {allWeighed ? '¡Pesaje Completado!' : 'Pesaje en proceso...'}
                 </p>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[10px] sm:text-[11px] text-slate-500">
                   Total en báscula: <strong className="font-mono">{totalGrams.toFixed(1)}g</strong>
                   {Number(wasteGrams) > 0 && (
                     <span className="ml-2 text-emerald-600">· Merma: {wasteGrams}g</span>
@@ -634,7 +633,7 @@ export default function CalculatorWorkspace({
               <button
                 onClick={handleRegisterBatch}
                 disabled={!allWeighed || isSubmitting}
-                className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer ${
+                className={`w-full sm:w-auto px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
                   allWeighed
                     ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20'
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
@@ -643,7 +642,7 @@ export default function CalculatorWorkspace({
                 {isSubmitting ? 'Registrando...' : 'Confirmar Lote y Descontar Tintas'}
               </button>
             </div>
-            <p className="text-[10px] text-slate-400 mt-3 text-right">
+            <p className="hidden sm:block text-[10px] text-slate-400 mt-2 text-right">
               Nota: Solo presiona este botón si preparaste la mezcla físicamente. Esto descontará el inventario y generará un reporte de producción.
             </p>
           </div>

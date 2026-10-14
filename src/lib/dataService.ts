@@ -9,7 +9,8 @@ import {
   orderBy, 
   limit, 
   Timestamp,
-  serverTimestamp 
+  serverTimestamp,
+  onSnapshot 
 } from 'firebase/firestore';
 import { db, auth } from './firebase';
 import { PantoneColor, StockItem, BatchLog, TeamMember, WorkOrder, Design, DailyProductionRecord } from '../types';
@@ -409,6 +410,27 @@ export async function deleteStockItem(id: string): Promise<void> {
 }
 
 /**
+ * Suscripción en tiempo real a inventario y stock de insumos
+ */
+export function subscribeToStock(onUpdate: (stock: StockItem[]) => void): () => void {
+  try {
+    const unsubscribe = onSnapshot(collection(db, STOCK_COLLECTION), (snap) => {
+      const items = snap.docs.map(d => ({
+        id: d.id,
+        ...d.data()
+      })) as StockItem[];
+      onUpdate(items);
+    }, (error) => {
+      console.warn('Error en listener tiempo real de Stock:', error);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.warn('No se pudo suscribir a Stock:', error);
+    return () => {};
+  }
+}
+
+/**
  * Sincroniza el inventario con los datos del reporte de inventario Excel más reciente.
  * - Actualiza las cantidades de los insumos existentes a los gramos físicos del Excel.
  * - Crea los insumos nuevos que no existían.
@@ -693,6 +715,35 @@ export async function getBatchLogs(): Promise<BatchLog[]> {
   return localBatches;
 }
 
+/**
+ * Suscripción en tiempo real al historial de preparación de lotes y mezclas
+ */
+export function subscribeToBatches(onUpdate: (batches: BatchLog[]) => void): () => void {
+  try {
+    const q = query(collection(db, BATCHES_COLLECTION), orderBy('timestamp', 'desc'), limit(150));
+    const unsubscribe = onSnapshot(q, (snap) => {
+      const deletedIds = getDeletedBatchIds();
+      const firestoreBatches = snap.docs
+        .filter(d => !deletedIds.has(d.id))
+        .map(d => {
+          const data = d.data();
+          return {
+            id: d.id,
+            ...data,
+            timestamp: data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date())
+          };
+        }) as BatchLog[];
+      onUpdate(firestoreBatches);
+    }, (error) => {
+      console.warn('Error en listener tiempo real de Batches:', error);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.warn('No se pudo suscribir a Batches:', error);
+    return () => {};
+  }
+}
+
 export async function addBatchLog(batch: BatchLog): Promise<string> {
   try {
     // 1. Añadir el lote a la base de datos
@@ -858,6 +909,29 @@ export async function getWorkOrders(): Promise<WorkOrder[]> {
   }
 }
 
+/**
+ * Suscripción en tiempo real a las órdenes de trabajo (para TV, tablets y PCs)
+ */
+export function subscribeToWorkOrders(onUpdate: (orders: WorkOrder[]) => void): () => void {
+  try {
+    const q = query(
+      collection(db, WORK_ORDERS_COLLECTION),
+      orderBy('createdAt', 'desc'),
+      limit(200)
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as WorkOrder));
+      onUpdate(orders);
+    }, (error) => {
+      console.warn("Error en suscripción tiempo real a WorkOrders:", error);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.warn("No se pudo iniciar listener en tiempo real de WorkOrders:", error);
+    return () => {};
+  }
+}
+
 export async function addWorkOrder(order: WorkOrder): Promise<boolean> {
   try {
     await addDoc(collection(db, WORK_ORDERS_COLLECTION), {
@@ -904,8 +978,8 @@ export async function getDesigns(): Promise<Design[]> {
     const snap = await getDocs(q);
     if (!snap.empty) {
       list = snap.docs.map(d => ({
-        id: d.id,
-        ...d.data()
+        ...d.data(),
+        id: d.id
       })) as Design[];
     }
   } catch (error) {
@@ -943,6 +1017,30 @@ export async function getDesigns(): Promise<Design[]> {
   } catch (e) {}
 
   return list;
+}
+
+/**
+ * Suscripción en tiempo real a diseños multi-color
+ */
+export function subscribeToDesigns(onUpdate: (designs: Design[]) => void): () => void {
+  try {
+    const q = query(collection(db, DESIGNS_COLLECTION));
+    const unsubscribe = onSnapshot(q, (snap) => {
+      if (!snap.empty) {
+        const list = snap.docs.map(d => ({
+          ...d.data(),
+          id: d.id
+        })) as Design[];
+        onUpdate(list);
+      }
+    }, (error) => {
+      console.warn('Error en listener tiempo real de Designs:', error);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.warn('No se pudo suscribir a Designs:', error);
+    return () => {};
+  }
 }
 
 export async function addDesign(design: Design): Promise<string> {
@@ -1002,37 +1100,141 @@ export async function updateDesign(id: string, updates: Partial<Design>): Promis
 
 // --- DAILY PRODUCTION RECORDS CRUD ---
 
-export const INITIAL_PRODUCTION_RECORDS: DailyProductionRecord[] = FULL_YEAR_PRODUCTION_RECORDS;
+export const TOALLA_DESIGN_NAMES = [
+  'FRUTAS ANDU',
+  'FRUTAS ANDU VIEJAS',
+  'GRANJA ANDU',
+  'GRANJAS ANDU',
+  'NAVIDAD ANDU',
+  'NAVIDAD LINEA',
+  'QE FRUTAS',
+  'QE UTENCILIOS',
+  'QE UTENSILIO',
+  'QEFRUTAS',
+  'VACAS ANDU'
+];
+
+export function isToallaDesign(designName?: string, widthM?: number, lineType?: string): boolean {
+  const norm = (designName || '').toUpperCase().trim();
+  if (TOALLA_DESIGN_NAMES.includes(norm)) return true;
+  if (norm.includes('ANDU') || norm.includes('TOALLA') || norm.startsWith('QE ')) return true;
+  if (widthM !== undefined && widthM <= 0.40 && (lineType?.toUpperCase() === 'PIGMENTO' || !lineType)) return true;
+  return false;
+}
+
+export function normalizeProductionRecord(r: DailyProductionRecord): DailyProductionRecord {
+  const normName = (r.designName || '').toUpperCase().trim();
+  const isToalla = isToallaDesign(normName, r.widthM, r.process);
+
+  const widthM = isToalla ? 0.35 : (r.widthM || 0.60);
+  const heightM = isToalla ? 0.60 : (r.heightM || 1.20);
+  const gramaje = isToalla ? 310 : (r.gramaje || 280);
+  const areaM2 = isToalla ? 0.21 : Number((widthM * heightM).toFixed(2));
+  const unitWeightG = isToalla ? 63 : (r.unitWeightG || Number((areaM2 * gramaje).toFixed(1)));
+  const process: 'PIGMENTO' | 'REACTIVO' = isToalla ? 'PIGMENTO' : (r.process || 'REACTIVO');
+  
+  // Toallas en pigmento: siempre 5 piezas por golpe (3036 unidades / 5 = 607 golpes)
+  const golpes = isToalla 
+    ? Math.round((r.units || 0) / 5) 
+    : (r.golpes || (widthM <= 0.40 ? Math.round((r.units || 0) / 5) : Math.round((r.units || 0) / 3)));
+  
+  // Kilos de tela: (unidades * peso_unitario_gramos) / 1000 (3036 * 63 / 1000 = 191.27 kg)
+  const kgDay = Number((((r.units || 0) * unitWeightG) / 1000).toFixed(2));
+
+  return {
+    ...r,
+    designName: normName,
+    widthM,
+    heightM,
+    gramaje,
+    areaM2,
+    unitWeightG,
+    process,
+    golpes,
+    kgDay
+  };
+}
+
+export function getRecordKg(r: DailyProductionRecord): number {
+  if (!r) return 0;
+  if (r.units && r.unitWeightG) {
+    return Number(((r.units * r.unitWeightG) / 1000).toFixed(2));
+  }
+  return r.kgDay || 0;
+}
+
+export function getRecordGolpes(r: DailyProductionRecord): number {
+  if (!r) return 0;
+  if (isToallaDesign(r.designName, r.widthM, r.process)) {
+    return Math.round((r.units || 0) / 5);
+  }
+  return r.golpes || (r.widthM <= 0.40 ? Math.round((r.units || 0) / 5) : Math.round((r.units || 0) / 3));
+}
+
+export const INITIAL_PRODUCTION_RECORDS: DailyProductionRecord[] = FULL_YEAR_PRODUCTION_RECORDS.map(normalizeProductionRecord);
+
+const PRODUCTION_STORAGE_KEY = 'daily_production_records_v6';
+const DELETED_PRODUCTION_RECORDS_KEY = 'taller_production_records_deleted_ids_v1';
+
+export function getDeletedProductionRecordIds(): Set<string> {
+  try {
+    const stored = localStorage.getItem(DELETED_PRODUCTION_RECORDS_KEY);
+    if (stored) {
+      const arr = JSON.parse(stored);
+      if (Array.isArray(arr)) {
+        return new Set(arr);
+      }
+    }
+  } catch (e) {}
+  return new Set();
+}
+
+export function markProductionRecordAsDeleted(id: string): void {
+  try {
+    const deleted = getDeletedProductionRecordIds();
+    deleted.add(id);
+    localStorage.setItem(DELETED_PRODUCTION_RECORDS_KEY, JSON.stringify(Array.from(deleted)));
+  } catch (e) {}
+}
 
 export async function getProductionRecords(): Promise<DailyProductionRecord[]> {
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  const deletedIds = getDeletedProductionRecordIds();
   let localRecords: DailyProductionRecord[] = [];
 
   // Fallback local storage
-  const stored = localStorage.getItem(PRODUCTION_STORAGE_KEY);
+  const stored = localStorage.getItem(PRODUCTION_STORAGE_KEY) || localStorage.getItem('daily_production_records_v5');
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // Validar que no tenga datos astronómicos/corruptos (unidades > 50,000 en toallas)
       const hasCorruptData = Array.isArray(parsed) && parsed.some((r: any) => Number(r.units) > 50000);
-      const hasGolpes = Array.isArray(parsed) && parsed.some((r: any) => r.golpes !== undefined);
-      if (Array.isArray(parsed) && parsed.length >= FULL_YEAR_PRODUCTION_RECORDS.length && !hasCorruptData && hasGolpes) {
-        localRecords = parsed;
+      if (Array.isArray(parsed) && parsed.length >= FULL_YEAR_PRODUCTION_RECORDS.length && !hasCorruptData) {
+        localRecords = parsed.map(normalizeProductionRecord);
       }
     } catch (e) {}
   }
 
-  // Si no hay datos locales limpios con golpes, usar los 341 registros con golpes del 2026
+  // Si no hay datos locales limpios, usar los 341 registros normalizados del 2026
   if (localRecords.length === 0) {
-    localRecords = FULL_YEAR_PRODUCTION_RECORDS;
+    localRecords = INITIAL_PRODUCTION_RECORDS;
     try {
       localStorage.removeItem('daily_production_records');
       localStorage.removeItem('daily_production_records_v2');
       localStorage.removeItem('daily_production_records_v3');
       localStorage.removeItem('daily_production_records_v4');
-      localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(FULL_YEAR_PRODUCTION_RECORDS));
+      localStorage.removeItem('daily_production_records_v5');
+      localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(INITIAL_PRODUCTION_RECORDS));
     } catch (e) {}
   }
+
+  const filterDeleted = (records: DailyProductionRecord[]): DailyProductionRecord[] => {
+    return records.filter(r => {
+      if (r.id && deletedIds.has(r.id)) return false;
+      if (r.workOrderId && (deletedIds.has(r.workOrderId) || deletedIds.has(`order-${r.workOrderId}`))) return false;
+      const key = `${r.date}__${(r.designName || '').toUpperCase().trim()}__${r.shift || 1}`;
+      if (deletedIds.has(key)) return false;
+      return true;
+    });
+  };
 
   // Deduplicación estricta por fecha, nombre de diseño y turno, eliminando temporales
   const deduplicate = (records: DailyProductionRecord[]): DailyProductionRecord[] => {
@@ -1049,10 +1251,10 @@ export async function getProductionRecords(): Promise<DailyProductionRecord[]> {
         }
       }
     }
-    return Array.from(map.values());
+    return Array.from(map.values()).map(normalizeProductionRecord);
   };
 
-  localRecords = deduplicate(localRecords);
+  localRecords = filterDeleted(deduplicate(localRecords));
 
   // Si Firestore está conectado y tiene registros, combinarlos sin duplicar
   try {
@@ -1062,9 +1264,9 @@ export async function getProductionRecords(): Promise<DailyProductionRecord[]> {
       const firestoreRecords = snap.docs.map(d => ({
         id: d.id,
         ...d.data()
-      })) as DailyProductionRecord[];
+      }) as unknown as DailyProductionRecord).map(normalizeProductionRecord);
 
-      const merged = deduplicate([...localRecords, ...firestoreRecords]);
+      const merged = filterDeleted(deduplicate([...localRecords, ...firestoreRecords]));
       try {
         localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(merged));
       } catch (e) {}
@@ -1078,11 +1280,11 @@ export async function getProductionRecords(): Promise<DailyProductionRecord[]> {
 }
 
 export async function addProductionRecord(record: DailyProductionRecord): Promise<string> {
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
-  let createdId = record.id || `prod-${Date.now()}`;
+  const normalized = normalizeProductionRecord(record);
+  let createdId = normalized.id || `prod-${Date.now()}`;
   try {
     const docRef = await addDoc(collection(db, PRODUCTION_RECORDS_COLLECTION), {
-      ...record,
+      ...normalized,
       createdAt: serverTimestamp()
     });
     createdId = docRef.id;
@@ -1093,7 +1295,7 @@ export async function addProductionRecord(record: DailyProductionRecord): Promis
   // Save to local storage as well
   try {
     const current = await getProductionRecords();
-    const updated = [{ ...record, id: createdId }, ...current.filter(r => r.id !== createdId)];
+    const updated = [{ ...normalized, id: createdId }, ...current.filter(r => r.id !== createdId)];
     localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent('production-records-updated'));
   } catch (e) {}
@@ -1102,7 +1304,6 @@ export async function addProductionRecord(record: DailyProductionRecord): Promis
 }
 
 export async function updateProductionRecord(id: string, updates: Partial<DailyProductionRecord>): Promise<boolean> {
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
   try {
     const docRef = doc(db, PRODUCTION_RECORDS_COLLECTION, id);
     await updateDoc(docRef, updates);
@@ -1112,7 +1313,7 @@ export async function updateProductionRecord(id: string, updates: Partial<DailyP
 
   try {
     const current = await getProductionRecords();
-    const updated = current.map(r => r.id === id ? { ...r, ...updates } : r);
+    const updated = current.map(r => r.id === id ? normalizeProductionRecord({ ...r, ...updates }) : r);
     localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent('production-records-updated'));
   } catch (e) {}
@@ -1121,22 +1322,105 @@ export async function updateProductionRecord(id: string, updates: Partial<DailyP
 }
 
 export async function deleteProductionRecord(id: string): Promise<boolean> {
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
-  try {
-    const docRef = doc(db, PRODUCTION_RECORDS_COLLECTION, id);
-    await deleteDoc(docRef);
-  } catch (error) {
-    console.warn("Firestore deleteProductionRecord failed, saving locally", error);
+  markProductionRecordAsDeleted(id);
+  if (id.startsWith('order-')) {
+    markProductionRecordAsDeleted(id.replace('order-', ''));
+  }
+
+  if (!id.startsWith('prod-')) {
+    try {
+      const docRef = doc(db, PRODUCTION_RECORDS_COLLECTION, id);
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.warn("Firestore deleteProductionRecord failed, saving locally", error);
+    }
   }
 
   try {
     const current = await getProductionRecords();
-    const updated = current.filter(r => r.id !== id);
+    const toDelete = current.find(r => r.id === id || r.workOrderId === id || `order-${r.workOrderId}` === id);
+    if (toDelete) {
+      markProductionRecordAsDeleted(`${toDelete.date}__${(toDelete.designName || '').toUpperCase().trim()}__${toDelete.shift || 1}`);
+    }
+
+    const updated = current.filter(r => 
+      r.id !== id && 
+      r.workOrderId !== id && 
+      `order-${r.workOrderId}` !== id &&
+      !(toDelete && r.date === toDelete.date && (r.designName || '').toUpperCase().trim() === (toDelete.designName || '').toUpperCase().trim() && (r.shift || 1) === (toDelete.shift || 1))
+    );
     localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent('production-records-updated'));
   } catch (e) {}
 
   return true;
+}
+
+/**
+ * Sincroniza todas las filas de producción existentes cuando el usuario actualiza
+ * el peso unitario, gramaje o dimensiones de un diseño en el Gestor de Diseños.
+ */
+export async function syncDesignToProductionRecords(
+  designName: string,
+  unitWeightG: number,
+  gramaje?: number,
+  widthCm?: number,
+  heightCm?: number,
+  piezasPorGolpe?: number
+): Promise<void> {
+  const normName = (designName || '').toUpperCase().trim();
+  const current = await getProductionRecords();
+  let modified = false;
+
+  const updated = current.map(r => {
+    if ((r.designName || '').toUpperCase().trim() === normName) {
+      modified = true;
+      const isToalla = isToallaDesign(normName, widthCm ? widthCm / 100 : r.widthM, r.process);
+      const wM = isToalla ? 0.35 : (widthCm ? Number((widthCm / 100).toFixed(2)) : r.widthM);
+      const hM = isToalla ? 0.60 : (heightCm ? Number((heightCm / 100).toFixed(2)) : r.heightM);
+      const gr = isToalla ? 310 : (gramaje || r.gramaje);
+      const wWeight = isToalla ? 63 : (unitWeightG || r.unitWeightG);
+      const area = isToalla ? 0.21 : Number((wM * hM).toFixed(2));
+      const pxg = isToalla ? 5 : (piezasPorGolpe || (wM <= 0.40 ? 5 : 3));
+      const golpes = Math.round((r.units || 0) / pxg);
+      const kgDay = Number((((r.units || 0) * wWeight) / 1000).toFixed(2));
+
+      const updatedRecord: DailyProductionRecord = {
+        ...r,
+        widthM: wM,
+        heightM: hM,
+        gramaje: gr,
+        areaM2: area,
+        unitWeightG: wWeight,
+        golpes,
+        kgDay
+      };
+
+      if (r.id && !r.id.startsWith('prod-')) {
+        try {
+          updateDoc(doc(db, PRODUCTION_RECORDS_COLLECTION, r.id), {
+            widthM: wM,
+            heightM: hM,
+            gramaje: gr,
+            areaM2: area,
+            unitWeightG: wWeight,
+            golpes,
+            kgDay
+          }).catch(() => {});
+        } catch (e) {}
+      }
+
+      return updatedRecord;
+    }
+    return r;
+  });
+
+  if (modified) {
+    try {
+      localStorage.setItem(PRODUCTION_STORAGE_KEY, JSON.stringify(updated));
+      window.dispatchEvent(new CustomEvent('production-records-updated'));
+    } catch (e) {}
+  }
 }
 
 /**
@@ -1185,8 +1469,10 @@ export function convertWorkOrderToProductionRecord(order: WorkOrder, designs: De
   const unitWeightG = design?.unitWeight ? Number(design.unitWeight.toFixed(2)) : Number((areaM2 * gramaje).toFixed(2));
   const kgDay = Number(((units * unitWeightG) / 1000).toFixed(2));
 
-  // Piezas por golpe según diseño o mesa
-  const ratio = design?.piezasPorGolpe || (widthM <= 0.40 ? 5 : 3);
+  // Piezas por golpe según diseño o proceso (Toallas pigmento 35x60 son de 5)
+  const isPigmentoToalla = 
+    ((order.lineType || design?.lineType || '').toLowerCase() !== 'reactivo') || widthM <= 0.40;
+  const ratio = isPigmentoToalla ? 5 : (design?.piezasPorGolpe || 3);
   const golpes = Math.ceil(units / ratio);
   const process: 'PIGMENTO' | 'REACTIVO' = 
     ((order.lineType || design?.lineType || 'reactivo').toLowerCase() === 'pigmento') ? 'PIGMENTO' : 'REACTIVO';
@@ -1222,23 +1508,29 @@ export async function syncWorkOrdersToProductionRecords(
   designs: Design[] = []
 ): Promise<DailyProductionRecord[]> {
   const currentRecords = await getProductionRecords();
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v6';
 
   if (!workOrders || workOrders.length === 0) return currentRecords;
 
   // Identificar qué órdenes están completadas y cuáles incompletas
-  const completedOrders = workOrders.filter(o => o.status === 'Completada');
+  const deletedIds = getDeletedProductionRecordIds();
+  const completedOrders = workOrders.filter(o => 
+    o.status === 'Completada' && 
+    !deletedIds.has(o.id || '') && 
+    !deletedIds.has(`order-${o.id}`)
+  );
   const incompleteOrderIds = new Set(workOrders.filter(o => o.status !== 'Completada').map(o => o.id));
 
   // 1. Filtrar registros previos:
   // - Eliminar temporales huérfanos 'order-temp-'
-  // - Eliminar registros de órdenes que NO estén completadas
+  // - Eliminar registros de órdenes que NO estén completadas o hayan sido eliminadas
   const validRecords = currentRecords.filter(r => {
     if (r.id && r.id.startsWith('order-temp-')) return false;
-    if (r.workOrderId && incompleteOrderIds.has(r.workOrderId)) return false;
+    if (r.id && deletedIds.has(r.id)) return false;
+    if (r.workOrderId && (incompleteOrderIds.has(r.workOrderId) || deletedIds.has(r.workOrderId) || deletedIds.has(`order-${r.workOrderId}`))) return false;
     if (r.id && r.id.startsWith('order-')) {
       const oId = r.id.replace('order-', '');
-      if (incompleteOrderIds.has(oId)) return false;
+      if (incompleteOrderIds.has(oId) || deletedIds.has(oId) || deletedIds.has(r.id)) return false;
     }
     return true;
   });
@@ -1250,13 +1542,15 @@ export async function syncWorkOrdersToProductionRecords(
     recordsMap.set(key, r);
   }
 
-  // 3. Sincronizar SOLO órdenes completadas
+  // 3. Sincronizar SOLO órdenes completadas que no estén eliminadas
   for (const order of completedOrders) {
     const prodRec = convertWorkOrderToProductionRecord(order, designs);
     if (!prodRec) continue;
 
     const key = `${prodRec.date}__${prodRec.designName}__${prodRec.shift || 1}`;
-    recordsMap.set(key, prodRec);
+    if (!deletedIds.has(key)) {
+      recordsMap.set(key, prodRec);
+    }
   }
 
   const updated = Array.from(recordsMap.values());
@@ -1272,7 +1566,9 @@ export async function syncWorkOrdersToProductionRecords(
  * Elimina el registro de producción asociado a una orden borrada
  */
 export async function removeProductionRecordForOrder(orderId: string): Promise<void> {
-  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v5';
+  const PRODUCTION_STORAGE_KEY = 'daily_production_records_v6';
+  markProductionRecordAsDeleted(orderId);
+  markProductionRecordAsDeleted(`order-${orderId}`);
   try {
     const current = await getProductionRecords();
     const updated = current.filter(r => r.id !== `order-${orderId}` && r.workOrderId !== orderId);

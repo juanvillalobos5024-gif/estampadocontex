@@ -23,10 +23,15 @@ import {
   deleteWorkOrder,
   getDesigns,
   addDesign,
+  updateDesign,
   syncWorkOrdersToProductionRecords,
   removeProductionRecordForOrder,
   getDeletedBatchIds,
-  INITIAL_BATCHES
+  INITIAL_BATCHES,
+  subscribeToWorkOrders,
+  subscribeToBatches,
+  subscribeToStock,
+  subscribeToDesigns
 } from './lib/dataService';
 import { PantoneColor, StockItem, BatchLog, TeamMember, WorkOrder, Design } from './types';
 import Sidebar from './components/Sidebar';
@@ -44,8 +49,9 @@ import FormulaModal from './components/FormulaModal';
 import CalculatorWorkspace from './components/CalculatorWorkspace';
 import DesignManager from './components/DesignManager';
 import ImageAnalyzer from './components/ImageAnalyzer';
-import ProyeccionConsumo from './components/ProyeccionConsumo';
-import { Palette, Scale, AlertCircle, Loader2 } from 'lucide-react';
+import { Palette, Scale, AlertCircle, Loader2, Menu, Paintbrush, History, ClipboardList } from 'lucide-react';
+// @ts-ignore
+import logoUrl from '@/assets/logo.jpeg';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './lib/firebase';
 import inventoryData from './inventory_data.json';
@@ -58,7 +64,8 @@ export default function App() {
 
   // Tab activa persistente
   const [activeTab, setActiveTab] = useState<string>(() => {
-    return localStorage.getItem('activeTab') || 'pantones';
+    const saved = localStorage.getItem('activeTab') || 'pantones';
+    return saved === 'proyeccion' ? 'pantones' : saved;
   });
 
   useEffect(() => {
@@ -108,6 +115,9 @@ export default function App() {
 
   // Estados para modal de detalle (Visualización)
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  // Control de menú de navegación móvil (drawer)
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   // Parámetros iniciales para la calculadora (desde Órdenes de Trabajo)
   const [initialOrderParams, setInitialOrderParams] = useState<{
@@ -412,6 +422,36 @@ export default function App() {
         const wOrders = await getWorkOrders();
         const fetchedDesigns = await getDesigns();
 
+        // Actualización de especificaciones técnicas para toallas de pigmento:
+        // Medida: 35 x 60 cm, Gramaje: 310 gr., técnica: pigmento, 5 piezas por golpe, 63g/unidad
+        if (localStorage.getItem('toallasSpecFixV4') !== 'true') {
+          const names35x60 = [
+            'FRUTAS ANDU', 'FRUTAS ANDU VIEJAS', 'GRANJA ANDU', 'GRANJAS ANDU',
+            'NAVIDAD ANDU', 'NAVIDAD LINEA', 'QE FRUTAS', 'QE UTENCILIOS',
+            'QE UTENSILIO', 'QEFRUTAS', 'VACAS ANDU'
+          ];
+          for (const d of fetchedDesigns) {
+            const isTarget = names35x60.includes(d.name?.toUpperCase().trim()) || 
+              (d.productType === 'Toallas' && (d.widthCm === 35 || d.lineType === 'pigmento') && (d.heightCm === 60 || !d.heightCm));
+
+            if (isTarget) {
+              if (d.id) {
+                await updateDesign(d.id, {
+                  widthCm: 35,
+                  heightCm: 60,
+                  gramaje: 310,
+                  unitWeight: 63,
+                  piezasPorGolpe: 5,
+                  areaPorToalla: 0.21,
+                  areaTotal: 1.05,
+                  lineType: 'pigmento'
+                });
+              }
+            }
+          }
+          localStorage.setItem('toallasSpecFixV4', 'true');
+        }
+
         // Limpieza automática de ítems "malla"/"rasero" no deseados y duplicados de Pantone
         let databaseChanged = false;
         const cleanColors: PantoneColor[] = [];
@@ -501,6 +541,73 @@ export default function App() {
     
     return () => unsubscribe();
   }, [isAuthenticated]);
+
+  // Sincronización en tiempo real (TV en sala, Tablets, Móviles y PCs)
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    // 1. Suscripción en vivo a Órdenes de Trabajo (Firestore onSnapshot)
+    const unsubOrders = subscribeToWorkOrders((liveOrders) => {
+      setWorkOrders(liveOrders);
+      // Auto-sincronizar con reportes de producción
+      if (liveOrders.length > 0) {
+        syncWorkOrdersToProductionRecords(liveOrders, designs);
+      }
+    });
+
+    // 2. Suscripción en vivo a Historial de Mezclas y Lotes
+    const unsubBatches = subscribeToBatches((liveBatches) => {
+      setBatches(liveBatches);
+    });
+
+    // 3. Suscripción en vivo a Stock de Insumos
+    const unsubStock = subscribeToStock((liveStock) => {
+      setStock(liveStock);
+    });
+
+    // 4. Suscripción en vivo a Diseños
+    const unsubDesigns = subscribeToDesigns((liveDesigns) => {
+      setDesigns(liveDesigns);
+    });
+
+    // 5. Heartbeat automático cada 8 segundos (ideal para pantallas TV sin recarga manual)
+    const tvHeartbeat = setInterval(async () => {
+      try {
+        const freshOrders = await getWorkOrders();
+        setWorkOrders(freshOrders);
+        if (freshOrders.length > 0) {
+          syncWorkOrdersToProductionRecords(freshOrders, designs);
+        }
+      } catch (e) {
+        // Silencioso en caso de micro-cortes
+      }
+    }, 8000);
+
+    // 6. Al reanudar pestaña o visibilidad
+    const handleVisibility = async () => {
+      if (document.visibilityState === 'visible') {
+        try {
+          const freshOrders = await getWorkOrders();
+          setWorkOrders(freshOrders);
+          if (freshOrders.length > 0) {
+            syncWorkOrdersToProductionRecords(freshOrders, designs);
+          }
+        } catch (e) {}
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('focus', handleVisibility);
+
+    return () => {
+      unsubOrders();
+      unsubBatches();
+      unsubStock();
+      unsubDesigns();
+      clearInterval(tvHeartbeat);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('focus', handleVisibility);
+    };
+  }, [isAuthenticated, designs]);
 
   // Actualizar listas después de cambios
   const refreshPantones = async (deletedId?: string) => {
@@ -728,7 +835,7 @@ export default function App() {
   return (
     <div className="h-screen w-screen bg-slate-50 flex font-sans overflow-hidden text-slate-800" id="main-app-container">
       
-      {/* Barra de Navegación Lateral */}
+      {/* Barra de Navegación Lateral (Desktop y Drawer Móvil) */}
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={(tab) => {
@@ -739,37 +846,71 @@ export default function App() {
         }} 
         currentUser={currentUser} 
         onLogout={() => signOut(auth)}
+        isOpenMobile={isMobileNavOpen}
+        onCloseMobile={() => setIsMobileNavOpen(false)}
       />
 
       {/* Área Principal de Contenido */}
-      <main className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
+      <main className="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative">
         
-        {/* Cabecera / Header Superior */}
-        <header className="h-20 bg-white border-b border-slate-200 px-6 sm:px-8 flex items-center justify-between shrink-0">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-              <Palette className="w-6 h-6 text-blue-600" />
-              {activeTab === 'pantones' && 'Formulación de Color'}
-              {activeTab === 'disenos' && 'Diseños Multi-Color'}
-              {activeTab === 'tareas' && 'Tareas de Hoy'}
-              {activeTab === 'calculadora' && 'Calculadora de Mezclas de Color'}
-              {activeTab === 'historial' && 'Historial de Lotes de Estampado'}
-              {activeTab === 'asistente' && 'Consultor Técnico de Color (IA)'}
-              {activeTab === 'stock' && 'Gestión de Stock de Tintas'}
-              {activeTab === 'equipo' && 'Equipo de Taller'}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-400 font-medium italic mt-0.5">
-              Sistema Centralizado de Pigmentos — Fábrica de Toallas & Otros
-            </p>
+        {/* Cabecera / Header Superior Adaptable */}
+        <header className="h-16 md:h-20 bg-white border-b border-slate-200 px-3 sm:px-6 md:px-8 flex items-center justify-between shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            {/* Botón Hamburguesa Móvil */}
+            <button
+              onClick={() => setIsMobileNavOpen(true)}
+              className="p-2 -ml-1 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl md:hidden transition-colors shrink-0 cursor-pointer"
+              title="Abrir menú de navegación"
+              aria-label="Abrir menú"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+
+            {/* Logo en Móvil */}
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-blue-900 shadow-sm md:hidden shrink-0 border border-blue-800">
+              <img src={logoUrl} alt="CONTEX" className="w-full h-full object-cover" />
+            </div>
+
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 truncate">
+                <Palette className="w-5 h-5 md:w-6 h-6 text-blue-600 shrink-0 hidden sm:inline-block" />
+                <span className="truncate">
+                  {activeTab === 'pantones' && 'Catalogo de Pantone'}
+                  {activeTab === 'disenos' && 'Diseños'}
+                  {activeTab === 'tareas' && 'Tareas Diarias'}
+                  {activeTab === 'calculadora' && 'Calculadora de Mezclas'}
+                  {activeTab === 'historial' && 'Graficos e Historial'}
+                  {activeTab === 'asistente' && 'Consultor Técnico (IA)'}
+                  {activeTab === 'stock' && 'Gestión de Stock'}
+                  {activeTab === 'equipo' && 'Equipo de Taller'}
+                  {activeTab === 'analizador' && 'Analizador de Imágenes (IA)'}
+                </span>
+              </h1>
+              <p className="text-[11px] sm:text-xs md:text-sm text-slate-400 font-medium italic mt-0.5 truncate hidden sm:block">
+                Sistema Integrado de Gestión de Laboratorio de Color e Inventario de Insumos Textiles
+              </p>
+            </div>
           </div>
 
-          <div>
-            {/* El botón de crear nueva fórmula en la calculadora ahora se maneja dentro del Workspace */}
+          {/* Avatar / Menú rápido en Móvil */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setIsMobileNavOpen(true)}
+              className="md:hidden flex items-center gap-1.5 p-1 pl-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200/80 rounded-full transition-colors cursor-pointer"
+              title="Menú y usuario"
+            >
+              <span className="text-[11px] font-bold text-slate-700 max-w-[70px] truncate">
+                {currentUser.name.split('@')[0]}
+              </span>
+              <div className="w-7 h-7 rounded-full bg-slate-800 text-blue-400 flex items-center justify-center text-[10px] font-bold shadow-inner">
+                {currentUser.initials}
+              </div>
+            </button>
           </div>
         </header>
 
         {/* Workspace de Trabajo */}
-        <div className="flex-1 p-6 sm:p-8 overflow-hidden min-h-0 bg-slate-50/50">
+        <div className="flex-1 p-3 sm:p-6 md:p-8 pb-20 md:pb-8 overflow-hidden min-h-0 bg-slate-50/50">
           {loading ? (
             <div className="h-full w-full flex flex-col items-center justify-center text-slate-500">
               <Loader2 className="w-10 h-10 text-blue-600 animate-spin mb-4" />
@@ -970,35 +1111,71 @@ export default function App() {
                   }}
                 />
               )}
-
-              {/* Tab Proyección Consumos */}
-              {activeTab === 'proyeccion' && (
-                <ProyeccionConsumo 
-                  pantones={pantones} 
-                  stock={stock}
-                  onExecuteProduction={async (deductions, batchLogsData) => {
-                    // Descontar del stock
-                    for (const deduction of deductions) {
-                      const item = stock.find(s => s.id === deduction.stockId);
-                      if (item) {
-                        const newQty = Math.max(0, item.quantity - deduction.qty);
-                        await updateStockItemQuantity(item.id!, newQty);
-                      }
-                    }
-                    // Registrar lotes en el historial
-                    for (const log of batchLogsData) {
-                      await addBatchLog(log);
-                    }
-                    
-                    await refreshStock();
-                    await refreshBatches();
-                    return true;
-                  }}
-                />
-              )}
             </>
           )}
         </div>
+
+        {/* ── BARRA DE NAVEGACIÓN INFERIOR (Solo visible en dispositivos móviles) ── */}
+        <nav 
+          className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/90 flex items-center justify-around py-1.5 px-2 md:hidden shadow-2xl select-none"
+          aria-label="Navegación móvil rápida"
+        >
+          <button
+            onClick={() => { setActiveTab('historial'); setSelectedPantone(null); }}
+            className={`flex flex-col items-center py-1 px-2.5 rounded-xl transition-all cursor-pointer ${
+              activeTab === 'historial' 
+                ? 'text-blue-400 font-extrabold scale-105' 
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <History className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Dashboard</span>
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('tareas'); setSelectedPantone(null); }}
+            className={`flex flex-col items-center py-1 px-2.5 rounded-xl transition-all cursor-pointer ${
+              activeTab === 'tareas' 
+                ? 'text-blue-400 font-extrabold scale-105' 
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <ClipboardList className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Tareas</span>
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('pantones'); setSelectedPantone(null); }}
+            className={`flex flex-col items-center py-1 px-2.5 rounded-xl transition-all cursor-pointer ${
+              activeTab === 'pantones' 
+                ? 'text-blue-400 font-extrabold scale-105' 
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Paintbrush className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Catálogo</span>
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('calculadora'); setSelectedPantone(null); }}
+            className={`flex flex-col items-center py-1 px-2.5 rounded-xl transition-all cursor-pointer ${
+              activeTab === 'calculadora' 
+                ? 'text-blue-400 font-extrabold scale-105' 
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Scale className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Calculadora</span>
+          </button>
+
+          <button
+            onClick={() => setIsMobileNavOpen(true)}
+            className="flex flex-col items-center py-1 px-2.5 rounded-xl text-slate-400 hover:text-white transition-all cursor-pointer"
+          >
+            <Menu className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px] tracking-tight">Menú</span>
+          </button>
+        </nav>
       </main>
 
       {/* Modal para Crear/Editar Fórmulas Pantone */}
