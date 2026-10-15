@@ -22,6 +22,9 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [frames, setFrames] = useState<number>(0);
+  const [widthCm, setWidthCm] = useState<number | ''>(60);
+  const [heightCm, setHeightCm] = useState<number | ''>(120);
+  const [piezasPorGolpe, setPiezasPorGolpe] = useState<number | ''>(3);
   const [gramaje, setGramaje] = useState<number | ''>('');
   const [unitWeight, setUnitWeight] = useState<number | ''>('');
   const [productType, setProductType] = useState<'Toallas' | 'Otros'>('Toallas');
@@ -137,6 +140,9 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
     setName(d.name);
     setImageUrl(d.imageUrl || '');
     setFrames(d.frames || 0);
+    setWidthCm(d.widthCm !== undefined && d.widthCm !== null ? d.widthCm : 60);
+    setHeightCm(d.heightCm !== undefined && d.heightCm !== null ? d.heightCm : 120);
+    setPiezasPorGolpe(d.piezasPorGolpe !== undefined && d.piezasPorGolpe !== null ? d.piezasPorGolpe : 3);
     setGramaje(d.gramaje !== undefined && d.gramaje !== null ? d.gramaje : '');
     setUnitWeight(d.unitWeight !== undefined && d.unitWeight !== null ? d.unitWeight : '');
     setProductType(d.productType || 'Toallas');
@@ -152,6 +158,9 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
     setName('');
     setImageUrl('');
     setFrames(0);
+    setWidthCm(60);
+    setHeightCm(120);
+    setPiezasPorGolpe(3);
     setGramaje('');
     setUnitWeight('');
     setProductType('Toallas');
@@ -169,29 +178,45 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
     try {
       const existing = designs.find(d => d.id === editingDesignId);
       const normName = name.toUpperCase().trim();
-      const isToalla = isToallaDesign(normName) || (productType === 'Toallas' && lineType === 'pigmento');
 
-      const widthCm = isToalla ? 35 : (existing?.widthCm || 60);
-      const heightCm = isToalla ? 60 : (existing?.heightCm || 120);
-      const piezasPorGolpe = isToalla ? 5 : (existing?.piezasPorGolpe || 3);
-      const gVal = isToalla ? 310 : (gramaje !== '' && !isNaN(Number(gramaje)) ? Number(gramaje) : (existing?.gramaje || 280));
-      const wVal = isToalla ? 63 : (unitWeight !== '' && !isNaN(Number(unitWeight)) ? Number(unitWeight) : (existing?.unitWeight || 201.6));
-      const calcAreaTowel = isToalla ? 0.21 : (gVal > 0 && wVal > 0 ? (wVal / gVal) : Number(((widthCm * heightCm) / 10000).toFixed(2)));
-      const calcAreaTotal = calcAreaTowel * piezasPorGolpe;
+      const wCm = widthCm !== '' && !isNaN(Number(widthCm)) && Number(widthCm) > 0
+        ? Number(widthCm)
+        : (existing?.widthCm || 60);
+      const hCm = heightCm !== '' && !isNaN(Number(heightCm)) && Number(heightCm) > 0
+        ? Number(heightCm)
+        : (existing?.heightCm || 120);
+      const pxg = piezasPorGolpe !== '' && !isNaN(Number(piezasPorGolpe)) && Number(piezasPorGolpe) > 0
+        ? Number(piezasPorGolpe)
+        : (existing?.piezasPorGolpe || (wCm <= 40 ? 5 : 3));
 
-      const designData = {
+      const calcAreaTowel = Number(((wCm * hCm) / 10000).toFixed(3));
+      const calcAreaTotal = Number((calcAreaTowel * pxg).toFixed(3));
+
+      const gVal = gramaje !== '' && !isNaN(Number(gramaje)) && Number(gramaje) > 0
+        ? Number(gramaje)
+        : (unitWeight !== '' && Number(unitWeight) > 0 && calcAreaTowel > 0
+          ? Number((Number(unitWeight) / calcAreaTowel).toFixed(1))
+          : (existing?.gramaje || 280));
+
+      const wVal = unitWeight !== '' && !isNaN(Number(unitWeight)) && Number(unitWeight) > 0
+        ? Number(unitWeight)
+        : (calcAreaTowel > 0 && gVal > 0
+          ? Number((calcAreaTowel * gVal).toFixed(1))
+          : (existing?.unitWeight || 201.6));
+
+      const designData: Design = {
         name: normName,
         imageUrl,
         frames: Number(frames) || 0,
         gramaje: gVal,
         unitWeight: wVal,
-        widthCm,
-        heightCm,
-        piezasPorGolpe,
+        widthCm: wCm,
+        heightCm: hCm,
+        piezasPorGolpe: pxg,
         areaPorToalla: calcAreaTowel,
         areaTotal: calcAreaTotal,
         productType,
-        lineType: isToalla ? 'pigmento' : lineType,
+        lineType,
         colors: colors.filter(c => c.pantoneCode && c.gramsPerPiece > 0)
       };
 
@@ -202,7 +227,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
       }
 
       // Sincronizar automáticamente registros de producción para que nunca queden desactualizados
-      await syncDesignToProductionRecords(normName, wVal, gVal, widthCm, heightCm, piezasPorGolpe);
+      await syncDesignToProductionRecords(normName, wVal, gVal, wCm, hCm, pxg);
 
       handleCancel();
       loadDesigns();
@@ -290,18 +315,91 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                 />
                 {imageUrl && <img src={imageUrl} alt="Preview" className="mt-3 h-24 object-contain rounded-lg border border-slate-200 shadow-sm" />}
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Cantidad de Marcos</label>
-                  <input 
-                    type="number" 
-                    value={frames}
-                    onChange={e => setFrames(Number(e.target.value))}
-                    min="0"
-                    placeholder="0"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+              <div className="space-y-3.5">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Cantidad de Marcos</label>
+                    <input 
+                      type="number" 
+                      value={frames}
+                      onChange={e => setFrames(Number(e.target.value))}
+                      min="0"
+                      placeholder="0"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Piezas x Golpe</label>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        value={piezasPorGolpe}
+                        onChange={e => {
+                          const val = e.target.value === '' ? '' : parseInt(e.target.value, 10);
+                          setPiezasPorGolpe(val);
+                        }}
+                        min="1"
+                        placeholder="Ej. 3 o 5"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                      />
+                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">pz</span>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Medidas: Ancho y Largo */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2 flex items-center justify-between">
+                      <span>Ancho</span>
+                      <span className="text-[10px] text-blue-600 font-normal">cm</span>
+                    </label>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        step="any"
+                        min="1"
+                        value={widthCm}
+                        onChange={e => {
+                          const val = e.target.value.replace(',', '.');
+                          const num = val === '' ? '' : parseFloat(val);
+                          setWidthCm(num);
+                          if (typeof num === 'number' && num > 0) {
+                            if (num <= 40 && piezasPorGolpe === 3) setPiezasPorGolpe(5);
+                            else if (num > 40 && piezasPorGolpe === 5) setPiezasPorGolpe(3);
+                          }
+                        }}
+                        placeholder="Ej. 60"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        required
+                      />
+                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">cm</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2 flex items-center justify-between">
+                      <span>Largo / Alto</span>
+                      <span className="text-[10px] text-blue-600 font-normal">cm</span>
+                    </label>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        step="any"
+                        min="1"
+                        value={heightCm}
+                        onChange={e => {
+                          const val = e.target.value.replace(',', '.');
+                          setHeightCm(val === '' ? '' : parseFloat(val));
+                        }}
+                        placeholder="Ej. 120"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        required
+                      />
+                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">cm</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Gramaje (Tela)</label>
@@ -316,7 +414,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           setGramaje(val === '' ? '' : parseFloat(val));
                         }}
                         placeholder="Ej. 280"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pr-12 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-12 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                       />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400">g/m²</span>
                     </div>
@@ -334,21 +432,31 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           setUnitWeight(val === '' ? '' : parseFloat(val));
                         }}
                         placeholder="Ej. 201.6"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                       />
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">g/pz</span>
                     </div>
                   </div>
                 </div>
+
                 {(() => {
-                  const gVal = gramaje !== '' ? Number(gramaje) : 0;
-                  const wVal = unitWeight !== '' ? Number(unitWeight) : 0;
-                  const area = gVal > 0 && wVal > 0 ? (wVal / gVal) : 0.72;
-                  const total = area * 3;
+                  const wCm = widthCm !== '' && !isNaN(Number(widthCm)) ? Number(widthCm) : 0;
+                  const hCm = heightCm !== '' && !isNaN(Number(heightCm)) ? Number(heightCm) : 0;
+                  const gVal = gramaje !== '' && !isNaN(Number(gramaje)) ? Number(gramaje) : 0;
+                  const wVal = unitWeight !== '' && !isNaN(Number(unitWeight)) ? Number(unitWeight) : 0;
+                  const pxg = piezasPorGolpe !== '' && Number(piezasPorGolpe) > 0 
+                    ? Number(piezasPorGolpe) 
+                    : (wCm > 0 && wCm <= 40 ? 5 : 3);
+                  
+                  const areaFromDim = (wCm > 0 && hCm > 0) ? (wCm * hCm) / 10000 : 0;
+                  const area = areaFromDim > 0 ? areaFromDim : (gVal > 0 && wVal > 0 ? (wVal / gVal) : 0.72);
+                  const total = area * pxg;
+                  const dimStr = (wCm > 0 && hCm > 0) ? `${wCm}×${hCm} cm` : '60×120 cm';
+                  
                   return (
-                    <div className="p-2.5 bg-blue-50/70 rounded-xl border border-blue-200 text-xs font-mono flex justify-between items-center text-blue-900">
-                      <span>Área x Toalla: <strong className="font-bold text-blue-800">{area.toFixed(3)} m²</strong> (60×120 cm)</span>
-                      <span>Área Total (3 pz): <strong className="font-bold text-blue-800">{total.toFixed(3)} m²</strong></span>
+                    <div className="p-2.5 bg-blue-50/70 rounded-xl border border-blue-200 text-xs font-mono flex flex-wrap justify-between items-center text-blue-900 gap-1.5">
+                      <span>Área x Toalla: <strong className="font-bold text-blue-800">{area.toFixed(3)} m²</strong> ({dimStr})</span>
+                      <span>Área Total ({pxg} pz): <strong className="font-bold text-blue-800">{total.toFixed(3)} m²</strong></span>
                     </div>
                   );
                 })()}
@@ -528,6 +636,11 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                       <span className={`px-2 py-1 rounded-md text-white ${design.lineType === 'reactivo' ? 'bg-purple-500' : 'bg-orange-500'}`}>
                         {design.lineType === 'reactivo' ? 'Reactivo' : 'Pigmentos'}
                       </span>
+                      {design.widthCm && design.heightCm ? (
+                        <span className="bg-sky-50 text-sky-800 border border-sky-200 font-bold px-2 py-1 rounded-md font-mono">
+                          {design.widthCm}×{design.heightCm} cm
+                        </span>
+                      ) : null}
                       {design.frames !== undefined && design.frames > 0 && (
                         <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md">
                           {design.frames} Marco{design.frames !== 1 && 's'}

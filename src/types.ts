@@ -53,6 +53,12 @@ export interface Design {
 
 export interface BatchLog {
   id?: string;
+  id_mezcla?: string;       // Identificador único del lote (ej. LOTE-20261015-01)
+  orden_id?: string;        // El ID exacto de la orden de trabajo (ej. "A123")
+  workOrderId?: string;     // Alias para compatibilidad de orden_id
+  color_codigo?: string;    // El tono preparado ("A1", "A2", "A3" o Pantone code)
+  fecha_hora_registro?: any;// Marca de tiempo exacta (timestamp con hora, minutos y segundos)
+  estado?: 'completado' | 'consumido' | 'en_mezclado' | 'pendiente'; // Estado de la mezcla
   pantoneCode: string;
   pantoneHex: string;
   productType: 'Toallas' | 'Otros' | 'Otros';
@@ -63,7 +69,7 @@ export interface BatchLog {
   wasteGrams?: number;   // Tinta sobrante/merma registrada al finalizar el lote (g)
   operator: string;      // Nombre del operador de mezclado / prensista
   timestamp?: any;        // Fecha de preparación
-  status: 'Completado' | 'En Mezclado' | 'Pendiente';
+  status: 'Completado' | 'En Mezclado' | 'Pendiente' | 'completado' | 'consumido';
   type?: 'preparacion' | 'consumo';
 }
 
@@ -78,6 +84,7 @@ export interface WorkOrder {
   designId?: string;
   designName?: string;
   completedColors?: string[]; // Códigos de pantone ya pesados para este diseño
+  completedFrames?: number[]; // Índices de marcos (colores) ya preparados; soporta pantones repetidos en un diseño
   preparedHistory?: Record<string, number[]>; // Historial de kgs preparados por cada pantone (pantoneCode -> [kg, kg...])
 
   productType: 'Toallas' | 'Otros' | 'Otros';
@@ -86,7 +93,7 @@ export interface WorkOrder {
   targetQuantity: number;
   assignedTo?: string; // Nombre del operario
   priority: 'Normal' | 'Urgente';
-  status: 'Pendiente' | 'En Progreso' | 'Completada' | 'Cancelada';
+  status: 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'Completada' | 'En Progreso' | 'Cancelada';
   orderDate?: string; // Fecha programada para la orden (YYYY-MM-DD)
   createdAt: any;
   completedAt?: any;

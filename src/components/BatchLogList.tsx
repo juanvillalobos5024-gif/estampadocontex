@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import {
   History, Calendar, Award, Scissors, ShoppingBag, CheckCircle, TrendingUp,
   Filter, Search, X, Download, Eye, Trash2, Clock, AlertCircle, Zap, FileText, Table, ChevronDown, ChevronLeft, ChevronRight,
-  Plus, Edit2, Layers, Check
+  Plus, Edit2, Layers, Check, Droplets, ExternalLink
 } from 'lucide-react';
 import { BatchLog, PantoneColor, TeamMember, StockItem, WorkOrder, Design, DailyProductionRecord } from '../types';
 import { findMatchingStockItem, getProductionRecords, addProductionRecord, updateProductionRecord, deleteProductionRecord, syncWorkOrdersToProductionRecords, INITIAL_BATCHES, getDeletedBatchIds, getRecordKg, getRecordGolpes, isToallaDesign } from '../lib/dataService';
@@ -151,6 +151,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
   const [pageConsumo, setPageConsumo] = useState(1);
   const [pageProduction, setPageProduction] = useState(1);
   const [productionPerPage, setProductionPerPage] = useState(25);
+  const [mobilePlanillaView, setMobilePlanillaView] = useState<'cards' | 'table'>('cards');
 
   const [deletedBatchIds, setDeletedBatchIds] = useState<Set<string>>(() => getDeletedBatchIds());
 
@@ -1140,7 +1141,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
     const currentData = data.slice(startIndex, startIndex + itemsPerPage);
 
     return (
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm shrink-0">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-3.5 sm:p-6 shadow-sm shrink-0">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-md font-bold text-slate-800">{title}</h3>
           <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
@@ -1159,11 +1160,12 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
               <thead>
                 <tr className="border-b border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest">
                   <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Tono Pantone</th>
+                  <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Orden de Trabajo</th>
                   <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Tipo</th>
                   <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Producto</th>
                   <th className="py-2.5 px-4 font-semibold text-right sticky top-0 bg-white z-10">Cantidad (g)</th>
                   <th className="py-2.5 px-4 font-semibold text-right sticky top-0 bg-white z-10">Piezas</th>
-                  <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Fecha</th>
+                  <th className="py-2.5 px-4 font-semibold sticky top-0 bg-white z-10">Fecha y Hora</th>
                   <th className="py-2.5 px-4 font-semibold text-center sticky top-0 bg-white z-10">Estado</th>
                   <th className="py-2.5 px-4 font-semibold text-center sticky top-0 bg-white z-10">Acciones</th>
                 </tr>
@@ -1171,10 +1173,15 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
               <tbody className="divide-y divide-slate-50 text-xs">
                 {currentData.map(batch => {
                   let dateStr = 'Reciente';
-                  if (batch.timestamp) {
-                    const d = batch.timestamp.toDate ? batch.timestamp.toDate() : new Date(batch.timestamp);
+                  let timeStr = '';
+                  const rawDate = batch.fecha_hora_registro || batch.timestamp;
+                  if (rawDate) {
+                    const d = rawDate.toDate ? rawDate.toDate() : new Date(rawDate);
                     dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+                    timeStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                   }
+                  const orderId = batch.orden_id || batch.workOrderId;
+                  const linkedOrder = orderId ? workOrders?.find(o => o.id === orderId) : undefined;
 
                   return (
                     <tr
@@ -1186,8 +1193,36 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                       <td className="py-3 px-4 font-bold text-slate-800">
                         <div className="flex items-center gap-2">
                           <div className="w-4 h-4 rounded-full border border-slate-200 shadow-sm shrink-0" style={{ backgroundColor: batch.pantoneHex }} />
-                          {batch.pantoneCode}
+                          <div className="flex flex-col">
+                            <span>{batch.color_codigo || batch.pantoneCode}</span>
+                            {batch.id_mezcla && (
+                              <span className="text-[9px] font-mono text-slate-400 font-normal">{batch.id_mezcla}</span>
+                            )}
+                          </div>
                         </div>
+                      </td>
+
+                      {/* Orden de Trabajo */}
+                      <td className="py-3 px-4" onClick={e => e.stopPropagation()}>
+                        {orderId ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (linkedOrder) {
+                                setSelectedOrderDetails(linkedOrder);
+                              } else {
+                                setSelectedBatch(batch);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-900 border border-blue-200 transition-colors shadow-2xs cursor-pointer group"
+                            title={linkedOrder ? `Ver Orden ${orderId} (${linkedOrder.designName || linkedOrder.productReference || 'Ver detalles'})` : `Orden de Trabajo ${orderId}`}
+                          >
+                            <span>{orderId}</span>
+                            <ExternalLink className="w-3 h-3 text-blue-400 group-hover:text-blue-600 shrink-0" />
+                          </button>
+                        ) : (
+                          <span className="text-slate-300 text-xs italic font-medium">—</span>
+                        )}
                       </td>
 
                       {/* Tipo */}
@@ -1222,14 +1257,24 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
 
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-700">{batch.totalGrammage.toLocaleString()}g</td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-500">{(batch.type === 'consumo' && batch.quantity) ? batch.quantity.toLocaleString() : '-'}</td>
-                      <td className="py-3 px-4 text-slate-400 font-medium whitespace-nowrap">
-                        <div className="flex items-center gap-1.5">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {dateStr}
+                      
+                      {/* Fecha y Hora */}
+                      <td className="py-3 px-4 text-slate-500 font-medium whitespace-nowrap">
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-1.5 text-slate-700 font-semibold">
+                            <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span>{dateStr}</span>
+                          </div>
+                          {timeStr && (
+                            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+                              <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+                              <span>{timeStr}</span>
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="py-3 px-4 text-center">
-                        <StatusBadge status={batch.status} />
+                        <StatusBadge status={batch.estado || batch.status} />
                       </td>
 
                       {/* Acciones */}
@@ -1480,341 +1525,308 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
     <div className="space-y-5 h-full flex flex-col overflow-y-auto custom-scrollbar pr-2 pb-8" id="batches-history-view">
 
       {/* ── SELECTOR DE VISTA DEL DASHBOARD ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-sm shrink-0">
-        <div className="flex bg-slate-100 p-1 rounded-xl gap-1 overflow-x-auto max-w-full custom-scrollbar">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs shrink-0">
+        <div className="flex bg-slate-100/90 p-1 rounded-2xl gap-1 overflow-x-auto max-w-full border border-slate-200/60 scrollbar-none [&::-webkit-scrollbar]:hidden">
           <button
             type="button"
             onClick={() => setActiveDashboardTab('daily_golpes')}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'daily_golpes'
-                ? 'bg-sky-600 text-white shadow-md'
-                : 'text-slate-600 hover:text-slate-900'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'daily_golpes'
+                ? 'bg-white text-sky-800 font-black shadow-xs'
+                : 'text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-200/50'
               }`}
           >
-            <Calendar className="w-4 h-4" />
+            <Calendar className={`w-3.5 h-3.5 ${activeDashboardTab === 'daily_golpes' ? 'text-sky-600' : 'text-slate-400'}`} />
             Reporte Diario
           </button>
           <button
             type="button"
             onClick={() => setActiveDashboardTab('production_sheet')}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'production_sheet'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-600 hover:text-slate-900'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'production_sheet'
+                ? 'bg-white text-blue-800 font-black shadow-xs'
+                : 'text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-200/50'
               }`}
           >
-            <Table className="w-4 h-4" />
+            <Table className={`w-3.5 h-3.5 ${activeDashboardTab === 'production_sheet' ? 'text-blue-600' : 'text-slate-400'}`} />
             Planilla
           </button>
           <button
             type="button"
             onClick={() => setActiveDashboardTab('production_charts')}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'production_charts'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'text-slate-600 hover:text-slate-900'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'production_charts'
+                ? 'bg-white text-emerald-800 font-black shadow-xs'
+                : 'text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-200/50'
               }`}
           >
-            <Layers className="w-4 h-4" />
+            <Layers className={`w-3.5 h-3.5 ${activeDashboardTab === 'production_charts' ? 'text-emerald-600' : 'text-slate-400'}`} />
             Producción
           </button>
           <button
             type="button"
             onClick={() => setActiveDashboardTab('analytics')}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'analytics'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-600 hover:text-slate-900'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'analytics'
+                ? 'bg-white text-indigo-800 font-black shadow-xs'
+                : 'text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-200/50'
               }`}
           >
-            <TrendingUp className="w-4 h-4" />
+            <TrendingUp className={`w-3.5 h-3.5 ${activeDashboardTab === 'analytics' ? 'text-indigo-600' : 'text-slate-400'}`} />
             Consumo
           </button>
         </div>
-
-        {activeDashboardTab === 'production_sheet' && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleExportProductionExcel}
-              className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-xl hover:bg-emerald-100 transition-colors shadow-sm"
-              title="Descargar archivo Excel con este formato"
-            >
-              <Download className="w-4 h-4 text-emerald-600" />
-              Descargar Excel
-            </button>
-            <button
-              type="button"
-              onClick={handleOpenAddRecord}
-              className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl transition-all shadow-md"
-            >
-              <Plus className="w-4 h-4" />
-              Nuevo Registro
-            </button>
-          </div>
-        )}
       </div>
 
-      {/* ── BARRA DE FILTROS ── */}
-      {activeDashboardTab !== 'daily_golpes' && (
-        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm shrink-0 space-y-3">
+      {/* ── BARRA DE FILTROS (EXCLUSIVA PARA CONSUMO / ANALYTICS) ── */}
+      {activeDashboardTab === 'analytics' && (
+        <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-3 shrink-0">
+          {/* Fila 1: Título, Lotes KPI, Limpiar y Menú Exportar */}
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                <TrendingUp className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
+                  Consumo de Tintas
+                  <span className="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200">
+                    {numLotesDisplay} lotes
+                  </span>
+                </h2>
+                <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+                  Balance de formulaciones, correlación con producción y métricas de insumos
+                </p>
+              </div>
+            </div>
 
-          {/* Fila 1: Búsqueda + acciones */}
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="relative flex-1 min-w-[200px]">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Buscar por Pantone, operario o referencia..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              />
-              {searchTerm && (
-                <button onClick={() => setSearchTerm('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <div className="flex items-center gap-2 ml-auto">
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="flex items-center gap-1 text-[11px] font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200/80 px-2.5 py-1.5 rounded-xl transition-colors cursor-pointer"
+                  title="Restablecer filtros"
+                >
                   <X className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Limpiar filtros</span>
+                  <span className="sm:hidden">Limpiar</span>
                 </button>
               )}
-            </div>
 
-            {hasActiveFilters && (
-              <button onClick={clearFilters} className="flex items-center gap-1.5 text-xs text-red-500 hover:text-red-700 font-bold px-3 py-2 bg-red-50 rounded-xl border border-red-100 transition-colors">
-                <X className="w-3.5 h-3.5" /> Limpiar filtros
-              </button>
-            )}
+              {/* Menú exportar */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowExportMenu(!showExportMenu)}
+                  className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 px-3 py-1.5 rounded-xl hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Exportar</span>
+                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${showExportMenu ? 'rotate-180' : ''}`} />
+                </button>
 
-            <div className="flex items-center gap-2 ml-auto relative">
-              <button
-                onClick={() => setShowExportMenu(!showExportMenu)}
-                className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 px-4 py-2 rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
-              >
-                <Download className="w-4 h-4" /> Exportar
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showExportMenu ? 'rotate-180' : ''}`} />
-              </button>
-
-              {showExportMenu && (
-                <>
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setShowExportMenu(false)}
-                  />
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden py-1">
-                    <button
-                      onClick={() => { handleExportCSV(); setShowExportMenu(false); }}
-                      className="w-full flex items-center gap-2 px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors text-left"
-                    >
-                      <Download className="w-4 h-4 text-slate-400" /> Archivo CSV
-                    </button>
-                    <button
-                      onClick={() => { handleExportExcel(); setShowExportMenu(false); }}
-                      className="w-full flex items-center gap-2 px-4 py-3 text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition-colors text-left"
-                    >
-                      <Table className="w-4 h-4 text-emerald-500" /> Libro de Excel
-                    </button>
-                    <button
-                      onClick={() => { handleExportPDF(); setShowExportMenu(false); }}
-                      className="w-full flex items-center gap-2 px-4 py-3 text-xs font-bold text-red-700 hover:bg-red-50 transition-colors text-left border-t border-slate-100"
-                    >
-                      <FileText className="w-4 h-4 text-red-500" /> Reporte PDF
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Fila 2: Categorías y Preferencias */}
-          <div className="flex flex-col gap-4 pt-4 border-t border-slate-100">
-
-            <div className="flex flex-wrap items-start md:items-center gap-x-8 gap-y-4">
-
-              {/* Bloque: Filtros de Datos (no aplica a la gráfica de producción) */}
-              {activeDashboardTab !== 'production_charts' && (
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Filtrar Datos</span>
-                  <div className="flex flex-wrap gap-2">
-                    <select
-                      value={logTypeFilter}
-                      onChange={(e) => setLogTypeFilter(e.target.value as any)}
-                      className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 min-w-[140px]"
-                    >
-                      <option value="all">Todas las Operaciones</option>
-                      <option value="preparacion">Solo Mezclas</option>
-                      <option value="consumo">Solo Consumo</option>
-                    </select>
-
-                    <select
-                      value={productFilter}
-                      onChange={e => setProductFilter(e.target.value as any)}
-                      className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="all">Todo producto</option>
-                      <option value="Toallas">Toallas</option>
-                    </select>
-
-                    <select
-                      value={lineTypeFilter}
-                      onChange={e => setLineTypeFilter(e.target.value as any)}
-                      className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 min-w-[170px]"
-                    >
-                      <option value="all">Pigmentos, Reactivos y Aditivos</option>
-                      <option value="pigmento">Solo Pigmentos</option>
-                      <option value="reactivo">Solo Reactivos</option>
-                      <option value="aditivo">Solo Aditivos (Urea, Insumos)</option>
-                    </select>
-                  </div>
-                </div>
-
-              )}
-
-              {/* Bloque: Rango de Tiempo */}
-              <div className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Periodo de Tiempo</span>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { id: 'today', label: 'Hoy' },
-                    { id: 'week', label: '7 Días' },
-                    { id: 'month', label: timeFilter === 'month' ? `Mes (${MONTH_NAMES[selectedMonth]})` : 'Mes' },
-                    { id: 'year', label: timeFilter === 'year' ? `Año (${selectedYear})` : 'Año' },
-                    { id: 'all', label: 'Todo' },
-                    { id: 'custom', label: 'Rango' },
-                  ].map(f => (
-                    <button
-                      key={f.id}
-                      onClick={() => setTimeFilter(f.id as TimeFilter)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${timeFilter === f.id ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bloque: Visualización y Unidades */}
-              <div className="flex flex-col gap-1.5 ml-auto">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unidad de Peso</span>
-                <div className="flex flex-wrap gap-3">
-                  <div className="flex bg-slate-100 rounded-xl p-1">
-                    {([['kg', 'Kg'], ['g', 'Gramos']] as ['kg' | 'g', string][]).map(([id, label]) => (
+                {showExportMenu && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setShowExportMenu(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-1.5 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden py-1">
                       <button
-                        key={id}
-                        onClick={() => setWeightUnit(id)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${weightUnit === id ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                        onClick={() => { handleExportCSV(); setShowExportMenu(false); }}
+                        className="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                       >
-                        {label}
+                        <Download className="w-4 h-4 text-slate-400" /> Archivo CSV
                       </button>
-                    ))}
-                  </div>
-
-                  {/* Botonera de visualización de gráficos removida (Solo Tintas por defecto) */}
-                </div>
+                      <button
+                        onClick={() => { handleExportExcel(); setShowExportMenu(false); }}
+                        className="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition-colors text-left cursor-pointer"
+                      >
+                        <Table className="w-4 h-4 text-emerald-500" /> Libro de Excel
+                      </button>
+                      <button
+                        onClick={() => { handleExportPDF(); setShowExportMenu(false); }}
+                        className="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold text-red-700 hover:bg-red-50 transition-colors text-left border-t border-slate-100 cursor-pointer"
+                      >
+                        <FileText className="w-4 h-4 text-red-500" /> Reporte PDF
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
-
             </div>
           </div>
 
-          {/* Fila 3: Selectores de fecha contextuales para Mes, Año y Rango personalizado */}
-          {timeFilter === 'month' && (
-            <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-100 bg-blue-50/50 p-3 rounded-2xl border border-blue-100/80">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Mes a consultar:</span>
-                <div className="flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          {/* Fila 2: Selectores compactos y chips de período */}
+          <div className="pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {/* Mes navigator */}
+              {timeFilter === 'month' && (
+                <div className="flex items-center bg-slate-100/90 border border-slate-200/80 rounded-xl p-0.5 shadow-2xs">
                   <button
                     type="button"
                     onClick={handlePrevMonth}
-                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                    className="p-1 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
                     title="Mes anterior"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <select
-                    value={selectedMonth}
-                    onChange={e => setSelectedMonth(Number(e.target.value))}
-                    className="bg-transparent text-slate-800 text-xs font-bold px-2 py-1.5 outline-none cursor-pointer"
-                  >
-                    {MONTH_NAMES.map((m, idx) => (
-                      <option key={idx} value={idx}>{m}</option>
-                    ))}
-                  </select>
+                  <div className="px-2 py-0.5 text-xs font-black text-slate-800 flex items-center gap-1">
+                    <span>{MONTH_NAMES[selectedMonth]}</span>
+                    <span className="text-slate-400 font-semibold">{selectedYear}</span>
+                  </div>
                   <button
                     type="button"
                     onClick={handleNextMonth}
-                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                    className="p-1 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
                     title="Mes siguiente"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
-              </div>
+              )}
 
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Año:</span>
-                <select
-                  value={selectedYear}
-                  onChange={e => setSelectedYear(Number(e.target.value))}
-                  className="bg-white border border-slate-200 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 shadow-sm outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                >
-                  {availableYears.map(y => (
-                    <option key={y} value={y}>{y}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="ml-auto text-xs font-bold text-blue-700 bg-blue-100/80 px-3 py-1.5 rounded-xl border border-blue-200/50">
-                Mostrando: <strong>{MONTH_NAMES[selectedMonth]} {selectedYear}</strong>
-              </div>
-            </div>
-          )}
-
-          {timeFilter === 'year' && (
-            <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-100 bg-blue-50/50 p-3 rounded-2xl border border-blue-100/80">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Año a consultar:</span>
-                <div className="flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+              {/* Año navigator */}
+              {timeFilter === 'year' && (
+                <div className="flex items-center bg-slate-100/90 border border-slate-200/80 rounded-xl p-0.5 shadow-2xs">
                   <button
                     type="button"
                     onClick={() => setSelectedYear(y => y - 1)}
-                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                    className="p-1 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
                     title="Año anterior"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <select
-                    value={selectedYear}
-                    onChange={e => setSelectedYear(Number(e.target.value))}
-                    className="bg-transparent text-slate-800 text-xs font-bold px-3 py-1.5 outline-none cursor-pointer"
-                  >
-                    {availableYears.map(y => (
-                      <option key={y} value={y}>{y}</option>
-                    ))}
-                  </select>
+                  <div className="px-2 py-0.5 text-xs font-black text-slate-800">
+                    <span>{selectedYear}</span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setSelectedYear(y => y + 1)}
-                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                    className="p-1 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
                     title="Año siguiente"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
+              )}
+
+              {/* Period chips */}
+              <div className="flex items-center gap-0.5 bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60">
+                {[
+                  { id: 'month', label: 'Mes' },
+                  { id: 'year', label: 'Año' },
+                  { id: 'week', label: '7 Días' },
+                  { id: 'all', label: 'Todo' },
+                  { id: 'custom', label: 'Rango' },
+                ].map(f => (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => setTimeFilter(f.id as TimeFilter)}
+                    className={`px-2 sm:px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                      timeFilter === f.id
+                        ? 'bg-white text-indigo-700 shadow-2xs font-black'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
               </div>
 
-              <div className="ml-auto text-xs font-bold text-blue-700 bg-blue-100/80 px-3 py-1.5 rounded-xl border border-blue-200/50">
-                Mostrando todo el año: <strong>{selectedYear}</strong>
+              {/* Selector Operación */}
+              <select
+                value={logTypeFilter}
+                onChange={(e) => setLogTypeFilter(e.target.value as any)}
+                className="bg-slate-100/90 border border-slate-200/80 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-1 outline-none cursor-pointer"
+              >
+                <option value="all">Todas Operaciones</option>
+                <option value="preparacion">Solo Mezclas</option>
+                <option value="consumo">Solo Consumo</option>
+              </select>
+
+              {/* Selector Línea */}
+              <select
+                value={lineTypeFilter}
+                onChange={e => setLineTypeFilter(e.target.value as any)}
+                className="bg-slate-100/90 border border-slate-200/80 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-1 outline-none cursor-pointer"
+              >
+                <option value="all">Todas las Líneas</option>
+                <option value="pigmento">Solo Pigmentos</option>
+                <option value="reactivo">Solo Reactivos</option>
+                <option value="aditivo">Solo Aditivos</option>
+              </select>
+
+              {/* Selector Producto */}
+              <select
+                value={productFilter}
+                onChange={e => setProductFilter(e.target.value as any)}
+                className="bg-slate-100/90 border border-slate-200/80 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-1 outline-none cursor-pointer"
+              >
+                <option value="all">Todo producto</option>
+                <option value="Toallas">Toallas</option>
+              </select>
+
+              {/* Toggle Kg / Gramos */}
+              <div className="flex items-center bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60 text-[11px] font-bold">
+                <button
+                  type="button"
+                  onClick={() => setWeightUnit('kg')}
+                  className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'kg' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                >
+                  Kg
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWeightUnit('g')}
+                  className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'g' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                >
+                  Gramos
+                </button>
               </div>
             </div>
-          )}
 
+            {/* Buscador */}
+            <div className="relative flex-1 min-w-[170px] max-w-xs">
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder="Buscar Pantone, ref u operario..."
+                className="w-full pl-8 pr-7 py-1 bg-slate-50 border border-slate-200/80 rounded-xl text-xs font-medium text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-2xs"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Fila 3: Rango de fecha personalizado */}
           {timeFilter === 'custom' && (
-            <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-100 bg-slate-50/70 p-3 rounded-2xl border border-slate-100">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
+            <div className="flex flex-wrap items-center gap-2.5 pt-2.5 border-t border-slate-100 bg-slate-50/70 p-2.5 rounded-xl border border-slate-200/60">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Desde</label>
-                <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+                <input
+                  type="date"
+                  value={dateFrom}
+                  onChange={e => setDateFrom(e.target.value)}
+                  className="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-2xs"
+                />
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Hasta</label>
-                <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+                <input
+                  type="date"
+                  value={dateTo}
+                  onChange={e => setDateTo(e.target.value)}
+                  className="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-2xs"
+                />
               </div>
             </div>
           )}
@@ -1833,77 +1845,260 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
 
       {/* ── VISTA 1: PLANILLA DIARIA DE PRODUCCIÓN (KILOS DE TELA) ── */}
       {activeDashboardTab === 'production_sheet' && (
-        <div className="space-y-5">
-          {/* KPI CARDS DE PRODUCCIÓN */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-                <Table className="w-5 h-5 text-amber-700" />
+        <div className="space-y-4">
+
+          {/* ── CONTROLES Y FILTROS DEDICADOS DE PLANILLA ── */}
+          <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-3 shrink-0">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-xs">
+                  <Table className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
+                    Planilla de Producción
+                    <span className="text-[10px] font-extrabold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 hidden sm:inline-block">
+                      {filteredProductionRecords.length} {filteredProductionRecords.length === 1 ? 'registro' : 'registros'}
+                    </span>
+                  </h2>
+                  <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+                    Kilos de tela procesada, golpes y especificaciones técnicas por turno
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+
+              <div className="flex items-center gap-2 ml-auto">
+                {/* Botón Excel */}
+                <button
+                  type="button"
+                  onClick={handleExportProductionExcel}
+                  className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-xl transition-colors shadow-2xs cursor-pointer"
+                  title="Descargar archivo Excel con este formato"
+                >
+                  <Download className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="hidden sm:inline">Descargar</span> Excel
+                </button>
+
+                {/* Botón Nuevo Registro */}
+                <button
+                  type="button"
+                  onClick={handleOpenAddRecord}
+                  className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all shadow-sm shadow-blue-600/20 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Nuevo Registro</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Fila 2: Navegación de Fecha, Chips de Período, Proceso, Unidad de Peso y Búsqueda */}
+            <div className="pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {/* Mes anterior / actual / siguiente */}
+                {timeFilter === 'month' && (
+                  <div className="flex items-center bg-slate-100/90 border border-slate-200/80 rounded-xl p-0.5 shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={handlePrevMonth}
+                      className="p-1 text-slate-500 hover:text-blue-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                      title="Mes anterior"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <div className="px-2 py-0.5 text-xs font-black text-slate-800 flex items-center gap-1">
+                      <span>{MONTH_NAMES[selectedMonth]}</span>
+                      <span className="text-slate-400 font-semibold">{selectedYear}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleNextMonth}
+                      className="p-1 text-slate-500 hover:text-blue-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                      title="Mes siguiente"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Period chips */}
+                <div className="flex items-center gap-1 bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60">
+                  {[
+                    { id: 'month', label: 'Mes' },
+                    { id: 'year', label: 'Año' },
+                    { id: 'all', label: 'Todo' },
+                    { id: 'custom', label: 'Rango' },
+                  ].map(f => (
+                    <button
+                      key={f.id}
+                      onClick={() => setTimeFilter(f.id as any)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                        timeFilter === f.id
+                          ? 'bg-white text-blue-700 shadow-2xs font-black'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Filtro Proceso (Reactivo / Pigmento) */}
+                <select
+                  value={lineTypeFilter}
+                  onChange={e => setLineTypeFilter(e.target.value as any)}
+                  className="bg-slate-100/90 border border-slate-200/80 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-1 outline-none cursor-pointer"
+                >
+                  <option value="all">Todo proceso</option>
+                  <option value="reactivo">Solo Reactivos</option>
+                  <option value="pigmento">Solo Pigmentos</option>
+                </select>
+
+                {/* Toggle Kg / Gramos */}
+                <div className="flex items-center bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60 text-[11px] font-bold">
+                  <button
+                    type="button"
+                    onClick={() => setWeightUnit('kg')}
+                    className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'kg' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    Kg
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWeightUnit('g')}
+                    className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'g' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    Gramos
+                  </button>
+                </div>
+              </div>
+
+              {/* Buscador */}
+              <div className="relative flex-1 min-w-[170px] max-w-xs">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  placeholder="Buscar diseño o proceso..."
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-7 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Fila contextual para fecha personalizada o año */}
+            {timeFilter === 'custom' && (
+              <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Rango:</span>
+                <input
+                  type="date"
+                  value={dateFrom}
+                  onChange={e => setDateFrom(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold"
+                />
+                <span className="text-slate-400">-</span>
+                <input
+                  type="date"
+                  value={dateTo}
+                  onChange={e => setDateTo(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold"
+                />
+              </div>
+            )}
+
+            {timeFilter === 'year' && (
+              <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Año a consultar:</span>
+                <select
+                  value={selectedYear}
+                  onChange={e => setSelectedYear(Number(e.target.value))}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-slate-700"
+                >
+                  {availableYears.map(y => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
+          {/* ── KPI CARDS DE PRODUCCIÓN MODERNAS ── */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 shrink-0">
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100/80">
+                <Table className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
                   {weightUnit === 'kg' ? 'Kilos Totales' : 'Gramos Totales'}
                 </p>
-                <p className="text-xl font-extrabold text-slate-900 font-mono">
+                <p className="text-lg sm:text-2xl font-black text-amber-950 font-mono tracking-tight">
                   {weightUnit === 'kg'
                     ? `${totalProductionKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
                     : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
                 </p>
-                <p className="text-[9px] text-slate-400 font-medium">Tela procesada</p>
+                <p className="text-[9px] text-amber-600/80 font-medium truncate">Tela procesada en taller</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
-                <Award className="w-5 h-5 text-sky-700" />
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 border border-sky-100/80">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unidades</p>
-                <p className="text-xl font-extrabold text-slate-900 font-mono">
-                  {totalProductionUnits.toLocaleString()} pz
+              <div className="min-w-0">
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Unidades</p>
+                <p className="text-lg sm:text-2xl font-black text-blue-700 font-mono tracking-tight">
+                  {totalProductionUnits.toLocaleString()} <span className="text-xs font-bold text-blue-500">pz</span>
                 </p>
-                <p className="text-[9px] text-slate-400 font-medium">Prendas estampadas</p>
+                <p className="text-[9px] text-blue-600/80 font-medium truncate">Prendas estampadas</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-                <Zap className="w-5 h-5 text-purple-700" />
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100/80">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reactivo</p>
-                <p className="text-xl font-extrabold text-purple-900 font-mono">
+              <div className="min-w-0">
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Reactivo</p>
+                <p className="text-lg sm:text-2xl font-black text-purple-900 font-mono tracking-tight">
                   {weightUnit === 'kg'
                     ? `${totalReactivoKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
                     : `${(totalReactivoKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
                 </p>
-                <p className="text-[9px] text-purple-600 font-medium">Línea Reactivos</p>
+                <p className="text-[9px] text-purple-600/80 font-medium truncate">Línea Reactivos</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-                <TrendingUp className="w-5 h-5 text-orange-700" />
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 border border-orange-100/80">
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pigmento</p>
-                <p className="text-xl font-extrabold text-orange-900 font-mono">
+              <div className="min-w-0">
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Pigmento</p>
+                <p className="text-lg sm:text-2xl font-black text-orange-900 font-mono tracking-tight">
                   {weightUnit === 'kg'
                     ? `${totalPigmentoKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
                     : `${(totalPigmentoKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
                 </p>
-                <p className="text-[9px] text-orange-600 font-medium">Línea Pigmentos</p>
+                <p className="text-[9px] text-orange-600/80 font-medium truncate">Línea Pigmentos</p>
               </div>
             </div>
           </div>
 
-          {/* TABLA PRINCIPAL ESTILO EXCEL */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-            <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-              <div className="flex items-center gap-2">
-                <span className="bg-yellow-400 text-slate-900 font-extrabold text-xs px-3 py-1 rounded-lg uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-                  <Table className="w-3.5 h-3.5" />
-                  {timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth].toUpperCase()} ${selectedYear}` : timeFilter === 'year' ? `AÑO ${selectedYear}` : 'REPORTE MENSUAL DE PRODUCCIÓN'}
+          {/* ── CONTENEDOR PRINCIPAL DE REGISTROS ── */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
+            <div className="p-3 sm:p-4 border-b border-slate-100 flex items-center justify-between gap-2 flex-wrap bg-slate-50/70">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="bg-slate-900 text-white font-extrabold text-xs px-2.5 py-1 rounded-lg uppercase tracking-wider shadow-2xs flex items-center gap-1.5">
+                  <Table className="w-3.5 h-3.5 text-amber-400" />
+                  {timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth].toUpperCase()} ${selectedYear}` : timeFilter === 'year' ? `AÑO ${selectedYear}` : 'PLANILLA DE PRODUCCIÓN'}
                 </span>
                 <span className="text-xs font-semibold text-slate-500">
                   {filteredProductionRecords.length} registros
@@ -1914,41 +2109,213 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                   )}
                 </span>
               </div>
-              <div className="text-xs font-bold text-slate-600 font-mono">
-                {weightUnit === 'kg' ? 'Total Kls:' : 'Total Grs:'}{' '}
-                <span className="text-blue-700 font-black">
-                  {weightUnit === 'kg'
-                    ? `${totalProductionKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
-                    : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
-                </span>
+
+              <div className="flex items-center gap-2 ml-auto">
+                {/* Conmutador de vista solo en Móvil */}
+                <div className="flex bg-slate-200/70 p-0.5 rounded-xl text-xs font-bold md:hidden">
+                  <button
+                    type="button"
+                    onClick={() => setMobilePlanillaView('cards')}
+                    className={`px-2.5 py-0.5 rounded-lg transition-all cursor-pointer ${
+                      mobilePlanillaView === 'cards'
+                        ? 'bg-white text-blue-700 shadow-2xs font-black'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    Tarjetas
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMobilePlanillaView('table')}
+                    className={`px-2.5 py-0.5 rounded-lg transition-all cursor-pointer ${
+                      mobilePlanillaView === 'table'
+                        ? 'bg-white text-blue-700 shadow-2xs font-black'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    Tabla
+                  </button>
+                </div>
+
+                <div className="text-xs font-bold text-slate-600 font-mono hidden sm:block">
+                  {weightUnit === 'kg' ? 'Total Kilos:' : 'Total Gramos:'}{' '}
+                  <span className="text-blue-700 font-black">
+                    {weightUnit === 'kg'
+                      ? `${totalProductionKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
+                      : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* ── VISTA DE TARJETAS PARA MÓVIL (Por defecto en celulares) ── */}
+            {mobilePlanillaView === 'cards' && (
+              <div className="p-3 space-y-2.5 md:hidden">
+                {filteredProductionRecords.length === 0 ? (
+                  <div className="py-10 text-center text-slate-400">
+                    <Table className="w-10 h-10 text-slate-300 mx-auto mb-2" />
+                    <p className="font-semibold text-sm">No hay registros de producción</p>
+                    <p className="text-xs text-slate-400 mt-1">Haz clic en "+ Nuevo Registro" para añadir una fila.</p>
+                  </div>
+                ) : (
+                  displayedProductionRecords.map(r => (
+                    <div
+                      key={r.id}
+                      className="bg-white rounded-xl border border-slate-200/90 shadow-2xs p-3 hover:border-slate-300 transition-all space-y-2"
+                    >
+                      {/* Cabecera de la tarjeta: Fecha, Turno, Proceso y Acciones */}
+                      <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-100">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="font-mono font-black text-xs text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80">
+                            {formatProductionDate(r.date)}
+                          </span>
+                          <span className="text-[10px] font-bold text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">
+                            T{r.shift}
+                          </span>
+                          <span className={`text-[8px] px-1.5 py-0.5 rounded font-black tracking-wider uppercase ${
+                            r.process === 'REACTIVO'
+                              ? 'bg-purple-50 text-purple-700 border border-purple-200/70'
+                              : 'bg-amber-50 text-amber-700 border border-amber-200/70'
+                          }`}>
+                            {r.process}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-0.5">
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEditRecord(r)}
+                            className="p-1 text-slate-400 hover:text-blue-600 rounded-lg transition-colors cursor-pointer"
+                            title="Editar registro"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          {deleteRecordConfirmId === r.id ? (
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteRecord(r.id!)}
+                                className="text-[10px] font-bold text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded cursor-pointer"
+                              >
+                                Sí
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setDeleteRecordConfirmId(null)}
+                                className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded cursor-pointer"
+                              >
+                                No
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setDeleteRecordConfirmId(r.id!)}
+                              className="p-1 text-slate-400 hover:text-red-600 rounded-lg transition-colors cursor-pointer"
+                              title="Eliminar registro"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Título del diseño */}
+                      <div>
+                        <h4 className="font-extrabold text-xs text-slate-900 truncate">
+                          {r.designName}
+                        </h4>
+                      </div>
+
+                      {/* 3 Métricas Clave */}
+                      <div className="grid grid-cols-3 gap-2 py-1.5 px-2 bg-slate-50/90 rounded-xl border border-slate-100 text-center">
+                        <div>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase block">Golpes</span>
+                          <span className="font-mono font-black text-xs text-blue-900">
+                            {getRecordGolpes(r).toLocaleString()}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase block">Unidades</span>
+                          <span className="font-mono font-black text-xs text-sky-700">
+                            {r.units.toLocaleString()} <span className="text-[9px] font-normal text-sky-500">pz</span>
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase block">Kilos Tela</span>
+                          <span className="font-mono font-black text-xs text-amber-900">
+                            {weightUnit === 'kg'
+                              ? `${getRecordKg(r).toFixed(2).replace('.', ',')} kg`
+                              : `${(getRecordKg(r) * 1000).toLocaleString('es-ES', { maximumFractionDigits: 0 })} g`}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Ficha técnica compacta */}
+                      <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium px-0.5">
+                        <span>📐 {r.widthM.toFixed(2)}x{r.heightM.toFixed(2)}m · {r.gramaje} g/m²</span>
+                        <span>⚖️ {r.unitWeightG.toFixed(1)} g/ud</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+
+                {/* Resumen Total para Móvil */}
+                {filteredProductionRecords.length > 0 && (
+                  <div className="bg-slate-900 text-white rounded-xl p-3 shadow-2xs mt-3 space-y-1.5 border border-slate-800">
+                    <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-1">
+                      <span>Totales del Periodo</span>
+                      <span className="text-slate-300 font-mono text-[10px]">{filteredProductionRecords.length} reg.</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-center pt-0.5">
+                      <div>
+                        <span className="text-[9px] text-slate-400 block font-semibold uppercase">Golpes</span>
+                        <span className="text-xs font-mono font-black text-sky-400">{totalProductionGolpes.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 block font-semibold uppercase">Unidades</span>
+                        <span className="text-xs font-mono font-black text-blue-400">{totalProductionUnits.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 block font-semibold uppercase">Kilos Tela</span>
+                        <span className="text-xs font-mono font-black text-amber-400">
+                          {weightUnit === 'kg'
+                            ? `${totalProductionKg.toFixed(2).replace('.', ',')} kg`
+                            : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} g`}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── TABLA COMPLETA (Visible en escritorio O cuando el usuario selecciona 'Tabla' en móvil) ── */}
+            <div className={`overflow-x-auto ${mobilePlanillaView === 'cards' ? 'hidden md:block' : 'block'}`}>
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-amber-100/90 text-slate-900 font-extrabold uppercase text-[11px] border-b-2 border-amber-300">
-                    <th className="py-2.5 px-3 border-r border-amber-200">Fecha</th>
-                    <th className="py-2.5 px-4 border-r border-amber-200">Diseño</th>
-                    <th className="py-2.5 px-2 text-center border-r border-amber-200">Turno</th>
-                    <th className="py-2.5 px-3 text-right border-r border-amber-200">Medida</th>
-                    <th className="py-2.5 px-3 text-right border-r border-amber-200">Medida</th>
-                    <th className="py-2.5 px-3 text-right border-r border-amber-200">Gr/m²</th>
-                    <th className="py-2.5 px-3 text-center border-r border-amber-200">Proceso</th>
-                    <th className="py-2.5 px-3 text-right border-r border-amber-200">Área</th>
-                    <th className="py-2.5 px-3 text-right border-r border-amber-200">Peso Unidad</th>
-                    <th className="py-2.5 px-3 text-right bg-blue-500 text-white border-r border-blue-600">Nº Golpes</th>
-                    <th className="py-2.5 px-4 text-right bg-sky-500 text-white border-r border-sky-600">Unidades</th>
-                    <th className="py-2.5 px-4 text-right bg-amber-400 text-slate-950 border-r border-amber-500">
+                  <tr className="bg-slate-100/90 text-slate-700 font-extrabold uppercase text-[10px] border-b border-slate-200">
+                    <th className="py-2.5 px-3 border-r border-slate-200">Fecha</th>
+                    <th className="py-2.5 px-4 border-r border-slate-200">Diseño</th>
+                    <th className="py-2.5 px-2 text-center border-r border-slate-200">Turno</th>
+                    <th className="py-2.5 px-3 text-right border-r border-slate-200">Ancho</th>
+                    <th className="py-2.5 px-3 text-right border-r border-slate-200">Alto</th>
+                    <th className="py-2.5 px-3 text-right border-r border-slate-200">Gr/m²</th>
+                    <th className="py-2.5 px-3 text-center border-r border-slate-200">Proceso</th>
+                    <th className="py-2.5 px-3 text-right border-r border-slate-200">Área</th>
+                    <th className="py-2.5 px-3 text-right border-r border-slate-200">Peso Ud</th>
+                    <th className="py-2.5 px-3 text-right bg-blue-50 text-blue-900 border-r border-blue-100">Nº Golpes</th>
+                    <th className="py-2.5 px-4 text-right bg-sky-50 text-sky-900 border-r border-sky-100">Unidades</th>
+                    <th className="py-2.5 px-4 text-right bg-amber-50 text-amber-950 border-r border-amber-100">
                       {weightUnit === 'kg' ? 'Kls Día' : 'Grs Día'}
                     </th>
-                    <th className="py-2.5 px-3 text-center bg-amber-100">Acciones</th>
+                    <th className="py-2.5 px-3 text-center bg-slate-50">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium">
                   {filteredProductionRecords.length === 0 ? (
                     <tr>
-                      <td colSpan={12} className="py-12 text-center text-slate-400">
+                      <td colSpan={13} className="py-12 text-center text-slate-400">
                         <Table className="w-10 h-10 text-slate-300 mx-auto mb-2" />
                         <p className="font-semibold text-sm">No hay registros de producción para el periodo seleccionado</p>
                         <p className="text-xs text-slate-400 mt-1">Haz clic en "+ Nuevo Registro" para añadir una fila a la planilla.</p>
@@ -1956,7 +2323,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                     </tr>
                   ) : (
                     displayedProductionRecords.map(r => (
-                      <tr key={r.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={r.id} className="hover:bg-slate-50/80 transition-colors">
                         <td className="py-2 px-3 font-semibold text-slate-700 border-r border-slate-100 whitespace-nowrap">
                           {formatProductionDate(r.date)}
                         </td>
@@ -1989,13 +2356,13 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                         <td className="py-2 px-3 text-right font-mono border-r border-slate-100">
                           {r.unitWeightG.toFixed(1).replace('.', ',')}
                         </td>
-                        <td className="py-2 px-3 text-right font-mono font-bold text-blue-900 bg-blue-50/70 border-r border-blue-100">
+                        <td className="py-2 px-3 text-right font-mono font-bold text-blue-900 bg-blue-50/40 border-r border-blue-100">
                           {getRecordGolpes(r).toLocaleString()}
                         </td>
-                        <td className="py-2 px-4 text-right font-mono font-bold text-sky-800 bg-sky-50/70 border-r border-sky-100">
+                        <td className="py-2 px-4 text-right font-mono font-bold text-sky-800 bg-sky-50/40 border-r border-sky-100">
                           {r.units.toLocaleString()}
                         </td>
-                        <td className="py-2 px-4 text-right font-mono font-black text-amber-950 bg-amber-50/80 border-r border-amber-100">
+                        <td className="py-2 px-4 text-right font-mono font-black text-amber-950 bg-amber-50/50 border-r border-amber-100">
                           {weightUnit === 'kg'
                             ? getRecordKg(r).toFixed(2).replace('.', ',')
                             : (getRecordKg(r) * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
@@ -2069,20 +2436,20 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
 
             {/* Controles de paginación para Todo, Rango o listas extensas */}
             {isProductionPagingActive && filteredProductionRecords.length > 0 && (
-              <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50/90 border-t border-slate-200">
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4 bg-slate-50/90 border-t border-slate-200">
                 <div className="flex items-center gap-3">
                   <p className="text-xs text-slate-500 font-medium">
-                    Mostrando <span className="font-bold text-slate-700">{((pageProduction - 1) * productionPerPage) + 1}</span> a <span className="font-bold text-slate-700">{Math.min(pageProduction * productionPerPage, filteredProductionRecords.length)}</span> de <span className="font-bold text-slate-700">{filteredProductionRecords.length}</span> registros
+                    Mostrando <span className="font-bold text-slate-700">{((pageProduction - 1) * productionPerPage) + 1}</span> a <span className="font-bold text-slate-700">{Math.min(pageProduction * productionPerPage, filteredProductionRecords.length)}</span> de <span className="font-bold text-slate-700">{filteredProductionRecords.length}</span>
                   </p>
                   <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                    <span className="text-[11px] font-semibold text-slate-400">Por página:</span>
+                    <span className="text-[10px] font-semibold text-slate-400">Por pág:</span>
                     <select
                       value={productionPerPage}
                       onChange={(e) => {
                         setProductionPerPage(Number(e.target.value));
                         setPageProduction(1);
                       }}
-                      className="bg-white border border-slate-200 text-slate-700 rounded-lg px-2 py-1 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer shadow-sm"
+                      className="bg-white border border-slate-200 text-slate-700 rounded-lg px-2 py-1 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-2xs"
                     >
                       <option value={15}>15</option>
                       <option value={25}>25</option>
@@ -2092,12 +2459,12 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs">
                   <button
                     type="button"
                     onClick={() => setPageProduction(1)}
                     disabled={pageProduction === 1}
-                    className="px-2 py-1 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="px-2 py-1 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
                     title="Primera página"
                   >
                     «
@@ -2106,7 +2473,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                     type="button"
                     onClick={() => setPageProduction(p => Math.max(1, p - 1))}
                     disabled={pageProduction === 1}
-                    className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
                     title="Página anterior"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -2118,7 +2485,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                     type="button"
                     onClick={() => setPageProduction(p => Math.min(totalProductionPages, p + 1))}
                     disabled={pageProduction === totalProductionPages}
-                    className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
                     title="Página siguiente"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -2127,7 +2494,7 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
                     type="button"
                     onClick={() => setPageProduction(totalProductionPages)}
                     disabled={pageProduction === totalProductionPages}
-                    className="px-2 py-1 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="px-2 py-1 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
                     title="Última página"
                   >
                     »
@@ -2141,84 +2508,250 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
 
       {/* ── VISTA 1B: GRÁFICOS DE PRODUCCIÓN (golpes, unidades, kilos de tela) ── */}
       {activeDashboardTab === 'production_charts' && (
-        <ProductionCharts
-          records={filteredProductionRecords}
-          weightUnit={weightUnit}
-          periodLabel={
-            timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth]} ${selectedYear}`
-              : timeFilter === 'year' ? `Año ${selectedYear}`
-                : timeFilter === 'today' ? 'Hoy'
-                  : timeFilter === 'week' ? 'Últimos 7 días'
-                    : timeFilter === 'custom' ? 'Rango personalizado'
-                      : 'Todo el histórico'
-          }
-        />
+        <div className="space-y-4">
+          {/* ── CONTROLES Y FILTROS DEDICADOS DE GRÁFICOS DE PRODUCCIÓN ── */}
+          <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-3 shrink-0">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-xs">
+                  <Layers className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
+                    Gráficos de Producción
+                    <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 hidden sm:inline-block">
+                      {filteredProductionRecords.length} {filteredProductionRecords.length === 1 ? 'registro' : 'registros'}
+                    </span>
+                  </h2>
+                  <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+                    Tendencias de golpes, unidades y kilos de tela por día, proceso y turno
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Fila 2: Navegación de Fecha, Chips de Período, Proceso, Unidad de Peso y Búsqueda */}
+            <div className="pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {/* Mes anterior / actual / siguiente */}
+                {timeFilter === 'month' && (
+                  <div className="flex items-center bg-slate-100/90 border border-slate-200/80 rounded-xl p-0.5 shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={handlePrevMonth}
+                      className="p-1 text-slate-500 hover:text-emerald-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                      title="Mes anterior"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <div className="px-2 py-0.5 text-xs font-black text-slate-800 flex items-center gap-1">
+                      <span>{MONTH_NAMES[selectedMonth]}</span>
+                      <span className="text-slate-400 font-semibold">{selectedYear}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleNextMonth}
+                      className="p-1 text-slate-500 hover:text-emerald-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                      title="Mes siguiente"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Period chips */}
+                <div className="flex items-center gap-1 bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60">
+                  {[
+                    { id: 'month', label: 'Mes' },
+                    { id: 'year', label: 'Año' },
+                    { id: 'all', label: 'Todo' },
+                    { id: 'custom', label: 'Rango' },
+                  ].map(f => (
+                    <button
+                      key={f.id}
+                      onClick={() => setTimeFilter(f.id as any)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                        timeFilter === f.id
+                          ? 'bg-white text-emerald-700 shadow-2xs font-black'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Filtro Proceso (Reactivo / Pigmento) */}
+                <select
+                  value={lineTypeFilter}
+                  onChange={e => setLineTypeFilter(e.target.value as any)}
+                  className="bg-slate-100/90 border border-slate-200/80 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-1 outline-none cursor-pointer"
+                >
+                  <option value="all">Todo proceso</option>
+                  <option value="reactivo">Solo Reactivos</option>
+                  <option value="pigmento">Solo Pigmentos</option>
+                </select>
+
+                {/* Toggle Kg / Gramos */}
+                <div className="flex items-center bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/60 text-[11px] font-bold">
+                  <button
+                    type="button"
+                    onClick={() => setWeightUnit('kg')}
+                    className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'kg' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    Kg
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWeightUnit('g')}
+                    className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${weightUnit === 'g' ? 'bg-white text-slate-800 shadow-2xs font-black' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    Gramos
+                  </button>
+                </div>
+              </div>
+
+              {/* Buscador */}
+              <div className="relative flex-1 min-w-[170px] max-w-xs">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  placeholder="Filtrar por diseño..."
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-7 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Fila contextual para fecha personalizada o año */}
+            {timeFilter === 'custom' && (
+              <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Rango:</span>
+                <input
+                  type="date"
+                  value={dateFrom}
+                  onChange={e => setDateFrom(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold"
+                />
+                <span className="text-slate-400">-</span>
+                <input
+                  type="date"
+                  value={dateTo}
+                  onChange={e => setDateTo(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold"
+                />
+              </div>
+            )}
+
+            {timeFilter === 'year' && (
+              <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Año a consultar:</span>
+                <select
+                  value={selectedYear}
+                  onChange={e => setSelectedYear(Number(e.target.value))}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-slate-700"
+                >
+                  {availableYears.map(y => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
+          <ProductionCharts
+            records={filteredProductionRecords}
+            weightUnit={weightUnit}
+            periodLabel={
+              timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth]} ${selectedYear}`
+                : timeFilter === 'year' ? `Año ${selectedYear}`
+                  : timeFilter === 'today' ? 'Hoy'
+                    : timeFilter === 'week' ? 'Últimos 7 días'
+                      : timeFilter === 'custom' ? 'Rango personalizado'
+                        : 'Todo el histórico'
+            }
+          />
+        </div>
       )}
 
       {/* ── VISTA 2: GRÁFICOS Y ANALYTICS ── */}
       {activeDashboardTab === 'analytics' && (
         <div className="space-y-6">
           {/* ── KPI CARDS ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                <History className="w-5 h-5 text-blue-600" />
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4 shrink-0">
+            {/* Card 1: Total Registrado / Mezclado */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-2.5 sm:gap-3 hover:shadow-sm transition-shadow">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <History className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  {logTypeFilter === 'preparacion' ? 'Total Mezclado' : logTypeFilter === 'consumo' ? 'Total Consumido' : 'Total Registrado'}
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">
+                  {logTypeFilter === 'preparacion' ? 'Total Mezclado' : logTypeFilter === 'consumo' ? 'Total Consumido' : 'Total Tintas'}
                 </p>
-                <p className="text-xl font-extrabold text-slate-800">{totalKgMixed} {weightUnit}</p>
-                <p className="text-[9px] text-slate-400 font-medium">en {numLotesDisplay} lotes</p>
+                <p className="text-base sm:text-xl font-black text-slate-900 tracking-tight">{totalKgMixed} <span className="text-xs sm:text-sm font-bold text-slate-500">{weightUnit}</span></p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">{numLotesDisplay} lotes reg.</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
-                <Zap className="w-5 h-5 text-amber-600" />
+            {/* Card 2: Promedio / Lote */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-2.5 sm:gap-3 hover:shadow-sm transition-shadow">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Promedio {weightUnit === 'kg' ? 'Kg' : 'g'} / Lote</p>
-                <p className="text-xl font-extrabold text-slate-800">{avgKgPerBatch} {weightUnit}</p>
-                <p className="text-[9px] text-slate-400 font-medium">Eficiencia por lote</p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-                <Award className="w-5 h-5 text-emerald-600" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unidades Estampadas</p>
-                <p className="text-xl font-extrabold text-slate-800">{totalPieces.toLocaleString()} pz</p>
-                <p className="text-[9px] text-slate-400 font-medium">Prendas totales · {totalProductionGolpes.toLocaleString()} golpes</p>
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Prom. / Lote</p>
+                <p className="text-base sm:text-xl font-black text-slate-900 tracking-tight">{avgKgPerBatch} <span className="text-xs sm:text-sm font-bold text-slate-500">{weightUnit}</span></p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">Eficiencia x lote</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center shrink-0">
-                <Table className="w-5 h-5 text-purple-600" />
+            {/* Card 3: Unidades Estampadas */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-2.5 sm:gap-3 hover:shadow-sm transition-shadow">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tela Procesada</p>
-                <p className="text-xl font-extrabold text-slate-800">
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Prendas Estampadas</p>
+                <p className="text-base sm:text-xl font-black text-slate-900 tracking-tight">{totalPieces.toLocaleString()} <span className="text-xs sm:text-sm font-bold text-slate-500">pz</span></p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">{totalProductionGolpes.toLocaleString()} golpes</p>
+              </div>
+            </div>
+
+            {/* Card 4: Tela Procesada */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-2.5 sm:gap-3 hover:shadow-sm transition-shadow">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Tela Procesada</p>
+                <p className="text-base sm:text-xl font-black text-slate-900 tracking-tight">
                   {weightUnit === 'kg'
-                    ? `${totalProductionKg.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`
-                    : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0 })} g`}
+                    ? `${totalProductionKg.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`
+                    : `${(totalProductionKg * 1000).toLocaleString('es-ES', { minimumFractionDigits: 0 })}`}
+                  <span className="text-xs sm:text-sm font-bold text-slate-500 ml-1">{weightUnit}</span>
                 </p>
-                <p className="text-[9px] text-slate-400 font-medium">Toalla procesada en taller</p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">Toalla en taller</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
-                <Zap className="w-5 h-5 text-amber-600" />
+            {/* Card 5: Rendimiento de Tinta (col-span-2 on mobile, col-span-1 on desktop) */}
+            <div className="col-span-2 lg:col-span-1 bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-2.5 sm:gap-3 hover:shadow-sm transition-shadow">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rendimiento de Tinta</p>
-                <p className="text-xl font-extrabold text-slate-800">{inkPerUnitGrams} g / prenda</p>
-                <p className="text-[9px] text-slate-400 font-medium">{inkPerKgTelaGrams} g / kg tela · Prom. {avgKgPerBatch} {weightUnit}/lote</p>
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Rendimiento Tinta</p>
+                <p className="text-base sm:text-xl font-black text-slate-900 tracking-tight">{inkPerUnitGrams} <span className="text-xs sm:text-sm font-bold text-slate-500">g / pz</span></p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">{inkPerKgTelaGrams} g / kg tela</p>
               </div>
             </div>
           </div>
@@ -2280,15 +2813,38 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 {[
+                  { label: 'ID Lote (Mezcla)', value: selectedBatch.id_mezcla || selectedBatch.id || 'N/A' },
+                  { label: 'Orden de Trabajo', value: selectedBatch.orden_id || selectedBatch.workOrderId || 'N/A' },
+                  { label: 'Tono Preparado', value: selectedBatch.color_codigo || selectedBatch.pantoneCode },
                   { label: 'Mezcla Preparada', value: `${selectedBatch.totalGrammage.toLocaleString()} g` },
-                  { label: 'Estado', value: selectedBatch.status },
+                  { label: 'Estado', value: selectedBatch.estado || selectedBatch.status },
                 ].map(({ label, value }) => (
                   <div key={label} className="bg-slate-50 rounded-2xl p-3 border border-slate-100">
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5">{label}</p>
-                    <p className="text-sm font-bold text-slate-800">{value}</p>
+                    <p className="text-xs font-bold text-slate-800 break-all font-mono">{value}</p>
                   </div>
                 ))}
               </div>
+
+              {/* Fecha y Hora Exacta de Registro */}
+              {(() => {
+                const raw = selectedBatch.fecha_hora_registro || selectedBatch.timestamp;
+                if (!raw) return null;
+                const d = raw.toDate ? raw.toDate() : new Date(raw);
+                const fullDate = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                const fullTime = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                return (
+                  <div className="bg-blue-50/60 rounded-2xl p-3 border border-blue-100 flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wide mb-0.5">Fecha y Hora de Registro</p>
+                      <p className="text-xs font-bold text-slate-800">{fullDate}</p>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-blue-700 bg-white px-2.5 py-1 rounded-lg border border-blue-200 shadow-2xs">
+                      {fullTime}
+                    </span>
+                  </div>
+                );
+              })()}
 
               {/* Fórmula de ingredientes */}
               {(() => {

@@ -691,10 +691,19 @@ export async function getBatchLogs(): Promise<BatchLog[]> {
         .filter(d => !deletedIds.has(d.id))
         .map(d => {
           const data = d.data();
+          const parsedTimestamp = data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date());
+          const parsedFechaHora = data.fecha_hora_registro instanceof Timestamp ? data.fecha_hora_registro.toDate() : (data.fecha_hora_registro ? new Date(data.fecha_hora_registro) : parsedTimestamp);
+          const ordenId = data.orden_id || data.workOrderId || '';
           return {
             id: d.id,
             ...data,
-            timestamp: data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date())
+            id_mezcla: data.id_mezcla || d.id,
+            orden_id: ordenId,
+            workOrderId: ordenId,
+            color_codigo: data.color_codigo || data.pantoneCode || '',
+            fecha_hora_registro: parsedFechaHora,
+            estado: data.estado || (data.status === 'Completado' ? 'completado' : (data.status === 'consumido' ? 'consumido' : 'completado')),
+            timestamp: parsedTimestamp
           };
         }) as BatchLog[];
 
@@ -727,10 +736,19 @@ export function subscribeToBatches(onUpdate: (batches: BatchLog[]) => void): () 
         .filter(d => !deletedIds.has(d.id))
         .map(d => {
           const data = d.data();
+          const parsedTimestamp = data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date());
+          const parsedFechaHora = data.fecha_hora_registro instanceof Timestamp ? data.fecha_hora_registro.toDate() : (data.fecha_hora_registro ? new Date(data.fecha_hora_registro) : parsedTimestamp);
+          const ordenId = data.orden_id || data.workOrderId || '';
           return {
             id: d.id,
             ...data,
-            timestamp: data.timestamp instanceof Timestamp ? data.timestamp.toDate() : (data.timestamp ? new Date(data.timestamp) : new Date())
+            id_mezcla: data.id_mezcla || d.id,
+            orden_id: ordenId,
+            workOrderId: ordenId,
+            color_codigo: data.color_codigo || data.pantoneCode || '',
+            fecha_hora_registro: parsedFechaHora,
+            estado: data.estado || (data.status === 'Completado' ? 'completado' : (data.status === 'consumido' ? 'consumido' : 'completado')),
+            timestamp: parsedTimestamp
           };
         }) as BatchLog[];
       onUpdate(firestoreBatches);
@@ -746,11 +764,28 @@ export function subscribeToBatches(onUpdate: (batches: BatchLog[]) => void): () 
 
 export async function addBatchLog(batch: BatchLog): Promise<string> {
   try {
-    // 1. Añadir el lote a la base de datos
-    const docRef = await addDoc(collection(db, BATCHES_COLLECTION), {
+    const now = new Date();
+    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const id_mezcla = batch.id_mezcla || `LOTE-${datePart}-${randomSuffix}`;
+    const orden_id = batch.orden_id || batch.workOrderId || '';
+    const color_codigo = batch.color_codigo || batch.pantoneCode || '';
+    const estado = batch.estado || (batch.status === 'consumido' || batch.type === 'consumo' ? 'consumido' : 'completado');
+
+    const batchToSave: any = {
       ...batch,
+      id_mezcla,
+      orden_id,
+      workOrderId: orden_id,
+      color_codigo,
+      estado,
+      status: batch.status || (estado === 'consumido' ? 'consumido' : 'Completado'),
+      fecha_hora_registro: serverTimestamp(),
       timestamp: serverTimestamp()
-    });
+    };
+
+    // 1. Añadir el lote a la base de datos
+    const docRef = await addDoc(collection(db, BATCHES_COLLECTION), batchToSave);
 
     // 2. Descontar stock y manejar Tintas Preparadas según el tipo
     try {
@@ -1376,12 +1411,22 @@ export async function syncDesignToProductionRecords(
     if ((r.designName || '').toUpperCase().trim() === normName) {
       modified = true;
       const isToalla = isToallaDesign(normName, widthCm ? widthCm / 100 : r.widthM, r.process);
-      const wM = isToalla ? 0.35 : (widthCm ? Number((widthCm / 100).toFixed(2)) : r.widthM);
-      const hM = isToalla ? 0.60 : (heightCm ? Number((heightCm / 100).toFixed(2)) : r.heightM);
-      const gr = isToalla ? 310 : (gramaje || r.gramaje);
-      const wWeight = isToalla ? 63 : (unitWeightG || r.unitWeightG);
-      const area = isToalla ? 0.21 : Number((wM * hM).toFixed(2));
-      const pxg = isToalla ? 5 : (piezasPorGolpe || (wM <= 0.40 ? 5 : 3));
+      const wM = widthCm !== undefined && widthCm > 0
+        ? Number((widthCm / 100).toFixed(2))
+        : (isToalla ? 0.35 : (r.widthM || 0.60));
+      const hM = heightCm !== undefined && heightCm > 0
+        ? Number((heightCm / 100).toFixed(2))
+        : (isToalla ? 0.60 : (r.heightM || 1.20));
+      const gr = gramaje !== undefined && gramaje > 0
+        ? gramaje
+        : (isToalla ? 310 : (r.gramaje || 280));
+      const wWeight = unitWeightG !== undefined && unitWeightG > 0
+        ? unitWeightG
+        : (isToalla ? 63 : (r.unitWeightG || 201.6));
+      const area = Number((wM * hM).toFixed(2));
+      const pxg = piezasPorGolpe !== undefined && piezasPorGolpe > 0
+        ? piezasPorGolpe
+        : (isToalla ? 5 : (wM <= 0.40 ? 5 : 3));
       const golpes = Math.round((r.units || 0) / pxg);
       const kgDay = Number((((r.units || 0) * wWeight) / 1000).toFixed(2));
 

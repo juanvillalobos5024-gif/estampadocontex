@@ -184,7 +184,16 @@ export default function CalculatorWorkspace({
     if (!pantone) return;
 
     setIsSubmitting(true);
+    const now = new Date();
+    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const orderId = initialOrderParams?.workOrderId || '';
+
     const newBatch: BatchLog = {
+      id_mezcla: `LOTE-${datePart}-${randomSuffix}`,
+      orden_id: orderId,
+      workOrderId: orderId,
+      color_codigo: pantone.code,
       pantoneCode: pantone.code,
       pantoneHex: pantone.hex,
       productType: productType,
@@ -192,12 +201,14 @@ export default function CalculatorWorkspace({
       quantity: piecesQty,
       totalGrammage: totalGrams,
       operator: 'Laboratorio',
-      timestamp: new Date(),
+      timestamp: now,
+      fecha_hora_registro: now,
       status: 'Completado',
+      estado: 'completado',
       type: 'preparacion'
     };
-    if (productReference) {
-      newBatch.productReference = productReference;
+    if (productReference || initialOrderParams?.productRef) {
+      newBatch.productReference = productReference || initialOrderParams?.productRef;
     }
 
     const success = await onAddBatch(newBatch);

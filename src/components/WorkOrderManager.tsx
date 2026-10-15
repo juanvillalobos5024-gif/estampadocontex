@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   ClipboardList, Plus, Search, Filter, AlertCircle, AlertTriangle, Clock, 
-  CheckCircle, PlayCircle, Trash2, Edit2, Calendar, Maximize, Minimize, X
+  CheckCircle, PlayCircle, Trash2, Edit2, Calendar, Maximize, Minimize, X,
+  Layers, Eye
 } from 'lucide-react';
 import { WorkOrder, PantoneColor, TeamMember, BatchLog, Design, StockItem } from '../types';
 import { findMatchingStockItem, findMatchingPantone, findPastaMadreStockItem, syncWorkOrdersToProductionRecords } from '../lib/dataService';
@@ -12,6 +13,7 @@ interface WorkOrderManagerProps {
   pantones: PantoneColor[];
   designs: Design[];
   stock: StockItem[];
+  batches?: BatchLog[];
   onAddOrder: (order: WorkOrder) => Promise<boolean>;
   onUpdateOrder: (id: string, updates: Partial<WorkOrder>) => Promise<boolean>;
   onDeleteOrder: (id: string) => Promise<void>;
@@ -40,6 +42,7 @@ export default function WorkOrderManager({
   pantones,
   designs = [],
   stock = [],
+  batches = [],
   onAddOrder,
   onUpdateOrder,
   onDeleteOrder,
@@ -49,10 +52,21 @@ export default function WorkOrderManager({
 }: WorkOrderManagerProps) {
   const [showForm, setShowForm] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<'all' | 'Pendiente' | 'En Progreso' | 'Completada'>('all');
+  const [filterStatus, setFilterStatus] = useState<'all' | 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'Completada'>('all');
   const [selectedOrderForModal, setSelectedOrderForModal] = useState<WorkOrder | null>(null);
   const [customKilos, setCustomKilos] = useState<Record<number, string>>({});
   const [preparedHistory, setPreparedHistory] = useState<Record<string, number[]>>({});
+  // Referencias al estado más reciente de la orden/historial y cola de guardado.
+  // Evitan que preparaciones consecutivas lean una copia vieja y se pisen entre sí (progreso 2/3).
+  const orderRef = useRef<WorkOrder | null>(null);
+  const historyRef = useRef<Record<string, number[]> | null>(null);
+  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
+  useEffect(() => {
+    if (!selectedOrderForModal) {
+      orderRef.current = null;
+      historyRef.current = null;
+    }
+  }, [selectedOrderForModal]);
   const [confirmBatch, setConfirmBatch] = useState<{ 
     idx: number; 
     pantoneInfo: PantoneColor; 
@@ -142,11 +156,179 @@ export default function WorkOrderManager({
     };
   }, [confirmBatch, errorAlert, confirmFinishOrder, orderToDelete, selectedOrderForModal, showForm, isFullscreen]);
 
+  const handleRegisterConsumptions = async (order: WorkOrder, history: Record<string, number[]>) => {
+    if (!onRecordBatch) return;
+    let piecesRegistered = false;
+    for (const [pantoneCode, kgArray] of Object.entries(history)) {
+      const totalGrams = kgArray.reduce((a, b) => a + b, 0) * 1000;
+      if (totalGrams > 0) {
+         const pantoneInfo = findMatchingPantone(pantones, pantoneCode);
+         const now = new Date();
+         const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+         const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+         const batchData: BatchLog = {
+            id_mezcla: `LOTE-${datePart}-${randomSuffix}`,
+            orden_id: order.id || '',
+            workOrderId: order.id || '',
+            color_codigo: pantoneCode,
+            pantoneCode: pantoneCode,
+            pantoneHex: pantoneInfo?.hex || '#ccc',
+            productType: order.productType,
+            productReference: order.productReference || order.designName || '',
+            quantity: piecesRegistered ? 0 : order.targetQuantity,
+            totalGrammage: totalGrams,
+            operator: 'Usuario Sistema',
+            type: 'consumo',
+            status: 'Completado',
+            estado: 'consumido',
+            lineType: order.lineType || 'pigmento',
+            timestamp: now,
+            fecha_hora_registro: now
+         };
+         piecesRegistered = true;
+         await onRecordBatch(batchData);
+      }
+    }
+  };
+
+  // ── CÁLCULO DINÁMICO EN CONSULTA (Mezclas asociadas a la orden) ──
+  // SELECT COUNT(DISTINCT color_codigo) FROM mezclas WHERE orden_id = 'A123' AND estado = 'completado'
+  const getDynamicOrderProgress = (order: WorkOrder) => {
+    const design = designs.find(d => 
+      (order.designId && d.id === order.designId) ||
+      (order.designName && d.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())
+    );
+    const totalColors = design ? design.colors.length : 1;
+
+    // 1. Filtrar mezclas registradas para esta orden con estado completado
+    const matchingBatches = (batches || []).filter(b => {
+      const bOrderId = b.orden_id || b.workOrderId;
+      const matchesOrder = (order.id && bOrderId === order.id) ||
+        (order.id && b.productReference && b.productReference.includes(order.id)) ||
+        (order.designName && b.productReference && b.productReference.toLowerCase().trim() === order.designName.toLowerCase().trim());
+      
+      const isCompleted = b.estado === 'completado' || b.status === 'Completado' || b.status === 'completado';
+      return matchesOrder && isCompleted && b.type !== 'consumo';
+    });
+
+    // 2. Tonos preparados únicos (DISTINCT color_codigo)
+    const distinctPreparedColors = new Set<string>();
+    matchingBatches.forEach(b => {
+      const code = b.color_codigo || b.pantoneCode;
+      if (code) distinctPreparedColors.add(code.trim().toUpperCase());
+    });
+
+    // 3. Unificar con completedColors que la orden ya tuviese
+    (order.completedColors || []).forEach(c => {
+      if (c) distinctPreparedColors.add(c.trim().toUpperCase());
+    });
+
+    const framesCount = order.completedFrames?.length || 0;
+    const completedCount = Math.min(totalColors, Math.max(distinctPreparedColors.size, framesCount, matchingBatches.length));
+    const isFullyCompleted = totalColors > 0 && completedCount >= totalColors;
+
+    return {
+      completedCount,
+      totalColors,
+      isFullyCompleted,
+      distinctPreparedColors: Array.from(distinctPreparedColors)
+    };
+  };
+
+  // ── ESTADO EFECTIVO DE LA ORDEN SEGÚN EL FLUJO INDUSTRIAL ──
+  // Pendiente → Preparando Tintas → Tintas Listas → Estampándose → Completada
+  const getOrderEffectiveStatus = (
+    order: WorkOrder,
+    prog: { completedCount: number; totalColors: number; isFullyCompleted: boolean }
+  ): 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'Completada' => {
+    // 1. Si el usuario ya finalizó el estampado
+    if (order.status === 'Completada') return 'Completada';
+
+    // 2. Si la orden está en máquina estampándose
+    if (order.status === 'Estampándose') return 'Estampándose';
+
+    // 3. Si todas las tintas están preparadas pero no se ha iniciado el estampado
+    if (prog.isFullyCompleted || order.status === 'Tintas Listas') return 'Tintas Listas';
+
+    // 4. Si se ha preparado al menos 1 color de los requeridos
+    if (prog.completedCount > 0 || order.status === 'Preparando Tintas' || order.status === 'En Progreso') return 'Preparando Tintas';
+
+    // 5. Sin preparar
+    return 'Pendiente';
+  };
+
+  const handleStartStamping = async (order: WorkOrder) => {
+    if (!order.id) return;
+    try {
+      await onUpdateOrder(order.id, { status: 'Estampándose' });
+      if (selectedOrderForModal?.id === order.id) {
+        setSelectedOrderForModal(prev => prev ? { ...prev, status: 'Estampándose' } : null);
+      }
+    } catch (err: any) {
+      setErrorAlert('Error al iniciar estampado: ' + (err?.message || err));
+    }
+  };
+
+  const handleFinishStamping = async (order: WorkOrder) => {
+    if (!order.id) return;
+    try {
+      if (order.preparedHistory) {
+        await handleRegisterConsumptions(order, order.preparedHistory);
+      }
+      await onUpdateOrder(order.id, { status: 'Completada', completedAt: new Date() });
+      if (selectedOrderForModal?.id === order.id) {
+        setSelectedOrderForModal(prev => prev ? { ...prev, status: 'Completada', completedAt: new Date() } : null);
+      }
+    } catch (err: any) {
+      setErrorAlert('Error al finalizar estampado: ' + (err?.message || err));
+    }
+  };
+
+  const handleOpenOrderModal = (order: WorkOrder) => {
+    const initialHistory: Record<string, number[]> = { ...(order.preparedHistory || {}) };
+    (batches || [])
+      .filter(b => (b.orden_id === order.id || b.workOrderId === order.id) && b.type !== 'consumo')
+      .forEach(b => {
+        const code = b.color_codigo || b.pantoneCode;
+        if (code && !initialHistory[code]) {
+          const kgVal = (b.totalGrammage || 0) / 1000;
+          if (kgVal > 0) initialHistory[code] = [kgVal];
+        }
+      });
+
+    if (order.designId) {
+      const design = designs.find(d => d.id === order.designId);
+      if (design) {
+        orderRef.current = order;
+        historyRef.current = initialHistory;
+        setSelectedOrderForModal(order);
+        setCustomKilos({});
+        setPreparedHistory(initialHistory);
+      } else {
+        alert('No se encuentra el Diseño en la biblioteca.');
+      }
+    } else {
+      const pantone = order.pantoneCode ? findMatchingPantone(pantones, order.pantoneCode) : undefined;
+      if (pantone) {
+        orderRef.current = order;
+        historyRef.current = initialHistory;
+        setSelectedOrderForModal(order);
+        setCustomKilos({});
+        setPreparedHistory(initialHistory);
+      } else {
+        alert('No se encuentra el Pantone en la biblioteca.');
+      }
+    }
+  };
+
   // Lista de órdenes filtradas por estado y por fecha (por defecto SIEMPRE HOY)
   const pendingOrders = useMemo(() => {
     return workOrders.filter(order => {
+      const prog = getDynamicOrderProgress(order);
+      const effectiveStatus = getOrderEffectiveStatus(order, prog);
+
       // 1. Filtro por estado
-      if (filterStatus !== 'all' && order.status !== filterStatus) return false;
+      if (filterStatus !== 'all' && effectiveStatus !== filterStatus) return false;
 
       // 2. Filtro por fecha (Predeterminado SIEMPRE HOY)
       const orderDate = getOrderDate(order);
@@ -159,32 +341,7 @@ export default function WorkOrderManager({
       }
       return true; // 'all'
     });
-  }, [workOrders, filterStatus, dateFilterMode, customFilterDate, todayStr, tomorrowStr]);
-
-  const handleRegisterConsumptions = async (order: WorkOrder, history: Record<string, number[]>) => {
-    if (!onRecordBatch) return;
-    let piecesRegistered = false;
-    for (const [pantoneCode, kgArray] of Object.entries(history)) {
-      const totalGrams = kgArray.reduce((a, b) => a + b, 0) * 1000;
-      if (totalGrams > 0) {
-         const pantoneInfo = findMatchingPantone(pantones, pantoneCode);
-         const batchData: BatchLog = {
-            pantoneCode: pantoneCode,
-            pantoneHex: pantoneInfo?.hex || '#ccc',
-            productType: order.productType,
-            quantity: piecesRegistered ? 0 : order.targetQuantity,
-            totalGrammage: totalGrams,
-            operator: 'Usuario Sistema',
-            type: 'consumo',
-            status: 'Completado',
-            lineType: order.lineType || 'pigmento',
-            timestamp: new Date()
-         };
-         piecesRegistered = true;
-         await onRecordBatch(batchData);
-      }
-    }
-  };
+  }, [workOrders, filterStatus, dateFilterMode, customFilterDate, todayStr, tomorrowStr, batches]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -514,10 +671,22 @@ export default function WorkOrderManager({
               Pendientes
             </button>
             <button 
-              onClick={() => setFilterStatus('En Progreso')}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'En Progreso' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-blue-700'}`}
+              onClick={() => setFilterStatus('Preparando Tintas')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'Preparando Tintas' ? 'bg-sky-600 text-white shadow-sm' : 'text-slate-600 hover:text-sky-700'}`}
             >
-              En Progreso
+              Preparando Tintas
+            </button>
+            <button 
+              onClick={() => setFilterStatus('Tintas Listas')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'Tintas Listas' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-600 hover:text-purple-700'}`}
+            >
+              Tintas Listas
+            </button>
+            <button 
+              onClick={() => setFilterStatus('Estampándose')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${filterStatus === 'Estampándose' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:text-indigo-700'}`}
+            >
+              Estampándose
             </button>
             <button 
               onClick={() => setFilterStatus('Completada')}
@@ -642,14 +811,20 @@ export default function WorkOrderManager({
                       </span>
                     </div>
 
-                    {order.designId ? (
-                      <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
-                        <span className="text-slate-500 font-semibold">Progreso Diseño:</span>
-                        <span className="font-mono font-bold text-purple-700">
-                          {order.completedColors?.length || 0} / {designs.find(d => d.id === order.designId || d.name?.toUpperCase().trim() === order.designName?.toUpperCase().trim())?.colors.length || 0} Colores
-                        </span>
-                      </div>
-                    ) : (
+                    {order.designId ? (() => {
+                      const prog = getDynamicOrderProgress(order);
+                      return (
+                        <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
+                          <span className="text-slate-500 font-semibold">Tintas Requeridas:</span>
+                          <span className={`font-mono font-bold ${prog.isFullyCompleted ? 'text-purple-700' : 'text-blue-700'}`}>
+                            {prog.completedCount} / {prog.totalColors} Colores
+                            {prog.isFullyCompleted && (
+                              <span className="ml-1 text-[10px] bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-full font-sans font-bold">✓ Tintas Listas</span>
+                            )}
+                          </span>
+                        </div>
+                      );
+                    })() : (
                       <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
                         <span className="text-slate-500 font-semibold">Objetivo:</span>
                         <span className="font-mono font-bold text-blue-700">{order.targetGrammage}g</span>
@@ -702,63 +877,122 @@ export default function WorkOrderManager({
                     })()}
                   </div>
 
-                  {/* Estado y Acciones */}
-                  <div className="mt-auto border-t border-slate-100 pt-4 flex items-center justify-between">
-                    <span className={`text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider ${
-                      order.status === 'Pendiente' ? 'bg-amber-100 text-amber-700' :
-                      order.status === 'En Progreso' ? 'bg-blue-100 text-blue-700' :
-                      order.status === 'Completada' ? 'bg-emerald-100 text-emerald-700' :
-                      'bg-slate-100 text-slate-700'
-                    }`}>
-                      {order.status}
-                    </span>
-                    
-                    <div className="flex items-center gap-2">
-                      <button 
-                        onClick={() => {
-                          if (order.designId) {
-                             const design = designs.find(d => d.id === order.designId);
-                             if (design) {
-                               setSelectedOrderForModal(order);
-                               setCustomKilos({});
-                               setPreparedHistory(order.preparedHistory || {});
-                             } else {
-                               alert('No se encuentra el Diseño en la biblioteca.');
-                             }
-                          } else {
-                              const pantone = order.pantoneCode ? findMatchingPantone(pantones, order.pantoneCode) : undefined;
-                              if (pantone) {
-                                setSelectedOrderForModal(order);
-                                setCustomKilos({});
-                                setPreparedHistory(order.preparedHistory || {});
-                              } else {
-                              alert('No se encuentra el Pantone en la biblioteca.');
-                            }
-                          }
-                        }}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm ${
-                          order.status === 'Completada' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' :
-                          order.status === 'En Progreso' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100' :
-                          'bg-blue-600 text-white hover:bg-blue-700'
-                        }`}
-                      >
-                        {order.status === 'Completada' ? <CheckCircle className="w-3.5 h-3.5" /> : 
-                         order.status === 'En Progreso' ? <PlayCircle className="w-3.5 h-3.5" /> : 
-                         <PlayCircle className="w-3.5 h-3.5" />}
-                        {order.status === 'Completada' ? 'Ver Detalles' : 
-                         order.status === 'En Progreso' ? 'Continuar' : 'Comenzar'}
-                      </button>
-                      <button 
-                        onClick={() => {
-                          setOrderToDelete(order.id!);
-                        }}
-                        className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                        title="Eliminar Orden"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
+                  {/* Estado y Acciones según el Flujo Industrial */}
+                  {(() => {
+                    const prog = getDynamicOrderProgress(order);
+                    const effectiveStatus = getOrderEffectiveStatus(order, prog);
+
+                    return (
+                      <div className="mt-auto border-t border-slate-100 pt-3 flex flex-wrap items-center justify-between gap-2">
+                        {/* Insignia del Estado Actual */}
+                        {effectiveStatus === 'Pendiente' && (
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-amber-50 text-amber-700 border border-amber-200">
+                            Pendiente
+                          </span>
+                        )}
+                        {effectiveStatus === 'Preparando Tintas' && (
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-sky-50 text-sky-700 border border-sky-200">
+                            Preparando Tintas
+                          </span>
+                        )}
+                        {effectiveStatus === 'Tintas Listas' && (
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-purple-50 text-purple-700 border border-purple-200">
+                            Tintas Listas
+                          </span>
+                        )}
+                        {effectiveStatus === 'Estampándose' && (
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
+                            Estampándose
+                          </span>
+                        )}
+                        {effectiveStatus === 'Completada' && (
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Completada
+                          </span>
+                        )}
+
+                        {/* Botones de Acción */}
+                        <div className="flex items-center gap-1.5 ml-auto">
+                          {effectiveStatus === 'Pendiente' && (
+                            <button
+                              onClick={() => handleOpenOrderModal(order)}
+                              className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                            >
+                              <PlayCircle className="w-3.5 h-3.5" />
+                              <span>Preparar Tintas</span>
+                            </button>
+                          )}
+
+                          {effectiveStatus === 'Preparando Tintas' && (
+                            <button
+                              onClick={() => handleOpenOrderModal(order)}
+                              className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                            >
+                              <PlayCircle className="w-3.5 h-3.5" />
+                              <span>Continuar Preparación</span>
+                            </button>
+                          )}
+
+                          {effectiveStatus === 'Tintas Listas' && (
+                            <>
+                              <button
+                                onClick={() => handleOpenOrderModal(order)}
+                                className="p-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                                title="Ver fórmulas de las tintas"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleStartStamping(order)}
+                                className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm bg-purple-600 hover:bg-purple-700 text-white cursor-pointer"
+                              >
+                                <Layers className="w-3.5 h-3.5" />
+                                <span>Iniciar Estampado</span>
+                              </button>
+                            </>
+                          )}
+
+                          {effectiveStatus === 'Estampándose' && (
+                            <>
+                              <button
+                                onClick={() => handleOpenOrderModal(order)}
+                                className="p-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                                title="Ver fórmulas de las tintas"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleFinishStamping(order)}
+                                className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer"
+                              >
+                                <CheckCircle className="w-3.5 h-3.5" />
+                                <span>Finalizar Estampado</span>
+                              </button>
+                            </>
+                          )}
+
+                          {effectiveStatus === 'Completada' && (
+                            <button
+                              onClick={() => handleOpenOrderModal(order)}
+                              className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 cursor-pointer"
+                            >
+                              <CheckCircle className="w-3.5 h-3.5" />
+                              <span>Ver Detalles</span>
+                            </button>
+                          )}
+
+                          <button 
+                            onClick={() => setOrderToDelete(order.id!)}
+                            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            title="Eliminar Orden"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
               ))}
             </div>
@@ -779,15 +1013,46 @@ export default function WorkOrderManager({
             {(() => {
               const design = designs.find(d => d.id === selectedOrderForModal.designId);
               if (!design) return null;
+              const modalProg = getDynamicOrderProgress(selectedOrderForModal);
+              const modalEffectiveStatus = getOrderEffectiveStatus(selectedOrderForModal, modalProg);
               
               return (
                 <>
                   <div className="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50">
                     <div className="min-w-0 flex-1 pr-2">
-                      <h2 className="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2 truncate">
-                        <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-600 flex items-center justify-center text-xs shrink-0">D</div>
-                        <span className="truncate">{design.name}</span>
-                      </h2>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h2 className="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2 truncate">
+                          <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-600 flex items-center justify-center text-xs shrink-0">D</div>
+                          <span className="truncate">{design.name}</span>
+                        </h2>
+
+                        {modalEffectiveStatus === 'Pendiente' && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                            Pendiente
+                          </span>
+                        )}
+                        {modalEffectiveStatus === 'Preparando Tintas' && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                            Preparando Tintas ({modalProg.completedCount}/{modalProg.totalColors})
+                          </span>
+                        )}
+                        {modalEffectiveStatus === 'Tintas Listas' && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                            ✓ Tintas Listas
+                          </span>
+                        )}
+                        {modalEffectiveStatus === 'Estampándose' && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                            Estampándose
+                          </span>
+                        )}
+                        {modalEffectiveStatus === 'Completada' && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            ✓ Completada
+                          </span>
+                        )}
+                      </div>
                       <p className="text-xs sm:text-sm text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span>Orden #{selectedOrderForModal.id?.slice(-4)}</span>
                         <span>•</span>
@@ -1020,9 +1285,28 @@ export default function WorkOrderManager({
                   </div>
 
                   <div className="p-3.5 sm:p-6 border-t border-slate-100 bg-slate-50 shrink-0 flex flex-col sm:flex-row sm:justify-between items-stretch sm:items-center gap-2.5 sm:gap-3">
-                     <p className="text-xs sm:text-sm text-slate-500 font-medium text-center sm:text-left">
-                       Puedes preparar los marcos en el orden que prefieras.
-                     </p>
+                     <div className="text-xs sm:text-sm text-slate-500 font-medium text-center sm:text-left flex items-center justify-center sm:justify-start gap-2">
+                       {modalEffectiveStatus === 'Pendiente' && (
+                         <span>Prepara las fórmulas de tinta requeridas para comenzar.</span>
+                       )}
+                       {modalEffectiveStatus === 'Preparando Tintas' && (
+                         <span>Avance de tintas: <strong className="text-slate-800">{modalProg.completedCount} de {modalProg.totalColors}</strong> listas.</span>
+                       )}
+                       {modalEffectiveStatus === 'Tintas Listas' && (
+                         <span className="text-purple-700 font-bold flex items-center gap-1.5">
+                           <span>✨ Tintas completas. Lista para montar en máquina.</span>
+                         </span>
+                       )}
+                       {modalEffectiveStatus === 'Estampándose' && (
+                         <span className="text-indigo-700 font-bold flex items-center gap-1.5">
+                           <span className="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
+                           Orden estampándose en máquina actualmente.
+                         </span>
+                       )}
+                       {modalEffectiveStatus === 'Completada' && (
+                         <span className="text-emerald-700 font-bold">✓ Orden estampada y finalizada. Consumos registrados.</span>
+                       )}
+                     </div>
                      <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
                        <button 
                          onClick={() => setSelectedOrderForModal(null)}
@@ -1030,23 +1314,24 @@ export default function WorkOrderManager({
                        >
                          Cerrar
                        </button>
-                       {selectedOrderForModal.status === 'Pendiente' && (
+
+                       {modalEffectiveStatus === 'Tintas Listas' && (
                          <button 
-                           onClick={() => {
-                             onUpdateOrder(selectedOrderForModal.id!, { status: 'En Progreso' });
-                             setSelectedOrderForModal(null);
+                           onClick={async () => {
+                             await handleStartStamping(selectedOrderForModal);
                            }}
-                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
+                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-purple-600 hover:bg-purple-700 shadow-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
                          >
-                           <PlayCircle className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">En Progreso</span>
+                           <Layers className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">Iniciar Estampado</span>
                          </button>
                        )}
-                       {selectedOrderForModal.status === 'En Progreso' && (
+
+                       {modalEffectiveStatus === 'Estampándose' && (
                          <button 
                            onClick={() => setConfirmFinishOrder(true)}
-                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
+                           className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer text-center"
                          >
-                           <CheckCircle className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">Finalizar Orden</span>
+                           <CheckCircle className="w-4 h-4 shrink-0" /> <span className="whitespace-nowrap">Finalizar Estampado</span>
                          </button>
                        )}
                      </div>
@@ -1151,94 +1436,125 @@ export default function WorkOrderManager({
                 Cancelar
               </button>
               <button
-                onClick={async () => {
-                  const { idx, pantoneInfo, kg } = confirmBatch;
+                onClick={() => {
+                  const { idx, pantoneInfo, kg, colorCode } = confirmBatch;
+                  const renderedOrder = selectedOrderForModal;
+                  const renderedHistory = preparedHistory;
                   setConfirmBatch(null);
 
-                  const batchData: BatchLog = {
-                    pantoneCode: pantoneInfo.code,
-                    pantoneHex: pantoneInfo.hex,
-                    productType: selectedOrderForModal?.productType || 'Otros',
-                    quantity: selectedOrderForModal?.targetQuantity || 0,
-                    totalGrammage: kg * 1000,
-                    operator: 'Usuario Sistema',
-                    type: 'preparacion',
-                    lineType: pantoneInfo.type?.toLowerCase().includes('reactivo') ? 'reactivo' : 'pigmento',
-                    status: 'Completado',
-                    timestamp: new Date()
+                  if (!renderedOrder) return;
+
+                  // ── 1. ACTUALIZACIÓN OPTIMISTA INMEDIATA (0 ms) ──
+                  // Se actualiza la UI de inmediato para que el operario vea el Total Preparado al instante
+                  const colorKey = pantoneInfo.code;
+                  const newHistoryRecord = [...(renderedHistory[colorKey] || []), kg];
+                  const newPreparedHistory = { ...renderedHistory, [colorKey]: newHistoryRecord };
+
+                  historyRef.current = newPreparedHistory;
+                  setPreparedHistory(newPreparedHistory);
+                  setCustomKilos(prev => ({ ...prev, [idx]: '' }));
+
+                  const currentCompleted = renderedOrder.completedColors || [];
+                  const isNewColor = !currentCompleted.includes(colorKey);
+                  const newCompleted = isNewColor ? [...currentCompleted, colorKey] : currentCompleted;
+                  const currentFrames = renderedOrder.completedFrames || [];
+                  const newFrames = currentFrames.includes(idx) ? currentFrames : [...currentFrames, idx];
+                  const completedCount = Math.max(newCompleted.length, newFrames.length);
+
+                  let newStatus: WorkOrder['status'] = renderedOrder.status;
+                  let newCompletedAt = renderedOrder.completedAt;
+
+                  if (renderedOrder.status === 'Estampándose') {
+                    newStatus = 'Estampándose';
+                  } else if (renderedOrder.status === 'Completada') {
+                    newStatus = 'Completada';
+                  } else if (renderedOrder.designId) {
+                    const design = designs.find(d => d.id === renderedOrder.designId);
+                    if (design && completedCount >= design.colors.length) {
+                      newStatus = 'Tintas Listas';
+                    } else if (completedCount > 0) {
+                      newStatus = 'Preparando Tintas';
+                    }
+                  } else {
+                    newStatus = 'Tintas Listas';
+                  }
+
+                  const optimisticallyUpdatedOrder: WorkOrder = {
+                    ...renderedOrder,
+                    completedColors: newCompleted,
+                    completedFrames: newFrames,
+                    preparedHistory: newPreparedHistory,
+                    status: newStatus,
+                    completedAt: newCompletedAt
                   };
 
-                  if (onRecordBatch) {
-                    const success = await onRecordBatch(batchData);
-                    if (success) {
-                      const newHistoryRecord = [...(preparedHistory[pantoneInfo.code] || []), kg];
-                      setPreparedHistory(prev => ({
-                        ...prev,
-                        [pantoneInfo.code]: newHistoryRecord
-                      }));
-                      setCustomKilos(prev => ({...prev, [idx]: ''}));
+                  orderRef.current = optimisticallyUpdatedOrder;
+                  setSelectedOrderForModal(optimisticallyUpdatedOrder);
 
-                      // Actualizar el progreso del diseño en la orden y el historial de preparaciones
-                      if (selectedOrderForModal && selectedOrderForModal.id) {
-                        const currentCompleted = selectedOrderForModal.completedColors || [];
-                        const isNewColor = !currentCompleted.includes(pantoneInfo.code);
-                        const newCompleted = isNewColor ? [...currentCompleted, pantoneInfo.code] : currentCompleted;
-                        
-                        const newPreparedHistory = {
-                          ...selectedOrderForModal.preparedHistory,
-                          [pantoneInfo.code]: newHistoryRecord
-                        };
+                  // ── 2. PERSISTENCIA Y SINCRONIZACIÓN ASÍNCRONA EN SEGUNDO PLANO ──
+                  saveQueueRef.current = saveQueueRef.current.then(async () => {
+                    const now = new Date();
+                    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+                    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+                    const batchId = `LOTE-${datePart}-${randomSuffix}`;
+                    const orderId = renderedOrder.id || '';
+                    const chosenColor = colorCode || pantoneInfo.code;
 
-                        let newStatus = selectedOrderForModal.status;
-                        let newCompletedAt = selectedOrderForModal.completedAt;
+                    const batchData: BatchLog = {
+                      id_mezcla: batchId,
+                      orden_id: orderId,
+                      workOrderId: orderId,
+                      color_codigo: chosenColor,
+                      pantoneCode: pantoneInfo.code,
+                      pantoneHex: pantoneInfo.hex,
+                      productType: renderedOrder.productType || 'Otros',
+                      productReference: renderedOrder.designName || renderedOrder.productReference || '',
+                      quantity: renderedOrder.targetQuantity || 0,
+                      totalGrammage: kg * 1000,
+                      operator: 'Usuario Sistema',
+                      type: 'preparacion',
+                      lineType: pantoneInfo.type?.toLowerCase().includes('reactivo') ? 'reactivo' : 'pigmento',
+                      status: 'Completado',
+                      estado: 'completado',
+                      timestamp: now,
+                      fecha_hora_registro: now
+                    };
 
-                        if (selectedOrderForModal.designId) {
-                           const design = designs.find(d => d.id === selectedOrderForModal.designId);
-                           if (design && newCompleted.length >= design.colors.length) {
-                             newStatus = 'Completada';
-                             newCompletedAt = new Date();
-                           } else {
-                             newStatus = 'En Progreso';
-                           }
-                        } else {
-                           newStatus = 'Completada';
-                           newCompletedAt = new Date();
-                        }
-
-                        if (newStatus === 'Completada' && selectedOrderForModal.status !== 'Completada') {
-                           await handleRegisterConsumptions(selectedOrderForModal, newPreparedHistory);
-                        }
-
-                        const updatesToSave: Partial<WorkOrder> = {
-                          completedColors: newCompleted,
-                          preparedHistory: newPreparedHistory,
-                          status: newStatus,
-                        };
-                        if (newCompletedAt) {
-                          updatesToSave.completedAt = newCompletedAt;
-                        }
-
-                        try {
-                          const success = await onUpdateOrder(selectedOrderForModal.id, updatesToSave);
-                          if (!success) {
-                            setErrorAlert('Error al guardar en la base de datos (onUpdateOrder devolvió false).');
-                          } else {
-                            setSelectedOrderForModal({
-                              ...selectedOrderForModal,
-                              completedColors: newCompleted,
-                              preparedHistory: newPreparedHistory,
-                              status: newStatus,
-                              completedAt: newCompletedAt
-                            });
-                          }
-                        } catch (err: any) {
-                          setErrorAlert('Error crítico al guardar: ' + err.message);
-                        }
+                    if (onRecordBatch) {
+                      try {
+                        await onRecordBatch(batchData);
+                      } catch (err: any) {
+                        console.error('Error registrando batch:', err);
                       }
-                    } else {
-                      setErrorAlert('Hubo un error al registrar la preparación.');
                     }
-                  }
+
+                    if (newStatus === 'Completada' && renderedOrder.status !== 'Completada') {
+                      await handleRegisterConsumptions(optimisticallyUpdatedOrder, newPreparedHistory);
+                    }
+
+                    if (orderId) {
+                      const updatesToSave: Partial<WorkOrder> = {
+                        completedColors: newCompleted,
+                        completedFrames: newFrames,
+                        preparedHistory: newPreparedHistory,
+                        status: newStatus,
+                      };
+                      if (newCompletedAt) {
+                        updatesToSave.completedAt = newCompletedAt;
+                      }
+
+                      try {
+                        const success = await onUpdateOrder(orderId, updatesToSave);
+                        if (!success) {
+                          console.warn('onUpdateOrder devolvió false, conservando estado en memoria.');
+                        }
+                      } catch (err: any) {
+                        setErrorAlert('Error al sincronizar con la nube: ' + err.message);
+                      }
+                    }
+                  }).catch((err: any) => {
+                    setErrorAlert('Error al registrar la preparación: ' + (err?.message || err));
+                  });
                 }}
                 className="flex-1 bg-blue-600 text-white rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer"
               >
@@ -1263,12 +1579,12 @@ export default function WorkOrderManager({
               <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
                 <CheckCircle className="w-6 h-6 text-emerald-600" />
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">Finalizar Orden</h3>
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">Finalizar Estampado</h3>
               <p className="text-xs sm:text-sm text-slate-500 mb-2">
-                ¿Estás seguro que deseas marcar esta orden como <span className="font-bold text-emerald-600">Completada</span> manualmente?
+                ¿Confirmas que el proceso de estampado ha finalizado? La orden quedará como <span className="font-bold text-emerald-600">Completada</span> y se registrarán los consumos en inventario y producción.
               </p>
               <p className="text-[11px] text-slate-400">
-                Asegúrate de haber finalizado todos los colores necesarios.
+                Esta acción registrará las cantidades oficiales en el reporte diario.
               </p>
             </div>
             <div className="bg-slate-50 p-3 sm:p-4 border-t border-slate-100 flex gap-2 sm:gap-3">

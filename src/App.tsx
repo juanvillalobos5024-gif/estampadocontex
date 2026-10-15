@@ -856,16 +856,6 @@ export default function App() {
         {/* Cabecera / Header Superior Adaptable */}
         <header className="h-16 md:h-20 bg-white border-b border-slate-200 px-3 sm:px-6 md:px-8 flex items-center justify-between shrink-0 gap-2">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            {/* Botón Hamburguesa Móvil */}
-            <button
-              onClick={() => setIsMobileNavOpen(true)}
-              className="p-2 -ml-1 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl md:hidden transition-colors shrink-0 cursor-pointer"
-              title="Abrir menú de navegación"
-              aria-label="Abrir menú"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-
             {/* Logo en Móvil */}
             <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-blue-900 shadow-sm md:hidden shrink-0 border border-blue-800">
               <img src={logoUrl} alt="CONTEX" className="w-full h-full object-cover" />
@@ -890,22 +880,6 @@ export default function App() {
                 Sistema Integrado de Gestión de Laboratorio de Color e Inventario de Insumos Textiles
               </p>
             </div>
-          </div>
-
-          {/* Avatar / Menú rápido en Móvil */}
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => setIsMobileNavOpen(true)}
-              className="md:hidden flex items-center gap-1.5 p-1 pl-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200/80 rounded-full transition-colors cursor-pointer"
-              title="Menú y usuario"
-            >
-              <span className="text-[11px] font-bold text-slate-700 max-w-[70px] truncate">
-                {currentUser.name.split('@')[0]}
-              </span>
-              <div className="w-7 h-7 rounded-full bg-slate-800 text-blue-400 flex items-center justify-center text-[10px] font-bold shadow-inner">
-                {currentUser.initials}
-              </div>
-            </button>
           </div>
         </header>
 
@@ -1038,6 +1012,7 @@ export default function App() {
                   pantones={pantones}
                   designs={designs}
                   stock={stock}
+                  batches={batches}
                   onAddOrder={async (order) => {
                     const success = await addWorkOrder(order);
                     if (success) {

@@ -192,50 +192,52 @@ export default function InkCharts({
     <div className="space-y-6" id="ink-charts-view">
       {/* ── BANNER: Correlación Producción & Tintas ── */}
       {totalProductionUnits !== undefined && totalProductionUnits > 0 && (
-        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-5 shadow-lg border border-slate-700 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0">
-              <Award className="w-6 h-6 text-emerald-400" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/30 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
-                  Relación Producción & Tintas
-                </span>
-                <span className="text-xs text-slate-400 font-medium">Balance real del taller</span>
+        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-md border border-slate-700/80">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3.5">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                <Award className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
               </div>
-              <p className="text-lg font-black text-white mt-1">
-                {totalProductionUnits.toLocaleString()} Unidades Estampadas
-                {totalProductionKg ? <span className="text-sm font-semibold text-slate-300 ml-2">({totalProductionKg.toLocaleString('es-ES', { maximumFractionDigits: 1 })} kg de tela)</span> : null}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 ml-auto">
-            <div className="text-right">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Tintas</p>
-              <p className="text-base font-extrabold text-blue-400 font-mono">
-                {fmt(inkTotal)} {unit}
-              </p>
-            </div>
-            <div className="h-8 w-px bg-slate-700 hidden sm:block" />
-            <div className="text-right">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Consumo por Toalla</p>
-              <p className="text-base font-extrabold text-emerald-400 font-mono">
-                {totalProductionUnits > 0 ? (weightUnit === 'kg' ? ((inkTotal * 1000) / totalProductionUnits).toFixed(2) : (inkTotal / totalProductionUnits).toFixed(2)) : '0'} g / toalla
-              </p>
-            </div>
-            {totalProductionGolpes ? (
-              <>
-                <div className="h-8 w-px bg-slate-700 hidden sm:block" />
-                <div className="text-right">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Golpes Totales</p>
-                  <p className="text-base font-extrabold text-purple-400 font-mono">
-                    {totalProductionGolpes.toLocaleString()} golpes
-                  </p>
+              <div>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-emerald-500/25 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/20">
+                    Relación Producción & Tintas
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-slate-400 font-medium hidden sm:inline">Balance real del taller</span>
                 </div>
-              </>
-            ) : null}
+                <p className="text-sm sm:text-base font-extrabold text-white mt-0.5">
+                  {totalProductionUnits.toLocaleString()} Prendas Estampadas
+                  {totalProductionKg ? <span className="text-xs sm:text-sm font-semibold text-slate-300 ml-1.5">({totalProductionKg.toLocaleString('es-ES', { maximumFractionDigits: 1 })} kg tela)</span> : null}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-6 bg-slate-800/60 sm:bg-transparent p-2.5 sm:p-0 rounded-xl border border-slate-700/50 sm:border-0">
+              <div className="text-left sm:text-right">
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Total Tintas</p>
+                <p className="text-xs sm:text-sm font-black text-blue-400 font-mono">
+                  {fmt(inkTotal)} {unit}
+                </p>
+              </div>
+              <div className="h-6 w-px bg-slate-700 hidden sm:block" />
+              <div className="text-left sm:text-right">
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Consumo / Prenda</p>
+                <p className="text-xs sm:text-sm font-black text-emerald-400 font-mono">
+                  {totalProductionUnits > 0 ? (weightUnit === 'kg' ? ((inkTotal * 1000) / totalProductionUnits).toFixed(2) : (inkTotal / totalProductionUnits).toFixed(2)) : '0'} g / pz
+                </p>
+              </div>
+              {totalProductionGolpes ? (
+                <>
+                  <div className="h-6 w-px bg-slate-700 hidden sm:block" />
+                  <div className="text-left sm:text-right col-span-2 sm:col-span-1 pt-1.5 sm:pt-0 border-t border-slate-700/60 sm:border-0">
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Golpes Totales</p>
+                    <p className="text-xs sm:text-sm font-black text-purple-400 font-mono">
+                      {totalProductionGolpes.toLocaleString()} golpes
+                    </p>
+                  </div>
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
       )}
@@ -302,9 +304,9 @@ export default function InkCharts({
                   />
                   <RechartsTooltip content={renderCustomTooltip} />
                   <Legend wrapperStyle={{ fontSize: '11px', fontWeight: 700 }} />
-                  <Bar yAxisId="left" dataKey="Pigmento" stackId="l" fill={LINE_COLORS.Pigmento} maxBarSize={36} />
-                  <Bar yAxisId="left" dataKey="Reactivo" stackId="l" fill={LINE_COLORS.Reactivo} maxBarSize={36} />
-                  <Bar yAxisId="left" dataKey="Aditivo" stackId="l" fill={LINE_COLORS.Aditivo} radius={[4, 4, 0, 0]} maxBarSize={36} />
+                  <Bar yAxisId="left" dataKey="Pigmento" stackId="l" fill={LINE_COLORS.Pigmento} maxBarSize={36} isAnimationActive={false} />
+                  <Bar yAxisId="left" dataKey="Reactivo" stackId="l" fill={LINE_COLORS.Reactivo} maxBarSize={36} isAnimationActive={false} />
+                  <Bar yAxisId="left" dataKey="Aditivo" stackId="l" fill={LINE_COLORS.Aditivo} radius={[4, 4, 0, 0]} maxBarSize={36} isAnimationActive={false} />
                   {(timelineMode === 'both' || timelineMode === 'units') && (
                     <Line
                       yAxisId="right"
@@ -314,6 +316,7 @@ export default function InkCharts({
                       stroke="#10b981"
                       strokeWidth={2.5}
                       dot={{ r: 3, fill: '#10b981' }}
+                      isAnimationActive={false}
                     />
                   )}
                   {(timelineMode === 'both' || timelineMode === 'accum') && (
@@ -326,6 +329,7 @@ export default function InkCharts({
                       strokeWidth={2}
                       dot={false}
                       strokeDasharray={timelineMode === 'both' ? '4 4' : undefined}
+                      isAnimationActive={false}
                     />
                   )}
                 </ComposedChart>
@@ -353,7 +357,7 @@ export default function InkCharts({
               <div className="h-52 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={lineDistribution} dataKey="value" nameKey="name" innerRadius={52} outerRadius={82} paddingAngle={3} stroke="none">
+                    <Pie data={lineDistribution} dataKey="value" nameKey="name" innerRadius={52} outerRadius={82} paddingAngle={3} stroke="none" isAnimationActive={false}>
                       {lineDistribution.map((d, i) => <Cell key={i} fill={d.color} />)}
                     </Pie>
                     <RechartsTooltip
@@ -381,7 +385,7 @@ export default function InkCharts({
               </div>
             </>
           ) : (
-            <div className="flex-1 min-h-[200px] flex items-center justify-center text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <div className="flex-1 min-h-[110px] sm:min-h-[180px] flex items-center justify-center text-xs sm:text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
               Sin datos suficientes
             </div>
           )}
@@ -475,6 +479,7 @@ export default function InkCharts({
                       dataKey="kg"
                       radius={[0, 6, 6, 0]}
                       barSize={16}
+                      isAnimationActive={false}
                       label={{ position: 'right', fontSize: 10, fill: '#475569', fontWeight: 700, formatter: (v: any) => fmt(Number(v)) }}
                     >
                       {filteredInks.map((entry, i) => (
@@ -485,7 +490,7 @@ export default function InkCharts({
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+              <div className="h-28 sm:h-40 flex items-center justify-center text-xs sm:text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                 {inkSearch ? 'Ningún insumo coincide con la búsqueda' : 'Sin datos suficientes'}
               </div>
             )}
@@ -543,7 +548,7 @@ export default function InkCharts({
               )}
             </>
           ) : (
-            <div className="flex-1 min-h-[200px] flex items-center justify-center text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <div className="flex-1 min-h-[110px] sm:min-h-[180px] flex items-center justify-center text-xs sm:text-sm text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
               Sin datos suficientes
             </div>
           )}
@@ -583,8 +588,8 @@ export default function InkCharts({
                   formatter={(value: any, name: any) => [`${fmt(Number(value))} ${unit}`, name]}
                 />
                 <Legend wrapperStyle={{ fontSize: '11px', fontWeight: 700 }} />
-                <Area type="monotone" dataKey="Preparado" stroke="#0ea5e9" strokeWidth={2} fill="url(#gradPrep)" />
-                <Area type="monotone" dataKey="Consumido" stroke="#10b981" strokeWidth={2} fill="url(#gradCons)" />
+                <Area type="monotone" dataKey="Preparado" stroke="#0ea5e9" strokeWidth={2} fill="url(#gradPrep)" isAnimationActive={false} />
+                <Area type="monotone" dataKey="Consumido" stroke="#10b981" strokeWidth={2} fill="url(#gradCons)" isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>

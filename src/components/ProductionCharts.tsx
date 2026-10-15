@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
-  ResponsiveContainer, Cell, Legend, PieChart, Pie, ComposedChart, Line
+  ResponsiveContainer, Cell, Legend, ComposedChart, Line
 } from 'recharts';
 import { Table, Award, Zap, TrendingUp, Calendar, Layers, BarChart3 } from 'lucide-react';
 import { DailyProductionRecord } from '../types';
@@ -134,6 +134,12 @@ export default function ProductionCharts({ records, weightUnit, periodLabel }: P
   }, [records, metric, weightUnit]);
 
   const processTotal = processData.reduce((a, d) => a + d.value, 0);
+  const reactivoItem = processData.find(d => d.name === 'Reactivo');
+  const pigmentoItem = processData.find(d => d.name === 'Pigmento');
+  const reactivoVal = reactivoItem?.value || 0;
+  const pigmentoVal = pigmentoItem?.value || 0;
+  const reactivoPct = processTotal > 0 ? (reactivoVal / processTotal) * 100 : 0;
+  const pigmentoPct = processTotal > 0 ? (pigmentoVal / processTotal) * 100 : 0;
 
   // ── Top diseños ──
   const designData = useMemo(() => {
@@ -166,85 +172,95 @@ export default function ProductionCharts({ records, weightUnit, periodLabel }: P
 
   if (records.length === 0) {
     return (
-      <div className="bg-white rounded-3xl border border-dashed border-slate-300 py-16 text-center shrink-0">
-        <BarChart3 className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-        <p className="text-sm font-bold text-slate-500">No hay registros de producción para el periodo seleccionado</p>
+      <div className="bg-white rounded-2xl border border-dashed border-slate-300 py-12 text-center shrink-0">
+        <BarChart3 className="w-10 h-10 text-slate-300 mx-auto mb-2" />
+        <p className="text-sm font-bold text-slate-600">No hay registros de producción para el periodo seleccionado</p>
         <p className="text-xs text-slate-400 mt-1">Cambia el periodo o registra golpes en el Reporte Diario para ver las gráficas.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6" id="production-charts-view">
-      {/* ── KPIs ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-            <Table className="w-5 h-5 text-amber-700" />
+    <div className="space-y-4" id="production-charts-view">
+      {/* ── KPIs EJECUTIVOS DE PRODUCCIÓN ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 shrink-0">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100/80">
+            <Table className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tela producida</p>
-            <p className="text-xl font-extrabold text-slate-900 font-mono">
-              {fmtDec(kpis.totalKg * wFactor, weightUnit === 'kg' ? 2 : 0)} {wLabel}
+          <div className="min-w-0">
+            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Tela producida</p>
+            <p className="text-lg sm:text-2xl font-black text-amber-950 font-mono tracking-tight">
+              {fmtDec(kpis.totalKg * wFactor, weightUnit === 'kg' ? 2 : 0)} <span className="text-xs font-bold text-amber-700">{wLabel}</span>
             </p>
-            <p className="text-[9px] text-slate-400 font-medium">
-              Prom. {fmtDec(kpis.avgKgDay * wFactor, weightUnit === 'kg' ? 1 : 0)} {wLabel} / día
+            <p className="text-[9px] text-amber-600/80 font-medium truncate">
+              Prom. {fmtDec(kpis.avgKgDay * wFactor, weightUnit === 'kg' ? 1 : 0)} {wLabel}/día
             </p>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
-            <Award className="w-5 h-5 text-sky-700" />
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 border border-sky-100/80">
+            <Award className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unidades</p>
-            <p className="text-xl font-extrabold text-slate-900 font-mono">{fmtInt(kpis.totalUnits)} pz</p>
-            <p className="text-[9px] text-slate-400 font-medium">Prom. {fmtInt(kpis.avgUnitsDay)} pz / día</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
-            <Zap className="w-5 h-5 text-indigo-700" />
-          </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Golpes totales</p>
-            <p className="text-xl font-extrabold text-slate-900 font-mono">{fmtInt(kpis.totalGolpes)}</p>
-            <p className="text-[9px] text-slate-400 font-medium">En {kpis.days} día{kpis.days === 1 ? '' : 's'} de producción</p>
+          <div className="min-w-0">
+            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Unidades</p>
+            <p className="text-lg sm:text-2xl font-black text-blue-700 font-mono tracking-tight">
+              {fmtInt(kpis.totalUnits)} <span className="text-xs font-bold text-blue-500">pz</span>
+            </p>
+            <p className="text-[9px] text-blue-600/80 font-medium truncate">Prom. {fmtInt(kpis.avgUnitsDay)} pz/día</p>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
-            <TrendingUp className="w-5 h-5 text-emerald-700" />
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100/80">
+            <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mejor día</p>
-            <p className="text-xl font-extrabold text-slate-900 font-mono">{kpis.bestDay ? dayLabel(kpis.bestDay) : '-'}</p>
-            <p className="text-[9px] text-slate-400 font-medium">
-              {fmtDec(kpis.bestKg * wFactor, weightUnit === 'kg' ? 2 : 0)} {wLabel} de tela
+          <div className="min-w-0">
+            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Golpes totales</p>
+            <p className="text-lg sm:text-2xl font-black text-purple-900 font-mono tracking-tight">
+              {fmtInt(kpis.totalGolpes)}
+            </p>
+            <p className="text-[9px] text-purple-600/80 font-medium truncate">En {kpis.days} día{kpis.days === 1 ? '' : 's'} de producción</p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-xs flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100/80">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">Mejor día</p>
+            <p className="text-lg sm:text-2xl font-black text-emerald-900 font-mono tracking-tight">
+              {kpis.bestDay ? dayLabel(kpis.bestDay) : '-'}
+            </p>
+            <p className="text-[9px] text-emerald-600/80 font-medium truncate">
+              {fmtDec(kpis.bestKg * wFactor, weightUnit === 'kg' ? 1 : 0)} {wLabel} de tela
             </p>
           </div>
         </div>
       </div>
 
-      {/* ── Selector de métrica ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm shrink-0">
+      {/* ── SELECTOR DE MÉTRICA COMPACTO ── */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-xs shrink-0">
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-blue-600" />
-          <span className="text-xs font-bold text-slate-700">
-            Métrica a graficar{periodLabel ? <span className="text-slate-400 font-semibold"> · {periodLabel}</span> : null}
+          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <BarChart3 className="w-4 h-4" />
+          </div>
+          <span className="text-xs font-black text-slate-800">
+            Métrica a Graficar {periodLabel ? <span className="text-slate-400 font-semibold hidden sm:inline">· {periodLabel}</span> : null}
           </span>
         </div>
-        <div className="flex bg-slate-100 p-1 rounded-xl gap-1">
+        <div className="flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/60 text-xs font-bold">
           {(['kg', 'units', 'golpes'] as ProductionMetric[]).map(m => (
             <button
               key={m}
               type="button"
               onClick={() => setMetric(m)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
-                metric === m ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
+              className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                metric === m
+                  ? 'bg-white text-blue-700 shadow-2xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {m === 'kg' ? (weightUnit === 'kg' ? 'Kilos' : 'Gramos') : m === 'units' ? 'Unidades' : 'Golpes'}
@@ -253,121 +269,174 @@ export default function ProductionCharts({ records, weightUnit, periodLabel }: P
         </div>
       </div>
 
-      {/* ── Serie temporal + Distribución por proceso ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 shrink-0">
-        <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm lg:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-              <Calendar className="w-4 h-4 text-blue-600" />
+      {/* ── SERIE TEMPORAL + DISTRIBUCIÓN POR PROCESO ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 shrink-0">
+        {/* Gráfico diario */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs lg:col-span-2">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100/80">
+              <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-800">
-                {metricMeta[metric].label} producidos {groupedByMonth ? 'por mes' : 'por día'}
+              <h3 className="text-sm font-black text-slate-900">
+                {metricMeta[metric].label} {groupedByMonth ? 'por mes' : 'por día'}
               </h3>
               <p className="text-[10px] text-slate-400 font-medium">Barras por proceso · línea = acumulado del periodo</p>
             </div>
           </div>
-          <div className="h-72 w-full">
+          <div className="h-64 sm:h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={timeline} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+              <ComposedChart data={timeline} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b' }} dy={6} />
                 <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b' }} />
                 <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
                 <RechartsTooltip
-                  contentStyle={tooltipStyle}
+                  contentStyle={{ ...tooltipStyle, borderRadius: '12px', border: '1px solid #e2e8f0' }}
                   formatter={(value: any, name: any) => [`${fmtMetric(Number(value))} ${unitLabel}`, name]}
                 />
-                <Legend wrapperStyle={{ fontSize: '11px', fontWeight: 700 }} />
-                <Bar yAxisId="left" dataKey="Reactivo" stackId="p" fill={REACTIVO_COLOR} maxBarSize={36} />
-                <Bar yAxisId="left" dataKey="Pigmento" stackId="p" fill={PIGMENTO_COLOR} radius={[4, 4, 0, 0]} maxBarSize={36} />
-                <Line yAxisId="right" type="monotone" dataKey="acumulado" name="Acumulado" stroke="#0f172a" strokeWidth={2} dot={false} />
+                <Legend wrapperStyle={{ fontSize: '11px', fontWeight: 700, paddingTop: '8px' }} />
+                <Bar yAxisId="left" dataKey="Reactivo" stackId="p" fill={REACTIVO_COLOR} maxBarSize={32} isAnimationActive={false} />
+                <Bar yAxisId="left" dataKey="Pigmento" stackId="p" fill={PIGMENTO_COLOR} radius={[3, 3, 0, 0]} maxBarSize={32} isAnimationActive={false} />
+                <Line yAxisId="right" type="monotone" dataKey="acumulado" name="Acumulado" stroke="#0f172a" strokeWidth={2.5} dot={false} isAnimationActive={false} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm flex flex-col">
+        {/* Donut Chart: Reactivo vs Pigmento con SVG Puro (Carga instantánea, 100% centrado sin desbordes) */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs flex flex-col justify-between">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-              <Layers className="w-4 h-4 text-purple-600" />
+            <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100/80">
+              <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-800">Reactivo vs Pigmento</h3>
+              <h3 className="text-sm font-black text-slate-900">Reactivo vs Pigmento</h3>
               <p className="text-[10px] text-slate-400 font-medium">{metricMeta[metric].label}</p>
             </div>
           </div>
-          <div className="h-56 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={processData}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={55}
-                  outerRadius={85}
-                  paddingAngle={3}
-                  stroke="none"
-                >
-                  {processData.map((d, i) => <Cell key={i} fill={d.color} />)}
-                </Pie>
-                <RechartsTooltip
-                  contentStyle={tooltipStyle}
-                  formatter={(value: any, name: any) => [`${fmtMetric(Number(value))} ${unitLabel}`, name]}
+
+          <div className="w-full flex items-center justify-center my-2">
+            <div className="relative w-44 h-44 flex items-center justify-center">
+              <svg viewBox="0 0 160 160" className="w-full h-full -rotate-90">
+                {/* Círculo base de fondo */}
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="54"
+                  fill="none"
+                  stroke="#f1f5f9"
+                  strokeWidth="20"
                 />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="space-y-2 mt-1">
-            {processData.map(d => (
-              <div key={d.name} className="flex items-center justify-between text-xs">
-                <span className="flex items-center gap-2 font-bold text-slate-700">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                  {d.name}
+                {/* Segmento Reactivo */}
+                {processTotal > 0 && reactivoPct > 0 && (
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="54"
+                    fill="none"
+                    stroke={REACTIVO_COLOR}
+                    strokeWidth="20"
+                    strokeDasharray={`${Math.max(0, (reactivoPct / 100) * 339.29 - (pigmentoPct > 0 ? 3 : 0))} 339.29`}
+                    strokeDashoffset="0"
+                    strokeLinecap="round"
+                    className="transition-all duration-300"
+                  />
+                )}
+                {/* Segmento Pigmento */}
+                {processTotal > 0 && pigmentoPct > 0 && (
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="54"
+                    fill="none"
+                    stroke={PIGMENTO_COLOR}
+                    strokeWidth="20"
+                    strokeDasharray={`${Math.max(0, (pigmentoPct / 100) * 339.29 - (reactivoPct > 0 ? 3 : 0))} 339.29`}
+                    strokeDashoffset={`-${(reactivoPct / 100) * 339.29}`}
+                    strokeLinecap="round"
+                    className="transition-all duration-300"
+                  />
+                )}
+              </svg>
+
+              {/* Texto Central perfectamente centrado */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Total</span>
+                <span className="text-base font-black font-mono text-slate-900 tracking-tight">
+                  {fmtMetric(processTotal)}
                 </span>
-                <span className="font-mono font-bold text-slate-800">
-                  {fmtMetric(d.value)} {unitLabel}
-                  <span className="text-slate-400 font-semibold ml-1.5">
-                    ({processTotal > 0 ? fmtDec((d.value / processTotal) * 100, 1) : '0'}%)
-                  </span>
-                </span>
+                <span className="text-[10px] font-bold text-slate-400">{unitLabel}</span>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Tarjetas informativas de los procesos */}
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            {processData.map(d => {
+              const pct = processTotal > 0 ? (d.value / processTotal) * 100 : 0;
+              const isReactivo = d.name === 'Reactivo';
+              return (
+                <div
+                  key={d.name}
+                  className={`p-2.5 rounded-xl border flex flex-col gap-0.5 ${
+                    isReactivo
+                      ? 'bg-purple-50/60 border-purple-100 text-purple-950'
+                      : 'bg-amber-50/60 border-amber-100 text-amber-950'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wide flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
+                      {d.name}
+                    </span>
+                    <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-md ${
+                      isReactivo ? 'bg-purple-200/70 text-purple-800' : 'bg-amber-200/70 text-amber-900'
+                    }`}>
+                      {fmtDec(pct, 1)}%
+                    </span>
+                  </div>
+                  <p className="text-xs font-black font-mono mt-0.5">
+                    {fmtMetric(d.value)} <span className="text-[10px] font-semibold text-slate-500">{unitLabel}</span>
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* ── Top diseños + Por turno ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 shrink-0">
-        <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm lg:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-              <Award className="w-4 h-4 text-emerald-600" />
+      {/* ── TOP DISEÑOS + POR TURNO ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 shrink-0">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs lg:col-span-2">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100/80">
+              <Award className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-800">Top diseños más producidos</h3>
+              <h3 className="text-sm font-black text-slate-900">Top diseños más producidos</h3>
               <p className="text-[10px] text-slate-400 font-medium">{metricMeta[metric].label} · hasta 10 diseños</p>
             </div>
           </div>
-          <div style={{ height: Math.max(220, designData.length * 38) }} className="w-full">
+          <div style={{ height: Math.max(220, designData.length * 36) }} className="w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={designData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
+              <BarChart data={designData} layout="vertical" margin={{ top: 0, right: 35, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
                 <XAxis type="number" hide />
                 <YAxis
                   type="category"
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  width={130}
-                  tick={{ fontSize: 10, fill: '#475569', fontWeight: 'bold' }}
+                  width={105}
+                  tick={{ fontSize: 9, fill: '#475569', fontWeight: 800 }}
                 />
                 <RechartsTooltip
                   cursor={{ fill: '#f8fafc' }}
-                  contentStyle={tooltipStyle}
+                  contentStyle={{ ...tooltipStyle, borderRadius: '12px', border: '1px solid #e2e8f0' }}
                   formatter={(value: any) => [`${fmtMetric(Number(value))} ${unitLabel}`, metricMeta[metric].label]}
                 />
-                <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={18} label={{ position: 'right', fontSize: 10, fill: '#475569', formatter: (v: any) => fmtMetric(Number(v)) }}>
+                <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={16} isAnimationActive={false} label={{ position: 'right', fontSize: 9, fill: '#475569', fontWeight: 700, formatter: (v: any) => fmtMetric(Number(v)) }}>
                   {designData.map((_, i) => <Cell key={i} fill={DESIGN_COLORS[i % DESIGN_COLORS.length]} />)}
                 </Bar>
               </BarChart>
@@ -375,28 +444,28 @@ export default function ProductionCharts({ records, weightUnit, periodLabel }: P
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center shrink-0">
-              <Zap className="w-4 h-4 text-sky-600" />
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 border border-sky-100/80">
+              <Zap className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-800">Producción por turno</h3>
+              <h3 className="text-sm font-black text-slate-900">Producción por turno</h3>
               <p className="text-[10px] text-slate-400 font-medium">{metricMeta[metric].label}</p>
             </div>
           </div>
-          <div className="h-60 w-full">
+          <div className="h-56 sm:h-60 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={shiftData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} dy={6} />
+              <BarChart data={shiftData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b', fontWeight: 700 }} dy={6} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b' }} />
                 <RechartsTooltip
                   cursor={{ fill: '#f8fafc' }}
-                  contentStyle={tooltipStyle}
+                  contentStyle={{ ...tooltipStyle, borderRadius: '12px', border: '1px solid #e2e8f0' }}
                   formatter={(value: any) => [`${fmtMetric(Number(value))} ${unitLabel}`, metricMeta[metric].label]}
                 />
-                <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={56}>
+                <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={48} isAnimationActive={false}>
                   {shiftData.map((d, i) => <Cell key={i} fill={SHIFT_COLORS[(d.shift - 1) % SHIFT_COLORS.length]} />)}
                 </Bar>
               </BarChart>
