@@ -93,7 +93,7 @@ export interface WorkOrder {
   targetQuantity: number;
   assignedTo?: string; // Nombre del operario
   priority: 'Normal' | 'Urgente';
-  status: 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'Completada' | 'En Progreso' | 'Cancelada';
+  status: 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'En Máquina' | 'Completada' | 'En Progreso' | 'Cancelada';
   orderDate?: string; // Fecha programada para la orden (YYYY-MM-DD)
   createdAt: any;
   completedAt?: any;
@@ -136,4 +136,42 @@ export interface SalidaInsumoRecord {
   line: 'pigmento' | 'reactivo';
   hex: string;
   source: string;        // Archivo Excel de origen
+}
+
+export interface DefectosEstampado {
+  manchas: number;
+  repise: number;
+  faltaPintura: number;
+  logosCorridos: number;
+  penetracion: number;
+  grasa: number;
+  descases: number;
+  quemadas: number;
+  totalEstampado: number;
+}
+
+export interface SegundasRecord {
+  id: string;
+  fecha: string;               // YYYY-MM-DD
+  fechaSerial?: number;        // Número serial de Excel
+  revisadoras: string;         // Nombres de revisadoras
+  cliente?: string;            // Cliente
+  pedidoLinea?: string;        // # Pedido / Línea
+  referencia: string;          // Referencia de tela (ML1002, C280T, etc.)
+  dimensiones: string;         // Dimensiones (35*60-350, 60*120-280, etc.)
+  diseno: string;              // Diseño textil (FRUTAS, SPIDERMAN, etc.)
+  color?: string;              // Color o tipo (ej: EST)
+  tecnica?: 'REACTIVO' | 'PIGMENTO'; // Técnica de estampación (Reactivo o Pigmento)
+  cantTotalRevisada: number;   // Cantidad total de toallas revisadas
+  cantBuena: number;           // Cantidad buena (primera calidad)
+  pegas: number;               // Defecto pegas
+  arreLaterales: number;       // Arreglo laterales
+  pctLaterales: number;        // % Arreglo laterales
+  arreCabeceras: number;       // Arreglo cabeceras
+  pctCabeceras: number;        // % Arreglo cabeceras
+  observaciones?: string;      // Observaciones
+  defectosEstampado: DefectosEstampado;
+  pctEstampado: number;        // % de defectos directos de estampado
+  totalSegundas: number;       // pegas + arreLaterales + arreCabeceras + totalEstampado
+  pctTotalSegundas: number;    // totalSegundas / cantTotalRevisada
 }

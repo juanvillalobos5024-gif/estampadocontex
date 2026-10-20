@@ -1,8 +1,8 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import {
   History, Calendar, Award, Scissors, ShoppingBag, CheckCircle, TrendingUp,
   Filter, Search, X, Download, Eye, Trash2, Clock, AlertCircle, Zap, FileText, Table, ChevronDown, ChevronLeft, ChevronRight,
-  Plus, Edit2, Layers, Check, Droplets, ExternalLink
+  Plus, Edit2, Layers, Check, Droplets, ExternalLink, ShieldAlert, Loader2
 } from 'lucide-react';
 import { BatchLog, PantoneColor, TeamMember, StockItem, WorkOrder, Design, DailyProductionRecord } from '../types';
 import { findMatchingStockItem, getProductionRecords, addProductionRecord, updateProductionRecord, deleteProductionRecord, syncWorkOrdersToProductionRecords, INITIAL_BATCHES, getDeletedBatchIds, getRecordKg, getRecordGolpes, isToallaDesign } from '../lib/dataService';
@@ -15,8 +15,22 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import DailyProductionTasks from './DailyProductionTasks';
-import ProductionCharts from './ProductionCharts';
-import InkCharts from './InkCharts';
+
+// Carga perezosa para evitar inflar el bundle inicial
+const ProductionCharts = lazy(() => import('./ProductionCharts'));
+const InkCharts = lazy(() => import('./InkCharts'));
+const SegundasDashboard = lazy(() => import('./SegundasDashboard'));
+
+function DashboardLoadingSkeleton() {
+  return (
+    <div className="w-full min-h-[300px] flex flex-col items-center justify-center p-8 text-slate-400 bg-white rounded-2xl border border-slate-100 shadow-xs">
+      <div className="w-9 h-9 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center mb-2 animate-pulse border border-slate-200">
+        <Loader2 className="w-4 h-4 animate-spin" />
+      </div>
+      <p className="text-xs font-bold text-slate-600">Cargando gráficos y datos...</p>
+    </div>
+  );
+}
 
 interface BatchLogListProps {
   batches: BatchLog[];
@@ -113,7 +127,7 @@ function isAdditiveComponent(name: string, stockList: StockItem[] = []): boolean
 }
 
 export default function BatchLogList({ batches, workOrders = [], pantones, team, stock, designs = [], onDeleteBatch, onDeleteWorkOrder }: BatchLogListProps) {
-  const [activeDashboardTab, setActiveDashboardTab] = useState<'daily_golpes' | 'production_sheet' | 'production_charts' | 'analytics'>('daily_golpes');
+  const [activeDashboardTab, setActiveDashboardTab] = useState<'daily_golpes' | 'production_sheet' | 'production_charts' | 'analytics' | 'segundas'>('daily_golpes');
   const [productionRecords, setProductionRecords] = useState<DailyProductionRecord[]>(() => FULL_YEAR_PRODUCTION_RECORDS);
   const [isRecordModalOpen, setIsRecordModalOpen] = useState(false);
   const [editingRecordId, setEditingRecordId] = useState<string | null>(null);
@@ -1571,6 +1585,17 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
             <TrendingUp className={`w-3.5 h-3.5 ${activeDashboardTab === 'analytics' ? 'text-indigo-600' : 'text-slate-400'}`} />
             Consumo
           </button>
+          <button
+            type="button"
+            onClick={() => setActiveDashboardTab('segundas')}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${activeDashboardTab === 'segundas'
+                ? 'bg-white text-rose-800 font-black shadow-xs'
+                : 'text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+          >
+            <ShieldAlert className={`w-3.5 h-3.5 ${activeDashboardTab === 'segundas' ? 'text-rose-600' : 'text-slate-400'}`} />
+            Segundas
+          </button>
         </div>
       </div>
 
@@ -2668,18 +2693,24 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
             )}
           </div>
 
-          <ProductionCharts
-            records={filteredProductionRecords}
-            weightUnit={weightUnit}
-            periodLabel={
-              timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth]} ${selectedYear}`
-                : timeFilter === 'year' ? `Año ${selectedYear}`
-                  : timeFilter === 'today' ? 'Hoy'
-                    : timeFilter === 'week' ? 'Últimos 7 días'
-                      : timeFilter === 'custom' ? 'Rango personalizado'
-                        : 'Todo el histórico'
-            }
-          />
+          <Suspense fallback={<DashboardLoadingSkeleton />}>
+            <ProductionCharts
+              records={filteredProductionRecords}
+              allRecords={productionRecords}
+              weightUnit={weightUnit}
+              selectedMonth={selectedMonth}
+              selectedYear={selectedYear}
+              timeFilter={timeFilter}
+              periodLabel={
+                timeFilter === 'month' ? `${MONTH_NAMES[selectedMonth]} ${selectedYear}`
+                  : timeFilter === 'year' ? `Año ${selectedYear}`
+                    : timeFilter === 'today' ? 'Hoy'
+                      : timeFilter === 'week' ? 'Últimos 7 días'
+                        : timeFilter === 'custom' ? 'Rango personalizado'
+                          : 'Todo el histórico'
+              }
+            />
+          </Suspense>
         </div>
       )}
 
@@ -2757,20 +2788,22 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
           </div>
 
           {/* ── GRÁFICOS ── */}
-          <InkCharts
-            weightUnit={weightUnit}
-            logTypeFilter={logTypeFilter}
-            lineTypeFilter={lineTypeFilter}
-            onLineTypeChange={setLineTypeFilter}
-            timeline={inkTimeline}
-            groupedByMonth={inkGroupByMonth}
-            inks={topInksData}
-            pantones={pantoneChartData}
-            comparison={inkComparison}
-            totalProductionUnits={totalProductionUnits}
-            totalProductionKg={totalProductionKg}
-            totalProductionGolpes={totalProductionGolpes}
-          />
+          <Suspense fallback={<DashboardLoadingSkeleton />}>
+            <InkCharts
+              weightUnit={weightUnit}
+              logTypeFilter={logTypeFilter}
+              lineTypeFilter={lineTypeFilter}
+              onLineTypeChange={setLineTypeFilter}
+              timeline={inkTimeline}
+              groupedByMonth={inkGroupByMonth}
+              inks={topInksData}
+              pantones={pantoneChartData}
+              comparison={inkComparison}
+              totalProductionUnits={totalProductionUnits}
+              totalProductionKg={totalProductionKg}
+              totalProductionGolpes={totalProductionGolpes}
+            />
+          </Suspense>
 
           {/* ── TABLAS DE HISTORIAL ── */}
           <div className="space-y-6">
@@ -2778,6 +2811,13 @@ export default function BatchLogList({ batches, workOrders = [], pantones, team,
             {renderConsumoTable("Registro de Consumo de Órdenes", filteredWorkOrders, "No hay consumos registrados para los filtros aplicados", pageConsumo, setPageConsumo)}
           </div>
         </div>
+      )}
+
+      {/* ── VISTA 5: SEGUNDAS Y CONTROL DE CALIDAD ── */}
+      {activeDashboardTab === 'segundas' && (
+        <Suspense fallback={<DashboardLoadingSkeleton />}>
+          <SegundasDashboard />
+        </Suspense>
       )}
 
       {/* ── MODAL DE DETALLE ── */}

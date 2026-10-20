@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Layers, Plus, TrendingDown, ArrowUpRight, AlertTriangle, ShieldCheck, Filter, Trash2, Edit2, Search, Beaker, X, Check, RefreshCw, RotateCcw, Sliders } from 'lucide-react';
+import { Layers, Plus, TrendingDown, ArrowUpRight, AlertTriangle, ShieldCheck, Filter, Trash2, Edit2, Search, Beaker, X, Check, RotateCcw, Sliders } from 'lucide-react';
 import { StockItem, BatchLog } from '../types';
-import { syncInventoryWithExcel, addBatchLog } from '../lib/dataService';
-import inventoryData from '../inventory_data.json';
+import { addBatchLog } from '../lib/dataService';
 
 export interface PastaMadreIngredient {
   id: string;
@@ -50,27 +49,6 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
   const [newQty, setNewQty] = useState<number>(1000);
   const [newMin, setNewMin] = useState<number>(500);
   const [newColor, setNewColor] = useState<string>('#000000');
-
-  // Estados para sincronización manual de inventario Excel
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncFeedback, setSyncFeedback] = useState<string | null>(null);
-
-  const handleSyncExcelInventory = async () => {
-    setIsSyncing(true);
-    setSyncFeedback(null);
-    try {
-      const res = await syncInventoryWithExcel(inventoryData);
-      if (onRefreshStock) {
-        await onRefreshStock();
-      }
-      setSyncFeedback(`¡Inventario sincronizado con Excel 7-Oct! ${res.updated} actualizados, ${res.added} nuevos, ${res.zeroed} que no estaban quedaron en 0.`);
-      setTimeout(() => setSyncFeedback(null), 8000);
-    } catch (e: any) {
-      setSyncFeedback('Error al sincronizar el inventario.');
-    } finally {
-      setIsSyncing(false);
-    }
-  };
 
   // Filtro de categorías y búsqueda
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<'todos' | 'pigmentos' | 'reactivos' | 'inventario' | 'preparadas' | 'criticos'>('todos');
@@ -517,36 +495,9 @@ export default function StockManager({ stock, currentUser, onUpdateStock, onUpda
                 <span>Pasta Madre</span>
               </button>
 
-              <button
-                onClick={handleSyncExcelInventory}
-                disabled={isSyncing}
-                className="flex-1 sm:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl px-2.5 sm:px-3 py-2 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-                title="Sincronizar con el reporte Excel 7-Oct-2026"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span className="hidden sm:inline">{isSyncing ? 'Sincronizando...' : 'Excel 7-Oct'}</span>
-                <span className="sm:hidden">{isSyncing ? '...' : 'Excel'}</span>
-              </button>
             </div>
           </div>
         </div>
-
-        {/* Notificación de resultado de sincronización */}
-        {syncFeedback && (
-          <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold flex items-center justify-between animate-fade-in shadow-sm">
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-              {syncFeedback}
-            </span>
-            <button 
-              type="button"
-              onClick={() => setSyncFeedback(null)} 
-              className="text-emerald-500 hover:text-emerald-700 cursor-pointer p-1"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
 
         {/* Separación por Pestañas (Pills) */}
         <div className="flex border-b border-slate-100 mb-4 sm:mb-5 gap-1.5 overflow-x-auto pb-2 custom-scrollbar">

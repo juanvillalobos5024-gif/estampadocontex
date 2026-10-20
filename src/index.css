@@ -20,3 +20,48 @@
     scrollbar-width: none;
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-bucket-label,
+  #printable-bucket-label *,
+  #printable-cart-label,
+  #printable-cart-label * {
+    visibility: visible;
+  }
+  #printable-bucket-label {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 95mm !important;
+    max-width: 95mm !important;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 6mm !important;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #printable-cart-label {
+    position: fixed !important;
+    left: 50% !important;
+    top: 20mm !important;
+    transform: translateX(-50%) !important;
+    width: 170mm !important;
+    max-width: 95% !important;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 8mm !important;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+

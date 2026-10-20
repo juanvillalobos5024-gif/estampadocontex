@@ -1,6 +1,6 @@
 import { 
   Paintbrush, Scale, History, Layers, MessageSquareCode, 
-  LogOut, ClipboardList, Palette, Image as ImageIcon, X 
+  LogOut, ClipboardList, Palette, Image as ImageIcon, X, ShoppingCart
 } from 'lucide-react';
 // @ts-ignore
 import logoUrl from '@/assets/logo.jpeg';
@@ -129,16 +129,40 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* User profile footer */}
-      <div className="p-4 sm:p-5 border-t border-slate-800 bg-slate-950/60 shrink-0">
+      {/* User profile footer con soporte de Tooltip completo en Hover */}
+      <div className="p-4 sm:p-5 border-t border-slate-800 bg-slate-950/60 shrink-0 relative">
         <div className="flex items-center gap-3 justify-between">
-          <div className="flex items-center gap-3 overflow-hidden min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 font-bold text-blue-400 shadow-sm text-sm shrink-0">
+          <div 
+            className="flex items-center gap-3 overflow-hidden min-w-0 flex-1 group/user relative cursor-pointer"
+            title={`${currentUser.name} • ${currentUser.role}`}
+          >
+            <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 font-bold text-blue-400 shadow-sm text-sm shrink-0 group-hover/user:border-blue-500/50 group-hover/user:text-blue-300 transition-colors">
               {currentUser.initials}
             </div>
-            <div className="truncate min-w-0">
-              <p className="text-xs font-bold text-slate-200 truncate">{currentUser.name}</p>
-              <p className="text-[10px] text-slate-500 truncate">{currentUser.role}</p>
+            <div className="truncate min-w-0 flex-1">
+              <p 
+                className="text-xs font-bold text-slate-200 truncate group-hover/user:text-blue-300 transition-colors"
+                title={currentUser.name}
+              >
+                {currentUser.name}
+              </p>
+              <p 
+                className="text-[10px] text-slate-500 truncate group-hover/user:text-slate-400 transition-colors"
+                title={currentUser.role}
+              >
+                {currentUser.role}
+              </p>
+            </div>
+
+            {/* Tooltip flotante enriquecido visible al hacer hover */}
+            <div className="absolute bottom-full left-0 mb-3 hidden group-hover/user:flex flex-col bg-slate-900/95 backdrop-blur-md text-white text-xs rounded-xl p-3 shadow-2xl border border-slate-700/80 z-50 pointer-events-none min-w-[220px] max-w-xs animate-in fade-in zoom-in-95 duration-150">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 mb-0.5">Usuario Conectado</span>
+              <span className="font-bold text-slate-100 break-all text-xs text-blue-400">{currentUser.name}</span>
+              <span className="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                {currentUser.role}
+              </span>
+              <div className="absolute top-full left-5 -mt-1 border-4 border-transparent border-t-slate-900/95"></div>
             </div>
           </div>
           <button 

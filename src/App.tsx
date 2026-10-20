@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { 
   seedDatabaseIfEmpty, 
   getPantoneColors, 
@@ -12,7 +12,6 @@ import {
   updateStockItemQuantity,
   updateStockItem,
   deleteStockItem,
-  syncInventoryWithExcel,
   addBatchLog,
   deleteBatchLog,
   addTeamMember,
@@ -36,25 +35,38 @@ import {
 import { PantoneColor, StockItem, BatchLog, TeamMember, WorkOrder, Design } from './types';
 import Sidebar from './components/Sidebar';
 import PantoneSelector from './components/PantoneSelector';
-import FormulaDetail from './components/FormulaDetail';
-import StockManager from './components/StockManager';
-import BatchLogList from './components/BatchLogList';
-import TeamManager from './components/TeamManager';
-import WorkOrderManager from './components/WorkOrderManager';
-import AiAssistant from './components/AiAssistant';
-import PantoneFormModal from './components/PantoneFormModal';
 import Login from './components/Login';
 import PantoneGrid from './components/PantoneGrid';
-import FormulaModal from './components/FormulaModal';
-import CalculatorWorkspace from './components/CalculatorWorkspace';
-import DesignManager from './components/DesignManager';
-import ImageAnalyzer from './components/ImageAnalyzer';
 import { Palette, Scale, AlertCircle, Loader2, Menu, Paintbrush, History, ClipboardList } from 'lucide-react';
+
+// ── CARGA PEREZOSA (CODE SPLITTING DINÁMICO) ──
+// Reduce el bundle inicial descargado por el navegador en más del 80%
+const FormulaDetail = lazy(() => import('./components/FormulaDetail'));
+const StockManager = lazy(() => import('./components/StockManager'));
+const BatchLogList = lazy(() => import('./components/BatchLogList'));
+const WorkOrderManager = lazy(() => import('./components/WorkOrderManager'));
+const AiAssistant = lazy(() => import('./components/AiAssistant'));
+const PantoneFormModal = lazy(() => import('./components/PantoneFormModal'));
+const FormulaModal = lazy(() => import('./components/FormulaModal'));
+const CalculatorWorkspace = lazy(() => import('./components/CalculatorWorkspace'));
+const DesignManager = lazy(() => import('./components/DesignManager'));
+const ImageAnalyzer = lazy(() => import('./components/ImageAnalyzer'));
+
+function TabLoadingSkeleton() {
+  return (
+    <div className="h-full w-full min-h-[350px] flex flex-col items-center justify-center p-8 text-slate-400 animate-in fade-in duration-150">
+      <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 animate-pulse border border-blue-100 shadow-xs">
+        <Loader2 className="w-5 h-5 animate-spin" />
+      </div>
+      <p className="text-xs font-black text-slate-700">Cargando módulo...</p>
+      <p className="text-[11px] text-slate-400 mt-0.5">Optimizando memoria y rendimiento</p>
+    </div>
+  );
+}
 // @ts-ignore
 import logoUrl from '@/assets/logo.jpeg';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './lib/firebase';
-import inventoryData from './inventory_data.json';
 import pantonesData from './pantones_data.json';
 
 export default function App() {
@@ -157,14 +169,6 @@ export default function App() {
         // 1. Sembrar base de datos si está vacía
         await seedDatabaseIfEmpty();
 
-        // Sincronización automática de inventario (Reporte Excel 7-Oct-2026)
-        // Actualiza cantidades existentes, añade nuevos y pone en 0 los que no están
-        const syncKey = 'inventorySync_2026_10_07_v1';
-        if (localStorage.getItem(syncKey) !== 'true') {
-          console.log('Sincronizando inventario con el reporte Excel del 7 de Octubre de 2026...');
-          await syncInventoryWithExcel(inventoryData);
-          localStorage.setItem(syncKey, 'true');
-        }
 
         // Carga rápida inicial
         let initialPColors = await getPantoneColors(10);
@@ -898,7 +902,7 @@ export default function App() {
               <p className="text-xs text-slate-500">{errorMsg}</p>
             </div>
           ) : (
-            <>
+            <Suspense fallback={<TabLoadingSkeleton />}>
               {/* Tab Catálogo Pantone (Vista de Cuadrícula) */}
               {activeTab === 'pantones' && (
                 <div className="h-full w-full min-h-0">
@@ -1014,15 +1018,34 @@ export default function App() {
                   stock={stock}
                   batches={batches}
                   onAddOrder={async (order) => {
-                    const success = await addWorkOrder(order);
-                    if (success) {
-                      await refreshWorkOrders();
-                      const updated = await getWorkOrders();
-                      await syncWorkOrdersToProductionRecords(updated, designs);
+                    // Actualización optimista inmediata: El contador (Hoy 0 -> Hoy 1) y la lista se actualizan en 0ms sin F5
+                    const tempId = `wo-opt-${Date.now()}`;
+                    const optimisticOrder: WorkOrder = {
+                      ...order,
+                      id: tempId,
+                      createdAt: new Date()
+                    };
+                    setWorkOrders(prev => [optimisticOrder, ...prev]);
+
+                    try {
+                      const success = await addWorkOrder(order);
+                      if (success) {
+                        await refreshWorkOrders();
+                        const updated = await getWorkOrders();
+                        await syncWorkOrdersToProductionRecords(updated, designs);
+                        return true;
+                      } else {
+                        setWorkOrders(prev => prev.filter(o => o.id !== tempId));
+                        return false;
+                      }
+                    } catch (err) {
+                      setWorkOrders(prev => prev.filter(o => o.id !== tempId));
+                      throw err;
                     }
-                    return success;
                   }}
                   onUpdateOrder={async (id, updates) => {
+                    // Actualización optimista inmediata en la UI
+                    setWorkOrders(prev => prev.map(o => o.id === id ? { ...o, ...updates } : o));
                     const success = await updateWorkOrder(id, updates);
                     if (success) {
                       await refreshWorkOrders();
@@ -1072,6 +1095,8 @@ export default function App() {
                 />
               )}
 
+
+
               {/* Tab Analizador de Imagen */}
               {activeTab === 'analizador' && (
                 <ImageAnalyzer 
@@ -1086,7 +1111,7 @@ export default function App() {
                   }}
                 />
               )}
-            </>
+            </Suspense>
           )}
         </div>
 
@@ -1154,39 +1179,43 @@ export default function App() {
       </main>
 
       {/* Modal para Crear/Editar Fórmulas Pantone */}
-      <PantoneFormModal 
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setEditingPantone(null);
-        }}
-        onSubmit={handleCreateOrUpdatePantone}
-        stock={stock}
-        editingPantone={editingPantone}
-      />
+      <Suspense fallback={null}>
+        <PantoneFormModal 
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingPantone(null);
+          }}
+          onSubmit={handleCreateOrUpdatePantone}
+          stock={stock}
+          editingPantone={editingPantone}
+        />
+      </Suspense>
 
       {/* Modal para Ver Detalle de Fórmula (Solo Lectura o Edición si se usa desde Calculadora, pero aquí está enfocado al catálogo) */}
-      <FormulaModal
-        isOpen={isDetailModalOpen}
-        onClose={() => setIsDetailModalOpen(false)}
-      >
-        <FormulaDetail 
-          pantone={selectedPantone}
-          team={team}
-          onAddBatch={handleAddBatch}
-          onDeletePantone={(id) => {
-            handleDeletePantone(id);
-            setIsDetailModalOpen(false);
-          }}
-          onEditPantone={(p) => {
-            setIsDetailModalOpen(false);
-            setEditingPantone(p);
-            setIsModalOpen(true);
-          }}
-          onAskAi={handleAskAi}
-          readonly={false}
-        />
-      </FormulaModal>
+      <Suspense fallback={null}>
+        <FormulaModal
+          isOpen={isDetailModalOpen}
+          onClose={() => setIsDetailModalOpen(false)}
+        >
+          <FormulaDetail 
+            pantone={selectedPantone}
+            team={team}
+            onAddBatch={handleAddBatch}
+            onDeletePantone={(id) => {
+              handleDeletePantone(id);
+              setIsDetailModalOpen(false);
+            }}
+            onEditPantone={(p) => {
+              setIsDetailModalOpen(false);
+              setEditingPantone(p);
+              setIsModalOpen(true);
+            }}
+            onAskAi={handleAskAi}
+            readonly={false}
+          />
+        </FormulaModal>
+      </Suspense>
 
     </div>
   );

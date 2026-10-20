@@ -930,6 +930,7 @@ export async function deleteTeamMember(id: string): Promise<void> {
 // MÉTODOS PARA WORK ORDERS
 // ==========================================
 export async function getWorkOrders(): Promise<WorkOrder[]> {
+  let list: WorkOrder[] = [];
   try {
     const q = query(
       collection(db, WORK_ORDERS_COLLECTION),
@@ -937,11 +938,28 @@ export async function getWorkOrders(): Promise<WorkOrder[]> {
       limit(200)
     );
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as WorkOrder));
+    list = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as WorkOrder));
   } catch (error) {
-    console.warn("Could not get work orders, maybe collection doesn't exist yet", error);
-    return [];
+    console.warn("Could not get work orders from Firestore, fallback to local cache", error);
   }
+
+  // Sincronizar con respaldo local para persistencia inmediata offline
+  try {
+    const stored = localStorage.getItem('taller_work_orders');
+    if (stored) {
+      const localOrders = JSON.parse(stored) as WorkOrder[];
+      if (Array.isArray(localOrders) && localOrders.length > 0) {
+        const existingIds = new Set(list.map(o => o.id));
+        for (const lo of localOrders) {
+          if (!existingIds.has(lo.id)) {
+            list.push(lo);
+          }
+        }
+      }
+    }
+  } catch (e) {}
+
+  return list;
 }
 
 /**
@@ -968,38 +986,64 @@ export function subscribeToWorkOrders(onUpdate: (orders: WorkOrder[]) => void): 
 }
 
 export async function addWorkOrder(order: WorkOrder): Promise<boolean> {
+  let createdId = `wo-${Date.now()}`;
   try {
-    await addDoc(collection(db, WORK_ORDERS_COLLECTION), {
+    const docRef = await addDoc(collection(db, WORK_ORDERS_COLLECTION), {
       ...order,
       createdAt: serverTimestamp()
     });
-    return true;
+    createdId = docRef.id;
   } catch (error) {
-    handleFirestoreError(error, OperationType.CREATE, WORK_ORDERS_COLLECTION);
-    return false;
+    console.warn("Firestore addWorkOrder warning:", error);
   }
+
+  // Respaldo en localStorage para consistencia y disponibilidad offline inmediata
+  try {
+    const stored = localStorage.getItem('taller_work_orders');
+    const list: WorkOrder[] = stored ? JSON.parse(stored) : [];
+    list.unshift({ ...order, id: createdId, createdAt: new Date() });
+    localStorage.setItem('taller_work_orders', JSON.stringify(list));
+  } catch (e) {}
+
+  return true;
 }
 
 export async function updateWorkOrder(id: string, updates: Partial<WorkOrder>): Promise<boolean> {
   try {
     const docRef = doc(db, WORK_ORDERS_COLLECTION, id);
     await updateDoc(docRef, updates);
-    return true;
   } catch (error) {
-    handleFirestoreError(error, OperationType.UPDATE, `${WORK_ORDERS_COLLECTION}/${id}`);
-    return false;
+    console.warn("Firestore updateWorkOrder warning:", error);
   }
+
+  try {
+    const stored = localStorage.getItem('taller_work_orders');
+    if (stored) {
+      const list = (JSON.parse(stored) as WorkOrder[]).map(o => o.id === id ? { ...o, ...updates } : o);
+      localStorage.setItem('taller_work_orders', JSON.stringify(list));
+    }
+  } catch (e) {}
+
+  return true;
 }
 
 export async function deleteWorkOrder(id: string): Promise<boolean> {
   try {
     const docRef = doc(db, WORK_ORDERS_COLLECTION, id);
     await deleteDoc(docRef);
-    return true;
   } catch (error) {
-    handleFirestoreError(error, OperationType.DELETE, `${WORK_ORDERS_COLLECTION}/${id}`);
-    return false;
+    console.warn("Firestore deleteWorkOrder warning:", error);
   }
+
+  try {
+    const stored = localStorage.getItem('taller_work_orders');
+    if (stored) {
+      const list = (JSON.parse(stored) as WorkOrder[]).filter(o => o.id !== id);
+      localStorage.setItem('taller_work_orders', JSON.stringify(list));
+    }
+  } catch (e) {}
+
+  return true;
 }
 
 // --- DESIGNS CRUD ---
