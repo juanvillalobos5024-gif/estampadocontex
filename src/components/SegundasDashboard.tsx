@@ -6,7 +6,7 @@ import {
   Calendar, ChevronLeft, ChevronRight, GitCompare, Check, Zap,
   SlidersHorizontal, CheckSquare, Square, LayoutGrid, Table2,
   Award, ArrowDownWideNarrow, ArrowUpNarrowWide, EyeOff,
-  Scissors, AlertCircle
+  Scissors, AlertCircle, Factory, Info
 } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -55,6 +55,49 @@ const REF_COLORS: Record<string, string> = {
 
 const fmtInt = (n: number) => Math.round(n || 0).toLocaleString('es-CO');
 const fmtPct = (n: number, d = 2) => `${((n || 0) * 100).toFixed(d)}%`;
+
+export function normalizeExcelDate(val: any): string {
+  if (val === undefined || val === null || val === '') return '';
+  if (typeof val === 'number') {
+    // Serial number de Excel (días desde 1899-12-30)
+    const utcDays = Math.round(val - 25569);
+    const date = new Date(utcDays * 86400 * 1000);
+    const y = date.getUTCFullYear();
+    const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const d = String(date.getUTCDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+  if (val instanceof Date && !isNaN(val.getTime())) {
+    const y = val.getFullYear();
+    const m = String(val.getMonth() + 1).padStart(2, '0');
+    const d = String(val.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+  const s = String(val).trim();
+  const clean = s.split('T')[0];
+  const parts = clean.split(/[\/\-\.]/);
+  if (parts.length === 3) {
+    if (parts[0].length === 4) {
+      // YYYY-MM-DD
+      return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+    } else if (parts[2].length === 4) {
+      // DD-MM-YYYY
+      return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+  }
+  return clean;
+}
+
+export function getRecordFingerprint(r: SegundasRecord): string {
+  const f = normalizeExcelDate(r.fecha);
+  const d = (r.diseno || '').trim().toUpperCase();
+  const ref = (r.referencia || '').trim().toUpperCase();
+  const rev = Number(r.cantTotalRevisada || 0);
+  const ok = Number(r.cantBuena || 0);
+  const col = (r.color || '').trim().toUpperCase();
+  const revs = (r.revisadoras || '').trim().toUpperCase();
+  return `${f}|${d}|${ref}|${col}|${rev}|${ok}|${revs}`;
+}
 
 function getTopDefect(r: SegundasRecord): { name: string; count: number } | null {
   if (!r.defectosEstampado) return null;
@@ -129,6 +172,40 @@ export default function SegundasDashboard() {
   const [editingRecord, setEditingRecord] = useState<SegundasRecord | null>(null);
   const [selectedDetailRecord, setSelectedDetailRecord] = useState<SegundasRecord | null>(null);
 
+  // ── Feedback y Notificaciones Visuales (Reemplazo moderno de alert) ──
+  const [toast, setToast] = useState<{
+    id: string;
+    type: 'success' | 'error' | 'info';
+    title: string;
+    message?: string;
+  } | null>(null);
+
+  const showToast = (type: 'success' | 'error' | 'info', title: string, message?: string) => {
+    const id = String(Date.now());
+    setToast({ id, type, title, message });
+    setTimeout(() => {
+      setToast(curr => (curr?.id === id ? null : curr));
+    }, 4500);
+  };
+
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    confirmText?: string;
+    danger?: boolean;
+    onConfirm: () => void;
+  } | null>(null);
+
+  // ── Estado del Modal de Carga Periódica (Acumular Historial vs Reemplazar) ──
+  const [importPending, setImportPending] = useState<{
+    fileName: string;
+    importedRecords: SegundasRecord[];
+    detectedMonths: { key: string; label: string; count: number; month: number; year: number }[];
+    newRecords: SegundasRecord[];
+    duplicatesCount: number;
+  } | null>(null);
+
   // Form State
   const [formFecha, setFormFecha] = useState(() => new Date().toISOString().slice(0, 10));
   const [formRevisadoras, setFormRevisadoras] = useState('');
@@ -194,6 +271,27 @@ export default function SegundasDashboard() {
     return Array.from(set).sort();
   }, [records]);
 
+  // ── Meses disponibles con datos en todo el historial acumulado ──
+  const availableMonthsInRecords = useMemo(() => {
+    const map: Record<string, { label: string; month: number; year: number; count: number }> = {};
+    records.forEach(r => {
+      const f = normalizeExcelDate(r.fecha);
+      const parts = f.split('-');
+      if (parts.length >= 2) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        if (!isNaN(y) && !isNaN(m) && m >= 0 && m <= 11) {
+          const key = `${y}-${m}`;
+          if (!map[key]) {
+            map[key] = { label: `${MONTH_NAMES[m]} ${y}`, month: m, year: y, count: 0 };
+          }
+          map[key].count++;
+        }
+      }
+    });
+    return Object.values(map).sort((a, b) => (b.year * 12 + b.month) - (a.year * 12 + a.month));
+  }, [records]);
+
   // ── FILTRADO POR TIEMPO, TÉCNICA, DISEÑO Y TELA BASE ──
   const timeFilteredRecords = useMemo(() => {
     return records.filter(r => {
@@ -211,7 +309,8 @@ export default function SegundasDashboard() {
       if (timeFilter === 'all') return true;
 
       if (!r.fecha) return false;
-      const parts = r.fecha.split('-');
+      const normalized = normalizeExcelDate(r.fecha);
+      const parts = normalized.split('-');
       if (parts.length < 2) return false;
       const y = parseInt(parts[0], 10);
       const m = parseInt(parts[1], 10) - 1; // 0-indexed
@@ -296,10 +395,11 @@ export default function SegundasDashboard() {
     );
   }, [visibleRecords]);
 
-  const mermaDescarte = Math.max(0, totals.revisada - (totals.buena + totals.totalSegundas));
+  // Segundas generadas en otros procesos (Tintorería, Tejeduría, etc.)
+  const segundasOtrosProcesos = Math.max(0, totals.revisada - (totals.buena + totals.totalSegundas));
   const pctGlobalBuena = totals.revisada > 0 ? totals.buena / totals.revisada : 0;
   const pctGlobalSegundas = totals.revisada > 0 ? totals.totalSegundas / totals.revisada : 0;
-  const pctGlobalMerma = totals.revisada > 0 ? mermaDescarte / totals.revisada : 0;
+  const pctGlobalOtrosProcesos = totals.revisada > 0 ? segundasOtrosProcesos / totals.revisada : 0;
   const pctGlobalEstampado = totals.revisada > 0 ? totals.estampado / totals.revisada : 0;
   const pctGlobalLaterales = totals.revisada > 0 ? totals.arreLaterales / totals.revisada : 0;
   const pctGlobalCabeceras = totals.revisada > 0 ? totals.arreCabeceras / totals.revisada : 0;
@@ -976,16 +1076,34 @@ export default function SegundasDashboard() {
   };
 
   const handleDeleteRecord = (id: string) => {
-    if (window.confirm('¿Seguro que deseas eliminar este registro de segundas?')) {
-      updateRecords(records.filter(r => r.id !== id));
-      if (selectedDetailRecord?.id === id) setSelectedDetailRecord(null);
-    }
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Eliminar Registro de Inspección',
+      message: '¿Estás seguro de que deseas eliminar este registro de segundas? Esta acción actualizará los indicadores de calidad.',
+      confirmText: 'Eliminar',
+      danger: true,
+      onConfirm: () => {
+        updateRecords(records.filter(r => r.id !== id));
+        if (selectedDetailRecord?.id === id) setSelectedDetailRecord(null);
+        showToast('info', 'Registro eliminado', 'La inspección fue retirada del historial.');
+        setConfirmDialog(null);
+      }
+    });
   };
 
   const handleResetDefaults = () => {
-    if (window.confirm('¿Restablecer los 22 registros originales del archivo Excel de Segundas Estampado?')) {
-      updateRecords(INITIAL_SEGUNDAS_RECORDS);
-    }
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Restablecer Datos Originales',
+      message: '¿Deseas restablecer los registros originales de la planilla de segundas? Se perderán las modificaciones no exportadas.',
+      confirmText: 'Restablecer',
+      danger: true,
+      onConfirm: () => {
+        updateRecords(INITIAL_SEGUNDAS_RECORDS);
+        showToast('info', 'Datos restablecidos', 'Se han restaurado los registros originales del taller.');
+        setConfirmDialog(null);
+      }
+    });
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -997,89 +1115,170 @@ export default function SegundasDashboard() {
       try {
         const bstr = evt.target?.result;
         const wb = XLSX.read(bstr, { type: 'binary' });
-        const sheet = wb.Sheets[wb.SheetNames[0]];
-        const raw = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
 
         const imported: SegundasRecord[] = [];
-        for (let r = 2; r < raw.length; r++) {
-          const row = raw[r];
-          if (!row || row[0] === 'TOTAL' || row[0] === undefined || row[0] === null) continue;
-          if (!row[8] && !row[9]) continue;
+        for (const sheetName of wb.SheetNames) {
+          const sheet = wb.Sheets[sheetName];
+          if (!sheet) continue;
+          const raw = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
+          if (!raw || raw.length < 2) continue;
 
-          let fechaStr = String(row[0] || '');
-          if (typeof row[0] === 'number') {
-            const utc_days = Math.floor(row[0] - 25569);
-            const date_info = new Date(utc_days * 86400 * 1000);
-            fechaStr = date_info.toISOString().split('T')[0];
+          // Detección dinámica: si raw[1] ya tiene cantidades numéricas en col 8 o 9, los datos inician en fila 2 (índice 1)
+          const startRow = (Number(raw[1]?.[8]) > 0 || Number(raw[1]?.[9]) > 0) ? 1 : 2;
+
+          for (let r = startRow; r < raw.length; r++) {
+            const row = raw[r];
+            if (!row) continue;
+            // Omitir fila si en cualquiera de las primeras columnas dice 'TOTAL'
+            const isTotalRow = row.slice(0, 8).some(cell => String(cell || '').trim().toUpperCase() === 'TOTAL');
+            if (isTotalRow) continue;
+            if (!row[8] && !row[9]) continue;
+
+            const fechaStr = normalizeExcelDate(row[0]);
+            if (!fechaStr) continue;
+
+            const totalRev = Number(row[8]) || 0;
+            const cantBuena = Number(row[9]) || 0;
+            const pegas = Number(row[10]) || 0;
+            const arreLat = Number(row[11]) || 0;
+            const arreCab = Number(row[13]) || 0;
+
+            const manchas = Number(row[16]) || 0;
+            const repise = Number(row[17]) || 0;
+            const faltaPintura = Number(row[18]) || 0;
+            const logosCorridos = Number(row[19]) || 0;
+            const penetracion = Number(row[20]) || 0;
+            const grasa = Number(row[21]) || 0;
+            const descases = Number(row[22]) || 0;
+            const quemadas = Number(row[23]) || 0;
+            const totalEstampado = manchas + repise + faltaPintura + logosCorridos + penetracion + grasa + descases + quemadas;
+            const totalSegundas = pegas + arreLat + arreCab + totalEstampado;
+
+            const diseno = String(row[6] || '').trim();
+            const referencia = String(row[4] || '').trim();
+
+            imported.push({
+              id: `seg-imp-${r}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+              fecha: fechaStr,
+              revisadoras: String(row[1] || '').trim(),
+              referencia,
+              dimensiones: String(row[5] || '').trim(),
+              diseno,
+              color: row[7] ? String(row[7]).trim() : 'EST',
+              tecnica: inferTecnica(diseno, referencia),
+              cantTotalRevisada: totalRev,
+              cantBuena,
+              pegas,
+              arreLaterales: arreLat,
+              pctLaterales: totalRev > 0 ? Number((arreLat / totalRev).toFixed(6)) : 0,
+              arreCabeceras: arreCab,
+              pctCabeceras: totalRev > 0 ? Number((arreCab / totalRev).toFixed(6)) : 0,
+              observaciones: row[15] ? String(row[15]).trim() : '',
+              defectosEstampado: {
+                manchas,
+                repise,
+                faltaPintura,
+                logosCorridos,
+                penetracion,
+                grasa,
+                descases,
+                quemadas,
+                totalEstampado
+              },
+              pctEstampado: totalRev > 0 ? Number((totalEstampado / totalRev).toFixed(6)) : 0,
+              totalSegundas,
+              pctTotalSegundas: totalRev > 0 ? Number((totalSegundas / totalRev).toFixed(6)) : 0
+            });
           }
-
-          const totalRev = Number(row[8]) || 0;
-          const cantBuena = Number(row[9]) || 0;
-          const pegas = Number(row[10]) || 0;
-          const arreLat = Number(row[11]) || 0;
-          const arreCab = Number(row[13]) || 0;
-
-          const manchas = Number(row[16]) || 0;
-          const repise = Number(row[17]) || 0;
-          const faltaPintura = Number(row[18]) || 0;
-          const logosCorridos = Number(row[19]) || 0;
-          const penetracion = Number(row[20]) || 0;
-          const grasa = Number(row[21]) || 0;
-          const descases = Number(row[22]) || 0;
-          const quemadas = Number(row[23]) || 0;
-          const totalEstampado = manchas + repise + faltaPintura + logosCorridos + penetracion + grasa + descases + quemadas;
-          const totalSegundas = pegas + arreLat + arreCab + totalEstampado;
-
-          const diseno = String(row[6] || '').trim();
-          const referencia = String(row[4] || '').trim();
-
-          imported.push({
-            id: `seg-imp-${r}-${Date.now()}`,
-            fecha: fechaStr,
-            revisadoras: String(row[1] || '').trim(),
-            referencia,
-            dimensiones: String(row[5] || '').trim(),
-            diseno,
-            color: row[7] ? String(row[7]).trim() : 'EST',
-            tecnica: inferTecnica(diseno, referencia),
-            cantTotalRevisada: totalRev,
-            cantBuena,
-            pegas,
-            arreLaterales: arreLat,
-            pctLaterales: totalRev > 0 ? Number((arreLat / totalRev).toFixed(6)) : 0,
-            arreCabeceras: arreCab,
-            pctCabeceras: totalRev > 0 ? Number((arreCab / totalRev).toFixed(6)) : 0,
-            observaciones: row[15] ? String(row[15]).trim() : '',
-            defectosEstampado: {
-              manchas,
-              repise,
-              faltaPintura,
-              logosCorridos,
-              penetracion,
-              grasa,
-              descases,
-              quemadas,
-              totalEstampado
-            },
-            pctEstampado: totalRev > 0 ? Number((totalEstampado / totalRev).toFixed(6)) : 0,
-            totalSegundas,
-            pctTotalSegundas: totalRev > 0 ? Number((totalSegundas / totalRev).toFixed(6)) : 0
-          });
         }
 
-        if (imported.length > 0) {
-          updateRecords(imported);
-          alert(`¡Se importaron exitosamente ${imported.length} registros del archivo Excel!`);
-        } else {
-          alert('No se encontraron filas válidas en el archivo.');
+        if (imported.length === 0) {
+          showToast('error', 'Archivo sin datos válidos', 'No se encontraron filas con información de inspección en el archivo.');
+          return;
         }
+
+        // Agrupar períodos / meses detectados en el archivo
+        const monthsMap: Record<string, { label: string; count: number; month: number; year: number }> = {};
+        imported.forEach(r => {
+          const parts = r.fecha.split('-');
+          if (parts.length >= 2) {
+            const y = parseInt(parts[0], 10);
+            const m = parseInt(parts[1], 10) - 1;
+            if (!isNaN(y) && !isNaN(m) && m >= 0 && m <= 11) {
+              const key = `${y}-${m}`;
+              const label = `${MONTH_NAMES[m]} ${y}`;
+              if (!monthsMap[key]) {
+                monthsMap[key] = { label, count: 0, month: m, year: y };
+              }
+              monthsMap[key].count++;
+            }
+          }
+        });
+        const detectedMonths = Object.entries(monthsMap).map(([key, data]) => ({ key, ...data }));
+
+        // Análisis de duplicados contra el historial actual
+        const existingFingerprints = new Set(records.map(getRecordFingerprint));
+        const newRecords = imported.filter(r => !existingFingerprints.has(getRecordFingerprint(r)));
+        const duplicatesCount = imported.length - newRecords.length;
+
+        // Abrir modal de confirmación inteligente
+        setImportPending({
+          fileName: file.name,
+          importedRecords: imported,
+          detectedMonths,
+          newRecords,
+          duplicatesCount
+        });
       } catch (err) {
         console.error(err);
-        alert('Ocurrió un error al procesar el archivo Excel.');
+        showToast('error', 'Error al procesar archivo', 'Ocurrió un error al leer el archivo Excel.');
       }
     };
     reader.readAsBinaryString(file);
     e.target.value = '';
+  };
+
+  const handleConfirmAccumulate = () => {
+    if (!importPending) return;
+    const toAdd = importPending.newRecords;
+    const merged = [...toAdd, ...records];
+    updateRecords(merged);
+
+    // Auto-navegar al mes predominante de los datos importados para visualización inmediata
+    if (importPending.detectedMonths.length > 0) {
+      const primary = importPending.detectedMonths.reduce((prev, curr) => curr.count > prev.count ? curr : prev);
+      setSelectedMonth(primary.month);
+      setSelectedYear(primary.year);
+      setTimeFilter('month');
+    }
+
+    const periodStr = importPending.detectedMonths.map(m => m.label).join(', ');
+    showToast(
+      'success',
+      '¡Historial Acumulado con Éxito!',
+      `Se incorporaron ${toAdd.length} registros nuevos (${periodStr}). El historial ahora conserva ${merged.length} registros en total.`
+    );
+    setImportPending(null);
+  };
+
+  const handleConfirmReplace = () => {
+    if (!importPending) return;
+    updateRecords(importPending.importedRecords);
+
+    if (importPending.detectedMonths.length > 0) {
+      const primary = importPending.detectedMonths.reduce((prev, curr) => curr.count > prev.count ? curr : prev);
+      setSelectedMonth(primary.month);
+      setSelectedYear(primary.year);
+      setTimeFilter('month');
+    }
+
+    const periodStr = importPending.detectedMonths.map(m => m.label).join(', ');
+    showToast(
+      'info',
+      'Historial Reemplazado',
+      `Se guardaron ${importPending.importedRecords.length} registros de ${periodStr} como base única del historial.`
+    );
+    setImportPending(null);
   };
 
   const handleExportExcel = () => {
@@ -1116,6 +1315,7 @@ export default function SegundasDashboard() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Segundas y Primeras');
     XLSX.writeFile(wb, `Reporte_Segundas_Calidad_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    showToast('success', 'Reporte Excel Descargado', 'El archivo de inspección de calidad se ha guardado exitosamente.');
   };
 
   return (
@@ -1277,7 +1477,10 @@ export default function SegundasDashboard() {
 
         {/* Acciones Rápidas */}
         <div className="flex items-center gap-2 ml-auto">
-          <label className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl cursor-pointer transition-all border border-slate-200">
+          {/* Badge de Historial Acumulado */}
+          
+
+          <label className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl cursor-pointer transition-all border border-slate-200 shadow-2xs">
             <Upload className="w-3.5 h-3.5 text-slate-600" />
             <span className="hidden sm:inline">Cargar Excel</span>
             <input type="file" accept=".xlsx,.xls" className="hidden" onChange={handleFileUpload} />
@@ -1285,7 +1488,7 @@ export default function SegundasDashboard() {
           <button
             type="button"
             onClick={handleExportExcel}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 rounded-xl cursor-pointer transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 rounded-xl cursor-pointer transition-all shadow-2xs"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
             <span>Excel</span>
@@ -1298,16 +1501,53 @@ export default function SegundasDashboard() {
             <Plus className="w-3.5 h-3.5" />
             <span>Inspección</span>
           </button>
-          <button
-            type="button"
-            onClick={handleResetDefaults}
-            className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-            title="Restaurar datos originales"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
+          
         </div>
       </div>
+
+      {/* ── ALERTA INFORMATIVA SI EL MES SELECCIONADO ESTÁ EN CERO ── */}
+      {timeFilter === 'month' && timeFilteredRecords.length === 0 && (
+        <div className="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs animate-in fade-in">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 border border-amber-200/60">
+              <Calendar className="w-5 h-5 text-amber-700" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-amber-950">
+                No hay registros de inspección registrados en {MONTH_NAMES[selectedMonth]} {selectedYear}
+              </p>
+              <div className="text-[11px] text-amber-800 font-medium mt-0.5 flex flex-wrap items-center gap-1.5">
+                <span>Meses con datos en el historial:</span>
+                {availableMonthsInRecords.length > 0 ? (
+                  availableMonthsInRecords.map(m => (
+                    <button
+                      key={m.label}
+                      type="button"
+                      onClick={() => {
+                        setSelectedMonth(m.month);
+                        setSelectedYear(m.year);
+                        setTimeFilter('month');
+                      }}
+                      className="px-2 py-0.5 bg-white hover:bg-amber-100 border border-amber-200 rounded-md font-bold text-amber-900 transition-colors cursor-pointer shadow-2xs"
+                    >
+                      {m.label} ({m.count} lotes)
+                    </button>
+                  ))
+                ) : (
+                  <span className="italic">No hay datos aún. Haz clic en "Cargar Excel" para importar el archivo del mes.</span>
+                )}
+              </div>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setTimeFilter('all')}
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
+          >
+            Ver Todo el Histórico ({records.length})
+          </button>
+        </div>
+      )}
 
       {/* ── KPI CARDS EJECUTIVOS: BALANCE GENERAL Y COMPOSICIÓN ── */}
       <div className="space-y-2.5">
@@ -1356,31 +1596,31 @@ export default function SegundasDashboard() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[10px] sm:text-[11px] font-extrabold text-amber-700 uppercase tracking-wide leading-tight">
-                Segundas Totales
+                Segundas Taller
               </p>
               <p className="text-xl sm:text-2xl font-black text-amber-800 font-mono tracking-tight mt-0.5">
                 {fmtInt(totals.totalSegundas)}
               </p>
               <p className="text-[10px] text-amber-700 font-bold mt-0.5 leading-tight">
-                {fmtPct(pctGlobalSegundas)} Fuera de norma
+                {fmtPct(pctGlobalSegundas)} Arreglos, pegas y estampado
               </p>
             </div>
           </div>
 
-          {/* Card 4: Merma / Descarte */}
-          <div className="bg-white rounded-2xl border border-rose-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-rose-50/15">
-            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
-              <AlertCircle className="w-5 h-5" />
+          {/* Card 4: Segundas Otros Procesos */}
+          <div className="bg-white rounded-2xl border border-purple-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-purple-50/20">
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+              <Factory className="w-5 h-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] sm:text-[11px] font-extrabold text-rose-600 uppercase tracking-wide leading-tight">
-                Merma / Descarte
+              <p className="text-[10px] sm:text-[11px] font-extrabold text-purple-700 uppercase tracking-wide leading-tight">
+                Segundas Otros Procesos
               </p>
               <p className="text-xl sm:text-2xl font-black text-slate-800 font-mono tracking-tight mt-0.5">
-                {fmtInt(mermaDescarte)}
+                {fmtInt(segundasOtrosProcesos)}
               </p>
-              <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight">
-                {fmtPct(pctGlobalMerma)} Merma / descarte tejido
+              <p className="text-[10px] text-purple-700 font-medium mt-0.5 leading-tight">
+                {fmtPct(pctGlobalOtrosProcesos)} Tintorería, tejeduría y otros
               </p>
             </div>
           </div>
@@ -1395,7 +1635,7 @@ export default function SegundasDashboard() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold text-sky-700 uppercase tracking-wide leading-tight">
-                Arreglos Confección
+                Arreglos
               </p>
               <p className="text-base sm:text-lg font-black text-sky-800 font-mono tracking-tight">
                 {fmtInt(totals.arreLaterales + totals.arreCabeceras)}
@@ -1413,13 +1653,13 @@ export default function SegundasDashboard() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide leading-tight">
-                Pegas de Tela
+                Pegas 
               </p>
               <p className="text-base sm:text-lg font-black text-indigo-800 font-mono tracking-tight">
                 {fmtInt(totals.pegas)}
               </p>
               <p className="text-[9px] text-slate-500 font-medium leading-tight">
-                Empates de rollo ({totals.totalSegundas > 0 ? ((totals.pegas / totals.totalSegundas) * 100).toFixed(0) : 0}% segundas)
+                ({totals.totalSegundas > 0 ? ((totals.pegas / totals.totalSegundas) * 100).toFixed(0) : 0}% segundas)
               </p>
             </div>
           </div>
@@ -1551,7 +1791,7 @@ export default function SegundasDashboard() {
                     )}
                   </div>
                   <p className="text-xs text-slate-500 font-medium">
-                    Prendas conformes de primera vs mermas y segundas totales acumuladas.
+                    Prendas conformes de primera vs segundas totales acumuladas.
                   </p>
                 </div>
               </div>
@@ -3131,11 +3371,11 @@ export default function SegundasDashboard() {
 
               <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200/80">
                 <span className="text-[10px] font-black uppercase text-slate-500 tracking-wider block mb-2">
-                  Cantidades de Producción (Balance: Estampadas − Segundas − Merma = Primeras)
+                  Cantidades de Producción (Balance: Revisadas − Seg. Taller − Seg. Otros Procesos = Primeras)
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600 mb-1">Total Estampadas</label>
+                    <label className="block text-[10px] font-bold text-slate-600 mb-1">Total Revisadas</label>
                     <input
                       type="number"
                       min="1"
@@ -3218,39 +3458,114 @@ export default function SegundasDashboard() {
                 </div>
               </div>
 
-              {/* Balance de Producción en Tiempo Real */}
+              {/* Balance de Producción en Tiempo Real (Mini Control Dashboard) */}
               {(() => {
                 const totalEstLive =
                   formManchas + formRepise + formFaltaPintura + formLogosCorridos +
                   formPenetracion + formGrasa + formDescases + formQuemadas;
-                const totalSegLive = formPegas + formArrLat + formArrCab + totalEstLive;
-                const mermaLive = formTotalRevisada - (formCantBuena + totalSegLive);
-                const isBalanced = mermaLive === 0;
+                const totalSegTallerLive = formPegas + formArrLat + formArrCab + totalEstLive;
+                const otrosProcesosLive = formTotalRevisada - (formCantBuena + totalSegTallerLive);
+                const isBalanced = otrosProcesosLive === 0;
+                const isOverTotal = otrosProcesosLive < 0;
+
+                const pctBuenas = formTotalRevisada > 0 ? ((formCantBuena / formTotalRevisada) * 100).toFixed(1) : '0';
+                const pctTaller = formTotalRevisada > 0 ? ((totalSegTallerLive / formTotalRevisada) * 100).toFixed(1) : '0';
+                const pctOtros = formTotalRevisada > 0 && otrosProcesosLive > 0 ? ((otrosProcesosLive / formTotalRevisada) * 100).toFixed(1) : '0';
 
                 return (
-                  <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200 text-xs space-y-1.5">
-                    <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-extrabold text-slate-700 flex items-center gap-1.5">
-                        <Activity className="w-3.5 h-3.5 text-slate-500" />
-                        Balance del Lote
-                      </span>
-                      <span className={`font-bold px-2 py-0.5 rounded-lg text-[10px] ${
-                        isBalanced ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  <div className="bg-gradient-to-br from-slate-50 via-slate-50 to-slate-100/70 rounded-2xl p-3.5 border border-slate-200/90 shadow-2xs space-y-3">
+                    {/* Encabezado y Estado */}
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${
+                          isOverTotal ? 'bg-rose-100 text-rose-700' : isBalanced ? 'bg-emerald-100 text-emerald-700' : 'bg-purple-100 text-purple-700'
+                        }`}>
+                          <Activity className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <span className="font-extrabold text-slate-800 text-xs block leading-tight">
+                            Balance del Lote en Tiempo Real
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            Revisadas = Primeras + Seg. Taller + Seg. Otros Procesos
+                          </span>
+                        </div>
+                      </div>
+
+                      <span className={`inline-flex items-center gap-1.5 font-black px-2.5 py-1 rounded-xl text-[10px] border shadow-2xs ${
+                        isOverTotal
+                          ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse'
+                          : isBalanced
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : 'bg-purple-50 text-purple-800 border-purple-200'
                       }`}>
-                        {isBalanced ? '✓ Cuadre 100% exacto' : `Segundas Totales: ${totalSegLive}`}
+                        {isOverTotal && <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />}
+                        {isBalanced && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />}
+                        {!isBalanced && !isOverTotal && <Factory className="w-3.5 h-3.5 text-purple-600" />}
+                        {isOverTotal
+                          ? `Exceso de ${Math.abs(otrosProcesosLive)} pz sobre revisadas`
+                          : isBalanced
+                            ? '✓ 100% Cuadre exacto (Taller)'
+                            : `${otrosProcesosLive} pz Segundas Otros Procesos`}
                       </span>
                     </div>
-                    <div className="text-[11px] font-mono text-slate-600 flex flex-wrap items-center gap-1">
-                      <strong className="text-slate-900">{formTotalRevisada}</strong> Estampadas −{' '}
-                      <strong className="text-amber-800">{totalSegLive}</strong> Segundas (Pegas:{formPegas} + Arr:{formArrLat + formArrCab} + Est:{totalEstLive})
-                      {mermaLive !== 0 && (
-                        <>
-                          {' '}− <strong className={mermaLive > 0 ? 'text-rose-700' : 'text-purple-700'}>
-                            {mermaLive > 0 ? `${mermaLive} Merma` : `+${Math.abs(mermaLive)} Excedente`}
-                          </strong>
-                        </>
-                      )}
-                      {' '}= <strong className="text-emerald-700">{formCantBuena}</strong> Primeras
+
+                    {/* Barra visual de distribución porcentual */}
+                    {formTotalRevisada > 0 && (
+                      <div className="w-full bg-slate-200/80 rounded-full h-2.5 overflow-hidden flex shadow-inner">
+                        <div
+                          style={{ width: `${Math.min(100, Math.max(0, (formCantBuena / formTotalRevisada) * 100))}%` }}
+                          className="bg-emerald-500 h-full transition-all duration-300"
+                          title={`Primeras Buenas: ${formCantBuena} (${pctBuenas}%)`}
+                        />
+                        <div
+                          style={{ width: `${Math.min(100, Math.max(0, (totalSegTallerLive / formTotalRevisada) * 100))}%` }}
+                          className="bg-amber-500 h-full transition-all duration-300"
+                          title={`Segundas Taller: ${totalSegTallerLive} (${pctTaller}%)`}
+                        />
+                        {otrosProcesosLive > 0 && (
+                          <div
+                            style={{ width: `${Math.min(100, (otrosProcesosLive / formTotalRevisada) * 100)}%` }}
+                            className="bg-purple-500 h-full transition-all duration-300"
+                            title={`Segundas Otros Procesos: ${otrosProcesosLive} (${pctOtros}%)`}
+                          />
+                        )}
+                      </div>
+                    )}
+
+                    {/* 4 Mini Tarjetas de Distribución */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                      <div className="bg-white p-2 rounded-xl border border-slate-200/80 shadow-2xs">
+                        <span className="text-[9px] font-bold text-slate-400 block uppercase">Total Revisadas</span>
+                        <span className="text-sm font-black text-slate-900 font-mono">{formTotalRevisada}</span>
+                        <span className="text-[9px] text-slate-400 block">100% lote</span>
+                      </div>
+
+                      <div className="bg-emerald-50/60 p-2 rounded-xl border border-emerald-200/80 shadow-2xs">
+                        <span className="text-[9px] font-bold text-emerald-700 block uppercase">1ª Buenas</span>
+                        <span className="text-sm font-black text-emerald-800 font-mono">{formCantBuena}</span>
+                        <span className="text-[9px] text-emerald-600 font-semibold block">{pctBuenas}%</span>
+                      </div>
+
+                      <div className="bg-amber-50/60 p-2 rounded-xl border border-amber-200/80 shadow-2xs">
+                        <span className="text-[9px] font-bold text-amber-800 block uppercase">Seg. Taller</span>
+                        <span className="text-sm font-black text-amber-900 font-mono">{totalSegTallerLive}</span>
+                        <span className="text-[9px] text-amber-700 font-semibold block">{pctTaller}% ({formPegas}p·{formArrLat+formArrCab}a·{totalEstLive}e)</span>
+                      </div>
+
+                      <div className={`p-2 rounded-xl border shadow-2xs ${
+                        isOverTotal ? 'bg-rose-50 border-rose-200' : 'bg-purple-50/60 border-purple-200/80'
+                      }`}>
+                        <span className={`text-[9px] font-bold block uppercase ${isOverTotal ? 'text-rose-700' : 'text-purple-700'}`}>
+                          {isOverTotal ? 'Descuadre' : 'Seg. Otros Proc.'}
+                        </span>
+                        <span className={`text-sm font-black font-mono ${isOverTotal ? 'text-rose-800' : 'text-purple-900'}`}>
+                          {otrosProcesosLive}
+                        </span>
+                        <span className={`text-[9px] font-semibold block ${isOverTotal ? 'text-rose-600' : 'text-purple-600'}`}>
+                          {isOverTotal ? 'Exceso' : `${pctOtros}%`}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -3477,6 +3792,241 @@ export default function SegundasDashboard() {
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
               >
                 Listo ({allTopDesigns.length - hiddenTopDesigns.length} visibles)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modern Floating Toast Notification ── */}
+      {toast && (
+        <div className="fixed top-6 right-6 z-[9999] max-w-sm sm:max-w-md w-full pointer-events-none p-2">
+          <div
+            className={`pointer-events-auto flex items-start gap-3.5 p-4 rounded-2xl shadow-2xl backdrop-blur-xl border transition-all duration-300 ${
+              toast.type === 'success'
+                ? 'bg-slate-900/95 text-white border-emerald-500/40 shadow-emerald-950/30'
+                : toast.type === 'error'
+                ? 'bg-slate-900/95 text-white border-rose-500/40 shadow-rose-950/30'
+                : 'bg-slate-900/95 text-white border-blue-500/40 shadow-blue-950/30'
+            }`}
+          >
+            <div
+              className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
+                toast.type === 'success'
+                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                  : toast.type === 'error'
+                  ? 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+                  : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+              }`}
+            >
+              {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />}
+              {toast.type === 'error' && <AlertCircle className="w-5 h-5 stroke-[2.5]" />}
+              {toast.type === 'info' && <Info className="w-5 h-5 stroke-[2.5]" />}
+            </div>
+
+            <div className="flex-1 min-w-0 pr-1">
+              <h4 className="text-xs sm:text-sm font-extrabold text-white tracking-tight leading-tight">
+                {toast.title}
+              </h4>
+              {toast.message && (
+                <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed font-medium">
+                  {toast.message}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setToast(null)}
+              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+              title="Cerrar"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal de Carga Periódica de Excel (Acumular Historial vs Reemplazar) ── */}
+      {importPending && (
+        <div className="fixed inset-0 z-[9997] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="p-5 sm:p-6 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white">
+                  <FileSpreadsheet className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black tracking-tight">Carga Mensual de Planilla de Calidad</h3>
+                  <p className="text-xs text-emerald-100 font-medium truncate max-w-[280px]">
+                    {importPending.fileName}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setImportPending(null)}
+                className="p-1.5 rounded-xl hover:bg-white/20 transition-colors text-white/80 hover:text-white cursor-pointer"
+                title="Cerrar"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-5 sm:p-6 space-y-4">
+              {/* Resumen de Detección */}
+              <div className="grid grid-cols-3 gap-2.5">
+                <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/70 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">En Archivo</span>
+                  <p className="text-lg font-black text-slate-900 mt-0.5">{importPending.importedRecords.length}</p>
+                  <span className="text-[10px] text-slate-500 font-medium">registros</span>
+                </div>
+                <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/70 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">En Historial</span>
+                  <p className="text-lg font-black text-slate-900 mt-0.5">{records.length}</p>
+                  <span className="text-[10px] text-slate-500 font-medium">guardados</span>
+                </div>
+                <div className="bg-emerald-50 rounded-2xl p-3 border border-emerald-200/80 text-center">
+                  <span className="text-[10px] uppercase font-bold text-emerald-700">Nuevos</span>
+                  <p className="text-lg font-black text-emerald-700 mt-0.5">+{importPending.newRecords.length}</p>
+                  <span className="text-[10px] text-emerald-600 font-medium">a incorporar</span>
+                </div>
+              </div>
+
+              {/* Períodos detectados */}
+              <div className="bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                  <Calendar className="w-4 h-4 text-emerald-600" />
+                  <span>Mes(es) detectado(s) en este archivo:</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {importPending.detectedMonths.map(m => (
+                    <span key={m.key} className="px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-900 text-xs font-extrabold border border-emerald-200">
+                      {m.label} ({m.count} lotes)
+                    </span>
+                  ))}
+                </div>
+                {importPending.duplicatesCount > 0 && (
+                  <p className="text-[11px] text-slate-500 font-medium mt-2 flex items-center gap-1.5">
+                    <Info className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                    <span>{importPending.duplicatesCount} registros ya existían en el historial y se conservarán sin duplicar.</span>
+                  </p>
+                )}
+              </div>
+
+              {/* Opciones de carga */}
+              <div className="space-y-2.5 pt-1">
+                <p className="text-xs font-bold text-slate-800">
+                  ¿Cómo deseas cargar esta planilla mensual?
+                </p>
+
+                {/* Opción A: Acumular (Recomendada) */}
+                <button
+                  type="button"
+                  onClick={handleConfirmAccumulate}
+                  className="w-full text-left p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 hover:bg-emerald-100/80 transition-all cursor-pointer group shadow-xs"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      <Plus className="w-5 h-5 stroke-[2.5]" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-black text-emerald-950">Acumular y Mantener Todo el Historial</span>
+                        <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-600 text-white tracking-wider">Recomendado</span>
+                      </div>
+                      <p className="text-[11px] text-emerald-800 font-medium mt-0.5 leading-relaxed">
+                        Mantiene intactos todos los meses anteriores ({records.length} registros) y agrega los {importPending.newRecords.length} nuevos lotes de este mes.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Opción B: Reemplazar */}
+                <button
+                  type="button"
+                  onClick={handleConfirmReplace}
+                  className="w-full text-left p-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition-all cursor-pointer group"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-slate-100 text-slate-500 group-hover:text-slate-800 flex items-center justify-center shrink-0 mt-0.5">
+                      <RotateCcw className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-xs font-bold text-slate-800">Reemplazar Todo el Historial</span>
+                      <p className="text-[11px] text-slate-500 font-medium mt-0.5 leading-relaxed">
+                        Borra el historial previo y deja únicamente los {importPending.importedRecords.length} registros de este archivo.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
+              <button
+                type="button"
+                onClick={() => setImportPending(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Custom Confirmation Modal ── */}
+      {confirmDialog?.isOpen && (
+        <div className="fixed inset-0 z-[9998] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-100 overflow-hidden p-6 transition-all transform">
+            <div className="flex items-start gap-4">
+              <div
+                className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
+                  confirmDialog.danger
+                    ? 'bg-rose-50 border-rose-100 text-rose-600'
+                    : 'bg-blue-50 border-blue-100 text-blue-600'
+                }`}
+              >
+                {confirmDialog.danger ? (
+                  <AlertTriangle className="w-6 h-6 stroke-[2]" />
+                ) : (
+                  <Info className="w-6 h-6 stroke-[2]" />
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base font-extrabold text-slate-900 tracking-tight">
+                  {confirmDialog.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed font-normal">
+                  {confirmDialog.message}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setConfirmDialog(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmDialog.onConfirm}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm transition-all cursor-pointer flex items-center gap-1.5 ${
+                  confirmDialog.danger
+                    ? 'bg-rose-600 hover:bg-rose-700 shadow-rose-600/20'
+                    : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20'
+                }`}
+              >
+                {confirmDialog.danger && <Trash2 className="w-3.5 h-3.5" />}
+                {confirmDialog.confirmText || 'Confirmar'}
               </button>
             </div>
           </div>
