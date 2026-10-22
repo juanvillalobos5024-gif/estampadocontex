@@ -150,6 +150,37 @@ export interface DefectosEstampado {
   totalEstampado: number;
 }
 
+export interface DefectosTintoreria {
+  manchaTintoreria?: number;
+  manchaOxido?: number;
+  arrastreBarca?: number;
+  sucias?: number;
+  vetas?: number;
+  medida?: number;
+  rama?: number;
+  grasa?: number;
+  totalTintoreria: number;
+}
+
+export interface DefectosTejeduria {
+  revienteUrdimbre?: number;
+  revienteTrama?: number;
+  marra?: number;
+  rayas?: number;
+  variacionesRizo?: number;
+  hiloContaminado?: number;
+  orillosLaterales?: number;
+  totalTejeduria: number;
+}
+
+export interface DefectosCostura {
+  enganches?: number;
+  manchasNegras?: number;
+  tundidoCaido?: number;
+  montadasCostura?: number;
+  totalCostura: number;
+}
+
 export interface SegundasRecord {
   id: string;
   fecha: string;               // YYYY-MM-DD
@@ -171,7 +202,14 @@ export interface SegundasRecord {
   pctCabeceras: number;        // % Arreglo cabeceras
   observaciones?: string;      // Observaciones
   defectosEstampado: DefectosEstampado;
+  defectosTintoreria?: DefectosTintoreria;
+  defectosTejeduria?: DefectosTejeduria;
+  defectosCostura?: DefectosCostura;
+  rotas?: number;
+  totalTintoreria?: number;
+  totalTejeduria?: number;
+  totalCostura?: number;
   pctEstampado: number;        // % de defectos directos de estampado
-  totalSegundas: number;       // pegas + arreLaterales + arreCabeceras + totalEstampado
+  totalSegundas: number;       // Total unidades segundas
   pctTotalSegundas: number;    // totalSegundas / cantTotalRevisada
 }

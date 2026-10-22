@@ -38,19 +38,22 @@ import PantoneSelector from './components/PantoneSelector';
 import Login from './components/Login';
 import PantoneGrid from './components/PantoneGrid';
 import { Palette, Scale, AlertCircle, Loader2, Menu, Paintbrush, History, ClipboardList } from 'lucide-react';
+import { lazyWithRetry } from './lib/lazyWithRetry';
+import ErrorBoundary from './components/ErrorBoundary';
 
-// ── CARGA PEREZOSA (CODE SPLITTING DINÁMICO) ──
-// Reduce el bundle inicial descargado por el navegador en más del 80%
-const FormulaDetail = lazy(() => import('./components/FormulaDetail'));
-const StockManager = lazy(() => import('./components/StockManager'));
-const BatchLogList = lazy(() => import('./components/BatchLogList'));
-const WorkOrderManager = lazy(() => import('./components/WorkOrderManager'));
-const AiAssistant = lazy(() => import('./components/AiAssistant'));
-const PantoneFormModal = lazy(() => import('./components/PantoneFormModal'));
-const FormulaModal = lazy(() => import('./components/FormulaModal'));
-const CalculatorWorkspace = lazy(() => import('./components/CalculatorWorkspace'));
-const DesignManager = lazy(() => import('./components/DesignManager'));
-const ImageAnalyzer = lazy(() => import('./components/ImageAnalyzer'));
+// ── CARGA PEREZOSA RESILIENTE (CODE SPLITTING CON AUTO-REINTENTO) ──
+// Reduce el bundle inicial descargado por el navegador en más del 80% y reintenta automáticamente si la red falla
+const FormulaDetail = lazyWithRetry(() => import('./components/FormulaDetail'));
+const StockManager = lazyWithRetry(() => import('./components/StockManager'));
+const BatchLogList = lazyWithRetry(() => import('./components/BatchLogList'));
+const WorkOrderManager = lazyWithRetry(() => import('./components/WorkOrderManager'));
+const AiAssistant = lazyWithRetry(() => import('./components/AiAssistant'));
+const PantoneFormModal = lazyWithRetry(() => import('./components/PantoneFormModal'));
+const FormulaModal = lazyWithRetry(() => import('./components/FormulaModal'));
+const CalculatorWorkspace = lazyWithRetry(() => import('./components/CalculatorWorkspace'));
+const DesignManager = lazyWithRetry(() => import('./components/DesignManager'));
+const ImageAnalyzer = lazyWithRetry(() => import('./components/ImageAnalyzer'));
+
 
 function TabLoadingSkeleton() {
   return (
@@ -74,14 +77,20 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(true);
 
-  // Tab activa persistente
+  // Tab activa persistente con recuperación segura
   const [activeTab, setActiveTab] = useState<string>(() => {
-    const saved = localStorage.getItem('activeTab') || 'pantones';
-    return saved === 'proyeccion' ? 'pantones' : saved;
+    try {
+      const saved = localStorage.getItem('activeTab') || 'pantones';
+      return saved === 'proyeccion' ? 'pantones' : saved;
+    } catch (e) {
+      return 'pantones';
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('activeTab', activeTab);
+    try {
+      localStorage.setItem('activeTab', activeTab);
+    } catch (e) {}
   }, [activeTab]);
   
   // Usuario activo en sesión del taller
@@ -902,7 +911,8 @@ export default function App() {
               <p className="text-xs text-slate-500">{errorMsg}</p>
             </div>
           ) : (
-            <Suspense fallback={<TabLoadingSkeleton />}>
+            <ErrorBoundary>
+              <Suspense fallback={<TabLoadingSkeleton />}>
               {/* Tab Catálogo Pantone (Vista de Cuadrícula) */}
               {activeTab === 'pantones' && (
                 <div className="h-full w-full min-h-0">
@@ -1112,6 +1122,7 @@ export default function App() {
                 />
               )}
             </Suspense>
+            </ErrorBoundary>
           )}
         </div>
 

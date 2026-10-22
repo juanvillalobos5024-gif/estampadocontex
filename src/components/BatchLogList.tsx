@@ -15,11 +15,12 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import DailyProductionTasks from './DailyProductionTasks';
+import { lazyWithRetry } from '../lib/lazyWithRetry';
 
-// Carga perezosa para evitar inflar el bundle inicial
-const ProductionCharts = lazy(() => import('./ProductionCharts'));
-const InkCharts = lazy(() => import('./InkCharts'));
-const SegundasDashboard = lazy(() => import('./SegundasDashboard'));
+// Carga perezosa resiliente para evitar inflar el bundle inicial y prevenir fallos de red
+const ProductionCharts = lazyWithRetry(() => import('./ProductionCharts'));
+const InkCharts = lazyWithRetry(() => import('./InkCharts'));
+const SegundasDashboard = lazyWithRetry(() => import('./SegundasDashboard'));
 
 function DashboardLoadingSkeleton() {
   return (

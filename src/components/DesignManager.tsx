@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, Palette, Trash2, Edit2, Loader2, AlertCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Search, Palette, Trash2, Edit2, Loader2, AlertCircle, X, ChevronLeft, ChevronRight, ZoomIn, UploadCloud, Calculator, Check, ChevronDown } from 'lucide-react';
 import { Design, PantoneColor } from '../types';
 import { addDesign, getDesigns, deleteDesign, updateDesign, syncDesignToProductionRecords, isToallaDesign } from '../lib/dataService';
+import PantoneSearchableSelect from './PantoneSearchableSelect';
+import { AnalyzedColor, analyzeImageSource, calculateInkGrams } from '../lib/imageColorAnalysis';
 
 interface DesignManagerProps {
   pantones: PantoneColor[];
@@ -29,7 +31,17 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
   const [unitWeight, setUnitWeight] = useState<number | ''>('');
   const [productType, setProductType] = useState<'Toallas' | 'Otros'>('Toallas');
   const [lineType, setLineType] = useState<'pigmento' | 'reactivo'>('pigmento');
-  const [colors, setColors] = useState<{ pantoneCode: string; gramsPerPiece: number }[]>([{ pantoneCode: '', gramsPerPiece: 10 }]);
+  const [colors, setColors] = useState<{ pantoneCode: string; gramsPerPiece: number; previewUrl?: string }[]>([{ pantoneCode: '', gramsPerPiece: 10 }]);
+
+  // Análisis automático del arte (marcos + Pantones) — reutiliza src/lib/imageColorAnalysis.ts
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysisResults, setAnalysisResults] = useState<AnalyzedColor[] | null>(null);
+  const [analysisMapping, setAnalysisMapping] = useState<Record<number, string>>({}); // idx de marco -> código Pantone
+  const [analysisPxg, setAnalysisPxg] = useState<number>(3);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [analysisTolerance, setAnalysisTolerance] = useState<number>(30);
+  const [analysisMinCoverage, setAnalysisMinCoverage] = useState<number>(1.5);
+  const [analysisVolumen, setAnalysisVolumen] = useState<number>(15);
 
   const loadDesigns = async () => {
     setLoading(true);
@@ -86,6 +98,86 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
   const handleRemoveColor = (index: number) => {
     const newColors = colors.filter((_, i) => i !== index);
     setColors(newColors);
+  };
+
+  // Si cambia/quita la imagen, los resultados del análisis anterior dejan de ser válidos
+  useEffect(() => {
+    setAnalysisResults(null);
+    setAnalysisError(null);
+  }, [imageUrl]);
+
+  const getAnalysisParams = () => {
+    const wCm = widthCm !== '' && Number(widthCm) > 0 ? Number(widthCm) : 60;
+    const hCm = heightCm !== '' && Number(heightCm) > 0 ? Number(heightCm) : 120;
+    const pxg = piezasPorGolpe !== '' && Number(piezasPorGolpe) > 0
+      ? Number(piezasPorGolpe)
+      : (wCm <= 40 ? 5 : 3);
+    return { wCm, hCm, pxg };
+  };
+
+  const handleAnalyzeArt = async () => {
+    if (!imageUrl) return;
+    setAnalyzing(true);
+    setAnalysisError(null);
+    setAnalysisResults(null);
+
+    try {
+      const { wCm, hCm, pxg } = getAnalysisParams();
+      const results = await analyzeImageSource(imageUrl, pantones, {
+        widthCm: wCm,
+        heightCm: hCm,
+        piezasPorGolpe: pxg,
+        tolerance: analysisTolerance,
+        minCoverage: analysisMinCoverage,
+        includeWhitePadding: true
+      });
+
+      // Pre-asigna el Pantone más cercano del catálogo a cada marco detectado
+      const mapping: Record<number, string> = {};
+      results.forEach((r, i) => {
+        if (r.closestPantoneCode) mapping[i] = r.closestPantoneCode;
+      });
+
+      setAnalysisPxg(pxg);
+      setAnalysisMapping(mapping);
+      setAnalysisResults(results);
+    } catch (err: any) {
+      console.error(err);
+      setAnalysisError(err?.message || 'No se pudo analizar la imagen.');
+    } finally {
+      setAnalyzing(false);
+    }
+  };
+
+  const handleApplyAnalysis = () => {
+    if (!analysisResults) return;
+
+    const applied = analysisResults
+      .map((r, idx) => {
+        const code = analysisMapping[idx];
+        if (!code) return null;
+        const grams = calculateInkGrams(r.areaM2 / analysisPxg, analysisVolumen);
+        return {
+          pantoneCode: code,
+          gramsPerPiece: Math.max(0.01, Number(grams.toFixed(2))),
+          previewUrl: r.previewUrl
+        };
+      })
+      .filter((c): c is { pantoneCode: string; gramsPerPiece: number; previewUrl: string } => c !== null);
+
+    if (applied.length === 0) {
+      alert('Asigna al menos un Pantone a los marcos detectados para poder aplicarlos.');
+      return;
+    }
+
+    const hasExisting = colors.some(c => c.pantoneCode);
+    if (hasExisting && !window.confirm(`Esto reemplazará los ${colors.length} color(es) actuales por ${applied.length} marco(s) detectado(s). ¿Continuar?`)) {
+      return;
+    }
+
+    setColors(applied);
+    setFrames(applied.length);
+    setAnalysisResults(null);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -279,42 +371,153 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
     return filteredDesigns.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredDesigns, currentPage, itemsPerPage]);
 
+  const renderZoomModal = () => {
+    if (!zoomedData) return null;
+    return (
+      <div 
+        className="fixed inset-0 z-[100] bg-black/90 flex flex-col items-center justify-center p-4 sm:p-6 cursor-pointer backdrop-blur-md animate-fade-in"
+        onClick={() => setZoomedData(null)}
+      >
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-3.5 py-2 rounded-xl backdrop-blur-md transition-colors cursor-pointer" title="Cerrar (Esc)">
+          <span className="text-xs font-semibold">Cerrar</span>
+          <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono">Esc</span>
+          <X className="w-4 h-4 ml-1" />
+        </div>
+
+        {zoomedData.title && (
+          <div className="mb-4 text-white text-base sm:text-xl font-bold flex items-center gap-3 text-center px-4 max-w-xl">
+            {zoomedData.color && (
+              <div className="w-6 h-6 rounded-full border-2 border-white shadow-lg shrink-0" style={{ backgroundColor: zoomedData.color }} />
+            )}
+            <span className="truncate">{zoomedData.title}</span>
+          </div>
+        )}
+        <img 
+          src={zoomedData.url} 
+          className="max-w-full max-h-[82vh] object-contain rounded-2xl shadow-2xl border border-white/10" 
+          alt="Zoomed" 
+          onClick={e => e.stopPropagation()}
+        />
+      </div>
+    );
+  };
+
   if (isCreating) {
     return (
       <div className="h-full flex flex-col bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-800">
-            {editingDesignId ? 'Editar Diseño / Referencia' : 'Crear Nuevo Diseño Multi-Color'}
-          </h2>
-          <button onClick={handleCancel} className="text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors">
+        <div className="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-800">
+              {editingDesignId ? 'Editar Diseño / Referencia' : 'Crear Nuevo Diseño Multi-Color'}
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Configura las especificaciones técnicas, arte y consumo de tintas por golpe
+            </p>
+          </div>
+          <button 
+            type="button"
+            onClick={handleCancel} 
+            className="px-4 py-2 text-xs sm:text-sm font-bold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+          >
             Cancelar
           </button>
         </div>
-        <div className="p-6 overflow-y-auto flex-1">
-          <form onSubmit={handleSubmit} className="max-w-2xl space-y-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+          <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Nombre del Diseño / Arte</label>
               <input 
                 type="text" 
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="Ej. Toalla Iron Man"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ej. TOALLA STICH NIÑO"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm sm:text-base font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+              {/* Sección de Imagen con Previsualización Interactiva y Ampliable */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Imagen (Opcional)</label>
-                <input 
-                  type="file" 
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
-                />
-                {imageUrl && <img src={imageUrl} alt="Preview" className="mt-3 h-24 object-contain rounded-lg border border-slate-200 shadow-sm" />}
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">
+                  Arte / Imagen del Diseño
+                </label>
+                {!imageUrl ? (
+                  <label className="relative border-2 border-dashed border-slate-300 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/30 rounded-2xl p-6 text-center transition-all cursor-pointer flex flex-col items-center justify-center min-h-[170px] group">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                      <UploadCloud className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-700">Seleccionar imagen o arte</span>
+                    <span className="text-[11px] text-slate-400 mt-0.5">JPG, PNG o WEBP (Diseño del estampado)</span>
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="sr-only"
+                    />
+                  </label>
+                ) : (
+                  <div className="space-y-2">
+                    <div 
+                      onClick={() => setZoomedData({ url: imageUrl, title: name || 'Arte del Diseño' })}
+                      className="relative h-44 sm:h-48 w-full rounded-2xl border-2 border-slate-200 bg-slate-900/5 overflow-hidden flex items-center justify-center p-2.5 cursor-pointer group hover:border-blue-400 transition-all shadow-xs"
+                      title="Clic para ampliar diseño en tamaño completo"
+                    >
+                      <img 
+                        src={imageUrl} 
+                        alt="Preview" 
+                        className="max-h-full max-w-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-105" 
+                      />
+                      
+                      {/* Overlay táctil de ampliar */}
+                      <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 text-white font-bold text-xs backdrop-blur-[2px]">
+                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                          <ZoomIn className="w-5 h-5 text-white" />
+                        </div>
+                        <span>Clic para ampliar arte</span>
+                      </div>
+
+                      <div className="absolute bottom-2.5 right-2.5 bg-slate-900/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-md flex items-center gap-1.5 shadow-sm group-hover:opacity-0 transition-opacity">
+                        <ZoomIn className="w-3 h-3 text-blue-300" />
+                        <span>Ampliar</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between px-1">
+                      <label className="text-xs font-bold text-blue-600 hover:text-blue-800 cursor-pointer flex items-center gap-1.5 min-h-[36px] py-1">
+                        <UploadCloud className="w-3.5 h-3.5" /> Cambiar imagen
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="sr-only"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setImageUrl('')}
+                        className="text-xs font-bold text-red-500 hover:text-red-700 cursor-pointer flex items-center gap-1 min-h-[36px] py-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" /> Quitar arte
+                      </button>
+                    </div>
+
+                    {/* Reutiliza el analizador de visión: detecta marcos y sugiere Pantones */}
+                    <button
+                      type="button"
+                      onClick={handleAnalyzeArt}
+                      disabled={analyzing}
+                      className="w-full min-h-[44px] px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-2xs active:scale-[0.98] transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait"
+                      title="Escanea el arte para separar los marcos por color y sugerir el Pantone de cada uno"
+                    >
+                      {analyzing && <Loader2 className="w-4 h-4 animate-spin" />}
+                      <span>{analyzing ? 'Analizando arte...' : 'Analizar marcos y Pantones'}</span>
+                    </button>
+                  </div>
+                )}
               </div>
+
+              {/* Medidas y Parámetros */}
               <div className="space-y-3.5">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -325,7 +528,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                       onChange={e => setFrames(Number(e.target.value))}
                       min="0"
                       placeholder="0"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                      className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                     />
                   </div>
                   <div>
@@ -340,7 +543,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                         }}
                         min="1"
                         placeholder="Ej. 3 o 5"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                       />
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">pz</span>
                     </div>
@@ -370,7 +573,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           }
                         }}
                         placeholder="Ej. 60"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                         required
                       />
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">cm</span>
@@ -392,7 +595,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           setHeightCm(val === '' ? '' : parseFloat(val));
                         }}
                         placeholder="Ej. 120"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                         required
                       />
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">cm</span>
@@ -414,7 +617,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           setGramaje(val === '' ? '' : parseFloat(val));
                         }}
                         placeholder="Ej. 280"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-12 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-12 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                       />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400">g/m²</span>
                     </div>
@@ -432,13 +635,14 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                           setUnitWeight(val === '' ? '' : parseFloat(val));
                         }}
                         placeholder="Ej. 201.6"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                        className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                       />
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">g/pz</span>
                     </div>
                   </div>
                 </div>
 
+                {/* Panel de Superficies y Áreas Calculadas en Máquina (Diseño Tipo Tarjeta Industrial) */}
                 {(() => {
                   const wCm = widthCm !== '' && !isNaN(Number(widthCm)) ? Number(widthCm) : 0;
                   const hCm = heightCm !== '' && !isNaN(Number(heightCm)) ? Number(heightCm) : 0;
@@ -454,9 +658,56 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                   const dimStr = (wCm > 0 && hCm > 0) ? `${wCm}×${hCm} cm` : '60×120 cm';
                   
                   return (
-                    <div className="p-2.5 bg-blue-50/70 rounded-xl border border-blue-200 text-xs font-mono flex flex-wrap justify-between items-center text-blue-900 gap-1.5">
-                      <span>Área x Toalla: <strong className="font-bold text-blue-800">{area.toFixed(3)} m²</strong> ({dimStr})</span>
-                      <span>Área Total ({pxg} pz): <strong className="font-bold text-blue-800">{total.toFixed(3)} m²</strong></span>
+                    <div className="bg-gradient-to-br from-blue-50 via-indigo-50/40 to-slate-50 p-3.5 sm:p-4 rounded-2xl border border-blue-200/90 shadow-xs space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                          <Calculator className="w-3.5 h-3.5 text-blue-600" />
+                          Cálculo de Área en Estampado
+                        </span>
+                        <span className="text-[10px] font-bold bg-white text-blue-800 border border-blue-200 px-2 py-0.5 rounded-full font-mono shadow-2xs">
+                          {dimStr}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {/* Tarjeta 1: Área por Toalla */}
+                        <div className="bg-white rounded-xl p-3 border border-blue-100 shadow-xs flex flex-col justify-between">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                              Área por Toalla
+                            </span>
+                            <span className="w-2 h-2 rounded-full bg-blue-500" />
+                          </div>
+                          <div className="mt-1 flex items-baseline gap-1">
+                            <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 tracking-tight">
+                              {area.toFixed(3)}
+                            </span>
+                            <span className="text-xs font-bold text-blue-600 font-mono">m²</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 font-medium mt-0.5">
+                            1 unidad ({dimStr})
+                          </span>
+                        </div>
+
+                        {/* Tarjeta 2: Área Total Golpe */}
+                        <div className="bg-white rounded-xl p-3 border border-indigo-100 shadow-xs flex flex-col justify-between">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">
+                              Área Total Golpe
+                            </span>
+                            <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                          </div>
+                          <div className="mt-1 flex items-baseline gap-1">
+                            <span className="text-xl sm:text-2xl font-black font-mono text-indigo-900 tracking-tight">
+                              {total.toFixed(3)}
+                            </span>
+                            <span className="text-xs font-bold text-indigo-600 font-mono">m²</span>
+                          </div>
+                          <span className="text-[10px] text-indigo-600/80 font-bold mt-0.5">
+                            {pxg} piezas / ciclo de máquina
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   );
                 })()}
@@ -469,32 +720,203 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                 <select 
                   value={productType}
                   onChange={e => setProductType(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="Toallas">Toallas</option>
-                  <option value="Otros">Otros</option>
                   <option value="Otros">Otros</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Línea</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Línea Técnica</label>
                 <select 
                   value={lineType}
                   onChange={e => setLineType(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="pigmento">Pigmentos (Pigmentos)</option>
-                  <option value="reactivo">Reactivo</option>
+                  <option value="pigmento">Pigmentos (Estampado Pigmento)</option>
+                  <option value="reactivo">Reactivo (Estampado Reactivo)</option>
                 </select>
               </div>
             </div>
 
+            {/* Resultado del análisis automático del arte: marcos detectados + Pantone sugerido */}
+            {(analyzing || analysisError || analysisResults) && (
+              <div className="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-3.5 sm:p-4 space-y-3 shadow-2xs">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-slate-500 uppercase flex items-center gap-1.5">
+                    
+                    Análisis de marcos y Pantones
+                  </span>
+                  {!analyzing && (
+                    <button
+                      type="button"
+                      onClick={() => { setAnalysisResults(null); setAnalysisError(null); }}
+                      className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-white/80 transition-colors cursor-pointer"
+                      title="Descartar análisis"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {analyzing && (
+                  <div className="flex items-center gap-3 py-4 justify-center text-blue-700">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span className="text-xs font-bold">Escaneando píxeles y separando colores...</span>
+                  </div>
+                )}
+
+                {analysisError && (
+                  <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 font-semibold">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span>{analysisError}</span>
+                  </div>
+                )}
+
+                {analysisResults && analysisResults.length === 0 && (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 font-medium">
+                    No se detectaron marcos en la imagen. Prueba bajando el <strong>filtro de ruido</strong> o subiendo la <strong>tolerancia</strong> en la calibración avanzada.
+                  </div>
+                )}
+
+                {analysisResults && analysisResults.length > 0 && (() => {
+                  const mappedCount = analysisResults.filter((_, i) => !!analysisMapping[i]).length;
+                  const unmapped = analysisResults.length - mappedCount;
+                  return (
+                    <>
+                      <p className="text-[11px] sm:text-xs text-slate-600">
+                        Se detectaron <strong className="text-blue-800">{analysisResults.length} marcos</strong>. El Pantone se sugiere por cercanía de color; corrígelo si hace falta antes de aplicar.
+                      </p>
+
+                      <div className="space-y-2.5">
+                        {analysisResults.map((r, idx) => {
+                          const code = analysisMapping[idx] || '';
+                          const gramsPz = calculateInkGrams(r.areaM2 / analysisPxg, analysisVolumen);
+                          return (
+                            <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-2.5 sm:p-3 flex flex-col sm:flex-row gap-2.5 sm:gap-3 sm:items-center shadow-2xs">
+                              <div className="flex items-center gap-2.5 sm:w-52 shrink-0">
+                                <button
+                                  type="button"
+                                  onClick={() => setZoomedData({ url: r.previewUrl, title: `Marco ${idx + 1} · ${r.hex}`, color: r.hex })}
+                                  className="w-12 h-12 rounded-xl border border-slate-200 bg-slate-50 overflow-hidden shrink-0 cursor-pointer hover:border-blue-400 transition-colors"
+                                  style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '6px 6px' }}
+                                  title="Ver separación de este marco"
+                                >
+                                  <img src={r.previewUrl} alt={`Marco ${idx + 1}`} className="w-full h-full object-contain" />
+                                </button>
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="w-3.5 h-3.5 rounded-full border border-black/15 shrink-0" style={{ backgroundColor: r.hex }} />
+                                    <span className="text-xs font-black text-slate-800">Marco {idx + 1}</span>
+                                  </div>
+                                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">
+                                    {r.hex} · {r.percentage.toFixed(1)}%
+                                  </p>
+                                  <p className="text-[10px] text-blue-700 font-bold font-mono">
+                                    ≈ {gramsPz.toFixed(1)} g/pz
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className="flex-1 min-w-0">
+                                <PantoneSearchableSelect
+                                  pantones={pantones}
+                                  value={code}
+                                  onChange={(c) => setAnalysisMapping(prev => ({ ...prev, [idx]: c }))}
+                                  placeholder={r.closestPantoneName ? `Sugerido: ${r.closestPantoneName}` : 'Sin coincidencia — busca un Pantone...'}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {unmapped > 0 && (
+                        <p className="text-[11px] text-amber-700 font-semibold flex items-center gap-1.5">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          {unmapped} marco(s) sin Pantone asignado se omitirán al aplicar.
+                        </p>
+                      )}
+
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <button
+                          type="button"
+                          onClick={handleApplyAnalysis}
+                          disabled={mappedCount === 0}
+                          className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <Check className="w-4 h-4" />
+                          Aplicar {mappedCount} marco(s) al diseño
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleAnalyzeArt}
+                          className="min-h-[44px] px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        >
+                          
+                          Re-analizar
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
+
+                {/* Calibración avanzada (misma que el Analizador de Separación) */}
+                <details className="group bg-white/80 rounded-xl border border-slate-200">
+                  <summary className="p-2.5 text-xs font-bold text-slate-600 flex items-center justify-between cursor-pointer select-none min-h-[40px]">
+                    <span>Calibración avanzada</span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[9px] text-blue-700 bg-blue-50 font-bold px-1.5 py-0.5 rounded">
+                        Tol: {analysisTolerance} · Ruido: {analysisMinCoverage}% · Vol: {analysisVolumen}
+                      </span>
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-open:rotate-180 transition-transform" />
+                    </span>
+                  </summary>
+                  <div className="p-3 border-t border-slate-100 space-y-3 text-xs">
+                    <div>
+                      <div className="flex justify-between text-[11px] font-semibold text-slate-600 mb-1">
+                        <span>Tolerancia de color</span>
+                        <span className="font-bold text-blue-600 font-mono">{analysisTolerance}</span>
+                      </div>
+                      <input type="range" min="5" max="100" value={analysisTolerance} onChange={e => setAnalysisTolerance(Number(e.target.value))} className="w-full accent-blue-600" />
+                      <p className="text-[10px] text-slate-400">Fusiona variaciones del mismo tono (antialiasing).</p>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-[11px] font-semibold text-slate-600 mb-1">
+                        <span>Filtro de ruido (mínimo %)</span>
+                        <span className="font-bold text-blue-600 font-mono">{analysisMinCoverage}%</span>
+                      </div>
+                      <input type="range" min="0.1" max="5" step="0.1" value={analysisMinCoverage} onChange={e => setAnalysisMinCoverage(Number(e.target.value))} className="w-full accent-blue-600" />
+                      <p className="text-[10px] text-slate-400">Ignora tonos que cubran menos de este % del área.</p>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-[11px] font-semibold text-slate-600 mb-1">
+                        <span>Volumen teórico (cm³/m²)</span>
+                      </div>
+                      <input
+                        type="number"
+                        min="1"
+                        value={analysisVolumen}
+                        onChange={e => setAnalysisVolumen(Number(e.target.value) || 15)}
+                        className="w-full min-h-[40px] px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold font-mono focus:ring-2 focus:ring-blue-500 outline-none"
+                      />
+                      <p className="text-[10px] text-slate-400">Se usa para estimar los gramos de tinta por pieza de cada marco.</p>
+                    </div>
+                    <p className="text-[10px] text-slate-400">Después de cambiar la calibración, pulsa “Re-analizar” o “Analizar marcos y Pantones”.</p>
+                  </div>
+                </details>
+              </div>
+            )}
+
+            {/* Gestión y Selección de Colores (Pantone con Buscador Predictivo y Muestra de Color) */}
             <div>
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
-                  <label className="block text-xs font-bold text-slate-500 uppercase">Colores Requeridos</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase">
+                    Colores / Marcos Requeridos ({colors.length})
+                  </label>
                   {colors.length > 0 && (
-                    <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md font-mono">
+                    <span className="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full font-mono">
                       Total: {colors.reduce((sum, c) => sum + (Number(c.gramsPerPiece) || 0), 0).toFixed(2)} g/pz
                       {unitWeight !== '' && Number(unitWeight) > 0 && (
                         <span className="text-slate-500 font-normal ml-1">
@@ -504,56 +926,90 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
                     </span>
                   )}
                 </div>
-                <button type="button" onClick={handleAddColor} className="text-xs font-bold text-blue-600 flex items-center gap-1 hover:text-blue-800">
-                  <Plus className="w-3 h-3" /> Añadir Color
+                <button 
+                  type="button" 
+                  onClick={handleAddColor} 
+                  className="min-h-[42px] px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95"
+                >
+                  <Plus className="w-4 h-4" /> Añadir Color
                 </button>
               </div>
               
               <div className="space-y-3">
                 {colors.map((c, idx) => (
-                  <div key={idx} className="flex gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div className="flex-1">
-                      <select 
+                  <div 
+                    key={idx} 
+                    className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-stretch sm:items-center bg-slate-50/80 p-3 sm:p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-slate-300 transition-colors"
+                  >
+                    {/* Indicador de Marco */}
+                    <div className="flex items-center justify-between sm:justify-start gap-2">
+                      <span className="w-7 h-7 rounded-lg bg-slate-200/80 text-slate-700 text-xs font-black font-mono flex items-center justify-center shrink-0">
+                        #{idx + 1}
+                      </span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase sm:hidden">
+                        Marco #{idx + 1}
+                      </span>
+                    </div>
+
+                    {/* Selector de Pantone Predictivo con Swatch de Color */}
+                    <div className="flex-1 min-w-0">
+                      <PantoneSearchableSelect
+                        pantones={pantones}
                         value={c.pantoneCode}
-                        onChange={e => handleColorChange(idx, 'pantoneCode', e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onChange={(code) => handleColorChange(idx, 'pantoneCode', code)}
+                        placeholder="Buscar por código (ej: 185 C) o nombre..."
                         required
-                      >
-                        <option value="">Selecciona un Color Pantone...</option>
-                        {pantones.map(p => (
-                          <option key={p.code} value={p.code}>{p.code} - {p.name}</option>
-                        ))}
-                      </select>
+                      />
                     </div>
-                    <div className="w-32">
-                      <div className="relative">
-                        <input 
-                          type="number"
-                          step="any"
-                          min="0.01"
-                          value={c.gramsPerPiece}
-                          onChange={e => handleColorChange(idx, 'gramsPerPiece', Number(e.target.value))}
-                          className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 pr-8 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-                          required
-                        />
-                        <span className="absolute right-3 top-2 text-xs font-bold text-slate-400">g/pz</span>
+
+                    {/* Consumo en Gramos por Pieza */}
+                    <div className="flex items-center gap-2">
+                      <div className="w-full sm:w-36">
+                        <div className="relative">
+                          <input 
+                            type="number"
+                            step="any"
+                            min="0.01"
+                            value={c.gramsPerPiece}
+                            onChange={e => handleColorChange(idx, 'gramsPerPiece', Number(e.target.value))}
+                            className="w-full min-h-[44px] bg-white border border-slate-200 rounded-xl px-3 py-2 pr-12 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                            placeholder="Gramos"
+                            required
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">g/pz</span>
+                        </div>
                       </div>
+
+                      {/* Botón Eliminar Color con Touch Target Grande (>= 44px) */}
+                      {colors.length > 1 ? (
+                        <button 
+                          type="button" 
+                          onClick={() => handleRemoveColor(idx)} 
+                          className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center bg-red-50 hover:bg-red-100 text-red-500 hover:text-red-700 border border-red-100 active:scale-95 transition-all cursor-pointer shrink-0"
+                          title="Eliminar este color / marco"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <div className="w-11 h-11 shrink-0 hidden sm:block" />
+                      )}
                     </div>
-                    {colors.length > 1 && (
-                      <button type="button" onClick={() => handleRemoveColor(idx)} className="p-2 text-slate-400 hover:text-red-500 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-sm font-bold transition-all shadow-md mt-4">
+            <button 
+              type="submit" 
+              className="w-full min-h-[50px] bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white rounded-2xl py-3.5 text-sm sm:text-base font-bold transition-all shadow-md mt-6 cursor-pointer flex items-center justify-center gap-2"
+            >
               {editingDesignId ? 'Actualizar Diseño' : 'Guardar Diseño'}
             </button>
           </form>
         </div>
+
+        {/* Modal de Imagen Ampliada accesible desde el formulario */}
+        {renderZoomModal()}
       </div>
     );
   }
@@ -893,28 +1349,7 @@ export default function DesignManager({ pantones, onRefreshDesigns }: DesignMana
       </div>
 
       {/* Modal de Imagen Ampliada */}
-      {zoomedData && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-6 cursor-pointer backdrop-blur-sm"
-          onClick={() => setZoomedData(null)}
-        >
-          <div className="absolute top-6 right-6 flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-xl backdrop-blur-md transition-colors" title="Cerrar (Esc)">
-            <span className="text-xs font-semibold">Cerrar</span>
-            <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono">Esc</span>
-            <X className="w-4 h-4 ml-1" />
-          </div>
-
-          {zoomedData.title && (
-            <div className="mb-4 text-white text-xl font-bold flex items-center gap-3">
-              {zoomedData.color && (
-                <div className="w-6 h-6 rounded-full border-2 border-white shadow-lg" style={{ backgroundColor: zoomedData.color }} />
-              )}
-              {zoomedData.title}
-            </div>
-          )}
-          <img src={zoomedData.url} className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl" alt="Zoomed" />
-        </div>
-      )}
+      {renderZoomModal()}
     </div>
   );
 }

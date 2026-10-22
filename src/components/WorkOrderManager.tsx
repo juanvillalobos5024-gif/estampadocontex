@@ -798,6 +798,7 @@ export default function WorkOrderManager({
             getOrderEffectiveStatus={getOrderEffectiveStatus}
             onUpdateStatus={handleKanbanUpdateStatus}
             onOpenOrderModal={handleOpenOrderModal}
+            onDeleteOrder={(orderId) => setOrderToDelete(orderId)}
           />
         ) : (
           /* Grid de Tarjetas */
@@ -853,11 +854,24 @@ export default function WorkOrderManager({
                         </>
                       )}
                     </div>
-                    {order.priority === 'Urgente' && (
-                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" /> URGENTE
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {order.priority === 'Urgente' && (
+                        <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" /> URGENTE
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOrderToDelete(order.id);
+                        }}
+                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                        title="Eliminar Orden"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Detalle */}
@@ -1016,6 +1030,18 @@ export default function WorkOrderManager({
 
                         {/* Botones de Acción */}
                         <div className="flex items-center gap-1.5 ml-auto">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOrderToDelete(order.id);
+                            }}
+                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            title="Eliminar Orden"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+
                           {effectiveStatus === 'Pendiente' && (
                             <button
                               onClick={() => handleOpenOrderModal(order)}
@@ -1173,6 +1199,19 @@ export default function WorkOrderManager({
                       </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const id = selectedOrderForModal.id;
+                          setSelectedOrderForModal(null);
+                          setOrderToDelete(id);
+                        }}
+                        className="px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                        title="Eliminar esta Orden de Trabajo"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Eliminar</span>
+                      </button>
                       <button
                         onClick={() => setSelectedOrderForModal(null)}
                         className="p-2 hover:bg-slate-200 rounded-full transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
@@ -1412,6 +1451,19 @@ export default function WorkOrderManager({
                       )}
                     </div>
                     <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const id = selectedOrderForModal.id;
+                          setSelectedOrderForModal(null);
+                          setOrderToDelete(id);
+                        }}
+                        className="px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                        title="Eliminar esta orden de trabajo"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>Eliminar</span>
+                      </button>
                       <button
                         onClick={() => setSelectedOrderForModal(null)}
                         className="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer text-center"

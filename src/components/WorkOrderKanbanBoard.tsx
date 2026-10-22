@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Clock, PlayCircle, CheckCircle2, Layers, Award, AlertCircle,
   Calendar, User, ArrowRight, ArrowLeft, Eye,
-  GripVertical, Sparkles, Check, ChevronRight
+  GripVertical, Sparkles, Check, ChevronRight, Trash2
 } from 'lucide-react';
 import { WorkOrder, Design, PantoneColor, BatchLog } from '../types';
 
@@ -98,6 +98,7 @@ interface WorkOrderKanbanBoardProps {
   ) => 'Pendiente' | 'Preparando Tintas' | 'Tintas Listas' | 'Estampándose' | 'Completada';
   onUpdateStatus: (orderId: string, newStatus: WorkOrder['status']) => Promise<void>;
   onOpenOrderModal: (order: WorkOrder) => void;
+  onDeleteOrder?: (orderId: string) => void;
 }
 
 export default function WorkOrderKanbanBoard({
@@ -110,7 +111,8 @@ export default function WorkOrderKanbanBoard({
   getDynamicOrderProgress,
   getOrderEffectiveStatus,
   onUpdateStatus,
-  onOpenOrderModal
+  onOpenOrderModal,
+  onDeleteOrder
 }: WorkOrderKanbanBoardProps) {
   const [draggedOrderId, setDraggedOrderId] = useState<string | null>(null);
   const [dragOverColumn, setDragOverColumn] = useState<KanbanColumnId | null>(null);
@@ -314,11 +316,26 @@ export default function WorkOrderKanbanBoard({
                               </div>
                             </div>
 
-                            {order.priority === 'Urgente' && (
-                              <span className="bg-red-50 text-red-700 border border-red-200 px-1.5 py-0.5 rounded-md text-[9px] font-black flex items-center gap-1 shrink-0 animate-pulse">
-                                <AlertCircle className="w-2.5 h-2.5" /> URGENTE
-                              </span>
-                            )}
+                            <div className="flex items-center gap-1 shrink-0">
+                              {order.priority === 'Urgente' && (
+                                <span className="bg-red-50 text-red-700 border border-red-200 px-1.5 py-0.5 rounded-md text-[9px] font-black flex items-center gap-1 shrink-0 animate-pulse">
+                                  <AlertCircle className="w-2.5 h-2.5" /> URGENTE
+                                </span>
+                              )}
+                              {onDeleteOrder && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDeleteOrder(order.id);
+                                  }}
+                                  className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
+                                  title="Eliminar Orden"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
                           </div>
 
                           {/* Medidor visual de avance de tintas / colores preparados */}
@@ -386,14 +403,29 @@ export default function WorkOrderKanbanBoard({
                           {/* Barra de Acciones de la Tarjeta */}
                           <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-1.5">
                             {/* Botón principal abrir orden */}
-                            <button
-                              type="button"
-                              onClick={() => onOpenOrderModal(order)}
-                              className="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1"
-                            >
-                              <Eye className="w-3 h-3" />
-                              <span>Abrir Orden</span>
-                            </button>
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => onOpenOrderModal(order)}
+                                className="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1"
+                              >
+                                <Eye className="w-3 h-3" />
+                                <span>Abrir Orden</span>
+                              </button>
+                              {onDeleteOrder && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDeleteOrder(order.id);
+                                  }}
+                                  className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                                  title="Eliminar Orden"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
 
                             {/* Botones para avanzar o retroceder columna con 1 clic (táctil) */}
                             <div className="flex items-center gap-0.5 ml-auto">

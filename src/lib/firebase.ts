@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
+import { 
+  getFirestore, 
+  initializeFirestore, 
+  persistentLocalCache, 
+  persistentMultipleTabManager 
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 // Configuración cargada directamente desde el archivo de configuración provisto por la plataforma
@@ -15,23 +20,21 @@ const firebaseConfig = {
 // Inicializar la aplicación Firebase
 const app = initializeApp(firebaseConfig);
 
-// Inicializar Firestore (usando la base de datos por defecto del proyecto)
-const db = getFirestore(app);
+// Inicializar Firestore con soporte multi-pestaña moderno y tolerancia a fallos
+let db: ReturnType<typeof getFirestore>;
+try {
+  db = initializeFirestore(app, {
+    localCache: persistentLocalCache({
+      tabManager: persistentMultipleTabManager()
+    })
+  });
+} catch (e) {
+  console.warn('Iniciando Firestore estándar sin persistencia local:', e);
+  db = getFirestore(app);
+}
 
 // Inicializar Auth
 const auth = getAuth(app);
 
-// Intentar habilitar la persistencia offline para que el taller no dependa de internet 100%
-try {
-  enableIndexedDbPersistence(db).catch((err) => {
-    if (err.code === 'failed-precondition') {
-      console.warn('La persistencia de Firestore falló debido a múltiples pestañas abiertas.');
-    } else if (err.code === 'unimplemented') {
-      console.warn('El navegador no soporta persistencia de Firestore.');
-    }
-  });
-} catch (e) {
-  console.warn('Persistencia offline de Firestore no configurada.', e);
-}
-
 export { app, db, auth };
+
