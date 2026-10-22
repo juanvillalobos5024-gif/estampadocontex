@@ -1,4 +1,9 @@
 import { SegundasRecord } from '../types';
+import { collection, doc, onSnapshot, writeBatch, deleteDoc, getDocs } from 'firebase/firestore';
+import { db } from './firebase';
+import { SEPTIEMBRE_SEGUNDAS_RECORDS } from './septiembreData';
+
+export { SEPTIEMBRE_SEGUNDAS_RECORDS };
 
 export function inferTecnica(diseno: string, referencia: string): 'REACTIVO' | 'PIGMENTO' {
   const d = (diseno || '').toUpperCase();
@@ -4251,9 +4256,12 @@ export function loadSegundasRecords(): SegundasRecord[] {
     if (saved) {
       let parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Asegurar que si faltan los registros de Julio (31 lotes) o Agosto (22 lotes), se integren desde INITIAL_SEGUNDAS_RECORDS
+        // Asegurar que si faltan registros de Julio (31 lotes), Agosto (22 lotes), Septiembre (19 lotes) u Octubre (8 lotes), se integren
         const hasJuly = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-07'));
         const hasAugust = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-08'));
+        const hasSeptember = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-09'));
+        const hasOctober = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-10'));
+
         if (!hasJuly) {
           const julyRecords = INITIAL_SEGUNDAS_RECORDS.filter(r => r.fecha && r.fecha.startsWith('2026-07'));
           parsed = [...parsed, ...julyRecords];
@@ -4262,7 +4270,9 @@ export function loadSegundasRecords(): SegundasRecord[] {
           const augRecords = INITIAL_SEGUNDAS_RECORDS.filter(r => r.fecha && r.fecha.startsWith('2026-08'));
           parsed = [...parsed, ...augRecords];
         }
-        const hasOctober = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-10'));
+        if (!hasSeptember) {
+          parsed = [...parsed, ...SEPTIEMBRE_SEGUNDAS_RECORDS];
+        }
         if (!hasOctober) {
           parsed = [...parsed, ...OCTUBRE_SEGUNDAS_RECORDS];
         }
@@ -4314,7 +4324,7 @@ export function loadSegundasRecords(): SegundasRecord[] {
   } catch (err) {
     console.error('Error loading segundas records from localStorage:', err);
   }
-  return [...INITIAL_SEGUNDAS_RECORDS, ...OCTUBRE_SEGUNDAS_RECORDS];
+  return [...INITIAL_SEGUNDAS_RECORDS, ...SEPTIEMBRE_SEGUNDAS_RECORDS, ...OCTUBRE_SEGUNDAS_RECORDS];
 }
 
 export function saveSegundasRecords(records: SegundasRecord[]): void {
@@ -4324,3 +4334,165 @@ export function saveSegundasRecords(records: SegundasRecord[]): void {
     console.error('Error saving segundas records to localStorage:', err);
   }
 }
+
+export const SEGUNDAS_COLLECTION = 'segundas_records';
+
+function sanitizeForFirestore(obj: any): any {
+  if (obj === null || obj === undefined) return null;
+  if (typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) {
+    return obj.map(sanitizeForFirestore);
+  }
+  const clean: Record<string, any> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      clean[key] = sanitizeForFirestore(value);
+    }
+  }
+  return clean;
+}
+
+/**
+ * Guarda o actualiza un lote de registros de segundas en Cloud Firestore (en bloques de hasta 400).
+ */
+export async function saveSegundasRecordsToCloud(records: SegundasRecord[]): Promise<boolean> {
+  if (!records || records.length === 0) return true;
+  try {
+    const CHUNK_SIZE = 400;
+    for (let i = 0; i < records.length; i += CHUNK_SIZE) {
+      const chunk = records.slice(i, i + CHUNK_SIZE);
+      const batch = writeBatch(db);
+      for (const rec of chunk) {
+        const id = (rec.id || `seg-${rec.fecha || 'sindata'}-${Math.random().toString(36).slice(2, 7)}`).replace(/\//g, '_');
+        const docRef = doc(db, SEGUNDAS_COLLECTION, id);
+        batch.set(docRef, sanitizeForFirestore({ ...rec, id }), { merge: true });
+      }
+      await batch.commit();
+    }
+    return true;
+  } catch (error) {
+    console.warn('Error guardando registros de segundas en Firestore:', error);
+    return false;
+  }
+}
+
+/**
+ * Elimina un registro de segundas de Cloud Firestore por su ID.
+ */
+export async function deleteSegundasRecordCloud(recordId: string): Promise<boolean> {
+  if (!recordId) return true;
+  try {
+    const cleanId = recordId.replace(/\//g, '_');
+    await deleteDoc(doc(db, SEGUNDAS_COLLECTION, cleanId));
+    return true;
+  } catch (error) {
+    console.warn('Error eliminando registro en Firestore:', error);
+    return false;
+  }
+}
+
+/**
+ * Restablece los registros en Cloud Firestore al conjunto maestro oficial.
+ */
+export async function resetSegundasRecordsCloud(masterRecords: SegundasRecord[]): Promise<boolean> {
+  try {
+    const snap = await getDocs(collection(db, SEGUNDAS_COLLECTION));
+    const masterIds = new Set(masterRecords.map(m => m.id));
+    
+    // Eliminar documentos que no pertenezcan al maestro
+    const toDelete = snap.docs.filter(d => !masterIds.has(d.id));
+    for (let i = 0; i < toDelete.length; i += 400) {
+      const chunk = toDelete.slice(i, i + 400);
+      const batch = writeBatch(db);
+      chunk.forEach(d => batch.delete(d.ref));
+      await batch.commit();
+    }
+    
+    return await saveSegundasRecordsToCloud(masterRecords);
+  } catch (error) {
+    console.warn('Error restableciendo registros en Firestore:', error);
+    return false;
+  }
+}
+
+/**
+ * Suscripción en tiempo real a la colección segundas_records de Firestore.
+ * Sincroniza automáticamente entre Vercel, localhost y cualquier dispositivo.
+ * Si la colección está vacía en la nube, la inicializa con el histórico acumulado.
+ */
+export function subscribeToSegundasRecords(
+  onUpdate: (records: SegundasRecord[]) => void
+): () => void {
+  try {
+    const colRef = collection(db, SEGUNDAS_COLLECTION);
+    let isSeeding = false;
+
+    const unsubscribe = onSnapshot(colRef, async (snapshot) => {
+      if (snapshot.empty && !isSeeding) {
+        isSeeding = true;
+        console.log('[Firestore] Colección segundas_records vacía. Sembrando histórico completo...');
+        
+        // Histórico base con Julio, Agosto, Septiembre y Octubre completos
+        const baseMaster = [
+          ...INITIAL_SEGUNDAS_RECORDS, 
+          ...SEPTIEMBRE_SEGUNDAS_RECORDS, 
+          ...OCTUBRE_SEGUNDAS_RECORDS
+        ];
+        
+        // Integrar registros locales únicos si el usuario tenía datos previos
+        const local = loadSegundasRecords();
+        const recordsToSeed = [...baseMaster];
+        if (Array.isArray(local) && local.length > 0) {
+          local.forEach(loc => {
+            const exists = recordsToSeed.some(b => 
+              (loc.id && b.id === loc.id) || 
+              (b.fecha === loc.fecha && (b.diseno || '').toUpperCase() === (loc.diseno || '').toUpperCase() && b.cantTotalRevisada === loc.cantTotalRevisada)
+            );
+            if (!exists) {
+              recordsToSeed.push(loc);
+            }
+          });
+        }
+
+        try {
+          await saveSegundasRecordsToCloud(recordsToSeed);
+          console.log(`[Firestore] Histórico sembrado con éxito en la nube (${recordsToSeed.length} lotes).`);
+        } catch (seedErr) {
+          console.warn('[Firestore] Error al sembrar segundas_records en la nube:', seedErr);
+        } finally {
+          isSeeding = false;
+        }
+        return;
+      }
+
+      if (!snapshot.empty) {
+        const cloudRecords = snapshot.docs.map(docSnap => ({
+          id: docSnap.id,
+          ...docSnap.data()
+        })) as SegundasRecord[];
+
+        // Ordenar por fecha descendente
+        cloudRecords.sort((a, b) => {
+          const fa = a.fecha || '';
+          const fb = b.fecha || '';
+          if (fa !== fb) return fb.localeCompare(fa);
+          return (b.cantTotalRevisada || 0) - (a.cantTotalRevisada || 0);
+        });
+
+        // Respaldar en localStorage para disponibilidad offline inmediata
+        saveSegundasRecords(cloudRecords);
+        onUpdate(cloudRecords);
+      }
+    }, (error) => {
+      console.warn('[Firestore] Aviso en listener tiempo real segundas_records (usando respaldo local):', error);
+      onUpdate(loadSegundasRecords());
+    });
+
+    return unsubscribe;
+  } catch (err) {
+    console.warn('[Firestore] No se pudo inicializar listener de segundas_records:', err);
+    onUpdate(loadSegundasRecords());
+    return () => {};
+  }
+}
+

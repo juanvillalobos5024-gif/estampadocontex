@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   ShieldAlert, CheckCircle2, AlertTriangle, TrendingDown, TrendingUp,
   Layers, Search, FileSpreadsheet, FileText, Plus, X, Edit2, Trash2,
@@ -9,7 +9,7 @@ import {
   Scissors, AlertCircle, Factory, Info, Droplets, Boxes, Sparkles,
   ArrowUpRight, ArrowDownRight, Download, FileDown, Filter,
   ChevronDown, Clock, ShieldCheck, Printer, Image as LucideImage,
-  PieChart as LucidePieChart, Palette
+  PieChart as LucidePieChart, Palette, Cloud
 } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -20,7 +20,19 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { SegundasRecord } from '../types';
-import { loadSegundasRecords, saveSegundasRecords, INITIAL_SEGUNDAS_RECORDS, inferTecnica, detectSegundasExcelColumns } from '../lib/segundasData';
+import { 
+  loadSegundasRecords, 
+  saveSegundasRecords, 
+  saveSegundasRecordsToCloud,
+  deleteSegundasRecordCloud,
+  resetSegundasRecordsCloud,
+  subscribeToSegundasRecords,
+  INITIAL_SEGUNDAS_RECORDS, 
+  SEPTIEMBRE_SEGUNDAS_RECORDS,
+  OCTUBRE_SEGUNDAS_RECORDS,
+  inferTecnica, 
+  detectSegundasExcelColumns 
+} from '../lib/segundasData';
 
 const MONTH_NAMES = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -200,7 +212,17 @@ export interface ReprocesoModalState {
 
 export default function SegundasDashboard() {
   const [records, setRecords] = useState<SegundasRecord[]>(() => loadSegundasRecords());
+  const [isCloudSyncing, setIsCloudSyncing] = useState<boolean>(true);
   const [subView, setSubView] = useState<'resumen' | 'fallas_ref' | 'planilla' | 'pareto'>('resumen');
+
+  // ── Sincronización en tiempo real con Firebase Firestore (Vercel, Localhost, Móviles) ──
+  useEffect(() => {
+    const unsub = subscribeToSegundasRecords((cloudRecords) => {
+      setRecords(cloudRecords);
+      setIsCloudSyncing(false);
+    });
+    return () => unsub();
+  }, []);
   
   // ── Filtros de Tiempo y Selección ──
   const [timeFilter, setTimeFilter] = useState<'all' | 'month' | 'year' | 'range'>('month');
@@ -362,6 +384,7 @@ export default function SegundasDashboard() {
   const updateRecords = (newRecords: SegundasRecord[]) => {
     setRecords(newRecords);
     saveSegundasRecords(newRecords);
+    saveSegundasRecordsToCloud(newRecords);
   };
 
   // Navegación de meses
@@ -1915,6 +1938,7 @@ export default function SegundasDashboard() {
       confirmText: 'Eliminar',
       danger: true,
       onConfirm: () => {
+        deleteSegundasRecordCloud(id);
         updateRecords(records.filter(r => r.id !== id));
         if (selectedDetailRecord?.id === id) setSelectedDetailRecord(null);
         showToast('info', 'Registro eliminado', 'La inspección fue retirada del historial.');
@@ -1930,8 +1954,10 @@ export default function SegundasDashboard() {
       message: '¿Deseas restablecer los registros originales de la planilla de segundas? Se perderán las modificaciones no exportadas.',
       confirmText: 'Restablecer',
       danger: true,
-      onConfirm: () => {
-        updateRecords(INITIAL_SEGUNDAS_RECORDS);
+      onConfirm: async () => {
+        const master = [...INITIAL_SEGUNDAS_RECORDS, ...SEPTIEMBRE_SEGUNDAS_RECORDS, ...OCTUBRE_SEGUNDAS_RECORDS];
+        await resetSegundasRecordsCloud(master);
+        updateRecords(master);
         showToast('info', 'Datos restablecidos', 'Se han restaurado los registros originales del taller.');
         setConfirmDialog(null);
       }
@@ -3051,6 +3077,17 @@ export default function SegundasDashboard() {
 
         {/* Acciones Rápidas */}
         <div className="flex items-center gap-2 ml-auto">
+          {/* Badge de Sincronización en la Nube Firestore */}
+          <div 
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-sky-800 bg-sky-50 border border-sky-200/90 rounded-xl transition-all shadow-2xs"
+            title="Base de datos Cloud Firestore activa. Sincronización multi-dispositivo y multi-origen en tiempo real."
+          >
+            <Cloud className={`w-3.5 h-3.5 text-sky-600 ${isCloudSyncing ? 'animate-bounce' : ''}`} />
+            <span className="hidden sm:inline text-sky-900 font-extrabold">Nube:</span>
+            <span className="text-sky-700 font-semibold">{isCloudSyncing ? 'Conectando...' : 'Sincronizado'}</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 shadow-xs animate-pulse" title="Conexión en vivo activa" />
+          </div>
+
           {/* Badge y Botón de Estado del Último Archivo Excel Cargado */}
           <button
             type="button"
