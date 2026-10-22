@@ -1070,7 +1070,7 @@ export default function SegundasDashboard() {
       const defsTint = [
         { key: 'manchaTintoreria', name: 'Mancha Tintorería', shortName: 'Mancha Tinta', cant: item.manchaTintoreria, color: '#06b6d4' },
         { key: 'manchaOxido', name: 'Mancha Óxido', shortName: 'Óxido', cant: item.manchaOxido, color: '#d97706' },
-        { key: 'arrastreBarca', name: 'Arrastre Barca', shortName: 'Arrastre', color: '#6366f1' },
+        { key: 'arrastreBarca', name: 'Arrastre Barca', shortName: 'Arrastre', cant: item.arrastreBarca, color: '#6366f1' },
         { key: 'sucias', name: 'Sucias', shortName: 'Sucias', cant: item.sucias, color: '#f43f5e' },
         { key: 'vetas', name: 'Vetas', shortName: 'Vetas', cant: item.vetas, color: '#0d9488' },
         { key: 'medida', name: 'Medida', shortName: 'Medida', cant: item.medida, color: '#8b5cf6' },
@@ -1092,7 +1092,7 @@ export default function SegundasDashboard() {
       // Costura
       const defsCost = [
         { key: 'tundidoCaido', name: 'Tundido Caído', shortName: 'Tundido', cant: item.tundidoCaido, color: '#a855f7' },
-        { key: 'montadasCostura', name: 'Montadas Costura', shortName: 'Montadas', color: '#6366f1' },
+        { key: 'montadasCostura', name: 'Montadas Costura', shortName: 'Montadas', cant: item.montadasCostura, color: '#6366f1' },
         { key: 'manchasNegras', name: 'Manchas Negras', shortName: 'Manchas Negras', cant: item.manchasNegras, color: '#334155' },
         { key: 'enganches', name: 'Enganches', shortName: 'Enganches', cant: item.enganches, color: '#f59e0b' },
       ];
@@ -3114,9 +3114,6 @@ export default function SegundasDashboard() {
                     {fmtPct(pctGlobalBuena)}
                   </span>
                 </div>
-                <p className="text-[10px] text-emerald-600 font-bold mt-0.5 leading-tight truncate">
-                  Rendimiento conforme
-                </p>
               </div>
             </div>
 
@@ -3153,9 +3150,7 @@ export default function SegundasDashboard() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-1 mt-0.5 text-[10px]">
-                      <span className="text-slate-500 font-medium truncate">
-                        Taller ({fmtInt(totals.estampado)}) + Otros ({fmtInt(totals.tintoreria + totals.tejeduria + totals.costura + totals.rotas)})
-                      </span>
+            
                       {monthOverMonthStats?.hasPrev && (
                         <span className={`font-mono font-bold shrink-0 text-[10px] ${monthOverMonthStats.deltaSegundas <= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
                           {monthOverMonthStats.deltaSegundas <= 0 ? `▼ ${Math.abs(monthOverMonthStats.deltaSegundas)} pp` : `▲ +${monthOverMonthStats.deltaSegundas} pp`}
@@ -3221,10 +3216,6 @@ export default function SegundasDashboard() {
                         {fmtPct(pctGlobalCabeceras)}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight truncate flex items-center justify-between">
-                      <span>Reproceso dobladillo cabecera</span>
-                      <span className="text-[9px] font-bold text-cyan-600 underline">Abrir modal</span>
-                    </p>
                   </div>
                 </div>
               );
@@ -3270,10 +3261,6 @@ export default function SegundasDashboard() {
                         {fmtPct(pctGlobalLaterales)}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight truncate flex items-center justify-between">
-                      <span>Reproceso dobladillo lateral</span>
-                      <span className="text-[9px] font-bold text-sky-600 underline">Abrir modal</span>
-                    </p>
                   </div>
                 </div>
               );
@@ -3311,10 +3298,6 @@ export default function SegundasDashboard() {
                     {fmtPct(pctGlobalPegas)}
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight truncate flex items-center justify-between">
-                  <span>Empalmes en rollo evaluados</span>
-                  <span className="text-[9px] font-bold text-indigo-600 underline">Abrir modal</span>
-                </p>
               </div>
             </div>
           </div>
@@ -3349,7 +3332,7 @@ export default function SegundasDashboard() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-1">
                   <p className="text-[10px] sm:text-[11px] font-extrabold text-rose-600 uppercase tracking-wide leading-tight truncate">
-                    Estampado (Taller)
+                    Estampado
                   </p>
                   <span className="text-[9px] font-extrabold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-rose-100">
                     <Search className="w-2.5 h-2.5" />
@@ -3365,7 +3348,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-rose-600 font-extrabold leading-tight truncate mt-0.5">
-                  Taller ({totals.totalSegundas > 0 ? ((totals.estampado / totals.totalSegundas) * 100).toFixed(0) : 0}% de segundas)
+                   ({totals.totalSegundas > 0 ? ((totals.estampado / totals.totalSegundas) * 100).toFixed(0) : 0}% de segundas)
                 </p>
               </div>
             </div>
@@ -3403,7 +3386,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-cyan-700 font-bold leading-tight truncate mt-0.5">
-                  Mancha, óxido, sucias ({totals.totalSegundas > 0 ? ((totals.tintoreria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                   ({totals.totalSegundas > 0 ? ((totals.tintoreria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
@@ -3441,7 +3424,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-emerald-700 font-bold leading-tight truncate mt-0.5">
-                  Urdimbre, trama ({totals.totalSegundas > 0 ? ((totals.tejeduria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                   ({totals.totalSegundas > 0 ? ((totals.tejeduria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
@@ -3493,7 +3476,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-purple-700 font-bold leading-tight truncate mt-0.5">
-                  Tundido ({totals.totalSegundas > 0 ? ((totals.tundido / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                   ({totals.totalSegundas > 0 ? ((totals.tundido / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
@@ -3531,7 +3514,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-indigo-700 font-bold leading-tight truncate mt-0.5">
-                  Costura ({totals.totalSegundas > 0 ? ((totals.montadas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                   ({totals.totalSegundas > 0 ? ((totals.montadas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
@@ -3569,7 +3552,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-slate-500 font-bold leading-tight truncate mt-0.5">
-                  Acabado ({totals.totalSegundas > 0 ? ((totals.manchasNegras / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                  ({totals.totalSegundas > 0 ? ((totals.manchasNegras / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
@@ -3607,7 +3590,7 @@ export default function SegundasDashboard() {
                   </span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-red-700 font-bold leading-tight truncate mt-0.5">
-                  Telas rotas ({totals.totalSegundas > 0 ? ((totals.rotas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                   ({totals.totalSegundas > 0 ? ((totals.rotas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
                 </p>
               </div>
             </div>
