@@ -3563,6 +3563,686 @@ export const INITIAL_SEGUNDAS_RECORDS: SegundasRecord[] = [
   }
 ];
 
+export const OCTUBRE_SEGUNDAS_RECORDS: SegundasRecord[] = [
+  {
+    "id": "seg-octubre-1",
+    "fecha": "2026-10-03",
+    "revisadoras": "BLANCA-KELLY",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "CHASE",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 2393,
+    "cantBuena": 1380,
+    "pegas": 108,
+    "arreLaterales": 180,
+    "pctLaterales": 0.07522,
+    "arreCabeceras": 183,
+    "pctCabeceras": 0.076473,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 0,
+      "repise": 2,
+      "faltaPintura": 12,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 3,
+      "totalEstampado": 17
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 0,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 0
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 0,
+      "revienteTrama": 24,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 24
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 0,
+      "tundidoCaido": 490,
+      "montadasCostura": 0,
+      "totalCostura": 490
+    },
+    "rotas": 11,
+    "totalTintoreria": 0,
+    "totalTejeduria": 24,
+    "totalCostura": 490,
+    "totalSegundas": 542,
+    "pctTotalSegundas": 0.226494,
+    "pctEstampado": 0.007104
+  },
+  {
+    "id": "seg-octubre-2",
+    "fecha": "2026-10-05",
+    "revisadoras": "BLANCA-MAYULIS-HEIDY-TATINA",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "ML1002",
+    "dimensiones": "30*60-330",
+    "diseno": "FRUTAS ANDU",
+    "color": "EST",
+    "tecnica": "PIGMENTO",
+    "cantTotalRevisada": 6968,
+    "cantBuena": 4645,
+    "pegas": 351,
+    "arreLaterales": 984,
+    "pctLaterales": 0.141217,
+    "arreCabeceras": 881,
+    "pctCabeceras": 0.126435,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 15,
+      "repise": 30,
+      "faltaPintura": 1,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 46
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 48,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 5,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 53
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 0,
+      "revienteTrama": 0,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 0
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 0,
+      "tundidoCaido": 0,
+      "montadasCostura": 2,
+      "totalCostura": 2
+    },
+    "rotas": 6,
+    "totalTintoreria": 53,
+    "totalTejeduria": 0,
+    "totalCostura": 2,
+    "totalSegundas": 107,
+    "pctTotalSegundas": 0.015356,
+    "pctEstampado": 0.006602
+  },
+  {
+    "id": "seg-octubre-3",
+    "fecha": "2026-10-06",
+    "revisadoras": "BLANCA MAYULIS HEIDY TATIANA",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "MICKEY",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 1075,
+    "cantBuena": 903,
+    "pegas": 45,
+    "arreLaterales": 47,
+    "pctLaterales": 0.043721,
+    "arreCabeceras": 45,
+    "pctCabeceras": 0.04186,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 9,
+      "repise": 14,
+      "faltaPintura": 3,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 26
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 0,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 0
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 2,
+      "revienteTrama": 0,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 2
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 3,
+      "tundidoCaido": 0,
+      "montadasCostura": 4,
+      "totalCostura": 7
+    },
+    "rotas": 0,
+    "totalTintoreria": 0,
+    "totalTejeduria": 2,
+    "totalCostura": 7,
+    "totalSegundas": 35,
+    "pctTotalSegundas": 0.032558,
+    "pctEstampado": 0.024186
+  },
+  {
+    "id": "seg-octubre-4",
+    "fecha": "2026-10-10",
+    "revisadoras": "KAREN-KARELYS-CARMEN",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "HELLO KITTY",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 903,
+    "cantBuena": 816,
+    "pegas": 0,
+    "arreLaterales": 0,
+    "pctLaterales": 0,
+    "arreCabeceras": 0,
+    "pctCabeceras": 0,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 14,
+      "repise": 0,
+      "faltaPintura": 0,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 14
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 21,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 21
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 23,
+      "revienteTrama": 14,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 37
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 0,
+      "tundidoCaido": 0,
+      "montadasCostura": 14,
+      "totalCostura": 14
+    },
+    "rotas": 1,
+    "totalTintoreria": 21,
+    "totalTejeduria": 37,
+    "totalCostura": 14,
+    "totalSegundas": 87,
+    "pctTotalSegundas": 0.096346,
+    "pctEstampado": 0.015504
+  },
+  {
+    "id": "seg-octubre-5",
+    "fecha": "2026-10-13",
+    "revisadoras": "KAREN-KARELYS-CARMEN",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "HELLO KITTY",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 945,
+    "cantBuena": 688,
+    "pegas": 0,
+    "arreLaterales": 67,
+    "pctLaterales": 0.070899,
+    "arreCabeceras": 0,
+    "pctCabeceras": 0,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 2,
+      "repise": 0,
+      "faltaPintura": 30,
+      "logosCorridos": 11,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 43
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 2,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 2
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 3,
+      "revienteTrama": 9,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 12
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 117,
+      "tundidoCaido": 0,
+      "montadasCostura": 16,
+      "totalCostura": 133
+    },
+    "rotas": 0,
+    "totalTintoreria": 2,
+    "totalTejeduria": 12,
+    "totalCostura": 133,
+    "totalSegundas": 190,
+    "pctTotalSegundas": 0.201058,
+    "pctEstampado": 0.045503
+  },
+  {
+    "id": "seg-octubre-6",
+    "fecha": "2026-10-13",
+    "revisadoras": "BLANCA-MAYULIS",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "SKYE",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 2559,
+    "cantBuena": 1802,
+    "pegas": 119,
+    "arreLaterales": 253,
+    "pctLaterales": 0.098867,
+    "arreCabeceras": 297,
+    "pctCabeceras": 0.116061,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 4,
+      "repise": 15,
+      "faltaPintura": 1,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 20
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 11,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 11
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 2,
+      "revienteTrama": 3,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 5
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 45,
+      "tundidoCaido": 0,
+      "montadasCostura": 3,
+      "totalCostura": 48
+    },
+    "rotas": 4,
+    "totalTintoreria": 11,
+    "totalTejeduria": 5,
+    "totalCostura": 48,
+    "totalSegundas": 88,
+    "pctTotalSegundas": 0.034388,
+    "pctEstampado": 0.007816
+  },
+  {
+    "id": "seg-octubre-7",
+    "fecha": "2026-10-14",
+    "revisadoras": "HEIDY-MAYULIS-BLANCA-TATIANA",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "GATA MERY",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 1253,
+    "cantBuena": 719,
+    "pegas": 45,
+    "arreLaterales": 252,
+    "pctLaterales": 0.201117,
+    "arreCabeceras": 213,
+    "pctCabeceras": 0.169992,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 2,
+      "repise": 3,
+      "faltaPintura": 9,
+      "logosCorridos": 0,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 0,
+      "quemadas": 0,
+      "totalEstampado": 14
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 0,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 0
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 0,
+      "revienteTrama": 5,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 5
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 0,
+      "tundidoCaido": 4,
+      "montadasCostura": 0,
+      "totalCostura": 4
+    },
+    "rotas": 1,
+    "totalTintoreria": 0,
+    "totalTejeduria": 5,
+    "totalCostura": 4,
+    "totalSegundas": 24,
+    "pctTotalSegundas": 0.019154,
+    "pctEstampado": 0.011173
+  },
+  {
+    "id": "seg-octubre-8",
+    "fecha": "2026-10-14",
+    "revisadoras": "BLANCA-TATIANA -HEIDY",
+    "cliente": "LINEA",
+    "pedidoLinea": "",
+    "referencia": "C280T",
+    "dimensiones": "60*120-280",
+    "diseno": "STITCH NIÑA",
+    "color": "EST",
+    "tecnica": "REACTIVO",
+    "cantTotalRevisada": 2329,
+    "cantBuena": 1705,
+    "pegas": 44,
+    "arreLaterales": 108,
+    "pctLaterales": 0.046372,
+    "arreCabeceras": 112,
+    "pctCabeceras": 0.048089,
+    "observaciones": "",
+    "defectosEstampado": {
+      "manchas": 19,
+      "repise": 36,
+      "faltaPintura": 5,
+      "logosCorridos": 1,
+      "penetracion": 0,
+      "grasa": 0,
+      "descases": 1,
+      "quemadas": 0,
+      "totalEstampado": 62
+    },
+    "defectosTintoreria": {
+      "manchaTintoreria": 2,
+      "manchaOxido": 0,
+      "arrastreBarca": 0,
+      "sucias": 0,
+      "vetas": 0,
+      "medida": 0,
+      "rama": 0,
+      "grasa": 0,
+      "totalTintoreria": 2
+    },
+    "defectosTejeduria": {
+      "revienteUrdimbre": 1,
+      "revienteTrama": 41,
+      "marra": 0,
+      "rayas": 0,
+      "variacionesRizo": 0,
+      "hiloContaminado": 0,
+      "orillosLaterales": 0,
+      "totalTejeduria": 42
+    },
+    "defectosCostura": {
+      "enganches": 0,
+      "manchasNegras": 0,
+      "tundidoCaido": 241,
+      "montadasCostura": 0,
+      "totalCostura": 241
+    },
+    "rotas": 13,
+    "totalTintoreria": 2,
+    "totalTejeduria": 42,
+    "totalCostura": 241,
+    "totalSegundas": 360,
+    "pctTotalSegundas": 0.154573,
+    "pctEstampado": 0.026621
+  }
+];
+
+export interface SegundasExcelColumns {
+  fecha: number;
+  revisadoras: number;
+  cliente: number;
+  pedidoLinea: number;
+  referencia: number;
+  dimensiones: number;
+  diseno: number;
+  color: number;
+  cantTotal: number;
+  cantBuena: number;
+  pegas: number;
+  arreLat: number;
+  pctLat: number;
+  arreCab: number;
+  pctCab: number;
+  observaciones: number;
+
+  // Estampado (8)
+  manchas: number;
+  repise: number;
+  faltaPintura: number;
+  logosCorridos: number;
+  penetracion: number;
+  grasaEst: number;
+  descases: number;
+  quemadas: number;
+
+  // Tintorería (8)
+  manchaTint: number;
+  manchaOxido: number;
+  arrastreBarca: number;
+  sucias: number;
+  vetas: number;
+  medida: number;
+  rama: number;
+  grasaTint: number;
+
+  // Tejeduría (7)
+  revUrdimbre: number;
+  revTrama: number;
+  marra: number;
+  rayas: number;
+  variacionesRizo: number;
+  hiloContaminado: number;
+  orillosLaterales: number;
+
+  // Costura (4)
+  enganches: number;
+  manchasNegras: number;
+  tundidoCaido: number;
+  montadasCostura: number;
+
+  // Rotas (1)
+  rotas: number;
+
+  // Total Unds R2 / RZ
+  totalSegundas: number;
+}
+
+export function detectSegundasExcelColumns(headers0: any[], headers1: any[]): SegundasExcelColumns {
+  const combinedHeaders: { col: number; section: string; h0: string; h1: string; full: string }[] = [];
+  const maxCols = Math.max((headers0 || []).length, (headers1 || []).length, 55);
+
+  let currentSection = '';
+  for (let c = 0; c < maxCols; c++) {
+    const h0 = String(headers0?.[c] || '').trim().toUpperCase();
+    const h1 = String(headers1?.[c] || '').trim().toUpperCase();
+    
+    if (h0.includes('ESTAMPADO')) currentSection = 'ESTAMPADO';
+    else if (h0.includes('TINTORERIA') || h0.includes('TINTORER')) currentSection = 'TINTORERIA';
+    else if (h0.includes('TEJEDURIA') || h0.includes('TEJEDUR')) currentSection = 'TEJEDURIA';
+    else if (h0.includes('COSTURA') || h0.includes('ENGANCHE') || h0.includes('TUNDIDO') || h0.includes('CONFECCION')) currentSection = 'COSTURA';
+    
+    combinedHeaders.push({
+      col: c,
+      section: currentSection,
+      h0,
+      h1,
+      full: `${h0} ${h1}`.trim()
+    });
+  }
+
+  const findCol = (predicate: (item: { col: number; section: string; h0: string; h1: string; full: string }) => boolean, fallbackCol: number) => {
+    const found = combinedHeaders.find(predicate);
+    return found !== undefined ? found.col : fallbackCol;
+  };
+
+  return {
+    fecha: findCol(c => c.h0.includes('FECHA') || c.h1.includes('FECHA'), 0),
+    revisadoras: findCol(c => c.h0.includes('REVISADORA') || c.h1.includes('REVISADORA'), 1),
+    cliente: findCol(c => c.h0.includes('CLIENTE') || c.h1.includes('CLIENTE'), 2),
+    pedidoLinea: findCol(c => (c.h0.includes('PEDIDO') || c.h0.includes('LINEA') || c.h1.includes('PEDIDO')) && !c.full.includes('CANT'), 3),
+    referencia: findCol(c => (c.h0.includes('REFERENCIA') || c.h1.includes('REFERENCIA')) && !c.full.includes('TALLER') && !c.full.includes('DISEÑO'), 4),
+    dimensiones: findCol(c => c.h0.includes('DIMEN') || c.h1.includes('DIMEN'), 5),
+    diseno: findCol(c => c.h0.includes('DISEÑO') || c.h0.includes('LOGO HOTELERO') || c.h1.includes('DISEÑO'), 6),
+    color: findCol(c => (c.h0 === 'COLOR' || c.h1 === 'COLOR') && !c.full.includes('TINT'), 7),
+    cantTotal: findCol(c => c.full.includes('TOTAL REVISADA') || (c.full.includes('REVISADA') && !c.full.includes('BUENA')), 8),
+    cantBuena: findCol(c => c.full.includes('BUENA') || c.full.includes('1ª CALIDAD') || c.full.includes('PRIMERA'), 9),
+    pegas: findCol(c => c.full.includes('PEGA'), 10),
+    arreLat: findCol(c => c.full.includes('LATERAL'), 11),
+    pctLat: findCol(c => c.col === 12 || (c.col > 11 && c.full === '%'), 12),
+    arreCab: findCol(c => c.full.includes('CABECERA'), 13),
+    pctCab: findCol(c => c.col === 14 || (c.col > 13 && c.full === '%'), 14),
+    observaciones: findCol(c => c.full.includes('OBSERVACION'), 15),
+
+    // Estampado (8)
+    manchas: findCol(c => (c.section === 'ESTAMPADO' || (c.col >= 16 && c.col < 24)) && c.full.includes('MANCHA') && !c.full.includes('NEGRA') && !c.full.includes('TINT') && !c.full.includes('OXIDO'), 16),
+    repise: findCol(c => c.full.includes('REPISE'), 17),
+    faltaPintura: findCol(c => c.full.includes('FALTA') || c.full.includes('PINTURA'), 18),
+    logosCorridos: findCol(c => (c.col >= 16 && c.col < 24) && (c.full.includes('LOGO') || c.full.includes('CORRIDO')), 19),
+    penetracion: findCol(c => c.full.includes('PENETRA'), 20),
+    grasaEst: findCol(c => (c.section === 'ESTAMPADO' || (c.col >= 16 && c.col < 24)) && c.full.includes('GRASA'), 21),
+    descases: findCol(c => c.full.includes('DESCASE'), 22),
+    quemadas: findCol(c => c.full.includes('QUEMADA'), 23),
+
+    // Tintorería (8)
+    manchaTint: findCol(c => c.full.includes('MANCHA TINT') || (c.section === 'TINTORERIA' && c.full.includes('MANCHA') && !c.full.includes('OXIDO') && !c.full.includes('OCIDO')), 24),
+    manchaOxido: findCol(c => c.full.includes('OXIDO') || c.full.includes('OCIDO'), 25),
+    arrastreBarca: findCol(c => c.full.includes('BARCA') || c.full.includes('ARRASTRE') || c.full.includes('ARASATRE'), 26),
+    sucias: findCol(c => c.full.includes('SUCIA'), 27),
+    vetas: findCol(c => c.full.includes('VETA'), 28),
+    medida: findCol(c => c.full.includes('MEDIDA'), 29),
+    rama: findCol(c => c.full.includes('RAMA'), 30),
+    grasaTint: findCol(c => (c.section === 'TINTORERIA' || (c.col >= 24 && c.col < 32)) && c.full.includes('GRASA'), 31),
+
+    // Tejeduría (7)
+    revUrdimbre: findCol(c => c.full.includes('URDIMBRE'), 32),
+    revTrama: findCol(c => c.full.includes('TRAMA'), 33),
+    marra: findCol(c => c.full.includes('MARRA'), 34),
+    rayas: findCol(c => c.full.includes('RAYA'), 35),
+    variacionesRizo: findCol(c => c.full.includes('RIZO') || c.full.includes('VARIACION'), 36),
+    hiloContaminado: findCol(c => c.full.includes('HILO') || c.full.includes('CONTAMINADO'), 37),
+    orillosLaterales: findCol(c => c.full.includes('ORILLO'), 38),
+
+    // Costura (4)
+    enganches: findCol(c => c.full.includes('ENGANCHE'), 39),
+    manchasNegras: findCol(c => c.full.includes('MANCHAS NEGRA') || c.full.includes('MANCHA NEGRA') || (c.section === 'COSTURA' && c.full.includes('NEGRA')), 40),
+    tundidoCaido: findCol(c => c.full.includes('TUNDIDO'), 41),
+    montadasCostura: findCol(c => c.full.includes('MONTADA') || (c.section === 'COSTURA' && c.full.includes('COSTURA')), 42),
+
+    // Rotas (1)
+    rotas: findCol(c => (c.full.includes('ROTA') || c.full.includes('ROTAS')) && !c.full.includes('%') && !c.full.includes('TOTAL'), 43),
+
+    // Total Unds R2 / RZ
+    totalSegundas: findCol(c => c.full.includes('TOTAL UNDS') || c.full.includes('TOTAL RZ') || c.full.includes('TOTAL R2') || (c.full.includes('TOTAL') && c.full.includes('SEG')), 44)
+  };
+}
+
 const LOCAL_STORAGE_KEY = 'contex_segundas_records_v5';
 
 export function loadSegundasRecords(): SegundasRecord[] {
@@ -3582,6 +4262,32 @@ export function loadSegundasRecords(): SegundasRecord[] {
           const augRecords = INITIAL_SEGUNDAS_RECORDS.filter(r => r.fecha && r.fecha.startsWith('2026-08'));
           parsed = [...parsed, ...augRecords];
         }
+        const hasOctober = parsed.some((r: any) => r.fecha && String(r.fecha).startsWith('2026-10'));
+        if (!hasOctober) {
+          parsed = [...parsed, ...OCTUBRE_SEGUNDAS_RECORDS];
+        }
+
+        // AUTO-UPGRADE: Si existen registros de Octubre 2026 pero tienen defectos de tintorería y tejeduría en 0 debido al parser anterior,
+        // actualizarlos automáticamente con los datos completos auditados.
+        parsed = parsed.map((r: any) => {
+          if (r.fecha && String(r.fecha).startsWith('2026-10')) {
+            const rev = Number(r.cantTotalRevisada) || 0;
+            const totTint = Number(r.defectosTintoreria?.totalTintoreria) || Number(r.totalTintoreria) || 0;
+            const totTej = Number(r.defectosTejeduria?.totalTejeduria) || Number(r.totalTejeduria) || 0;
+            const totCost = Number(r.defectosCostura?.totalCostura) || Number(r.totalCostura) || 0;
+            if (totTint === 0 && totTej === 0 && totCost === 0) {
+              const match = OCTUBRE_SEGUNDAS_RECORDS.find(oct => 
+                oct.fecha === r.fecha && 
+                oct.diseno.toUpperCase() === (r.diseno || '').toUpperCase() && 
+                oct.cantTotalRevisada === rev
+              );
+              if (match) {
+                return { ...r, ...match, id: r.id || match.id };
+              }
+            }
+          }
+          return r;
+        });
 
         return parsed.map((r: any) => {
           const rev = Number(r.cantTotalRevisada) || 0;
@@ -3608,7 +4314,7 @@ export function loadSegundasRecords(): SegundasRecord[] {
   } catch (err) {
     console.error('Error loading segundas records from localStorage:', err);
   }
-  return INITIAL_SEGUNDAS_RECORDS;
+  return [...INITIAL_SEGUNDAS_RECORDS, ...OCTUBRE_SEGUNDAS_RECORDS];
 }
 
 export function saveSegundasRecords(records: SegundasRecord[]): void {

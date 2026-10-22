@@ -20,7 +20,7 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { SegundasRecord } from '../types';
-import { loadSegundasRecords, saveSegundasRecords, INITIAL_SEGUNDAS_RECORDS, inferTecnica } from '../lib/segundasData';
+import { loadSegundasRecords, saveSegundasRecords, INITIAL_SEGUNDAS_RECORDS, inferTecnica, detectSegundasExcelColumns } from '../lib/segundasData';
 
 const MONTH_NAMES = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -1955,8 +1955,10 @@ export default function SegundasDashboard() {
           const raw = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
           if (!raw || raw.length < 2) continue;
 
-          // Detección dinámica: si raw[1] ya tiene cantidades numéricas en col 8 o 9, los datos inician en fila 2 (índice 1)
-          const startRow = (Number(raw[1]?.[8]) > 0 || Number(raw[1]?.[9]) > 0) ? 1 : 2;
+          const cols = detectSegundasExcelColumns(raw[0] || [], raw[1] || []);
+
+          // Detección dinámica: si raw[1] ya tiene cantidades numéricas en col cantTotal o cantBuena, los datos inician en fila 2 (índice 1)
+          const startRow = (Number(raw[1]?.[cols.cantTotal]) > 0 || Number(raw[1]?.[cols.cantBuena]) > 0) ? 1 : 2;
 
           for (let r = startRow; r < raw.length; r++) {
             const row = raw[r];
@@ -1964,41 +1966,77 @@ export default function SegundasDashboard() {
             // Omitir fila si en cualquiera de las primeras columnas dice 'TOTAL'
             const isTotalRow = row.slice(0, 8).some(cell => String(cell || '').trim().toUpperCase() === 'TOTAL');
             if (isTotalRow) continue;
-            if (!row[8] && !row[9]) continue;
+            if (!row[cols.cantTotal] && !row[cols.cantBuena]) continue;
 
-            const fechaStr = normalizeExcelDate(row[0]);
+            const fechaStr = normalizeExcelDate(row[cols.fecha]);
             if (!fechaStr) continue;
 
-            const totalRev = Number(row[8]) || 0;
-            const cantBuena = Number(row[9]) || 0;
-            const pegas = Number(row[10]) || 0;
-            const arreLat = Number(row[11]) || 0;
-            const arreCab = Number(row[13]) || 0;
+            const totalRev = Number(row[cols.cantTotal]) || 0;
+            const cantBuena = Number(row[cols.cantBuena]) || 0;
+            const pegas = Number(row[cols.pegas]) || 0;
+            const arreLat = Number(row[cols.arreLat]) || 0;
+            const arreCab = Number(row[cols.arreCab]) || 0;
 
-            const manchas = Number(row[16]) || 0;
-            const repise = Number(row[17]) || 0;
-            const faltaPintura = Number(row[18]) || 0;
-            const logosCorridos = Number(row[19]) || 0;
-            const penetracion = Number(row[20]) || 0;
-            const grasa = Number(row[21]) || 0;
-            const descases = Number(row[22]) || 0;
-            const quemadas = Number(row[23]) || 0;
-            const totalEstampado = manchas + repise + faltaPintura + logosCorridos + penetracion + grasa + descases + quemadas;
-            const arreglos = arreLat + arreCab;
-            const otrosProcesos = Math.max(0, totalRev - (cantBuena + pegas + arreglos + totalEstampado));
-            const totalSegundas = totalEstampado + otrosProcesos;
+            // Defectos Estampado (8 tipos)
+            const manchas = Number(row[cols.manchas]) || 0;
+            const repise = Number(row[cols.repise]) || 0;
+            const faltaPintura = Number(row[cols.faltaPintura]) || 0;
+            const logosCorridos = Number(row[cols.logosCorridos]) || 0;
+            const penetracion = Number(row[cols.penetracion]) || 0;
+            const grasaEst = Number(row[cols.grasaEst]) || 0;
+            const descases = Number(row[cols.descases]) || 0;
+            const quemadas = Number(row[cols.quemadas]) || 0;
+            const totalEstampado = manchas + repise + faltaPintura + logosCorridos + penetracion + grasaEst + descases + quemadas;
 
-            const diseno = String(row[6] || '').trim();
-            const referencia = String(row[4] || '').trim();
+            // Defectos Tintorería (8 tipos)
+            const manchaTint = Number(row[cols.manchaTint]) || 0;
+            const manchaOxido = Number(row[cols.manchaOxido]) || 0;
+            const arrastreBarca = Number(row[cols.arrastreBarca]) || 0;
+            const sucias = Number(row[cols.sucias]) || 0;
+            const vetas = Number(row[cols.vetas]) || 0;
+            const medida = Number(row[cols.medida]) || 0;
+            const rama = Number(row[cols.rama]) || 0;
+            const grasaTint = Number(row[cols.grasaTint]) || 0;
+            const totalTintoreria = manchaTint + manchaOxido + arrastreBarca + sucias + vetas + medida + rama + grasaTint;
+
+            // Defectos Tejeduría (7 tipos)
+            const revUrdimbre = Number(row[cols.revUrdimbre]) || 0;
+            const revTrama = Number(row[cols.revTrama]) || 0;
+            const marra = Number(row[cols.marra]) || 0;
+            const rayas = Number(row[cols.rayas]) || 0;
+            const variacionesRizo = Number(row[cols.variacionesRizo]) || 0;
+            const hiloContaminado = Number(row[cols.hiloContaminado]) || 0;
+            const orillosLaterales = Number(row[cols.orillosLaterales]) || 0;
+            const totalTejeduria = revUrdimbre + revTrama + marra + rayas + variacionesRizo + hiloContaminado + orillosLaterales;
+
+            // Defectos Costura / Confección (4 tipos)
+            const enganches = Number(row[cols.enganches]) || 0;
+            const manchasNegras = Number(row[cols.manchasNegras]) || 0;
+            const tundidoCaido = Number(row[cols.tundidoCaido]) || 0;
+            const montadasCostura = Number(row[cols.montadasCostura]) || 0;
+            const totalCostura = enganches + manchasNegras + tundidoCaido + montadasCostura;
+
+            // Telas Rotas
+            const rotas = Number(row[cols.rotas]) || 0;
+
+            // Total Segundas (Total Unds RZ / R2 o suma de todos los defectos)
+            const colTotalSeg = Number(row[cols.totalSegundas]) || 0;
+            const sumSeg = totalEstampado + totalTintoreria + totalTejeduria + totalCostura + rotas;
+            const totalSegundas = colTotalSeg > 0 ? colTotalSeg : sumSeg;
+
+            const diseno = String(row[cols.diseno] || '').trim();
+            const referencia = String(row[cols.referencia] || '').trim();
 
             imported.push({
               id: `seg-imp-${r}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
               fecha: fechaStr,
-              revisadoras: String(row[1] || '').trim(),
+              revisadoras: String(row[cols.revisadoras] || '').trim(),
+              cliente: String(row[cols.cliente] || '').trim(),
+              pedidoLinea: String(row[cols.pedidoLinea] || '').trim(),
               referencia,
-              dimensiones: String(row[5] || '').trim(),
+              dimensiones: String(row[cols.dimensiones] || '').trim(),
               diseno,
-              color: row[7] ? String(row[7]).trim() : 'EST',
+              color: row[cols.color] ? String(row[cols.color]).trim() : 'EST',
               tecnica: inferTecnica(diseno, referencia),
               cantTotalRevisada: totalRev,
               cantBuena,
@@ -2007,18 +2045,50 @@ export default function SegundasDashboard() {
               pctLaterales: totalRev > 0 ? Number((arreLat / totalRev).toFixed(6)) : 0,
               arreCabeceras: arreCab,
               pctCabeceras: totalRev > 0 ? Number((arreCab / totalRev).toFixed(6)) : 0,
-              observaciones: row[15] ? String(row[15]).trim() : '',
+              observaciones: row[cols.observaciones] ? String(row[cols.observaciones]).trim() : '',
               defectosEstampado: {
                 manchas,
                 repise,
                 faltaPintura,
                 logosCorridos,
                 penetracion,
-                grasa,
+                grasa: grasaEst,
                 descases,
                 quemadas,
                 totalEstampado
               },
+              defectosTintoreria: {
+                manchaTintoreria: manchaTint,
+                manchaOxido: manchaOxido,
+                arrastreBarca: arrastreBarca,
+                sucias,
+                vetas,
+                medida,
+                rama,
+                grasa: grasaTint,
+                totalTintoreria
+              },
+              defectosTejeduria: {
+                revienteUrdimbre: revUrdimbre,
+                revienteTrama: revTrama,
+                marra,
+                rayas,
+                variacionesRizo,
+                hiloContaminado,
+                orillosLaterales,
+                totalTejeduria
+              },
+              defectosCostura: {
+                enganches,
+                manchasNegras,
+                tundidoCaido,
+                montadasCostura,
+                totalCostura
+              },
+              rotas,
+              totalTintoreria,
+              totalTejeduria,
+              totalCostura,
               pctEstampado: totalRev > 0 ? Number((totalEstampado / totalRev).toFixed(6)) : 0,
               totalSegundas,
               pctTotalSegundas: totalRev > 0 ? Number((totalSegundas / totalRev).toFixed(6)) : 0
@@ -2067,6 +2137,10 @@ export default function SegundasDashboard() {
           { name: 'Arreglos Laterales (Orillos)', col: 'Col L (11)', status: 'ok' as const, note: 'Reproceso registrado' },
           { name: 'Arreglos Cabeceras (Dobladillo)', col: 'Col N (13)', status: 'ok' as const, note: 'Reproceso registrado' },
           { name: 'Defectos de Estampado (8 tipos)', col: 'Cols Q-X (16-23)', status: 'ok' as const, note: 'Manchas, repise, falta pintura, grasa, etc.' },
+          { name: 'Defectos de Tintorería (8 tipos)', col: 'Cols Y-AF (24-31)', status: 'ok' as const, note: 'Manchas, óxido, arrastre barca, sucias, vetas, etc.' },
+          { name: 'Defectos de Tejeduría (7 tipos)', col: 'Cols AG-AM (32-38)', status: 'ok' as const, note: 'Reviente urdimbre, trama, marras, rayas, rizo, etc.' },
+          { name: 'Costura y Físicas (4 tipos)', col: 'Cols AN-AQ (39-42)', status: 'ok' as const, note: 'Tundido caído, montadas, manchas negras, enganches' },
+          { name: 'Telas Rotas y Total Segundas', col: 'Cols AR-AS (43-44)', status: 'ok' as const, note: 'Rotas y Total Unds R2 / RZ verificado' }
         ];
 
         const auditInfo: ImportAuditStatus = {
@@ -2106,8 +2180,25 @@ export default function SegundasDashboard() {
 
   const handleConfirmAccumulate = () => {
     if (!importPending) return;
-    const toAdd = importPending.newRecords;
-    const merged = [...toAdd, ...records];
+    const incomingByFp = new Map<string, SegundasRecord>();
+    importPending.importedRecords.forEach(r => {
+      incomingByFp.set(getRecordFingerprint(r), r);
+    });
+
+    let updatedCount = 0;
+    const updatedExisting = records.map(r => {
+      const fp = getRecordFingerprint(r);
+      if (incomingByFp.has(fp)) {
+        updatedCount++;
+        const fresh = incomingByFp.get(fp)!;
+        incomingByFp.delete(fp);
+        return fresh;
+      }
+      return r;
+    });
+
+    const completelyNew = Array.from(incomingByFp.values());
+    const merged = [...completelyNew, ...updatedExisting];
     updateRecords(merged);
 
     // Auto-navegar al mes predominante de los datos importados para visualización inmediata
@@ -2121,8 +2212,8 @@ export default function SegundasDashboard() {
     const periodStr = importPending.detectedMonths.map(m => m.label).join(', ');
     showToast(
       'success',
-      '¡Historial Acumulado con Éxito!',
-      `Se incorporaron ${toAdd.length} registros nuevos (${periodStr}). El historial ahora conserva ${merged.length} registros en total.`
+      '¡Historial Actualizado con Éxito!',
+      `Se actualizaron ${updatedCount} registros existentes con sus datos completos y se agregaron ${completelyNew.length} nuevos (${periodStr}). El historial conserva ${merged.length} registros en total.`
     );
     setImportPending(null);
   };
