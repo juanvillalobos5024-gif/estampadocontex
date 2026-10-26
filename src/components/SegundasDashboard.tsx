@@ -33,6 +33,7 @@ import {
   inferTecnica, 
   detectSegundasExcelColumns 
 } from '../lib/segundasData';
+import { SegundasReportModal } from './SegundasReportModal';
 
 const MONTH_NAMES = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -215,30 +216,6 @@ export default function SegundasDashboard() {
   const [isCloudSyncing, setIsCloudSyncing] = useState<boolean>(true);
   const [subView, setSubView] = useState<'resumen' | 'fallas_ref' | 'planilla' | 'pareto'>('resumen');
 
-  // ── Modo de Visualización de KPIs (Opción 2: Ejecutivo vs Detallado) ──
-  const [kpiViewMode, setKpiViewMode] = useState<'ejecutivo' | 'detallado'>(() => {
-    try {
-      return (localStorage.getItem('contex_kpi_view_mode') as 'ejecutivo' | 'detallado') || 'ejecutivo';
-    } catch (e) {
-      return 'ejecutivo';
-    }
-  });
-
-  // ── Estado de Acordeón para los 3 Bloques Lógicos (Opción 3) ──
-  const [panelOpen, setPanelOpen] = useState<{
-    estampado: boolean;
-    proveedores: boolean;
-    costura: boolean;
-  }>({
-    estampado: true,
-    proveedores: true,
-    costura: true,
-  });
-
-  const togglePanel = (panel: 'estampado' | 'proveedores' | 'costura') => {
-    setPanelOpen(prev => ({ ...prev, [panel]: !prev[panel] }));
-  };
-
   // ── Sincronización en tiempo real con Firebase Firestore (Vercel, Localhost, Móviles) ──
   useEffect(() => {
     const unsub = subscribeToSegundasRecords((cloudRecords) => {
@@ -269,6 +246,7 @@ export default function SegundasDashboard() {
   const [referenciaFilter, setReferenciaFilter] = useState<string>('all'); // Base de tela (C280T, ME1002, ML1002)
   const [disenoFilter, setDisenoFilter] = useState<string>('all'); // Diseño (Referencia en el taller)
   const [monthlyComparisonScope, setMonthlyComparisonScope] = useState<'filtered' | 'all'>('filtered');
+  const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
 
   // ── Estados de la Vista Diagnóstico de Fallas por Diseño (Referencia) ──
   const [fallasProcess, setFallasProcess] = useState<'estampado' | 'tintoreria' | 'tejeduria' | 'costura' | 'todos'>('estampado');
@@ -3145,6 +3123,15 @@ export default function SegundasDashboard() {
           </button>
           <button
             type="button"
+            onClick={() => setIsReportModalOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200/80 rounded-xl cursor-pointer transition-all shadow-2xs"
+            title="Personalizar y generar informe PDF para jefes de planta (elegir gráficas, tiempo, MoM, año, rango)"
+          >
+            <FileText className="w-3.5 h-3.5 text-rose-600" />
+            <span>Informe PDF</span>
+          </button>
+          <button
+            type="button"
             onClick={handleOpenNewModal}
             className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-black text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-xs transition-all cursor-pointer"
           >
@@ -3201,738 +3188,553 @@ export default function SegundasDashboard() {
         </div>
       )}
 
-      {/* ── SECCIÓN DE KPIS: MODO DUAL (EJECUTIVO VS DETALLADO) Y 3 BLOQUES LÓGICOS ── */}
+      {/* ── KPI CARDS EJECUTIVOS: 4 BLOQUES ESTRUCTURADOS ── */}
       <div className="space-y-3">
-        {/* CABECERA DE BALANCE GENERAL CON CONMUTADOR DE MODO */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 px-0.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+        {/* BLOQUE 1: INSPECCIÓN PRINCIPAL (3 TARJETAS) */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5 px-0.5">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
               <Activity className="w-3.5 h-3.5 text-slate-600" />
-              Balance General de Calidad
+              1. Balance General de Inspección
             </span>
-            <span className="text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200/80 px-2 py-0.5 rounded-lg shadow-2xs">
-              {timeFilteredRecords.length} lotes evaluados
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {/* Conmutador de Modo: Vista Ejecutiva (3 KPIs) vs Auditoría de Procesos (Detallada) */}
-            <div className="flex items-center gap-0.5 bg-slate-100 p-0.5 rounded-xl border border-slate-200/90 shadow-2xs text-[11px]">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => {
-                  setKpiViewMode('ejecutivo');
-                  try { localStorage.setItem('contex_kpi_view_mode', 'ejecutivo'); } catch (e) {}
-                }}
-                className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  kpiViewMode === 'ejecutivo'
-                    ? 'bg-white text-slate-900 shadow-xs font-black'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-                title="Vista ejecutiva compacta con los 3 indicadores estratégicos"
+                onClick={() => setIsReportModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200/90 shadow-2xs transition-all cursor-pointer"
+                title="Personalizar y descargar informe PDF (elegir período, MoM y gráficas)"
               >
-                <LayoutGrid className="w-3.5 h-3.5 text-slate-600" />
-                <span>Vista Ejecutiva</span>
+                <FileText className="w-3.5 h-3.5 text-rose-600" />
+                <span>Informe Diario PDF</span>
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setKpiViewMode('detallado');
-                  try { localStorage.setItem('contex_kpi_view_mode', 'detallado'); } catch (e) {}
-                }}
-                className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  kpiViewMode === 'detallado'
-                    ? 'bg-white text-slate-900 shadow-xs font-black'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-                title="Vista de auditoría detallada con los 3 bloques de procesos"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-slate-600" />
-                <span>Auditoría de Procesos</span>
-              </button>
-            </div>
-
-            {/* Botón Descargar Informe Diario PDF */}
-            <button
-              type="button"
-              onClick={exportExecutiveSummaryPDF}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-all cursor-pointer"
-              title="Descargar informe operativo diario en PDF para jefes de planta y taller"
-            >
-              <FileText className="w-3.5 h-3.5 text-rose-600" />
-              <span>Informe PDF</span>
-            </button>
-          </div>
-        </div>
-
-        {/* ── LOS 3 KPIS ESTRATÉGICOS PRINCIPALES (PALETA SOBRIA Y EJECUTIVA) ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-          {/* 1. Total Revisadas */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 hover:border-slate-300 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/80">
-              <Activity className="w-5 h-5 text-slate-700" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide leading-tight">
-                Total Revisadas
-              </p>
-              <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
-                <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono tracking-tight">
-                  {fmtInt(totals.revisada)}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 border border-slate-200/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
-                  100%
-                </span>
-              </div>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5 leading-tight truncate">
+              <span className="text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200/80 px-2 py-0.5 rounded-lg shadow-2xs">
                 {timeFilteredRecords.length} lotes evaluados
-              </p>
+              </span>
             </div>
           </div>
-
-          {/* 2. 1ª Calidad (Buenas) */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 hover:border-emerald-300 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide leading-tight">
-                1ª Calidad (Buenas)
-              </p>
-              <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
-                <span className="text-xl sm:text-2xl font-black text-emerald-700 font-mono tracking-tight">
-                  {fmtInt(totals.buena)}
-                </span>
-                <span className="text-xs sm:text-sm font-black text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
-                  {fmtPct(pctGlobalBuena)}
-                </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            {/* 1.1 Total Revisadas */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 hover:border-slate-300 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200">
+                <Activity className="w-5 h-5" />
               </div>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5 leading-tight truncate">
-                Producción conforme
-              </p>
-            </div>
-          </div>
-
-          {/* 3. Total Segundas (Con Semáforo Semántico sobrio) */}
-          {(() => {
-            const isCritical = pctGlobalSegundas >= 0.08 || (monthOverMonthStats?.hasPrev && (monthOverMonthStats.deltaSegundas || 0) >= 1.5);
-            const isWarning = !isCritical && (pctGlobalSegundas >= 0.04 || (monthOverMonthStats?.hasPrev && (monthOverMonthStats.deltaSegundas || 0) > 0));
-            const cardBorder = isCritical ? 'border-rose-300 hover:border-rose-400' : isWarning ? 'border-amber-300 hover:border-amber-400' : 'border-slate-200/90 hover:border-slate-300';
-            const cardBg = isCritical ? 'bg-gradient-to-br from-white to-rose-50/20' : isWarning ? 'bg-gradient-to-br from-white to-amber-50/20' : 'bg-white';
-            const badgeClass = isCritical ? 'bg-rose-50 text-rose-700 border-rose-200' : isWarning ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-100 text-slate-700 border-slate-200';
-            const badgeLabel = isCritical ? '🔴 Crítico (≥8%)' : isWarning ? '🟡 Alerta (4-8%)' : '🟢 Conforme (<4%)';
-
-            return (
-              <div className={`rounded-2xl border ${cardBorder} ${cardBg} p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all relative`}>
-                <div className={`w-10 h-10 rounded-xl ${isCritical ? 'bg-rose-50 text-rose-600 border border-rose-100' : isWarning ? 'bg-amber-50 text-amber-600 border border-amber-100' : 'bg-slate-100 text-slate-700 border border-slate-200/80'} flex items-center justify-center shrink-0`}>
-                  {isCritical ? <AlertTriangle className="w-5 h-5" /> : <TrendingDown className="w-5 h-5" />}
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide leading-tight">
+                  Total Revisadas
+                </p>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono tracking-tight">
+                    {fmtInt(totals.revisada)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-slate-700 bg-slate-100 border border-slate-200/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    100%
+                  </span>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-1">
-                    <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide leading-tight">
-                      Total Segundas
-                    </p>
-                    <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded-md border ${badgeClass} shrink-0`}>
-                      {badgeLabel}
-                    </span>
+                <p className="text-[10px] text-slate-400 font-medium mt-0.5 leading-tight truncate">
+                  {timeFilteredRecords.length} lotes evaluados
+                </p>
+              </div>
+            </div>
+
+            {/* 1.2 1ª Calidad (Buenas) */}
+            <div className="bg-white rounded-2xl border border-emerald-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-emerald-50/20 hover:border-emerald-300 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] sm:text-[11px] font-extrabold text-emerald-600 uppercase tracking-wide leading-tight">
+                  1ª Calidad (Buenas)
+                </p>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-emerald-700 font-mono tracking-tight">
+                    {fmtInt(totals.buena)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-emerald-700 bg-emerald-50 border border-emerald-200/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalBuena)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 1.3 Total Segundas (Con Indicadores de Alerta Condicional y Umbrales) */}
+            {(() => {
+              const isCritical = pctGlobalSegundas >= 0.08 || (monthOverMonthStats?.hasPrev && (monthOverMonthStats.deltaSegundas || 0) >= 1.5);
+              const isWarning = !isCritical && (pctGlobalSegundas >= 0.04 || (monthOverMonthStats?.hasPrev && (monthOverMonthStats.deltaSegundas || 0) > 0));
+              const cardBorder = isCritical ? 'border-rose-300 hover:border-rose-400' : isWarning ? 'border-amber-300 hover:border-amber-400' : 'border-emerald-300 hover:border-emerald-400';
+              const cardBg = isCritical ? 'bg-gradient-to-br from-white via-rose-50/30 to-rose-100/20' : isWarning ? 'bg-gradient-to-br from-white via-amber-50/30 to-amber-100/20' : 'bg-gradient-to-br from-white via-emerald-50/30 to-emerald-100/20';
+              const iconBg = isCritical ? 'bg-rose-100 text-rose-700 border-rose-200' : isWarning ? 'bg-amber-100 text-amber-700 border-amber-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
+              const badgeClass = isCritical ? 'bg-rose-100 text-rose-800 border-rose-300' : isWarning ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300';
+              const badgeLabel = isCritical ? '🔴 Supera Umbral (≥8%)' : isWarning ? '🟡 Alerta Moderada (4-8%)' : '🟢 Meta Conforme (<4%)';
+
+              return (
+                <div className={`bg-white rounded-2xl border ${cardBorder} ${cardBg} p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all relative overflow-hidden`}>
+                  <div className={`w-10 h-10 rounded-xl ${iconBg} flex items-center justify-center shrink-0 border`}>
+                    {isCritical ? <AlertTriangle className="w-5 h-5 text-rose-600 animate-pulse" /> : <TrendingDown className="w-5 h-5" />}
                   </div>
-                  <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
-                    <span className={`text-xl sm:text-2xl font-black font-mono tracking-tight ${isCritical ? 'text-rose-900' : isWarning ? 'text-amber-900' : 'text-slate-900'}`}>
-                      {fmtInt(totals.totalSegundas)}
-                    </span>
-                    <span className={`text-xs sm:text-sm font-black px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs border ${badgeClass}`}>
-                      {fmtPct(pctGlobalSegundas)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between gap-1 mt-0.5 text-[10px]">
-                    <span className="text-slate-400 font-medium truncate">
-                      Meta mensual &lt; 4%
-                    </span>
-                    {monthOverMonthStats?.hasPrev && (
-                      <span className={`font-mono font-bold shrink-0 text-[10px] ${monthOverMonthStats.deltaSegundas <= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
-                        {monthOverMonthStats.deltaSegundas <= 0 ? `▼ ${Math.abs(monthOverMonthStats.deltaSegundas)} pp` : `▲ +${monthOverMonthStats.deltaSegundas} pp`}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className={`text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wide leading-tight ${isCritical ? 'text-rose-700' : isWarning ? 'text-amber-800' : 'text-emerald-800'}`}>
+                        Total Segundas
+                      </p>
+                      <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded-md border ${badgeClass} shrink-0`}>
+                        {badgeLabel}
                       </span>
-                    )}
+                    </div>
+                    <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                      <span className={`text-xl sm:text-2xl font-black font-mono tracking-tight ${isCritical ? 'text-rose-900' : isWarning ? 'text-amber-900' : 'text-emerald-900'}`}>
+                        {fmtInt(totals.totalSegundas)}
+                      </span>
+                      <span className={`text-sm sm:text-base font-black px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs border ${badgeClass}`}>
+                        {fmtPct(pctGlobalSegundas)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-1 mt-0.5 text-[10px]">
+            
+                      {monthOverMonthStats?.hasPrev && (
+                        <span className={`font-mono font-bold shrink-0 text-[10px] ${monthOverMonthStats.deltaSegundas <= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
+                          {monthOverMonthStats.deltaSegundas <= 0 ? `▼ ${Math.abs(monthOverMonthStats.deltaSegundas)} pp` : `▲ +${monthOverMonthStats.deltaSegundas} pp`}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })()}
+              );
+            })()}
+          </div>
         </div>
 
-        {/* ── MODO 1 (VISTA EJECUTIVA): TIRA RESUMEN DE PROCESOS (1 SOLA LÍNEA COMPACTA) ── */}
-        {kpiViewMode === 'ejecutivo' && (
-          <div className="bg-white rounded-2xl border border-slate-200/90 p-2.5 sm:p-3 shadow-2xs flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 text-slate-500 font-bold text-[11px]">
-              <Factory className="w-3.5 h-3.5 text-slate-600" />
-              <span>Aporte por Proceso:</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 sm:gap-5 font-mono text-[11px]">
-              <button
-                type="button"
-                onClick={() => { setKpiViewMode('detallado'); setPanelOpen(p => ({ ...p, estampado: true })); }}
-                className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 hover:underline cursor-pointer"
-                title="Ver auditoría de Estampado"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                <span className="font-semibold text-slate-500">Estampado:</span>
-                <span className="font-extrabold text-slate-900">{fmtInt(totals.estampado)}</span>
-                <span className="text-slate-500 text-[10px]">({fmtPct(pctGlobalEstampado)})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { setKpiViewMode('detallado'); setPanelOpen(p => ({ ...p, proveedores: true })); }}
-                className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 hover:underline cursor-pointer"
-                title="Ver auditoría de Tintorería"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                <span className="font-semibold text-slate-500">Tintorería:</span>
-                <span className="font-extrabold text-slate-900">{fmtInt(totals.tintoreria)}</span>
-                <span className="text-slate-500 text-[10px]">({fmtPct(pctGlobalTintoreria)})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { setKpiViewMode('detallado'); setPanelOpen(p => ({ ...p, proveedores: true })); }}
-                className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 hover:underline cursor-pointer"
-                title="Ver auditoría de Tejeduría"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                <span className="font-semibold text-slate-500">Tejeduría:</span>
-                <span className="font-extrabold text-slate-900">{fmtInt(totals.tejeduria)}</span>
-                <span className="text-slate-500 text-[10px]">({fmtPct(pctGlobalTejeduria)})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { setKpiViewMode('detallado'); setPanelOpen(p => ({ ...p, costura: true })); }}
-                className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 hover:underline cursor-pointer"
-                title="Ver auditoría de Confección y Físicas"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                <span className="font-semibold text-slate-500">Confección/Físicas:</span>
-                <span className="font-extrabold text-slate-900">{fmtInt(totals.tundido + totals.montadas + totals.manchasNegras + totals.rotas)}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { setKpiViewMode('detallado'); setPanelOpen(p => ({ ...p, costura: true })); }}
-                className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 hover:underline cursor-pointer"
-                title="Ver auditoría de Arreglos y Reprocesos"
-              >
-                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                <span className="font-semibold text-slate-500">Arreglos:</span>
-                <span className="font-extrabold text-slate-900">{fmtInt(totals.arreCabeceras + totals.arreLaterales)}</span>
-              </button>
-            </div>
-            <button
-              type="button"
-              onClick={() => setKpiViewMode('detallado')}
-              className="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1 ml-auto cursor-pointer"
+        {/* BLOQUE 2: ARREGLOS Y PEGAS (INTERACTIVOS CON DESGLOSE DE LOTES) */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5 px-0.5">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-sky-600" />
+              2. Arreglos y Pegas (Separados)
+            </span>
+            <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200/80 px-2 py-0.5 rounded-lg shadow-2xs">
+              Total Arreglos: {fmtInt(totals.arreCabeceras + totals.arreLaterales)} ({fmtPct(pctGlobalCabeceras + pctGlobalLaterales)})
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            {/* 2.1 Arreglos Cabeceras (Clickeable para ver desglose de lotes) */}
+            {(() => {
+              const isHigh = pctGlobalCabeceras >= 0.05;
+              const isMed = pctGlobalCabeceras >= 0.025 && !isHigh;
+              const borderCol = isHigh ? 'border-rose-300 hover:border-rose-400 bg-rose-50/20' : isMed ? 'border-amber-300 hover:border-amber-400 bg-amber-50/20' : 'border-cyan-200/90 hover:border-cyan-400 bg-cyan-50/20';
+
+              return (
+                <div
+                  onClick={() => setReprocesoModal({
+                    type: 'cabeceras',
+                    title: 'Arreglos Cabeceras (Dobladillo)',
+                    subtitle: 'Lotes exactos que generaron reproceso en dobladillos de cabecera',
+                    badgeColor: 'cyan'
+                  })}
+                  className={`bg-white rounded-2xl border ${borderCol} p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]`}
+                  title="Hacer clic para ver el desglose de los lotes exactos con arreglos de cabecera"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 border border-cyan-100 group-hover:bg-cyan-100 group-hover:scale-105 transition-all">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[10px] sm:text-[11px] font-extrabold text-cyan-700 uppercase tracking-wide leading-tight truncate">
+                        Arreglos Cabeceras
+                      </p>
+                      <span className="text-[9px] font-extrabold text-cyan-700 bg-cyan-50 border border-cyan-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-cyan-100">
+                        <Search className="w-2.5 h-2.5" />
+                        <span>Ver lotes</span>
+                      </span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                      <span className="text-xl sm:text-2xl font-black text-cyan-800 font-mono tracking-tight">
+                        {fmtInt(totals.arreCabeceras)}
+                      </span>
+                      <span className={`text-sm sm:text-base font-black px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs border ${
+                        isHigh ? 'bg-rose-50 text-rose-700 border-rose-200' : isMed ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-cyan-50 text-cyan-700 border-cyan-200'
+                      }`}>
+                        {fmtPct(pctGlobalCabeceras)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* 2.2 Arreglos Laterales (Clickeable para ver desglose de lotes) */}
+            {(() => {
+              const isHigh = pctGlobalLaterales >= 0.05;
+              const isMed = pctGlobalLaterales >= 0.025 && !isHigh;
+              const borderCol = isHigh ? 'border-rose-300 hover:border-rose-400 bg-rose-50/20' : isMed ? 'border-amber-300 hover:border-amber-400 bg-amber-50/20' : 'border-sky-200/90 hover:border-sky-400 bg-sky-50/20';
+
+              return (
+                <div
+                  onClick={() => setReprocesoModal({
+                    type: 'laterales',
+                    title: 'Arreglos Laterales (Orillos)',
+                    subtitle: 'Lotes exactos que generaron reproceso en dobladillos de orillos laterales',
+                    badgeColor: 'sky'
+                  })}
+                  className={`bg-white rounded-2xl border ${borderCol} p-3 sm:p-3.5 shadow-xs flex items-center gap-3 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]`}
+                  title="Hacer clic para ver el desglose de los lotes exactos con arreglos laterales"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 border border-sky-100 group-hover:bg-sky-100 group-hover:scale-105 transition-all">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[10px] sm:text-[11px] font-extrabold text-sky-700 uppercase tracking-wide leading-tight truncate">
+                        Arreglos Laterales
+                      </p>
+                      <span className="text-[9px] font-extrabold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-sky-100">
+                        <Search className="w-2.5 h-2.5" />
+                        <span>Ver lotes</span>
+                      </span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                      <span className="text-xl sm:text-2xl font-black text-sky-800 font-mono tracking-tight">
+                        {fmtInt(totals.arreLaterales)}
+                      </span>
+                      <span className={`text-sm sm:text-base font-black px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs border ${
+                        isHigh ? 'bg-rose-50 text-rose-700 border-rose-200' : isMed ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-sky-50 text-sky-700 border-sky-200'
+                      }`}>
+                        {fmtPct(pctGlobalLaterales)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* 2.3 Pegas (Empalmes de Rollo - Clickeable) */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'pegas',
+                title: 'Pegas (Empalmes de Rollo)',
+                subtitle: 'Lotes que registraron empalmes de rollo evaluados',
+                badgeColor: 'indigo'
+              })}
+              className="bg-white rounded-2xl border border-indigo-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-indigo-50/20 hover:border-indigo-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con empalmes de rollo"
             >
-              <span>Auditar a fondo</span>
-              <ChevronDown className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-
-        {/* ── MODO 2 (VISTA DETALLADA): 3 BLOQUES LÓGICOS COLAPSABLES (OPCIÓN 3) ── */}
-        {kpiViewMode === 'detallado' && (
-          <div className="space-y-3 pt-1 animate-in fade-in duration-200">
-            {/* ═══ PANEL 1: CONTROL TALLER DE ESTAMPACIÓN (PRODUCCIÓN DIRECTA) ═══ */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs">
-              <div
-                onClick={() => togglePanel('estampado')}
-                className="flex items-center justify-between p-3 sm:p-3.5 bg-slate-50/70 hover:bg-slate-100/70 cursor-pointer transition-colors border-b border-slate-100"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center shrink-0">
-                    <Factory className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                      <span>1. Control Taller de Estampación</span>
-                      <span className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.2 rounded-md">
-                        Producción Directa
-                      </span>
-                    </h4>
-                    <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                      Fallas originadas en máquinas de estampación (manchas, repise, falta de pintura, descases)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black font-mono text-slate-800 bg-white border border-slate-200 px-2.5 py-1 rounded-xl shadow-2xs">
-                    {fmtInt(totals.estampado)} pz ({fmtPct(pctGlobalEstampado)})
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 border border-indigo-100 group-hover:bg-indigo-100 group-hover:scale-105 transition-all">
+                <Scissors className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-indigo-700 uppercase tracking-wide leading-tight truncate">
+                    Pegas (Empalmes)
+                  </p>
+                  <span className="text-[9px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-indigo-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver lotes</span>
                   </span>
-                  <div className={`w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600 transition-transform ${panelOpen.estampado ? 'rotate-180' : ''}`}>
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
+                </div>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-indigo-800 font-mono tracking-tight">
+                    {fmtInt(totals.pegas)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-indigo-700 bg-indigo-50 border border-indigo-200/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalPegas)}
+                  </span>
                 </div>
               </div>
-
-              {panelOpen.estampado && (
-                <div className="p-3 sm:p-3.5 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 bg-white">
-                  {/* Tarjeta 1.1 Estampado General (Clickeable) */}
-                  <div
-                    onClick={() => setReprocesoModal({
-                      type: 'estampado',
-                      title: 'Defectos de Estampado (Taller)',
-                      subtitle: 'Lotes con manchas, repise, falta de pintura u otras fallas de estampación',
-                      badgeColor: 'rose'
-                    })}
-                    className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3 flex items-center gap-3 transition-all cursor-pointer group shadow-2xs"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                      <AlertTriangle className="w-4.5 h-4.5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                          Total Fallas Estampado
-                        </p>
-                        <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                          Ver lotes
-                        </span>
-                      </div>
-                      <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                        <span className="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight">
-                          {fmtInt(totals.estampado)}
-                        </span>
-                        <span className="text-xs font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                          {fmtPct(pctGlobalEstampado)}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 font-medium mt-0.5 truncate">
-                        {totals.totalSegundas > 0 ? ((totals.estampado / totals.totalSegundas) * 100).toFixed(0) : 0}% de todas las segundas
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tarjeta 1.2 Principales Defectos Operativos */}
-                  <div className="bg-slate-50/40 rounded-xl border border-slate-200/90 p-3 flex flex-col justify-between shadow-2xs">
-                    <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide">
-                      Fallas de Aplicación de Color
-                    </p>
-                    <div className="grid grid-cols-2 gap-2 mt-1.5 text-[11px] font-mono">
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Manchas:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.manchas)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Repise:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.repise)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Falta Pintura:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.faltaPintura)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Logos Corridos:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.logosCorridos)}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Tarjeta 1.3 Mecánicas y Térmicas */}
-                  <div className="bg-slate-50/40 rounded-xl border border-slate-200/90 p-3 flex flex-col justify-between shadow-2xs">
-                    <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide">
-                      Fallas Mecánicas y Térmicas
-                    </p>
-                    <div className="grid grid-cols-2 gap-2 mt-1.5 text-[11px] font-mono">
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Penetración:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.penetracion)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Grasa Máq.:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.grasa)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Descases:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.descases)}</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-100">
-                        <span className="text-slate-500">Quemadas:</span>
-                        <span className="font-bold text-slate-900">{fmtInt(totals.quemadas)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ═══ PANEL 2: PROVEEDORES DE TELA CRUDA (TINTORERÍA Y TEJEDURÍA) ═══ */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs">
-              <div
-                onClick={() => togglePanel('proveedores')}
-                className="flex items-center justify-between p-3 sm:p-3.5 bg-slate-50/70 hover:bg-slate-100/70 cursor-pointer transition-colors border-b border-slate-100"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center shrink-0">
-                    <Boxes className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                      <span>2. Calidad de Proveedores de Tela Cruda</span>
-                      <span className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.2 rounded-md">
-                        Tintorería y Tejeduría
-                      </span>
-                    </h4>
-                    <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                      Fallas provenientes de hilatura, tejeduría de rizo y tintura/lavandería externa
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black font-mono text-slate-800 bg-white border border-slate-200 px-2.5 py-1 rounded-xl shadow-2xs">
-                    {fmtInt(totals.tintoreria + totals.tejeduria)} pz ({fmtPct(pctGlobalTintoreria + pctGlobalTejeduria)})
-                  </span>
-                  <div className={`w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600 transition-transform ${panelOpen.proveedores ? 'rotate-180' : ''}`}>
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-
-              {panelOpen.proveedores && (
-                <div className="p-3 sm:p-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 bg-white">
-                  {/* Tarjeta 2.1 Tintorería y Lavandería */}
-                  <div
-                    onClick={() => setReprocesoModal({
-                      type: 'tintoreria',
-                      title: 'Fallas de Tintorería y Lavandería',
-                      subtitle: 'Lotes con manchas de tintura, sucias u óxido de proveedores',
-                      badgeColor: 'cyan'
-                    })}
-                    className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3.5 flex items-center gap-3.5 transition-all cursor-pointer group shadow-2xs"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                      <Droplets className="w-5 h-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                          Tintorería y Lavandería
-                        </p>
-                        <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                          Ver lotes
-                        </span>
-                      </div>
-                      <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
-                        <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono tracking-tight">
-                          {fmtInt(totals.tintoreria)}
-                        </span>
-                        <span className="text-xs sm:text-sm font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                          {fmtPct(pctGlobalTintoreria)}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 font-medium mt-0.5 truncate">
-                        Óxido, barca, sucias, vetas · {totals.totalSegundas > 0 ? ((totals.tintoreria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tarjeta 2.2 Tejeduría e Hilatura */}
-                  <div
-                    onClick={() => setReprocesoModal({
-                      type: 'tejeduria',
-                      title: 'Fallas de Tejeduría e Hilatura',
-                      subtitle: 'Lotes con reviente de urdimbre, trama, marras o variaciones de rizo',
-                      badgeColor: 'emerald'
-                    })}
-                    className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3.5 flex items-center gap-3.5 transition-all cursor-pointer group shadow-2xs"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                      <Boxes className="w-5 h-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                          Tejeduría e Hilatura
-                        </p>
-                        <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                          Ver lotes
-                        </span>
-                      </div>
-                      <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
-                        <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono tracking-tight">
-                          {fmtInt(totals.tejeduria)}
-                        </span>
-                        <span className="text-xs sm:text-sm font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                          {fmtPct(pctGlobalTejeduria)}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 font-medium mt-0.5 truncate">
-                        Urdimbre, trama, marras, rizo · {totals.totalSegundas > 0 ? ((totals.tejeduria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ═══ PANEL 3: CONFECCIÓN, ACABADO Y REPROCESOS DE COSTURA ═══ */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs">
-              <div
-                onClick={() => togglePanel('costura')}
-                className="flex items-center justify-between p-3 sm:p-3.5 bg-slate-50/70 hover:bg-slate-100/70 cursor-pointer transition-colors border-b border-slate-100"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center shrink-0">
-                    <Scissors className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                      <span>3. Confección, Acabado y Reprocesos</span>
-                      <span className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.2 rounded-md">
-                        Arreglos y Daños Físicos
-                      </span>
-                    </h4>
-                    <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                      Reprocesos recuperables (cabeceras/laterales) y segundas de confección / tundido
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black font-mono text-slate-800 bg-white border border-slate-200 px-2.5 py-1 rounded-xl shadow-2xs">
-                    Total Arreglos: {fmtInt(totals.arreCabeceras + totals.arreLaterales)}
-                  </span>
-                  <div className={`w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600 transition-transform ${panelOpen.costura ? 'rotate-180' : ''}`}>
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-
-              {panelOpen.costura && (
-                <div className="p-3 sm:p-3.5 space-y-3 bg-white">
-                  {/* Sub-sección: Arreglos Recuperables y Pegas */}
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2 px-0.5">
-                      Reprocesos Recuperables de Costura (No son pérdida definitiva de tela)
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                      {/* Arreglos Cabeceras */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'cabeceras',
-                          title: 'Arreglos Cabeceras (Dobladillo)',
-                          subtitle: 'Lotes exactos que generaron reproceso en dobladillos de cabecera',
-                          badgeColor: 'cyan'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3 flex items-center gap-3 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <Layers className="w-4.5 h-4.5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-1">
-                            <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                              Arreglos Cabeceras
-                            </p>
-                            <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                              Ver
-                            </span>
-                          </div>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight">
-                              {fmtInt(totals.arreCabeceras)}
-                            </span>
-                            <span className="text-xs font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                              {fmtPct(pctGlobalCabeceras)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Arreglos Laterales */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'laterales',
-                          title: 'Arreglos Laterales (Orillos)',
-                          subtitle: 'Lotes exactos que generaron reproceso en dobladillos de orillos laterales',
-                          badgeColor: 'sky'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3 flex items-center gap-3 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <Layers className="w-4.5 h-4.5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-1">
-                            <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                              Arreglos Laterales
-                            </p>
-                            <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                              Ver
-                            </span>
-                          </div>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight">
-                              {fmtInt(totals.arreLaterales)}
-                            </span>
-                            <span className="text-xs font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                              {fmtPct(pctGlobalLaterales)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Pegas */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'pegas',
-                          title: 'Pegas (Empalmes de Rollo)',
-                          subtitle: 'Lotes que registraron empalmes de rollo evaluados',
-                          badgeColor: 'indigo'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-3 flex items-center gap-3 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <Scissors className="w-4.5 h-4.5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-1">
-                            <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide truncate">
-                              Pegas (Empalmes)
-                            </p>
-                            <span className="text-[8px] font-bold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.2 rounded group-hover:bg-slate-100">
-                              Ver
-                            </span>
-                          </div>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight">
-                              {fmtInt(totals.pegas)}
-                            </span>
-                            <span className="text-xs font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-lg font-mono">
-                              {fmtPct(pctGlobalPegas)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Sub-sección: Segundas Físicas de Acabado */}
-                  <div className="pt-1">
-                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2 px-0.5">
-                      Segundas Físicas y Acabado (Pérdidas definitivas)
-                    </p>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-                      {/* Tundido Caído */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'tundido',
-                          title: 'Fallas de Tundido Caído',
-                          subtitle: 'Lotes afectados por problemas de tundido en proceso de acabado',
-                          badgeColor: 'purple'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 flex items-center gap-2.5 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <Sparkles className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide truncate">
-                            Tundido Caído
-                          </p>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-base sm:text-lg font-black text-slate-900 font-mono">
-                              {fmtInt(totals.tundido)}
-                            </span>
-                            <span className="text-[11px] font-bold text-slate-700 bg-white border border-slate-200 px-1.5 py-0.2 rounded font-mono">
-                              {fmtPct(pctGlobalTundido)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Montadas Costura */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'montadas',
-                          title: 'Fallas de Montadas y Costura',
-                          subtitle: 'Lotes afectados por montadas y defectos de confección / dobladillos',
-                          badgeColor: 'indigo'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 flex items-center gap-2.5 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <Scissors className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide truncate">
-                            Montadas Costura
-                          </p>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-base sm:text-lg font-black text-slate-900 font-mono">
-                              {fmtInt(totals.montadas)}
-                            </span>
-                            <span className="text-[11px] font-bold text-slate-700 bg-white border border-slate-200 px-1.5 py-0.2 rounded font-mono">
-                              {fmtPct(pctGlobalMontadas)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Manchas Negras */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'manchas_negras',
-                          title: 'Manchas Negras y Enganches',
-                          subtitle: 'Lotes con manchas negras y enganches detectados en acabado',
-                          badgeColor: 'slate'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 flex items-center gap-2.5 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <AlertCircle className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide truncate">
-                            Manchas Negras
-                          </p>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-base sm:text-lg font-black text-slate-900 font-mono">
-                              {fmtInt(totals.manchasNegras)}
-                            </span>
-                            <span className="text-[11px] font-bold text-slate-700 bg-white border border-slate-200 px-1.5 py-0.2 rounded font-mono">
-                              {fmtPct(pctGlobalManchasNegras)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Telas Rotas */}
-                      <div
-                        onClick={() => setReprocesoModal({
-                          type: 'rotas',
-                          title: 'Telas Rotas y Daños Físicos',
-                          subtitle: 'Lotes con roturas de tela, perforaciones o rasgaduras',
-                          badgeColor: 'red'
-                        })}
-                        className="bg-slate-50/40 rounded-xl border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 flex items-center gap-2.5 transition-all cursor-pointer group shadow-2xs"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 transition-colors">
-                          <ShieldAlert className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide truncate">
-                            Telas Rotas
-                          </p>
-                          <div className="flex items-baseline justify-between gap-1 mt-0.5">
-                            <span className="text-base sm:text-lg font-black text-slate-900 font-mono">
-                              {fmtInt(totals.rotas)}
-                            </span>
-                            <span className="text-[11px] font-bold text-slate-700 bg-white border border-slate-200 px-1.5 py-0.2 rounded font-mono">
-                              {fmtPct(pctGlobalRotas)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
-        )}
+        </div>
+
+        {/* BLOQUE 3: ESTAMPADO, TINTORERÍA Y TEJEDURÍA (3 TARJETAS) */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5 px-0.5">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+              <Factory className="w-3.5 h-3.5 text-rose-600" />
+              3. Segundas por Proceso Textil
+            </span>
+            <span className="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200/80 px-2 py-0.5 rounded-lg shadow-2xs">
+              Total Procesos: {fmtInt(totals.estampado + totals.tintoreria + totals.tejeduria)} ({fmtPct(pctGlobalEstampado + pctGlobalTintoreria + pctGlobalTejeduria)})
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            {/* 3.1 Estampado (Taller) - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'estampado',
+                title: 'Defectos de Estampado (Taller)',
+                subtitle: 'Lotes con manchas, repise, falta de pintura u otras fallas de estampación',
+                badgeColor: 'rose'
+              })}
+              className="bg-white rounded-2xl border border-rose-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-rose-50/20 hover:border-rose-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con fallas de estampado"
+            >
+              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100 group-hover:bg-rose-100 group-hover:scale-105 transition-all">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-rose-600 uppercase tracking-wide leading-tight truncate">
+                    Estampado
+                  </p>
+                  <span className="text-[9px] font-extrabold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-rose-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver lotes</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-rose-700 font-mono tracking-tight">
+                    {fmtInt(totals.estampado)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-rose-700 bg-rose-50 border border-rose-200/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalEstampado)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-rose-600 font-extrabold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.estampado / totals.totalSegundas) * 100).toFixed(0) : 0}% de segundas)
+                </p>
+              </div>
+            </div>
+
+            {/* 3.2 Tintorería - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'tintoreria',
+                title: 'Fallas de Tintorería y Lavandería',
+                subtitle: 'Lotes con manchas de tintura, sucias u óxido de proveedores',
+                badgeColor: 'cyan'
+              })}
+              className="bg-white rounded-2xl border border-cyan-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-cyan-50/20 hover:border-cyan-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con fallas de tintorería"
+            >
+              <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 border border-cyan-100 group-hover:bg-cyan-100 group-hover:scale-105 transition-all">
+                <Droplets className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-cyan-700 uppercase tracking-wide leading-tight truncate">
+                    Tintorería
+                  </p>
+                  <span className="text-[9px] font-extrabold text-cyan-700 bg-cyan-50 border border-cyan-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-cyan-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver lotes</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-cyan-900 font-mono tracking-tight">
+                    {fmtInt(totals.tintoreria)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-cyan-800 bg-cyan-50 border border-cyan-200/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalTintoreria)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-cyan-700 font-bold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.tintoreria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+
+            {/* 3.3 Tejeduría - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'tejeduria',
+                title: 'Fallas de Tejeduría e Hilatura',
+                subtitle: 'Lotes con reviente de urdimbre, trama, marras o variaciones de rizo',
+                badgeColor: 'emerald'
+              })}
+              className="bg-white rounded-2xl border border-emerald-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-3 bg-gradient-to-br from-white to-emerald-50/20 hover:border-emerald-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con fallas de tejeduría"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100 group-hover:bg-emerald-100 group-hover:scale-105 transition-all">
+                <Boxes className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-emerald-700 uppercase tracking-wide leading-tight truncate">
+                    Tejeduría
+                  </p>
+                  <span className="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-emerald-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver lotes</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-black text-emerald-900 font-mono tracking-tight">
+                    {fmtInt(totals.tejeduria)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-emerald-800 bg-emerald-50 border border-emerald-300/90 px-2.5 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalTejeduria)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-emerald-700 font-bold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.tejeduria / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* BLOQUE 4: TUNDIDO, MONTADAS, MANCHAS Y ROTAS (4 TARJETAS) - CLICKEABLES */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5 px-0.5">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+              4. Acabado, Confección y Fallas Físicas
+            </span>
+            <span className="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-200/80 px-2 py-0.5 rounded-lg shadow-2xs">
+              Total Físicas: {fmtInt(totals.tundido + totals.montadas + totals.manchasNegras + totals.rotas)} ({fmtPct(pctGlobalTundido + pctGlobalMontadas + pctGlobalManchasNegras + pctGlobalRotas)})
+            </span>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+            {/* 4.1 Tundido Caído - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'tundido',
+                title: 'Fallas de Tundido Caído',
+                subtitle: 'Lotes afectados por problemas de tundido en proceso de acabado',
+                badgeColor: 'purple'
+              })}
+              className="bg-white rounded-2xl border border-purple-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-2.5 bg-gradient-to-br from-white to-purple-50/20 hover:border-purple-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con tundido caído"
+            >
+              <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100 group-hover:bg-purple-100 group-hover:scale-105 transition-all">
+                <Sparkles className="w-4.5 h-4.5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-purple-700 uppercase tracking-wide leading-tight truncate">
+                    Tundido Caído
+                  </p>
+                  <span className="text-[8px] font-extrabold text-purple-700 bg-purple-50 border border-purple-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-purple-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1 mt-0.5">
+                  <span className="text-base sm:text-xl font-black text-purple-900 font-mono tracking-tight">
+                    {fmtInt(totals.tundido)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-purple-800 bg-purple-50 border border-purple-200/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalTundido)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-purple-700 font-bold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.tundido / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+
+            {/* 4.2 Montadas (Costura) - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'montadas',
+                title: 'Fallas de Montadas y Costura',
+                subtitle: 'Lotes afectados por montadas y defectos de confección / dobladillos',
+                badgeColor: 'indigo'
+              })}
+              className="bg-white rounded-2xl border border-indigo-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-2.5 bg-gradient-to-br from-white to-indigo-50/20 hover:border-indigo-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con montadas de costura"
+            >
+              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 border border-indigo-100 group-hover:bg-indigo-100 group-hover:scale-105 transition-all">
+                <Scissors className="w-4.5 h-4.5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-indigo-700 uppercase tracking-wide leading-tight truncate">
+                    Montadas (Costura)
+                  </p>
+                  <span className="text-[8px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-indigo-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1 mt-0.5">
+                  <span className="text-base sm:text-xl font-black text-indigo-900 font-mono tracking-tight">
+                    {fmtInt(totals.montadas)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-indigo-800 bg-indigo-50 border border-indigo-200/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalMontadas)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-indigo-700 font-bold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.montadas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+
+            {/* 4.3 Manchas Negras - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'manchas_negras',
+                title: 'Manchas Negras y Enganches',
+                subtitle: 'Lotes con manchas negras y enganches detectados en acabado',
+                badgeColor: 'slate'
+              })}
+              className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-2.5 bg-gradient-to-br from-white to-slate-50/40 hover:border-slate-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con manchas negras o enganches"
+            >
+              <div className="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-slate-200 group-hover:scale-105 transition-all">
+                <AlertCircle className="w-4.5 h-4.5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 uppercase tracking-wide leading-tight truncate">
+                    Manchas Negras
+                  </p>
+                  <span className="text-[8px] font-extrabold text-slate-700 bg-slate-100 border border-slate-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-slate-200">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1 mt-0.5">
+                  <span className="text-base sm:text-xl font-black text-slate-900 font-mono tracking-tight">
+                    {fmtInt(totals.manchasNegras)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-slate-800 bg-slate-100 border border-slate-300/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalManchasNegras)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-slate-500 font-bold leading-tight truncate mt-0.5">
+                  ({totals.totalSegundas > 0 ? ((totals.manchasNegras / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+
+            {/* 4.4 Telas Rotas - Clickeable */}
+            <div
+              onClick={() => setReprocesoModal({
+                type: 'rotas',
+                title: 'Telas Rotas y Daños Físicos',
+                subtitle: 'Lotes con roturas de tela, perforaciones o rasgaduras',
+                badgeColor: 'red'
+              })}
+              className="bg-white rounded-2xl border border-red-200/90 p-3 sm:p-3.5 shadow-xs flex items-center gap-2.5 bg-gradient-to-br from-white to-red-50/20 hover:border-red-400 transition-all cursor-pointer group hover:shadow-md hover:scale-[1.01]"
+              title="Hacer clic para ver los lotes con telas rotas"
+            >
+              <div className="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0 border border-red-100 group-hover:bg-red-100 group-hover:scale-105 transition-all">
+                <ShieldAlert className="w-4.5 h-4.5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <p className="text-[10px] sm:text-[11px] font-extrabold text-red-700 uppercase tracking-wide leading-tight truncate">
+                    Telas Rotas
+                  </p>
+                  <span className="text-[8px] font-extrabold text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.2 rounded-md shrink-0 flex items-center gap-0.5 group-hover:bg-red-100">
+                    <Search className="w-2.5 h-2.5" />
+                    <span>Ver</span>
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-1 mt-0.5">
+                  <span className="text-base sm:text-xl font-black text-red-900 font-mono tracking-tight">
+                    {fmtInt(totals.rotas)}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-red-700 bg-red-50 border border-red-200/90 px-2 py-0.5 rounded-xl font-mono shrink-0 shadow-2xs">
+                    {fmtPct(pctGlobalRotas)}
+                  </span>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-red-700 font-bold leading-tight truncate mt-0.5">
+                   ({totals.totalSegundas > 0 ? ((totals.rotas / totals.totalSegundas) * 100).toFixed(0) : 0}% de seg.)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── SELECTOR DE SUB-VISTAS PRINCIPALES ── */}
@@ -7645,6 +7447,19 @@ export default function SegundasDashboard() {
           </div>
         </div>
       )}
+
+      {/* ── MODAL: GENERADOR DE INFORME EJECUTIVO PDF PERSONALIZABLE ── */}
+      <SegundasReportModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        records={records}
+        currentMonth={selectedMonth}
+        currentYear={selectedYear}
+        currentTimeFilter={timeFilter}
+        currentStartDate={startDate}
+        currentEndDate={endDate}
+        showToast={showToast}
+      />
     </div>
   );
 }
